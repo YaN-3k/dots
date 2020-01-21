@@ -1,0 +1,102 @@
+// This is a list of your own shortcuts for Telegram Desktop
+// You can see full list of commands in the 'shortcuts-default.json' file
+// Place a null value instead of a command string to switch the shortcut off
+
+[
+    // {
+    //     "command": "close_telegram",
+    //     "keys": "ctrl+f4"
+    // },
+    // {
+    //     "command": "quit_telegram",
+    //     "keys": "ctrl+q"
+    // }
+
+    {
+        "version": "1004003"
+    },
+    {
+        "command": "media_play",
+        "keys": "media play"
+    },
+    {
+        "command": "media_stop",
+        "keys": "media stop"
+    },
+    {
+        "command": "media_previous",
+        "keys": "media previous"
+    },
+    {
+        "command": "media_next",
+        "keys": "media next"
+    },
+    {
+        "command": "media_pause",
+        "keys": "media pause"
+    },
+    {
+        "command": "media_playpause",
+        "keys": "toggle media play/pause"
+    },
+    {
+        "command": "search",
+        "keys": "ctrl+/"
+    },
+    {
+        "command": "search",
+        "keys": "find"
+    },
+    {
+        "command": "search",
+        "keys": "ctrl+f"
+    },
+    {
+        "command": "lock_telegram",
+        "keys": "ctrl+l"
+    },
+    {
+        "command": "minimize_telegram",
+        "keys": "ctrl+m"
+    },
+    {
+        "command": "quit_telegram",
+        "keys": "ctrl+q"
+    },
+    {
+        "command": "close_telegram",
+        "keys": "ctrl+w"
+    },
+    {
+        "command": "next_chat",
+        "keys": "ctrl+tab"
+    },
+    {
+        "command": "previous_chat",
+        "keys": "ctrl+backtab"
+    },
+    {
+        "command": "previous_chat",
+        "keys": "ctrl+pgup"
+    },
+    {
+        "command": "next_chat",
+        "keys": "ctrl+pgdown"
+    },
+    {
+        "command": "close_telegram",
+        "keys": "ctrl+f4"
+    },
+    {
+        "command": "previous_chat",
+        "keys": "ctrl+shift+tab"
+    },
+    {
+        "command": "previous_chat",
+        "keys": "ctrl+shift+k"
+    },
+    {
+        "command": "next_chat",
+        "keys": "ctrl+shift+j"
+    }
+]

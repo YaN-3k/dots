@@ -1,0 +1,108 @@
+#                                    _   _
+#   _ __   ___  ___  _ __ ___  _   _| |_| |_
+#  | '_ \ / _ \/ _ \| '_ ` _ \| | | | __| __|
+#  | | | |  __/ (_) | | | | | | |_| | |_| |_
+#  |_| |_|\___|\___/|_| |_| |_|\__,_|\__|\__|
+
+# Personal config
+source ~/.config/mutt/personal.muttrc
+
+# Colorscheme
+source ~/.config/mutt/colors
+
+# Editor
+set editor="nvim -c 'set tw=70 et' '+/^$' "
+set edit_headers=yes # See the headers when editing
+
+# Aliases
+set alias_file= ~/.config/mutt/aliases
+set sort_alias= alias
+set reverse_alias=yes
+source $alias_file
+
+set date_format="%y/%m/%d %I:%M%p"
+set index_format="%2C %zs %?X?A& ? %D %-15.15F %s (%-4.4c)"
+set sort = 'reverse-date'
+set smtp_authenticators = 'gssapi:login'
+
+set rfc2047_parameters = yes
+set sleep_time = 0		# Pause 0 seconds for informational messages
+set timeout = 300
+set markers = no		# Disables the `+` displayed at line wraps
+set mark_old = no		# Unread mail stay unread until read
+set mime_forward = yes		# attachments are forwarded with mail
+set wait_key = no		# mutt won't ask "press key to continue"
+set fast_reply			# skip to compose when replying
+set fcc_attach			# save attachments with the body
+set forward_format = "Fwd: %s"	# format of subject when forwarding
+set forward_quote		# include message in forwards
+set reverse_name		# reply as whomever it was to
+set include			# include message in replies
+set mail_check=60 # to avoid lags using IMAP with some email providers (yahoo for example)
+auto_view text/html		# automatically show html (mailcap uses w3m)
+auto_view application/pgp-encrypted
+alternative_order text/plain text/enriched text/html
+bind index,pager i noop
+bind index,pager g noop
+bind index \Cf noop
+
+# Cache
+set header_cache = "~/.config/mutt/cache/headers"
+set message_cachedir = "~/.config/mutt/cache/bodies"
+set certificate_file = "~/.config/mutt/cache/certificates"
+
+# Key bindings
+bind attach <return> view-mailcap
+bind attach l view-mailcap
+bind editor <space> noop
+bind index G last-entry
+bind index gg first-entry
+bind pager,attach h exit
+bind pager j next-line
+bind pager k previous-line
+bind pager l view-attachments
+bind index D delete-message
+bind index U undelete-message
+bind index L limit
+bind index h noop
+bind index l display-message
+#bind browser h goto-parent
+macro browser h '<change-dir><kill-line>..<enter>' "Go to parent folder"
+bind index,pager H view-raw-message
+bind browser l select-entry
+bind pager,browser gg top-page
+bind pager,browser G bottom-page
+bind index,pager,browser d half-down
+bind index,pager,browser u half-up
+bind index,pager S sync-mailbox
+bind index,pager R group-reply
+bind index \031 previous-undeleted	# Mouse wheel
+bind index \005 next-undeleted		# Mouse wheel
+bind pager \031 previous-line		# Mouse wheel
+bind pager \005 next-line		# Mouse wheel
+
+# Abook
+set query_command = "abook --datafile $HOME/.config/abook/addressbook --mutt-query '%s'"
+bind editor <Tab> complete-query
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile $HOME/.config/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "add the sender address to abook"
+macro generic,index,pager \ca "<shell-escape>abook --datafile $HOME/.config/abook/addressbook -C $HOME/.config/abook/abookrc <return>" "launch abook"
+
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+macro index O "<shell-escape>mailsync -Va<enter>" "run mbsync to sync all mail"
+macro index \Cf "<enter-command>unset wait_key<enter><shell-escape>read -p 'Enter a search term to find with notmuch: ' x; echo \$x >~/.cache/mutt_terms<enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<enter>" "show only messages matching a notmuch pattern"
+macro index A "<limit>all\n" "show all messages (undo limit)"
+
+# Sidebar
+set sidebar_visible = yes
+set sidebar_width = 20
+set sidebar_short_path = yes
+set sidebar_next_new_wrap = yes
+set mail_check_stats
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/? %?S?%S?'
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager \Cp sidebar-prev-new
+bind index,pager \Cn sidebar-next-new
+bind index,pager B sidebar-toggle-visible
+# vim: filetype=neomuttrc

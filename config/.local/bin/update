@@ -1,0 +1,21 @@
+#!/bin/sh
+
+ping -q -c 1 1.1.1.1 > /dev/null || {
+	notify-send  "Error, you are offline." "Check your internet connection."
+	exit
+}
+
+package=$(pacman -Quq | wc -l)
+
+if [ ! $package -eq 0 ]; then
+	notify-send "Updating..."
+	sudo pacman --noconfirm -Syu
+	if [ "$?" != 0 ]; then
+		notify-send "Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
+		exit
+	else
+		notify-send "Updating completed!" "$package packages have been updated"
+	fi
+else
+	notify-send "There is nothing to update"
+fi

@@ -1,0 +1,11 @@
+text/plain; $EDITOR %s ;
+text/html; openfile %s ; nametemplate=%s.html
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump %s; nametemplate=%s.html; copiousoutput;
+# text/html; w3m -o auto_image=TRUE %s -T text/html; nametemplate=%s.html
+# text/html; w3m -o auto_image=TRUE %s -T text/html; nametemplate=%s.html; copiousoutput
+# text/html; w3m -o auto_image=TRUE %s -T text/html; nametemplate=%s.html; needsterminal
+image/*; muttimage %s ; copiousoutput
+video/*; setsid mpv --quiet %s &; copiousoutput
+application/pdf; openfile %s ;
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+image/*; img2sixel '%s'

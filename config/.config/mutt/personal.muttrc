@@ -1,0 +1,15 @@
+# Example:
+set imap_user = "email@email.com"
+set imap_pass = "password"
+set smtp_url = "smtp://email@email.com@smtp.name.com:port/"
+set smtp_pass = "password"
+set from = "email@email.com"
+set realname = "fullname"
+set ssl_force_tls = yes
+
+set folder = "imaps://imap-mail.email.com:port"
+set spoolfile = "+INBOX"
+set imap_check_subscribed
+set hostname = host.com
+set imap_keepalive = 300
+# vim: syntax=neomuttrc

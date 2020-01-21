@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=sxiv
+Exec=/usr/bin/sxiv -a %u

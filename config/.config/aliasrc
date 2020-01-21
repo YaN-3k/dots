@@ -1,0 +1,66 @@
+#       _          _ _
+#   ___| |__   ___| | |
+#  / __| '_ \ / _ \ | |
+#  \__ \ | | |  __/ | |
+#  |___/_| |_|\___|_|_|
+
+# Aliases
+alias ls='ls --color=auto --group-directories-first'
+alias hc="history -c"
+alias out="pkill -kill -u $(whoami)"
+alias bat="cat /sys/class/power_supply/BAT?/capacity"
+alias cp="cp -riv"
+alias mv="mv -iv"
+alias rm="rm -v"
+alias mkd="mkdir -pv"
+
+alias yt="youtube-dl --add-metadata -i"
+alias yta="yt -x -f bestaudio/best"
+alias nc='ncmpcpp'
+alias ra='ranger'
+alias nm='neomutt'
+alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
+
+# vi
+alias e="$EDITOR"
+alias f="$FILE"
+alias vi="nvim"
+alias vidiff="nvim -d"
+alias vf="vifmrun"
+
+# tmux
+alias t="tmux"
+alias tn="tmux new -s"
+alias tls="tmux ls"
+alias ta="tmux a -t"
+alias tk="tmux kill-session -t"
+alias tks="tmux kill-server"
+
+# cURL
+wttr()    { curl wttr.in/"${1}" ;}
+cht() { curl cht.sh/"${1}" ;}
+
+# youtube-dl
+alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s" -4'
+alias yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s" -4'
+alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s" -4'
+alias yt-music='youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0 -o "%(title)s.%(ext)s" -4'
+alias yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s" -4'
+alias yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s" -4'
+alias yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%(ext)s" -4'
+
+# Pacmna
+alias up="sudo pacman -Syu"
+alias p="sudo pacman"
+alias owo="yay -Slq | fzf -m --preview 'yay -Si {1}' | yay -S -"
+alias uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' | xargs -ro yay -Rns"
+alias ser="yay -Slq | fzf -m --preview 'yay -Si {1}' | yay -Si -"
+alias sel="yay -Qq | fzf -m --preview 'yay -Si {1}' | yay -Si -"
+alias paco="sudo pacman -Rns $(pacman -Qtdq)"
+
+# fzf
+fe()   { find . -type f | fzf | xargs -r "$EDITOR" ;}
+cdf() { cd "$(find . -type d | fzf --preview '')" ;}
+fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
+
+# vim: filetype=zsh

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# Notify me with notify-send if my battery is below 25%.
+# You can set this to run via cron.
+
+if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]; then
+	rm /tmp/notify.lck; exit
+elif [ "$(cat /sys/class/power_supply/BAT0/capacity)" -lt 25 ] && [ ! -f /tmp/notify.lck  ]; then
+	touch /tmp/notify.lck; notify-send -u critical "Battery critically low."
+fi

@@ -1,0 +1,217 @@
+#            _     _       _
+#   _____  _| |__ | | ____| |
+#  / __\ \/ / '_ \| |/ / _` |
+#  \__ \>  <| | | |   < (_| |
+#  |___/_/\_\_| |_|_|\_\__,_|
+
+# Basic binds
+super + Return
+	$TERMINAL
+super + shift + Return
+	$TERMINAL -e $FILE
+super + w
+	$TERMINAL -e nmtui
+super + shift + w
+	$BROWSER
+super + m
+	$TERMINAL -e ncmpcpp
+super + v
+	$TERMINAL -e nvim
+super + shift + a
+	$TERMINAL -e alsamixer
+super + n
+	$TERMINAL -e neomutt
+super + d
+	j4-dmenu-desktop
+super + shift + d
+	passmenu
+super + u
+	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) mount.sh;; umount) umount.sh; esac
+
+# Kill window
+super + {_,shift + }q
+	bspc node -{c,k}
+
+# scratchpad
+super + F1
+ 	id=$(head -1 /tmp/scratchid);\
+ 	bspc node $id --flag hidden;bspc node -f $id
+
+# hiden windows
+super + F2
+	hwind
+super + a
+	bspc node -g sticky; bspc node -g hidden
+
+# Navigate layouts
+super + {_,shift + }space
+	bspc desktop --layout {next,prev}
+
+# Toogle tiling of window
+super + t
+	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
+	bspc node --state \~$state
+
+# Toogle pseudo tiling of window
+super + p
+	bspc node --state \~pseudo_tiled
+
+# Toggle fullscreen of window
+super + f
+	bspc node --state \~fullscreen
+
+# Flags
+alt + {m,x,s,p}
+	bspc node -g {marked,locked,sticky,private}
+
+# focus/swap the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# Navigate to older/newer window in history
+super + shift + {o,n}
+	bspc wm --record-history off; \
+	bspc node --focus {older,newer}; \
+	bspc wm --record-history on
+
+# focus the next/previous node in the current desktop
+alt + {_,shift +} n
+	bspc node -f {next,prev}.local
+
+# focus the next/previous desktop in the current monitor
+#alt + {_,shift} + n
+#	bspc desktop -f {prev,next}.local
+
+# Focus next/previous desktop
+super + {_,shift} + Tab
+	bspc desktop --focus {next,prev}.occupied
+
+# Move/send window to selected desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# Move window to selected desktop
+alt + {1-9,0}
+	bspc node --to-desktop ^{1-9,10} --focus
+
+# focus/swap the last node/desktop
+super + {grave,shift + grave,apostrophe}
+	bspc {node -f last.local,desktop -f last,node --swap last}
+
+# Flip layout vertically/horizontally
+super + {_,shift + }s
+	bspc node @/ --flip {vertical,horizontal}
+
+# rotate windows
+super + {_,shift +} r
+   bspc node @/ -R {90,270}
+
+# Circulate the leaves of the tree
+super + {_,shift + } c
+	bspc node @/ --circulate {backward,forward}
+
+# focus or send to the given desktop
+super + {_,shift +}g
+	bspc node {-f,-s} biggest.local
+
+# Focus parent/brother/first/second for preselection
+super + ctrl + {p,b,comma,period}
+	bspc node --focus @{parent,brother,first,second}
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# cancel the preselection
+super + {_,shift +} e
+	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
+
+# Make split ratios equal/balanced
+alt + {period,comma}
+	bspc node @/ {--equalize,--balance}
+
+# Resize window
+alt + shift + {h,j,k,l}
+      bspc node -z {left -10 0,bottom 0 10,top 0 -10,right 10 0}
+alt + {h,j,k,l}
+      bspc node -z {right -10 0,top 0 10,bottom 0 -10,left 10 0}
+
+# Move window
+super + alt + {h,j,k,l}
+	  bspc node -v {-20 0,0 20,0 -20,20 0}
+# Resize gaps
+alt + g: {k,j}
+      bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
+
+# Move window to last split
+super + y
+	bspc query --nodes -n focused.automatic \
+	&& bspc node -n last.\!automatic \
+	|| bspc node last.leaf -n focused
+
+# Et cetera...
+super + question
+	notify-send "Time: $(date)"
+super + Insert
+	showclip
+super + Escape
+	pkill -USR1 -x sxhkd && dunstify "sxhkd reloaded"
+alt + d
+	pkill dunst && dunst && dunstify "Dunst reloaded"
+super + x
+	prompt "Lock screen" "slock & mpc pause"
+super + shift + Delete
+	prompt "Restart bspwm?" "bspc wm -r"
+super + shift + x
+	prompt "Shutdown computer?" "shutdown -h now"
+super + shift + BackSpace
+	prompt "Reboot computer?" "reboot"
+super + shift + Escape
+	prompt 'Leave Xorg?' 'killall Xorg'
+super + shift + u
+	prompt "Update packages?" "update"
+alt + {_,shift +} equal
+	{xbacklight -inc 15, sudo -A keybacklight -inc}
+alt  + {_,shift +} minus
+	{xbacklight -dec 15, sudo -A keybacklight -dec}
+{XF86MonBrightnessDown,XF86MonBrightnessUp}
+	{xbacklight -dec 15,xbacklight -inc 15}
+End
+	screenshot
+
+# Pause audio
+super + p
+	mpc toggle
+# Changes to next/previous tracks
+super + {comma,period}
+	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
+# Restart track
+super + shift + less
+	mpc seek 0%
+# Seek foward in song
+super + {_,shift +} bracketright
+	mpc seek +{10,120}
+# Seek backward in song
+super + {_,shift +} bracketleft
+	mpc seek -{10,120}
+# Volume
+super + {equal,shift + plus}
+	{amixer sset Master 5%+,mpc volume +5}
+super {_,shift} + minus
+	{amixer sset Master 5%-,mpc volume -5}
+super + shift + m
+	amixer sset Master toggle
+
+# Audiokeys
+XF86AudioMute
+	amixer sset Master toggle
+XF86Audio{Raise,Lower}Volume
+	amixer sset Master 5%{+,-}
+XF86Audio{Next,Prev}
+	mpc {next,prev}
+XF86Audio{Pause,Play,Stop}
+	mpc {pause,play,stop}
+XF86Audio{Rewind,Forward}
+	mpc seek {-,+}10
+XF86AudioMedia
+	$TERMINAL -e ncmpcpp

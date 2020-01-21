@@ -1,0 +1,141 @@
+#     _    _                 _ _____ _______   __
+#    / \  | | __ _  ___ _ __(_)_   _|_   _\ \ / /
+#   / _ \ | |/ _` |/ __| '__| | | |   | |  \ V /
+#  / ___ \| | (_| | (__| |  | | | |   | |   | |
+# /_/   \_\_|\__,_|\___|_|  |_| |_|   |_|   |_|
+#
+# See this wiki page for more info:
+# https://github.com/jwilm/alacritty/wiki
+
+env:
+  TERM: xterm-256color
+
+# Window configurations
+window:
+  dimensions:
+    columns: 80
+    lines: 25
+
+  padding:
+    x: 4
+    y: 4
+
+  decorations: full
+
+scrolling:
+  multiplier: 1
+  auto_scroll: false
+
+tabspaces: 2
+
+# Font configurations
+font:
+  normal:
+    family: Inconsolata
+    style: Regular
+
+  bold:
+    family: Inconsolata
+    style: Bold
+
+  Italic:
+    family: Inconsolata
+    style: Italic
+
+  size: 10.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+  scale_with_dpi: true
+
+  use_thin_strokes: false
+
+draw_bold_text_with_bright_colors: true
+
+colors:
+  # Default colors
+  cursor:
+     cursor: '0xcccccc'
+  primary:
+    background: '0x161821'
+    foreground: '0xc6c8d1'
+
+  # Normal colors
+  normal:
+    black:   '0x161821'
+    red:     '0xe27878'
+    green:   '0xb4be82'
+    yellow:  '0xe2a478'
+    blue:    '0x84a0c6'
+    magenta: '0xa093c7'
+    cyan:    '0x89b8c2'
+    white:   '0xc6c8d1'
+
+  # Bright colors
+  bright:
+    black:   '0x22262e'
+    red:     '0xe98989'
+    green:   '0xc0ca8e'
+    yellow:  '0xe9b189'
+    blue:    '0x91acd1'
+    magenta: '0xada0d3'
+    cyan:    '0x95c4ce'
+    white:   '0xd2d4de'
+
+# Visual bell
+visual_bell:
+  animation: EaseOutExpo
+  duration: 0
+
+background_opacity: 1.0
+
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
+
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  faux_scrolling_lines: 1
+  hide_when_typing: false
+
+cursor:
+  style: Block
+  unfocused_hollow: false
+
+dynamic_title: true
+
+live_config_reload: true
+
+shell:
+  program: /bin/zsh
+
+key_bindings:
+  - { key: P,        mods: Control,       action: Paste            }
+  - { key: Y,        mods: Control,       action: Copy             }
+  - { key: Insert,   mods: Shift,         action: PasteSelection   }
+  - { key: Key0,     mods: Control,       action: ResetFontSize    }
+  - { key: Equals,   mods: Control,       action: IncreaseFontSize }
+  - { key: Add,      mods: Control,       action: IncreaseFontSize }
+  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  - { key: Minus,    mods: Control,       action: DecreaseFontSize }
+  - { key: Return,   mods: Alt,           action: ToggleFullscreen }
+  - { key: Paste,                    action: Paste                            }
+  - { key: Copy,                     action: Copy                             }
+  - { key: L,         mods: Control, action: ClearLogNotice                   }
+  - { key: L,         mods: Control, chars: "\x0c"                            }
+  - { key: K,         mods: Shift|Control,   action: ScrollPageUp,            }
+  - { key: J,         mods: Shift|Control,   action: ScrollPageDown,          }
+  - { key: P,         mods: Shift|Control,   action: ScrollLineUp,            }
+  - { key: N,         mods: Shift|Control,   action: ScrollLineDown,          }
+  - { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
+  - { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
