@@ -1,10 +1,9 @@
-#! /bin/sh
-#   _
-#  | |__  ___ _ ____      ___ __ ___
-#  | '_ \/ __| '_ \ \ /\ / / '_ ` _ \
-#  | |_) \__ \ |_) \ V  V /| | | | | |
-#  |_.__/|___/ .__/ \_/\_/ |_| |_| |_|
-#            |_|
+#!/bin/sh
+#
+#   ┏━━━━━━━┓
+#   ┃ bspwm ┃
+#   ┗━━━━━━━┛
+#
 
 #===========
 # Autostart
@@ -12,6 +11,7 @@
 notify-send -i ~/.local/share/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
+telegram-desktop &
 $TERMINAL --class scratchpad -e scratch &
 
 #===============
@@ -23,6 +23,7 @@ bspc desktop -f 1
 # Mouse setings
 bspc config pointer_modifier mod4
 bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
 bspc config pointer_action3 resize_side
 bspc config pointer_action2 resize_corner
 bspc config pointer_action1 move
@@ -51,9 +52,11 @@ bspc config presel_feedback_color "#1e2132"
 #======
 # Rule
 #======
+bspc desktop ^3 --layout next
 bspc rule -a firefox desktop='^2'
 bspc rule -a qutebrowser desktop='^2'
 bspc rule -a discord desktop='^3'
+bspc rule -a TelegramDesktop desktop='^3'
 bspc rule -a Steam desktop='^5'
 bspc rule -a network-manager state=floating sticky=on
 bspc rule -a *::scratchpad sticky=on state=floating hidden=on locked=on

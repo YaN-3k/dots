@@ -28,7 +28,8 @@ export ZDOTDIR="$HOME/.config/zsh"
 export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 
 # Other program settings:
-export SUDO_ASKPASS="$HOME/.local/bin/pass"
+export GOPATH="$HOME/go"
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 export LESS=-R
 export LESS_TERMCAP_mb=$(tput setaf 4)
 export LESS_TERMCAP_md=$(tput setaf 4)

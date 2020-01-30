@@ -75,7 +75,7 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#161821"
+    background = "#121821"
     foreground = "#cccccc"
     frame_color = "#89b8c2"
     timeout = 5
@@ -83,13 +83,13 @@
     #icon = ~/.local/share/arch.png
 
 [urgency_normal]
-    background = "#161821"
+    background = "#121821"
     foreground = "#cccccc"
     frame_color = "#84a0c6"
     timeout = 5
 
 [urgency_critical]
-    background = "#161821"
+    background = "#121821"
     foreground = "#cccccc"
     frame_color = "#e27878"
     timeout = 0

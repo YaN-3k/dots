@@ -56,7 +56,7 @@ c.fonts.hints = "bold 10pt DejaVu Sans Mono"
 c.fonts.debug_console = "10pt DejaVu Sans Mono"
 
 # Color Scheme
-black = "#161821"
+black = "#121821"
 white = "#c6c8d1"
 red = "#e27878"
 green = "#b4be82"
@@ -66,7 +66,7 @@ magenta = "#a093c7"
 cyan = "#89b8c2"
 
 background = black
-backgroundAlt = "#22262e"
+backgroundAlt = "#162130"
 accent = blue
 
 # Set colors from color scheme

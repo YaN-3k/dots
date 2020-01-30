@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 # Sets the background. If given an argument, will set file as background.
-[ -n "$1" ] && cp "$1" ~/Dotfiles/config/.config/wallpaper && notify-send -i "$HOME/.config/wallpaper" "Wallpaper changed."
+[ -n "$1" ] && cp "$1" ~/Dotfiles/config/.config/wallpaper && notify-send -i "$HOME/Dotfiles/config/.config/wallpaper" "Wallpaper changed."
 xwallpaper --daemon --zoom ~/Dotfiles/config/.config/wallpaper

@@ -92,7 +92,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect '^[[Z' reverse-menu-complete
-bindkey -v '^k' autosuggest-accept
+bindkey -v '^n' autosuggest-accept
 
 # Bind vim keys to searching in history
 autoload -U history-search-end
@@ -102,12 +102,22 @@ zle -N history-beginning-search-forward-end history-search-end
 # bindkey -v "^b"  history-beginning-search-backward-end
 # bindkey -v "^f"  history-beginning-search-forward-end
 
-bindkey "^b"  history-search-backward
+bindkey "^p"  history-search-backward
 bindkey "^f"  history-search-forward
 
 # Better searching in command mode
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
+
+# Emcs like
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^K" kill-line
+bindkey "^L" clear-screen
+bindkey "^R" history-incremental-search-backward
+bindkey "^U" kill-whole-line
+bindkey "^W" backward-kill-word
+bindkey "^Y" yank
 
 # vi mode
 bindkey -v
@@ -136,7 +146,9 @@ preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
 # Edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
+bindkey -M vicmd v edit-command-line
+bindkey '^v' edit-command-line
+bindkey -s '^g' '!*'
 
 bindkey '^x' clear-screen
 bindkey -v '^[d' backward-delete-char

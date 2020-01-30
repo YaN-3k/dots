@@ -1,7 +1,7 @@
 h	~/
 d	~/Documents
 D	~/Downloads
-dcf	~/Dotfiles/config/
+cD	~/Dotfiles/config/
 m	~/Music
 pp	~/Pictures
 vv	~/Videos

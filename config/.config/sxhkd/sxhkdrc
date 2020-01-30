@@ -19,8 +19,8 @@ super + v
 	$TERMINAL -e nvim
 super + shift + a
 	$TERMINAL -e alsamixer
-super + n
-	$TERMINAL -e neomutt
+super + e
+	$TERMINAL -e neomutt -R
 super + d
 	j4-dmenu-desktop
 super + shift + d
@@ -47,16 +47,12 @@ super + a
 super + {_,shift + }space
 	bspc desktop --layout {next,prev}
 
-# Toogle tiling of window
+# Toogle mode
 super + t
 	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
 	bspc node --state \~$state
-
-# Toogle pseudo tiling of window
 super + p
 	bspc node --state \~pseudo_tiled
-
-# Toggle fullscreen of window
 super + f
 	bspc node --state \~fullscreen
 
@@ -68,22 +64,12 @@ alt + {m,x,s,p}
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-# Navigate to older/newer window in history
-super + shift + {o,n}
-	bspc wm --record-history off; \
-	bspc node --focus {older,newer}; \
-	bspc wm --record-history on
-
 # focus the next/previous node in the current desktop
-alt + {_,shift +} n
+super + {_,shift + }n
 	bspc node -f {next,prev}.local
 
-# focus the next/previous desktop in the current monitor
-#alt + {_,shift} + n
-#	bspc desktop -f {prev,next}.local
-
 # Focus next/previous desktop
-super + {_,shift} + Tab
+super + {_,shift + }Tab
 	bspc desktop --focus {next,prev}.occupied
 
 # Move/send window to selected desktop
@@ -91,8 +77,8 @@ super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
 # Move window to selected desktop
-alt + {1-9,0}
-	bspc node --to-desktop ^{1-9,10} --focus
+#alt + {1-9,0}
+#	bspc node --to-desktop ^{1-9,10} --focus
 
 # focus/swap the last node/desktop
 super + {grave,shift + grave,apostrophe}
@@ -143,15 +129,13 @@ super + alt + {h,j,k,l}
 alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
-# Move window to last split
-super + y
-	bspc query --nodes -n focused.automatic \
-	&& bspc node -n last.\!automatic \
-	|| bspc node last.leaf -n focused
-
 # Et cetera...
-super + question
-	notify-send "Time: $(date)"
+super + slash
+	notify-send \
+	"$(date "+%a %d %b - %I:%M %p")" \
+	"Desktop: $(bspc query -D -d focused --names)\n\
+	Volume: $(amixer -D pulse get Master | grep -o '[0-9][0-9]*%' | head -1)\n\
+	$(acpi)"
 super + Insert
 	showclip
 super + Escape
@@ -180,7 +164,7 @@ End
 	screenshot
 
 # Pause audio
-super + p
+super + shift + p
 	mpc toggle
 # Changes to next/previous tracks
 super + {comma,period}

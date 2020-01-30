@@ -10,6 +10,7 @@
 "===========================
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
+	silent !pip3 install --user pynvim
 	silent !mkdir -p ~/.config/nvim/autoload/
 	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
 	autocmd VimEnter * PlugInstall
@@ -47,8 +48,8 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'tpope/vim-commentary'
 	Plug 'jiangmiao/auto-pairs'
 
-	Plug 'itchyny/lightline.vim'
-	Plug '~/.config/nvim/bundle/lightline-simple/'
+	" Plug 'itchyny/lightline.vim'
+	" Plug '~/.config/nvim/bundle/lightline-simple/'
 
 	Plug 'sheerun/vim-polyglot'
 	Plug 'luochen1990/rainbow'
@@ -95,9 +96,9 @@ augroup END
 "=============
 " Colorscheme
 "=============
-hi LineNr           ctermbg=0   ctermfg=11  cterm=italic
-hi CursorLineNr     ctermbg=0   ctermfg=3   cterm=bold
-hi ColorColumn      ctermbg=0   ctermfg=1   cterm=undercurl
+hi LineNr				  	 	ctermfg=11  cterm=italic
+hi CursorLineNr			  	 	ctermfg=3   cterm=bold
+hi ColorColumn			   		ctermfg=1   cterm=undercurl
 hi SignColumn                   ctermfg=7
 hi VertSplit        ctermbg=8   ctermfg=0
 
@@ -148,16 +149,19 @@ hi User1        ctermbg=NONE ctermfg=blue
 hi User2        ctermbg=NONE ctermfg=blue
 hi User3        ctermbg=NONE ctermfg=blue
 hi User4        ctermbg=8    ctermfg=blue
-set statusline+=\ %y                " File type
+
+set statusline+=\ %t                " File type
 set statusline+=\ %1*\              " Padding & switch colour
-set statusline+=%t\                 " File name
+set statusline+=%r\                 " File name
 set statusline+=%M                  " Modified flag
 set statusline+=\ %2*\              " Padding & switch colour
 set statusline+=%=                  " Switch to right-side
 set statusline+=\ %3*\              " Padding & switch colour
 set statusline+=%p%%                " Current line
 set statusline+=\ %4*\              " Padding & switch colour
-set statusline+=%{&fileencoding?&fileencoding:&encoding}\   " File coding
+set statusline+=%y	                " File type
+set statusline+=\ \|                " File type
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}\   " File coding
 
 " Lightline - statusline
 hi StatusLine       ctermbg=8   ctermfg=4    cterm=NONE
@@ -182,10 +186,10 @@ let g:lightline = {
 " Plugin configs
 "================
 " ALE - Asynchronous Lint Engine
-hi ALEWarning                               cterm=undercurl
-hi ALEError                                 cterm=undercurl
-hi ALEWarningSign   ctermbg=0   ctermfg=3   cterm=bold
-hi ALEErrorSign     ctermbg=0   ctermfg=1   cterm=bold
+hi ALEWarning       ctermbg=3   ctermfg=0   cterm=undercurl
+hi ALEError         ctermbg=1   ctermfg=0   cterm=undercurl
+hi ALEWarningSign    		    ctermfg=3   cterm=bold
+hi ALEErrorSign      		    ctermfg=1   cterm=bold
 
 let g:ale_linters = {
 \   'c': ['ccls', 'clang'],
@@ -195,7 +199,6 @@ let g:ale_linters = {
 \   'python': ['pyls', 'flake8'],
 \   'sh': ['language_server', 'shellcheck', 'shell'],
 \   'zsh': ['language_server', 'shellcheck', 'shell'],
-\   'go': ['gofmt'],
 \}
 let g:ale_fixers = {
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
@@ -235,8 +238,11 @@ let g:fzf_layout = { 'down': '~50%' }
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
 
+" Syntax highlighting
+let g:python_highlight_all = 1
+
 " Go - $ go get -u github.com/stamblerre/gocode
-let g:deoplete#sources#go#gocode_binary = "$HOME/go/bin/gocode"
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 
 " LaTeX
 let g:livepreview_previewer = 'zathura'
@@ -249,10 +255,10 @@ let g:extra_whitespace_ignored_filetypes = [ 'help', 'vim-plug' ]
 
 " GitGutter
 set updatetime=1000
-hi GitGutterChange  ctermbg=0   ctermfg=3    cterm=bold
-hi GitGutterAdd     ctermbg=0   ctermfg=2    cterm=bold
-hi GitGutterDelete  ctermbg=0   ctermfg=1    cterm=bold
-hi GitGutterChangeDelete ctermbg=0 ctermfg=5 cterm=bold
+hi GitGutterChange       ctermfg=3    cterm=bold
+hi GitGutterAdd          ctermfg=2    cterm=bold
+hi GitGutterDelete       ctermfg=1    cterm=bold
+hi GitGutterChangeDelete ctermfg=5 	  cterm=bold
 
 " Open Nerd Tree if no files were specified
 autocmd StdinReadPre * let s:std_in=1
@@ -378,7 +384,7 @@ map <F7> :setlocal spell! spelllang=pl<CR>
 cnoremap sudow w !sudo tee % >/dev/null
 
 " Open terminal
-map <C-A-t> :vsplit term://zsh<CR>
+map <C-A-t> :split term://zsh<CR>:resize 10<CR>
 
 " Exit from terminal mode
 tnoremap <C-e> <C-\><C-n>
