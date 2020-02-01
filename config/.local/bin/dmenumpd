@@ -1,0 +1,31 @@
+#!/bin/bash
+cmd_list="play stop next prev toggle add volume seek repeat single consume random clear crop status"
+
+mpc_add() {
+    file="$(mpc listall | dmenu -i -l 15 -p "mpc add")"
+    [[ -z $file ]] && return 1
+    mpc add "$file"
+    mpc play
+}
+
+mpc_seek() {
+	options="-20 -40 -100 +20 +40 +100 0%"
+	time="$(echo -e "$options" | sed 's/ /\n/g' | dmenu -i -p "seek")"
+	mpc seek "$time"
+}
+mpc_status() {
+	dunstify -t 5000 "$(mpc status)"
+}
+
+mpc_status
+while true; do
+	cmd="$(echo "$cmd_list" | sed 's/ /\n/g' | dmenu -i -p "mpc")"
+	[[ -z $cmd ]] && exit 1
+	case $cmd in
+		add) mpc_add;;
+		seek)mpc_seek;;
+		status)mpc_status;;
+		quit)exit 0;;
+		*) mpc "$cmd"
+	esac
+done

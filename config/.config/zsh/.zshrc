@@ -120,6 +120,8 @@ bindkey "^W" backward-kill-word
 bindkey "^Y" yank
 
 # vi mode
+bindkey -v '^?' backward-delete-char
+bindkey -v '^h' backward-delete-char
 bindkey -v
 export KEYTIMEOUT=1
 
@@ -151,7 +153,6 @@ bindkey '^v' edit-command-line
 bindkey -s '^g' '!*'
 
 bindkey '^x' clear-screen
-bindkey -v '^[d' backward-delete-char
 
 # Load fzf keybindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

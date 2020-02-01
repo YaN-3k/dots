@@ -20,13 +20,9 @@ super + v
 super + shift + a
 	$TERMINAL -e alsamixer
 super + e
-	$TERMINAL -e neomutt -R
+	$TERMINAL -e neomutt
 super + d
 	j4-dmenu-desktop
-super + shift + d
-	passmenu
-super + u
-	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) mount.sh;; umount) umount.sh; esac
 
 # Kill window
 super + {_,shift + }q
@@ -39,7 +35,7 @@ super + F1
 
 # hiden windows
 super + F2
-	hwind
+	dmenuhidden
 super + a
 	bspc node -g sticky; bspc node -g hidden
 
@@ -109,7 +105,7 @@ super + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # cancel the preselection
-super + {_,shift +} e
+super + {_,shift +} o
 	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
 
 # Make split ratios equal/balanced
@@ -130,6 +126,18 @@ alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
 # Et cetera...
+super + shift + e
+	passmenu
+super + shift + d
+	dmenuedit
+super + i
+	dmenuunicode
+super + shift + t
+	dmenutmux
+super + u
+	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
+super + question
+	dmenumpd
 super + slash
 	notify-send \
 	"$(date "+%a %d %b - %I:%M %p")" \
@@ -161,7 +169,9 @@ alt  + {_,shift +} minus
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
 	{xbacklight -dec 15,xbacklight -inc 15}
 End
-	screenshot
+	dmenuscreen
+Insert
+	dmenurecord
 
 # Pause audio
 super + shift + p

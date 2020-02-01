@@ -12,8 +12,8 @@
 white = #FFFFFF
 black = #000000
 
-bg = #121821
-fg = #cccccc
+bg = #161821
+fg = #C6C8D1
 blue = #84A0C6
 
 [general]
@@ -45,7 +45,7 @@ font-2 = "Font Awesome 5 Brands:pixelsize=10;2"
 
 modules-left = bspwm pkg
 modules-center = mpd
-modules-right = xkeyboard pulseaudio xbacklight network wired-network battery date powermenu
+modules-right = record xkeyboard pulseaudio xbacklight network wired-network battery date powermenu
 
 wm-restack = bspwm
 
@@ -98,7 +98,7 @@ label-monitor = %name%
 label-padding = 2
 label-focused = %index% %icon%
 label-focused-foreground = ${color.blue}
-label-focused-background = #162130
+label-focused-background = #262a3f
 label-focused-overline = ${color.blue}
 label-focused-padding = 2
 
@@ -253,7 +253,7 @@ animation-charging-framerate = 750
 type = custom/script
 exec = echo ""
 format-foreground = ${color.blue}
-click-left = pmenu
+click-left = dmenupower
 
 ;~~~~
 ; pkg
@@ -264,5 +264,12 @@ format-foreground = ${color.fg}
 exec = ~/.config/polybar/update
 click-left = ~/.local/bin/update
 
+;~~~~~~~~
+; Record
+;~~~~~~~~
+[module/record]
+type = custom/script
+format-foreground = ${color.blue}
+exec = cat /tmp/recordingicon 2> /dev/null
 
 ; vim:ft=dosini

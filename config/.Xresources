@@ -6,7 +6,7 @@
 
 ! specia1
 *.foreground:   #c6c8d1
-*.background:   #121821
+*.background:   #161821
 *.cursorColor:  #c6c8d1
 
 ! black

@@ -21,6 +21,7 @@ export SAVEHIST=1000
 
 # ~/ Clean-up:
 # export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
+export INPUTRC="$HOME/.config/inputrc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
 export WGETRC="$HOME/.config/wget/wgetrc"
@@ -47,15 +48,9 @@ export SUDO_PROMPT="$(printf "\033[1;36m")[sudo]$(printf "\033[0m") password for
 export FZF_DEFAULT_OPTS='
 --color fg:#D8DEE9,hl:#84a0c6,fg+:#D8DEE9,bg+:#22262e,hl+:#e2a478
 --color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
---height 95%
+--height 50%
 --reverse
---preview "[[ $(file --mime {}) =~ binary ]] &&
-                 echo {} is a binary file ||
-                 (bat --style=numbers --color=always {} ||
-                  highlight -O ansi -l {} ||
-                  coderay {} ||
-                  rougify {} ||
-                  cat {}) 2> /dev/null | head -500"
+--preview "cat {}"
 '
 export FZF_DEFAULT_COMMAND="find ."
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

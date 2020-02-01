@@ -5,8 +5,7 @@ ping -q -c 1 1.1.1.1 > /dev/null || exit
 
 notify-send "📦 Repository Sync" "Checking for package updates..."
 
-sudo pacman -Syyuw --noconfirm || notify-send "Error downloading updates.
-Check your internet connection, if pacman is already running, or run update manually to see errors."
+sudo pacman -Syyuw --noconfirm || notify-send "Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
 
 if pacman -Qu | grep -v "\[ignored\]"
 then

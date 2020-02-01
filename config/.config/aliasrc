@@ -52,10 +52,10 @@ alias yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%
 # Pacmna
 alias up="sudo pacman -Syu"
 alias p="sudo pacman"
-alias owo="yay -Slq | fzf -m --preview 'yay -Si {1}' | yay -S -"
-alias uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' | xargs -ro yay -Rns"
-alias ser="yay -Slq | fzf -m --preview 'yay -Si {1}' | yay -Si -"
-alias sel="yay -Qq | fzf -m --preview 'yay -Si {1}' | yay -Si -"
+alias owo="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -S -"
+alias uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | xargs -ro yay -Rns"
+alias ser="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -"
+alias sel="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -"
 alias paco="sudo pacman -Rns $(pacman -Qtdq)"
 
 # fzf
