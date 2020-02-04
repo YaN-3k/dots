@@ -48,8 +48,8 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'tpope/vim-commentary'
 	Plug 'jiangmiao/auto-pairs'
 
-	" Plug 'itchyny/lightline.vim'
-	" Plug '~/.config/nvim/bundle/lightline-simple/'
+	Plug 'itchyny/lightline.vim'
+	Plug '~/.config/nvim/bundle/lightline-simple/'
 
 	Plug 'sheerun/vim-polyglot'
 	Plug 'luochen1990/rainbow'
