@@ -211,6 +211,7 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \   'php': ['prettier'],
 \   'python': ['black'],
+\   'sh': ['shfmt'],
 \   'scss': ['prettier'],
 \   'yaml': ['prettier'],
 \}

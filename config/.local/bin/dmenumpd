@@ -17,6 +17,12 @@ mpc_status() {
 	dunstify -t 5000 "$(mpc status)"
 }
 
+mpc_volume() {
+	options="-15 -30 +15 +30"
+	volume="$(echo -e "$options" | sed 's/ /\n/g' | dmenu -i -p "seek")"
+	mpc volume "$volume"
+}
+
 mpc_status
 while true; do
 	cmd="$(echo "$cmd_list" | sed 's/ /\n/g' | dmenu -i -p "mpc")"
@@ -25,6 +31,7 @@ while true; do
 		add) mpc_add;;
 		seek)mpc_seek;;
 		status)mpc_status;;
+		volume)mpc_volume;;
 		quit)exit 0;;
 		*) mpc "$cmd"
 	esac

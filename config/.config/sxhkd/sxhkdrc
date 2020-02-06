@@ -126,18 +126,6 @@ alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
 # Et cetera...
-super + shift + e
-	passmenu
-super + shift + d
-	dmenuedit
-super + i
-	dmenuunicode
-super + shift + t
-	dmenutmux
-super + u
-	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
-super + question
-	dmenumpd
 super + slash
 	notify-send \
 	"$(date "+%a %d %b - %I:%M %p")" \
@@ -146,33 +134,50 @@ super + slash
 	$(acpi)"
 super + Insert
 	showclip
-super + Escape
-	pkill -USR1 -x sxhkd && dunstify "sxhkd reloaded"
-alt + d
-	pkill dunst && dunst && dunstify "Dunst reloaded"
 super + x
 	prompt "Lock screen" "slock & mpc pause"
-super + shift + Delete
-	prompt "Restart bspwm?" "bspc wm -r"
 super + shift + x
 	prompt "Shutdown computer?" "shutdown -h now"
-super + shift + BackSpace
+super + BackSpace
 	prompt "Reboot computer?" "reboot"
-super + shift + Escape
+super + Escape
 	prompt 'Leave Xorg?' 'killall Xorg'
 super + shift + u
 	prompt "Update packages?" "update"
+
+# backlight
 alt + {_,shift +} equal
 	{xbacklight -inc 15, sudo -A keybacklight -inc}
 alt  + {_,shift +} minus
 	{xbacklight -dec 15, sudo -A keybacklight -dec}
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
 	{xbacklight -dec 15,xbacklight -inc 15}
+
+# dmenu
+super + shift + Escape
+	dmenupower
+super + shift + e
+	passmenu
+super + shift + d
+	dmenuedit
+super + i
+	dmenuunicode
+super + shift + t
+	dmenutmux
+super + shift + Delete
+	dmenureload
 End
 	dmenuscreen
 Insert
 	dmenurecord
+super + BackSpace
+	dmenurecord kill; notify-send "Recording finished"
+super + u
+	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
 
+# mpd menu
+super + question
+	dmenumpd
 # Pause audio
 super + shift + p
 	mpc toggle

@@ -262,7 +262,7 @@ click-left = dmenupower
 type = custom/script
 format-foreground = ${color.fg}
 exec = ~/.config/polybar/update
-click-left = ~/.local/bin/update
+click-left = ~/.local/bin/update &
 
 ;~~~~~~~~
 ; Record

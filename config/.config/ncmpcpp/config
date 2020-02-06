@@ -4,10 +4,19 @@
 #  |_| |_|\___|_| |_| |_| .__/ \___| .__/| .__/
 #                       |_|        |_|   |_|
 
+# directory
 mpd_music_dir = "~/Music/"
 lyrics_directory  = "~/.config/ncmpcpp/lyrics"
 ncmpcpp_directory  = "~/.config/ncmpcpp"
 
+# settings
+allow_for_physical_item_deletion = yes
+show_hidden_files_in_local_browser = "no"
+external_editor = "nvim"
+use_console_editor = "yes"
+regular_expressions = "extended"
+
+# visualizer
 visualizer_fifo_path = "/tmp/mpd.fifo"
 visualizer_output_name = "my_fifo"
 visualizer_sync_interval = "30"
@@ -15,53 +24,48 @@ visualizer_in_stereo = "yes"
 visualizer_type = "spectrum"
 visualizer_look = "+#"
 
-# song_status_format =  "{%a - %t}"
-song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
-song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
-song_library_format = {%t}|{%f}
-song_columns_list_format = "(25)[blue]{a} (40)[blue]{t|f:Title} (30)[blue]{b} (7f)[blue] {l}"
-progressbar_look = "=>-"
-
+# playlist
+clock_display_seconds = "no"
+display_volume_level = "yes"
+display_bitrate = "yes"
+browser_playlist_prefix = "$2playlist$9 "
+playlist_display_mode = "columns" (classic/columns)
 playlist_show_remaining_time = "yes"
 playlist_separate_albums = "yes"
 
-playlist_display_mode = "columns" (classic/columns)
+# apperance
+user_interface = "alternative"
 browser_display_mode = "columns" (classic/columns)
 search_engine_display_mode = "columns" (classic/columns)
-
 default_place_to_search_in = "database"
-user_interface = "alternative"
-header_visibility = "no"
 titles_visibility = "yes"
-
-clock_display_seconds = "no"
-display_volume_level = "yes"
-display_bitrate = "no"
-display_remaining_time = "no"
-regular_expressions = "extended"
-show_hidden_files_in_local_browser = "no"
-
 ignore_leading_the = "yes"
-mouse_support = "no"
-
-enable_window_title = "yes"
-external_editor = "nvim"
-use_console_editor = "yes"
-
-# Color scheme
+enable_window_title = "no"
+autocenter_mode = "yes"
+centered_cursor = "yes"
+statusbar_visibility = "yes"
+mouse_support = "yes"
+header_visibility = "no"
+display_remaining_time = "no"
+discard_colors_if_item_is_selected = "yes"
 colors_enabled = "yes"
 header_window_color = "default"
 main_window_color = "white"
 progressbar_color = "green"
 alternative_ui_separator_color = "red"
 empty_tag_marker = ""
+
 current_item_prefix = $(blue)$r$b
 current_item_suffix = $/r$(end)$/b
 current_item_inactive_column_prefix = $(4)$r
 current_item_inactive_column_suffix = $/r$(end)
 now_playing_prefix = $b
 now_playing_suffix = $/b
-browser_playlist_prefix = "$2playlist$9 "
 selected_item_prefix = $6
 selected_item_suffix = $9
 modified_item_prefix = $3> $9
+song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
+song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
+song_library_format = {%t}|{%f}
+song_columns_list_format = "(25)[blue]{a} (40)[blue]{t|f:Title} (30)[blue]{b} (7f)[blue] {l}"
+progressbar_look = "=>-"
