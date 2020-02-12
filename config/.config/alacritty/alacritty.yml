@@ -57,34 +57,6 @@ font:
   use_thin_strokes: false
 
 draw_bold_text_with_bright_colors: false
-# Icebergs
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x181b21'
-#     foreground: '0xcccccc'
-
-#   # Normal colors
-#   normal:
-#     black:   '0x181b21'
-#     red:     '0xcf5252'
-#     green:   '0x92ad4a'
-#     yellow:  '0xc9895b'
-#     blue:    '0x6f97b8'
-#     magenta: '0xab6ba6'
-#     cyan:    '0x6fa69f'
-#     white:   '0xcccccc'
-
-#   # Bright colors
-#   bright:
-#     black:   '0x22262e'
-#     red:     '0xcf5252'
-#     green:   '0x92ad4a'
-#     yellow:  '0xc9895b'
-#     blue:    '0x6f97b8'
-#     magenta: '0xab6ba6'
-#     cyan:    '0x6fa69f'
-#     white:   '0xcccccc'
 
 colors:
   # Default colors
@@ -116,66 +88,6 @@ colors:
     magenta: '0xada0d3'
     cyan:    '0x95c4ce'
     white:   '0xd2d4de'
-
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x1d1f28'
-#     foreground: '0xfdfdfd'
-
-#   # Normal colors
-#   normal:
-#     black:   '0x282a36'
-#     red:     '0xf37f97'
-#     green:   '0x5adecd'
-#     yellow:  '0xf2a272'
-#     blue:    '0x8897f4'
-#     magenta: '0xc574dd'
-#     cyan:    '0x79e6f3'
-#     white:   '0xfdfdfd'
-
-#   # Bright colors
-#   bright:
-#     black:   '0x303347'
-#     red:     '0xff4971'
-#     green:   '0x18e3c8'
-#     yellow:  '0xff8037'
-#     blue:    '0x556fff'
-#     magenta: '0xb043d1'
-#     cyan:    '0x3fdcee'
-#     white:   '0xbebec1'
-
-# Aqua
-# colors:
-#   # Default colors
-#   cursor:
-#      cursor: '0xcccccc'
-#      text:   '0x121821'
-#   primary:
-#     background: '0x121821'
-#     foreground: '0xcccccc'
-
-#   # Normal colors
-#   normal:
-#     black:   '0x121821'
-#     red:     '0xcf5252'
-#     green:   '0x92ad4a'
-#     yellow:  '0xc9895b'
-#     blue:    '0x6f97b8'
-#     magenta: '0xab6ba6'
-#     cyan:    '0x6fa69f'
-#     white:   '0xcccccc'
-
-#   # Bright colors
-#   bright:
-#     black:   '0x162130'
-#     red:     '0xcf5252'
-#     green:   '0x92ad4a'
-#     yellow:  '0xc9895b'
-#     blue:    '0x6f97b8'
-#     magenta: '0xab6ba6'
-#     cyan:    '0x6fa69f'
-#     white:   '0xcccccc'
 
 # Visual bell
 visual_bell:

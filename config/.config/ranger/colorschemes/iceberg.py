@@ -50,7 +50,7 @@ class biual(ColorScheme):
                 else:
                     fg = red
             if not context.selected and (context.cut or context.copied):
-                fg = 8
+                fg = 244
                 attr |= bold
             if context.main_column:
                 if context.selected:

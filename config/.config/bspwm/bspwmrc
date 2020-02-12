@@ -19,7 +19,8 @@ $TERMINAL --class scratchpad -e scratch &
 # Configuration
 #===============
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
-bspc desktop -f 1
+# bspc monitor LVDS1 -d 1 2 3 4 5 6 7 8 9
+# bspc monitor HDMI1 -d 1 2 3 4 5 6 7 8 9
 
 # Mouse setings
 bspc config pointer_modifier mod4
@@ -53,12 +54,12 @@ bspc config presel_feedback_color "#1e2132"
 #======
 # Rule
 #======
-bspc desktop ^3 --layout next
-bspc rule -a firefox desktop='^2'
-bspc rule -a qutebrowser desktop='^2'
-bspc rule -a discord desktop='^3'
-bspc rule -a TelegramDesktop desktop='^3'
-bspc rule -a Steam desktop='^5'
+bspc desktop ^4 --layout next
+bspc rule -a firefox desktop='^3'
+bspc rule -a qutebrowser desktop='^3'
+bspc rule -a discord desktop='^4'
+bspc rule -a TelegramDesktop desktop='^4'
+bspc rule -a Steam desktop='^8'
 bspc rule -a network-manager state=floating sticky=on
 bspc rule -a *::scratchpad sticky=on state=floating hidden=on locked=on
 bspc rule -a lock  sticky=on state=floating locked=on

@@ -5,6 +5,7 @@
 #  |___/_| |_|\___|_|_|
 
 # Aliases
+alias sudo='sudo '
 alias ls='ls --color=auto --group-directories-first'
 alias hc="history -c"
 alias out="pkill -kill -u $(whoami)"

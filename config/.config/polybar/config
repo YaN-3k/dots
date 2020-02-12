@@ -43,9 +43,9 @@ font-0 = "Inconsolata:pixelsize=8;2"
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-2 = "Font Awesome 5 Brands:pixelsize=10;2"
 
-modules-left = bspwm pkg
+modules-left = bspwm
 modules-center = mpd
-modules-right = record xkeyboard pulseaudio xbacklight network wired-network battery date powermenu
+modules-right = pkg record xkeyboard volume xbacklight network wired-network battery date powermenu
 
 wm-restack = bspwm
 
@@ -82,15 +82,15 @@ reverse-scroll = false
 fuzzy-match = true
 
 ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 0;
 
 format = <label-state><label-mode>
 
@@ -194,22 +194,21 @@ type = internal/date
 interval = 1
 label =  %time%
 time = %{F#84A0C6}%{F-} %I:%M %p
-time-alt = %{F#84A0C6}%{F-} %Y-%m-%d
+time-alt = %{F#84A0C6}%{F-} %Y-%m-%d
 
 ;~~~~~~~~~~~~
 ; PulseAudio
 ;~~~~~~~~~~~~
-[module/pulseaudio]
+[module/volume]
 type = internal/pulseaudio
 format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
 ramp-volume-foreground = ${color.blue}
 
+label-muted   = "%{F#84A0C6}%{F-} muted"
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
-
-format-muted = <ramp-volume> <label-muted>
-label-muted-foreground = #666
 
 ;~~~~~~~~~
 ; Battery
