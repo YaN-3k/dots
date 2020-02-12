@@ -47,14 +47,14 @@
 highlight clear
 
 highlight Win			ctermfg=default	ctermbg=default	cterm=none
-highlight Directory		ctermfg=blue	ctermbg=default	cterm=bold
-highlight Link			ctermfg=cyan	ctermbg=default	cterm=none
+highlight Directory		ctermfg=blue	ctermbg=default	cterm=none
+highlight Link			ctermfg=blue	ctermbg=default	cterm=none
 highlight BrokenLink	ctermfg=red		ctermbg=default	cterm=bold
 highlight Socket		ctermfg=magenta	ctermbg=default	cterm=bold
 highlight Device		ctermfg=red		ctermbg=default	cterm=bold
 highlight Fifo			ctermfg=cyan	ctermbg=default	cterm=bold
-highlight Executable	ctermfg=green	ctermbg=default	cterm=bold
-highlight Selected		ctermfg=240   	ctermbg=default	cterm=bold
+highlight Executable	ctermfg=yellow	ctermbg=default	cterm=none
+highlight Selected		ctermfg=default ctermbg=8	cterm=bold
 highlight CurrLine		ctermfg=default	ctermbg=default	cterm=bold,reverse
 highlight TopLine		ctermfg=7		ctermbg=8		cterm=none
 highlight OtherLine		ctermfg=4 		ctermbg=8
@@ -81,5 +81,5 @@ highlight User8			ctermfg=default ctermbg=default cterm=bold,underline,reverse,s
 highlight User9			ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
 
 highlight /^.*\.(mp3|ogg|oga|flac|m4a)$/ ctermfg=magenta
-highlight /^.*\.(jpg|jpeg|png|gif|tiff|webp|bmp|svg|svgz)$/ ctermfg=yellow
+highlight /^.*\.(jpg|jpeg|png|gif|tiff|webp|bmp|svg|svgz)$/ ctermfg=green
 highlight /^.*\.(zip|gz|bz2|xz|tar|tgz|tbz2|7z|rar|iso|rpm|deb)$/ ctermfg=red
