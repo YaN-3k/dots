@@ -40,7 +40,3 @@
 ! white
 *.color7:       #c6c8d1
 *.color15:      #d2d4de
-
-st.alpha: 1
-st.font: Inconsolata-10;
-! font: "DejaVu Sans Mono for Powerline"
