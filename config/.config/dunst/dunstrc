@@ -24,7 +24,7 @@
     sort = yes
 
     idle_threshold = 120
-    font = Inconsolata 12
+    font = Incosolata 10
     line_height = 0
     markup = full
 

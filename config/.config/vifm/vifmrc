@@ -137,7 +137,8 @@ filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus mpv -
 
 " PDF
 filextype *.pdf,*.ps,*.eps,*.ps.gz,*.djvu,*.epub zathura %f 2>/dev/null &,
-fileviewer *.pdf pdftotext -l 1 -nopgbrk %c -
+fileviewer *.pdf vifmimg pdfpreview %px %py %pw %ph %c %pc vifmimg clear
+" fileviewer *.pdf pdftotext -l 1 -nopgbrk %c -
 
 " Video
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.qt,*.divx,*.as[fx],*mp3,*.flac file

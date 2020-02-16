@@ -20,7 +20,7 @@ export HISTSIZE=1000
 export SAVEHIST=1000
 
 # ~/ Clean-up:
-# export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export INPUTRC="$HOME/.config/inputrc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
@@ -30,7 +30,7 @@ export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 
 # Sudo
 export SUDO_PROMPT="$(printf "\033[1;36m")[sudo]$(printf "\033[0m") password for %p: "
-export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+export SUDO_ASKPASS="$HOME/.local/bin/dmenu/dmenupass"
 
 # Less
 export LESS=-R

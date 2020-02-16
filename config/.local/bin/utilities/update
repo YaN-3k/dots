@@ -7,10 +7,9 @@ ping -q -c 1 1.1.1.1 > /dev/null || {
 
 package=$(pacman -Quq | wc -l)
 
-if [ ! $package -eq 0 ]; then
+if [ ! "$package" -eq 0 ]; then
 	notify-send "Updating..."
-	sudo pacman --noconfirm -Syu
-	if [ "$?" != 0 ]; then
+	if sudo pacman --noconfirm -Syu; then
 		notify-send "Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
 		exit
 	else

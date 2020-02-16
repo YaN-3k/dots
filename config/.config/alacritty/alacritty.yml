@@ -56,7 +56,7 @@ font:
 
   use_thin_strokes: false
 
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
 colors:
   # Default colors
@@ -107,7 +107,7 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
   faux_scrolling_lines: 1
-  hide_when_typing: false
+  hide_when_typing: true
 
 cursor:
   style: Block
