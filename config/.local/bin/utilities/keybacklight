@@ -3,11 +3,11 @@ FILE="/sys/class/leds/dell::kbd_backlight/brightness"
 if [ -f "$FILE" ]; then
 	case $1 in
 		-inc) current=$(cat $FILE)
-			[ "$current" -lt 4 ] && echo $((++current)) | tee $FILE;;
+			[ "$current" -lt 4 ] && echo $((++current)) > $FILE;;
 		-dec) current=$(cat $FILE)
-			[ "$current" -gt 0 ] && echo $((--current)) | tee $FILE;;
+			[ "$current" -gt 0 ] && echo $((--current)) > $FILE;;
 		-set) [ -n "$2" ] && {
-			echo $2 | tee $FILE
+			echo "$2" > $FILE
 		}
 	esac
 else

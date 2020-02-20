@@ -36,14 +36,16 @@ bspc config pointer_action1 move
 # bspc config left_padding 5
 # bspc config bottom_padding 5
 # bspc config top_padding 15
-bspc config right_monocle_padding 5
-bspc config left_monocle_padding 5
-bspc config bottom_monocle_padding 5
-bspc config top_monocle_padding 10
+# bspc config right_monocle_padding 5
+# bspc config left_monocle_padding 5
+# bspc config bottom_monocle_padding 5
+# bspc config top_monocle_padding 10
 
 # Gaps && Border
 bspc config border_width 1
-bspc config window_gap 10
+# bspc config window_gap 10
+bspc config window_gap 0
+autogap &
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 

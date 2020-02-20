@@ -14,6 +14,7 @@ black = #000000
 
 bg = #161821
 fg = #C6C8D1
+fg-alt = #6b7089
 blue = #84A0C6
 
 [general]
@@ -96,20 +97,21 @@ format = <label-state><label-mode>
 
 label-monitor = %name%
 label-padding = 2
-label-focused = %index% %icon%
+label-focused = %name% %icon%
 label-focused-foreground = ${color.blue}
 label-focused-background = #262a3f
 label-focused-overline = ${color.blue}
-label-focused-padding = 2
+label-focused-padding = ${general.padding}
 
-label-occupied = %index% %icon%
-label-occupied-padding = 2
+label-occupied = %name% %icon%
+label-occupied-padding = ${general.padding}
 
-label-urgent = %index% %icon%
-label-urgent-padding = 1
+label-urgent = %name% %icon%
+label-urgent-padding = ${general.padding}
 
 label-empty =
 label-empty-padding = 0
+label-empty-foreground = ${color.fg-alt}
 
 ;~~~~~
 ; MPD
@@ -126,19 +128,6 @@ format-online = <label-song>
 
 label-song = %{F#84A0C6}%{F-} %artist% - %title%
 label-offline = %{F#84A0C6}%{F-} mpd is offline
-
-icon-play = 
-icon-pause = 
-icon-stop = 
-icon-prev = 
-icon-next = 
-icon-seekb = 
-icon-seekf = 
-icon-random = 
-icon-repeat = 
-
-toggle-on-foreground = #ff
-toggle-off-foreground = #55
 
 ;~~~~~~~~~~
 ; Keyboard

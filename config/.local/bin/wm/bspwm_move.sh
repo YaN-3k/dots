@@ -1,0 +1,32 @@
+#!/bin/bash
+
+dir=$1
+move="${2:-20}"
+
+is_tiled() {
+	bspc query -T -n | grep -q '"state":"tiled"'
+}
+
+if ! is_tiled; then
+	#only parse input if window is floating,tiled windows accept input as is
+	case "$dir" in
+	west)
+		coordinates="-${move} 0"
+		;;
+	east)
+		coordinates="${move} 0"
+		;;
+	north)
+		coordinates="0 -${move}"
+		;;
+	south)
+		coordinates="0 ${move}"
+		;;
+	esac
+	bspc node -v $coordinates
+
+
+# Otherwise, window is tiled: switch with window in given direction
+else
+	bspc node -s "$dir"
+fi

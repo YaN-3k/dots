@@ -1,0 +1,2 @@
+#!/bin/sh
+awk '/^[a-z]/ && last {print $0,"\t",last} {last=""} /^#/{last=$0}' ~/.config/sxhkd/sxhkdrc  | column -t -s $'\t' | fzf --preview '' --height 100%

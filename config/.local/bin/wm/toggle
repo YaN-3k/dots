@@ -2,7 +2,7 @@
 action=$1
 wid=$(xdotool getactivewindow)
 did=$(xdotool get_desktop)
-list=$HOME/.config/bspwm/log/toggle.window_list.$did
+list=/tmp/toggle.window_list.$did
 
 push() {
     echo $1>>$list

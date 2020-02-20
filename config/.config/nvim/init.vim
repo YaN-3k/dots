@@ -52,7 +52,7 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug '~/.config/nvim/bundle/lightline-simple/'
 
 	Plug 'sheerun/vim-polyglot'
-	Plug 'luochen1990/rainbow'
+	" Plug 'luochen1990/rainbow'
 
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
@@ -96,19 +96,37 @@ augroup END
 "=============
 " Colorscheme
 "=============
-hi LineNr				  	 	ctermfg=11  cterm=italic
-hi CursorLineNr			  	 	ctermfg=3   cterm=bold
-hi ColorColumn			   		ctermfg=1   cterm=undercurl
+hi LineNr                       ctermfg=11  cterm=italic
+hi CursorLineNr                 ctermfg=3   cterm=bold
+hi ColorColumn                  ctermfg=1   cterm=undercurl
 hi SignColumn                   ctermfg=7
 hi VertSplit        ctermbg=8   ctermfg=0
 
-hi Comment                      ctermfg=4
-hi String                       ctermfg=1
-
 hi Visual           ctermbg=8
 hi Search           ctermbg=8               cterm=bold,reverse
-hi MatchParen       ctermbg=0   ctermfg=3   cterm=bold
-hi Statement                    ctermfg=3
+hi MatchParen       ctermbg=0   ctermfg=4   cterm=reverse
+
+hi Comment                      ctermfg=245
+" hi String                       ctermfg=6
+hi String                       ctermfg=1
+hi Type                         ctermfg=4
+hi Statement                    ctermfg=4
+hi Constant                     ctermfg=5
+" hi PreProc                      ctermfg=2
+hi PreProc                      ctermfg=5
+hi Special                      ctermfg=5
+
+hi shFunction                   ctermfg=7
+hi shOperator                   ctermfg=7
+hi shQuote                      ctermfg=1
+hi shFunctionKey                ctermfg=3
+
+hi! link            shTestOpr    shOperator
+hi! link            Delimiter    shOperator
+hi! link            shRange      shOperator
+
+hi vimHiGroup                   ctermfg=6
+hi!                 link vimGroup  vimHiGroup
 
 hi ErrorMsg         ctermbg=0   ctermfg=1
 hi Error            ctermbg=1   ctermfg=0   cterm=undercurl
@@ -395,6 +413,11 @@ let g:UltiSnipsExpandTrigger='<C-z>'
 let g:UltiSnipsJumpForwardTrigger='<C-s>'
 let g:UltiSnipsJumpBackwardTrigger='<C-g>'
 let g:UltiSnipsListSnippets='<C-p>'
+
+" Identify the syntax highlighting group
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 "==Encoding==
 scriptencoding utf-8
