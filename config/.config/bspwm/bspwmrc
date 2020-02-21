@@ -42,22 +42,18 @@ bspc config pointer_action1 move
 # bspc config top_monocle_padding 10
 
 # Gaps && Border
+autogap &
 bspc config border_width 1
 # bspc config window_gap 10
-bspc config window_gap 0
-autogap &
+# Disable border when is only one window
+bspc config single_monocle true
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 # Automatic scheme
 bspc config automatic_scheme spiral
 bspc config initial_polarity first_child
-
-# Split Ratio
 bspc config split_ratio          0.52
-
-# Disable border when is only one window
-bspc config single_monocle true
 
 # Colorscheme
 bspc config normal_border_color "#161821"

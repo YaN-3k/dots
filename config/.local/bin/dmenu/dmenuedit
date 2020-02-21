@@ -7,4 +7,4 @@ for file in "$HOME"/Dotfiles/config/**; do
 done
 choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Edit a config file: ') || exit 1
 choice="$HOME"/Dotfiles/config/"$choice"
-$TERMINAL -e nvim "$choice"
+$TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"

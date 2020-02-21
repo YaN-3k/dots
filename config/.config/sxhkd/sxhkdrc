@@ -5,18 +5,18 @@
 #  |___/_/\_\_| |_|_|\_\__,_|
 
 # STATE/FLAGS {{
-# tiled - floating
+# Switch the node state on tiled - floating
 super + t
 	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
 	bspc node --state \~$state
-# tiled - pseudo_tiled
+# Switch the node state on tiled - pseudo tiled
 super + p
 	bspc node --state \~pseudo_tiled
-# tiled - fullscreen
+# Switch the node state on tiled - fullscreen
 super + f
 	bspc node --state \~fullscreen
 
-# set marked,locked,sticky,private flag
+# Set marked,locked,sticky,private flag
 super + {m,x,s,z}
 	bspc node -g {marked,locked,sticky,private}
 
@@ -32,47 +32,47 @@ super + {m,x,s,z}
 #alt + {h,j,k,l}
 #	bspc node -v {-20 0,0 20,0 -20,20 0}
 
-# change node focus
+# Change the node focus
 super + {h,j,k,l}
 	bspc node -f {west,south,north,east}
 
-# swap tiled node or move floating node
+# Swap the tiled node or move the floating node
 super + shift + {h,j,k,l}
-	bspwm_move.sh {west,south,north,east}
+	move {west,south,north,east}
 
-# focus/swap the last node/desktop
+# Focus/Swap the last node/desktop
 super + {grave,shift + grave,apostrophe}
 	bspc {node -f last.local,desktop -f last,node --swap last}
 
-# focus or send to the given desktop
+# Focus or send the node to the given desktop
 super + {_,shift +}g
 	bspc node {-f,-s} biggest.local
 
-# focus the next/previous node in the current desktop
+# Focus the next/previous node in the current desktop
 super + {_,shift + }n
 	bspc node -f {next,prev}.local
 
-# move node to other monitor
+# Move node to the left, rigt desktop
 ctrl + shift + {h,l}
     bspc node --to-desktop {prev,next} --focus
 
-# floating node to top left
+# Move the floating node to the top left
 alt + ctrl + k
     preset 'top-left'
 
-# floating node to bottom left
+# Move the floating node to the bottom left
 alt + ctrl + j
     preset 'bottom-left'
 
-# floating node to right (vertical)
+# Move the floating node to the right (vertical)
 alt + ctrl + l
     preset 'vertical-right'
 
-# floating node to left (wide vertical)
+# Move the floating node to the left (wide vertical)
 alt + ctrl + h
     preset 'wide-vertical-left'
 
-# floating node to center
+# Move the floating node to the center
 alt + ctrl + s
     preset 'center'
 
@@ -87,185 +87,190 @@ alt + ctrl + s
 #ctrl + super + shift + {h,j,k,l}
 #	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
-# resize node
+# Resize the node
 ctrl + super + {h,j,k,l}
-	bspwm_resize.sh {west,south,north,east}
+	resize {west,south,north,east}
 
-# resize gaps
+# Resize gaps
 ctrl + alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
 # }}
 
 # DESKTOP {{
-# focus next/previous desktop
+# Focus the next/previous desktop
 super + {_,shift + }Tab
 	bspc desktop --focus {next,prev}.occupied
 
-# move/send node to selected desktop
+# Move/Send the node to selected desktop
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
-# move node to selected desktop
+# Move the node to selected desktop
 alt + shift + {1-9,0}
-	bspc node --to-desktop ^{1-9,10} --focus
+	swapdesktop {1-9,10}
 
+# Swap nodes betwen desktops
 alt + {1-9,0}
-     summondesktop.sh {1-9,0}
+	bspc node --to-desktop ^{1-9,10} --focus
 
 # }}
 
 # LAYOUTS {{
-# flip layout vertically/horizontally
+# Flip the layout vertically/horizontally
 super + {v,b}
 	bspc node @/ --flip {vertical,horizontal}
 
-# rotate node tree
+# Rotate nodes tree
 super + {_,shift +} r
    bspc node @/ -R {90,270}
 
-# circulate the leaves of the tree
+# Circulate the leaves of the tree
 super + {_,shift + } c
 	bspc node @/ --circulate {forward,backward}
 
-# enable/disable monocle layout
+# Enable/Disable the monocle layout
 super + {_,shift + }space
 	bspc desktop --layout {next,prev}
 
-# make split ratios equal/balanced
+# Make the split ratios equal/balanced
 super + shift + {e,b}
 	bspc node @/ {--equalize,--balance}
 
 # }}
 
 # PRESELECTION {{
-# new split
+# Make a new split
 alt + shift + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 super + alt + {p,b,comma,period}
 	bspc node --focus @{parent,brother,first,second}
-# cancel preselection
+# Cancel the preselection
 alt + {_,shift +} c
 	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
+
+# Send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
 
 # }}
 
 # HIDEN {{
-# scratchpad
+# Un/Hide the scratchpad
 super + F1
  	id=$(head -1 /tmp/scratchid);\
  	bspc node $id --flag hidden;bspc node -f $id
 
-# un/hide currently active node
+# Un/Uide the currently active node
 super + {_,shift +} u
     toggle {hide,show}
 
-# un/hide currently active node
+# Un/Hide the currently active node
 super + {_,shift +} w
 	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
 
 # }}
 
 # APPLICATION {{
-# kill node
+# Close/Kill the node
 super + {_,shift + }q
 	bspc node -{c,k}
-# dmenu desktop
+# Run the dmenu desktop
 super + d
 	j4-dmenu-desktop
-# open terminal
+# Open the terminal
 super + Return
 	$TERMINAL
-# open terminal in the same dir
+# Open the terminal in the same directory
 super + shift + Return
-	open-terminal-here
-# open file manager
+	samedir
+# Open the file manager
 alt + f
 	$TERMINAL -e $FILE
-# open network configuration
+# Open the network configuration
 alt + n
 	$TERMINAL -e nmtui
-# open browser
+# Open the browser
 alt + w
 	$BROWSER
-# open mpd client
+# Open the mpd client
 alt + m
 	$TERMINAL -e ncmpcpp
-# open neovim
+# Open the neovim
 alt + v
 	$TERMINAL -e nvim
-# open sound configurations
+# Open the sound configurations
 alt + a
 	$TERMINAL -e alsamixer
-# open mail client
+# Open the mail client
 alt + e
 	$TERMINAL -e neomutt
-# show help
+# Show help
 super + F2
-	 $TERMINAL --class float -e show_help.sh
+	 $TERMINAL --class float -e show_help
 
 # }}
 
 # SCRIPTS {{
-# open menu for mpd
+# Open the menu for mpd
 super + ctrl + slash
 	dmenumpd
-# open new browser tab menu
+# Open the new browser tab menu
 super + ctrl + o
 	dmenunewtab
-# open passmenu
+# Open the passmenu
 super + ctrl + p
 	passmenu
-# opem menu for edit configuration file
+# Opem the menu for edit configuration file
 super + ctrl + e
 	dmenuedit
-# show unicode symbols
+# Show the unicode symbols
 super + ctrl + i
 	dmenuunicode
-# open tmux menu
+# Open the tmux menu
 super + ctrl + t
 	dmenutmux
-# reload programs
+# Reload the programs
 super + ctrl + Delete
 	dmenureload
-# lock, shutdown ,reboot, exit?
+# Lock, shutdown ,reboot, exit?
 super + ctrl + m
 	dmenupower
-# make screenshot
+# Take a screenshot
 super + End
 	dmenuscreen
-# record screen
+# Record the screen
 super + ctrl + Insert
 	dmenurecord
-# kill recording
+# Kill the recording
 super + ctrl + w
 	dmenurecord kill; notify-send "Recording finished"
-# mount, umount device
+# Mount, umount a device
 super + ctrl + d
 	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
-# display information
+# Display the information
 super + slash
 	notify-send \
 	"$(date "+%a %d %b - %I:%M %p")" \
 	"Desktop: $(bspc query -D -d focused --names)\n\
 	Volume: $(amixer -D pulse get Master | grep -o '[0-9][0-9]*%' | head -1)\n\
 	$(acpi)"
-# show clicboard content
+# Show the clicboard content
 super + Insert
 	showclip
-# lock screen
+# Lock the screen
 super + ctrl + x
 	prompt "Lock screen" "slock & mpc pause"
-# shutdown computer
+# Shutdown the computer
 super + ctrl + q
 	prompt "Shutdown computer?" "shutdown -h now"
-# reboot computer
+# Reboot the computer
 super + ctrl + BackSpace
 	prompt "Reboot computer?" "reboot"
-# kill xorg
+# Kill the xorg
 super + Escape
 	prompt 'Leave Xorg?' 'killall Xorg'
-# update OS
+# Update OS
 super + ctrl + u
 	prompt "Update packages?" "update"
 
@@ -276,7 +281,7 @@ super + ctrl + u
 
 # Open terminal if desktop is empty
 ~button1
-	click_desktop.sh
+	click_desktop
 
 
 # }}
@@ -305,19 +310,19 @@ alt  + {_,shift +} minus
 # }}
 
 # MPD {{
-# pause audio
+# Pause mpd audio
 super + shift + p
 	mpc toggle
-# changes to next/previous tracks
+# Changes to the next/previous tracks
 super + {comma,period}
 	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
-# restart track
+# Restart track
 super + shift + less
 	mpc seek 0%
-# seek foward in song
+# Seek foward in song
 super + {_,shift +} bracketright
 	mpc seek +{10,120}
-# seek backward in song
+# Seek backward in song
 super + {_,shift +} bracketleft
 	mpc seek -{10,120}
 
