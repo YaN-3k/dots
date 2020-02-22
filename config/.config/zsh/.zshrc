@@ -4,31 +4,34 @@
 #   / / \__ \| | | |
 #  /___||___/|_| |_|
 
-#~~~~~~~~~~~~~~~
-# Basic setings
-#~~~~~~~~~~~~~~~
-# Load zgen
-source "${HOME}/.zgen/zgen.zsh"
-
 # Load shell-agnostic configs
 [ -f "$HOME/.config/shortcutrc" ] && source ~/.config/shortcutrc
 [ -f "$HOME/.config/aliasrc" ] && source ~/.config/aliasrc
 
-# History
 export HISTFILE="$HOME/.config/zsh/.zsh_history"
+source "${HOME}/.zgen/zgen.zsh"
+
+autoload -U compinit promptinit colors
+compinit
+promptinit
+colors
+setopt prompt_subst
+setopt AUTO_CD
+setopt CORRECT
+setopt completealiases
+setopt append_history
+setopt share_history
+setopt hist_verify
+setopt hist_ignore_all_dups
 
 # Basic auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
 setopt complete_aliases
-#setopt correct
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
-#~~~~~~~~~
-# Plugins
-#~~~~~~~~~
 # Zgen, need to 'zgen reset' after changing
 if ! zgen saved; then
 
@@ -43,11 +46,8 @@ if ! zgen saved; then
   zgen save
 fi
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#6b7089'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
 
-#~~~~~~~
-# Theme
-#~~~~~~~
 # show available tmux sessions
 if [[ -z $TMUX ]]; then
     sessions=$( tmux ls 2> /dev/null | awk '! /attached/ { sub(":", "", $1); print $1; }' | xargs echo )
@@ -57,35 +57,33 @@ if [[ -z $TMUX ]]; then
     unset sessions
 fi
 
-setopt prompt_subst
-autoload -U colors && colors
+# return_code="%(?..%F{red}%? ↵%f)"
 
-return_code="%(?..%F{red}%? ↵%f)"
+# if [[ $UID -eq 0 ]]; then
+#     user_host='%B%F{red}%n@%m %f%b'
+#     user_symbol='#'
+# else
+#     user_host='%B%F{green}%n@%m %f%b'
+#     user_symbol='$'
+# fi
 
-if [[ $UID -eq 0 ]]; then
-    user_host='%B%F{red}%n@%m %f%b'
-    user_symbol='#'
-else
-    user_host='%B%F{green}%n@%m %f%b'
-    user_symbol='$'
-fi
+# current_dir='%B%F{blue}%~ %b%f'
+# git_branch='$(git_prompt_info)'
 
-current_dir='%B%F{blue}%~ %b%f'
-git_branch='$(git_prompt_info)'
+# ZSH_THEME_GIT_PROMPT_PREFIX='%F{yellow}‹'
+# ZSH_THEME_GIT_PROMPT_SUFFIX='%F{yellow}%b›%f'
+# ZSH_THEME_GIT_PROMPT_DIRTY='%F{yellow}*%f'
+# ZSH_THEME_GIT_PROMPT_UNTRACKED='%F{yellow}*%f'
+# ZSH_THEME_GIT_PROMPT_CLEAN=''
 
-ZSH_THEME_GIT_PROMPT_PREFIX='%F{yellow}‹'
-ZSH_THEME_GIT_PROMPT_SUFFIX='%F{yellow}%b›%f'
-ZSH_THEME_GIT_PROMPT_DIRTY='%F{yellow}*%f'
-ZSH_THEME_GIT_PROMPT_UNTRACKED='%F{yellow}*%f'
-ZSH_THEME_GIT_PROMPT_CLEAN=''
+# export PROMPT="╭─${user_host}${current_dir}${git_branch}
+# ╰─%B${user_symbol}%b "
+# export RPROMPT="%B${return_code}%b"
 
-export PROMPT="╭─${user_host}${current_dir}${git_branch}
-╰─%B${user_symbol}%b "
-export RPROMPT="%B${return_code}%b"
+PROMPT="
+%(?:%F{blue}»:%F{red}») %f"
+RPROMPT="%B%{%F{240}%}%~%f%b"
 
-#~~~~~~~~~~~~~
-# Keybindings
-#~~~~~~~~~~~~~
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -119,6 +117,13 @@ bindkey "^U" kill-whole-line
 bindkey "^W" backward-kill-word
 bindkey "^Y" yank
 
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+bindkey '^v' edit-command-line
+bindkey -s '^g' '!*'
+bindkey '^x' clear-screen
+
 # vi mode
 bindkey -v '^?' backward-delete-char
 bindkey -v '^h' backward-delete-char
@@ -146,13 +151,26 @@ zle -N zle-line-init
 echo -ne '\e[6 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
-bindkey '^v' edit-command-line
-bindkey -s '^g' '!*'
-
-bindkey '^x' clear-screen
+# Multi-dot cd (...)
+function expand-multiple-dots() {
+    local MATCH
+    if [[ $LBUFFER =~ '(^| )\.\.\.+' ]]; then
+        LBUFFER=$LBUFFER:fs%\.\.\.%../..%
+    fi
+}
+function expand-multiple-dots-then-expand-or-complete() {
+    zle expand-multiple-dots
+    zle expand-or-complete
+}
+function expand-multiple-dots-then-accept-line() {
+    zle expand-multiple-dots
+    zle accept-line
+}
+zle -N expand-multiple-dots
+zle -N expand-multiple-dots-then-expand-or-complete
+zle -N expand-multiple-dots-then-accept-line
+bindkey '^I' expand-multiple-dots-then-expand-or-complete
+bindkey '^M' expand-multiple-dots-then-accept-line
 
 # Load fzf keybindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

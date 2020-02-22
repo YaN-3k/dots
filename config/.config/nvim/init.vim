@@ -68,7 +68,7 @@ set scrolloff=5
 set pumheight=10
 set autoindent
 set smarttab
-set number relativenumber
+" set number relativenumber
 set clipboard=unnamedplus
 set inccommand=nosplit
 set tabstop=4

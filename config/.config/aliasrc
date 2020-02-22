@@ -15,12 +15,14 @@ alias mv="mv -iv"
 alias rm="rm -v"
 alias mkd="mkdir -pv"
 
+# programs
 alias yt="youtube-dl --add-metadata -i"
 alias yta="yt -x -f bestaudio/best"
 alias nc='ncmpcpp'
 alias ra='ranger'
 alias nm='neomutt'
 alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
+alias installfont='sudo fc-cache -f -v'
 
 # vi
 alias e="$EDITOR"
@@ -28,14 +30,15 @@ alias f="$FILE"
 alias vi="nvim"
 alias vidiff="nvim -d"
 alias vf="vifmrun"
+alias svim='sudoedit'
 
 # tmux
-alias t="tmux"
-alias tn="tmux new -s"
-alias tls="tmux ls"
-alias ta="tmux a -t"
-alias tk="tmux kill-session -t"
-alias tks="tmux kill-server"
+alias tm="tmux"
+alias tmn="tmux new -s"
+alias tmls"tmux ls"
+alias tma="tmux a -t"
+alias tmk="tmux kill-session -t"
+alias tmks="tmux kill-server"
 
 # cURL
 wttr()    { curl wttr.in/"${1}" ;}
@@ -63,5 +66,32 @@ alias paco="sudo pacman -Rns $(pacman -Qtdq)"
 fe()   { find . -type f | fzf | xargs -r "$EDITOR" ;}
 cdf() { cd "$(find . -type d | fzf --preview '')" ;}
 fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
+
+# function
+open() { xdg-open $1 &> /dev/null &disown;}
+psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;}
+fname() { find . -iname "*$@*";}
+mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+
+conf() {
+	case $1 in
+		bspwm)		$EDITOR ~/.config/bspwm/bspwmrc ;;
+		sxhkd)		$EDITOR ~/.config/sxhkd/sxhkdrc ;;
+		mpd)		$EDITOR ~/.config/mpd/mpd.conf ;;
+		mutt)		$EDITOR ~/.config/mutt/muttrc ;;
+		ncmpcpp)	$EDITOR ~/.config/ncmpcpp/config ;;
+		pacman)		sudoedit /etc/pacman.conf ;;
+		ranger)		$EDITOR ~/.config/ranger/rc.conf ;;
+		tmux)	    $EDITOR	~/.tmux.conf ;;
+		vim)		$EDITOR ~/.config/nvim/init.vim ;;
+		xinit)		$EDITOR ~/.xinitrc ;;
+		xresources)	$EDITOR ~/.Xresources && xrdb ~/.Xresources ;;
+		zathura)	$EDITOR ~/.config/zathura/zathurarc ;;
+		zsh)		$EDITOR ~/.config/zsh/.zshrc && source ~/.config/zsh/.zshrc ;;
+		hosts)		sudoedit /etc/hosts ;;
+		sudo)		sudoedit /etc/sudoers ;;
+		*)			echo "Unknown application: $1" ;;
+	esac
+}
 
 # vim: filetype=zsh
