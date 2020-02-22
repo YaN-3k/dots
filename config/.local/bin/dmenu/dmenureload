@@ -1,5 +1,5 @@
 #!/bin/sh
-opt="bspwm sxhkd polybar mpd dunst picom"
+opt="bspwm sxhkd polybar mpd dunst picom autogap"
 program="$(echo "$opt" | sed 's/ /\n/g' | dmenu -i -p "Which program do you want to restart?")"
 case $program in
 	bspwm) bspc wm -r;;
@@ -8,6 +8,7 @@ case $program in
 	mpd) pkill mpd; mpd &;;
 	dunst) pkill dunst; dunst &;;
 	picom) pkill picom; picom -b;;
+	autogap) killall autogap; autogap &;;
 	*) exit
 esac
 notify-send "$program reloaded."

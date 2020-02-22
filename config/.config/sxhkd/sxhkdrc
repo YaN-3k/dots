@@ -21,9 +21,22 @@ super + f
 super + {m,x,s,z}
 	bspc node -g {marked,locked,sticky,private}
 
+# Un/Hide the scratchpad
+super + F1
+ 	id=$(head -1 /tmp/scratchid);\
+ 	bspc node $id --flag hidden;bspc node -f $id
+
+# Un/Uide the currently active node
+super + {_,shift +} u
+    toggle {hide,show}
+
+# Un/Hide the currently active node
+super + {_,shift +} w
+	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
+
 # }}
 
-# MOVE {{
+# MOVE/RESIZE {{
 # focus/swap the node in the given direction
 #super + {_,shift + }{h,j,k,l}
 #	bspc node -{f,s} {west,south,north,east}
@@ -53,9 +66,17 @@ super + {_,shift +}g
 super + {_,shift + }n
 	bspc node -f {next,prev}.local
 
-# Move node to the left, rigt desktop
-ctrl + shift + {h,l}
-    bspc node --to-desktop {prev,next} --focus
+# expand a window by moving one of its side outward
+#ctrl + super + {h,j,k,l}
+#	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+#ctrl + super + shift + {h,j,k,l}
+#	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Resize the node
+ctrl + super + {h,j,k,l}
+	resize {west,south,north,east}
 
 # Move the floating node to the top left
 alt + ctrl + k
@@ -76,21 +97,6 @@ alt + ctrl + h
 # Move the floating node to the center
 alt + ctrl + s
     preset 'center'
-
-# }}
-
-# RESIZE {{
-# expand a window by moving one of its side outward
-#ctrl + super + {h,j,k,l}
-#	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# contract a window by moving one of its side inward
-#ctrl + super + shift + {h,j,k,l}
-#	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-# Resize the node
-ctrl + super + {h,j,k,l}
-	resize {west,south,north,east}
 
 # Resize gaps
 ctrl + alt + g: {k,j}
@@ -114,6 +120,10 @@ alt + shift + {1-9,0}
 # Swap nodes betwen desktops
 alt + {1-9,0}
 	bspc node --to-desktop ^{1-9,10} --focus
+
+# Move node to the left, rigt desktop
+ctrl + shift + {h,l}
+    bspc node --to-desktop {prev,next} --focus
 
 # }}
 
@@ -146,29 +156,22 @@ alt + shift + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 super + alt + {p,b,comma,period}
 	bspc node --focus @{parent,brother,first,second}
+
 # Cancel the preselection
 alt + {_,shift +} c
 	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
 
-# Send the newest marked node to the newest preselected node
+# Preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# Send the focused node to the newest preselected node
 super + y
-	bspc node newest.marked.local -n newest.!automatic.local
+	bspc node focused -n newest.!automatic.local
 
-# }}
-
-# HIDEN {{
-# Un/Hide the scratchpad
-super + F1
- 	id=$(head -1 /tmp/scratchid);\
- 	bspc node $id --flag hidden;bspc node -f $id
-
-# Un/Uide the currently active node
-super + {_,shift +} u
-    toggle {hide,show}
-
-# Un/Hide the currently active node
-super + {_,shift +} w
-	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
+# Send the newest marked node to the newest preselected node
+super + shift + y
+	bspc node newest.marked -n newest.!automatic.local
 
 # }}
 
@@ -182,6 +185,9 @@ super + d
 # Open the terminal
 super + Return
 	$TERMINAL
+# Open the floating terminal
+alt + Return
+	$TERMINAL --class float
 # Open the terminal in the same directory
 super + shift + Return
 	samedir
@@ -209,6 +215,45 @@ alt + e
 # Show help
 super + F2
 	 $TERMINAL --class float -e show_help
+
+# }}
+
+# BACKLIGHT/AUDIO {{
+# increase the volume (mpd or alsa)
+super + {equal,shift + plus}
+	{amixer sset Master 5%+,mpc volume +5}
+# decrease the volume (mpd or alsa)
+super {_,shift} + minus
+	{amixer sset Master 5%-,mpc volume -5}
+
+# mute the sound
+super + shift + m
+	amixer sset Master toggle
+
+# Pause mpd audio
+super + shift + p
+	mpc toggle
+# Changes to the next/previous tracks
+super + {comma,period}
+	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
+# Restart track
+super + shift + less
+	mpc seek 0%
+# Seek foward in song
+super + {_,shift +} bracketright
+	mpc seek +{10,120}
+# Seek backward in song
+super + {_,shift +} bracketleft
+	mpc seek -{10,120}
+
+# increase the backlight
+alt + {_,shift +} equal
+	{xbacklight -inc 15, sudo -A keybacklight -inc}
+# decrease the backlight
+alt  + {_,shift +} minus
+	{xbacklight -dec 15, sudo -A keybacklight -dec}
+{XF86MonBrightnessDown,XF86MonBrightnessUp}
+	{xbacklight -dec 15,xbacklight -inc 15}
 
 # }}
 
@@ -274,58 +319,9 @@ super + Escape
 # Update OS
 super + ctrl + u
 	prompt "Update packages?" "update"
-
-# Click
-#alt + s
-#	click_desktop.sh; \
-#	xdotool mousedown 1; sleep 0.2; xdotool mouseup 1
-
 # Open terminal if desktop is empty
 ~button1
 	click_desktop
-
-
-# }}
-
-# BACKLIGHT / VOLUME {{
-# increase the volume (mpd or alsa)
-super + {equal,shift + plus}
-	{amixer sset Master 5%+,mpc volume +5}
-# decrease the volume (mpd or alsa)
-super {_,shift} + minus
-	{amixer sset Master 5%-,mpc volume -5}
-
-# mute the sound
-super + shift + m
-	amixer sset Master toggle
-
-# increase the backlight
-alt + {_,shift +} equal
-	{xbacklight -inc 15, sudo -A keybacklight -inc}
-# decrease the backlight
-alt  + {_,shift +} minus
-	{xbacklight -dec 15, sudo -A keybacklight -dec}
-{XF86MonBrightnessDown,XF86MonBrightnessUp}
-	{xbacklight -dec 15,xbacklight -inc 15}
-
-# }}
-
-# MPD {{
-# Pause mpd audio
-super + shift + p
-	mpc toggle
-# Changes to the next/previous tracks
-super + {comma,period}
-	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
-# Restart track
-super + shift + less
-	mpc seek 0%
-# Seek foward in song
-super + {_,shift +} bracketright
-	mpc seek +{10,120}
-# Seek backward in song
-super + {_,shift +} bracketleft
-	mpc seek -{10,120}
 
 # }}
 

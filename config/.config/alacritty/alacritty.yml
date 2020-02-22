@@ -121,22 +121,22 @@ shell:
   program: /bin/zsh
 
 key_bindings:
-  # - { key: P,        mods: Control,       action: Paste            }
-  - { key: Y,        mods: Control,       action: Copy             }
-  - { key: Insert,   mods: Shift,         action: PasteSelection   }
-  - { key: Key0,     mods: Control,       action: ResetFontSize    }
-  - { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  - { key: Add,      mods: Control,       action: IncreaseFontSize }
-  - { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  - { key: Minus,    mods: Control,       action: DecreaseFontSize }
-  - { key: Return,   mods: Alt,           action: ToggleFullscreen }
-  - { key: Paste,                    action: Paste                            }
-  - { key: Copy,                     action: Copy                             }
-  - { key: L,         mods: Control, action: ClearLogNotice                   }
-  - { key: L,         mods: Control, chars: "\x0c"                            }
-  - { key: B,         mods: Shift|Control,   action: ScrollPageUp,            }
-  - { key: F,         mods: Shift|Control,   action: ScrollPageDown,          }
-  - { key: K,         mods: Shift|Control,   action: ScrollLineUp,            }
-  - { key: J,         mods: Shift|Control,   action: ScrollLineDown,          }
-  - { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt       }
-  - { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt       }
+  #- { key: Return,   mods: Alt,              action: ToggleFullscreen   }
+  - { key: Key0,     mods: Control,          action: ResetFontSize      }
+  - { key: Equals,   mods: Control,          action: IncreaseFontSize   }
+  - { key: Add,      mods: Control,          action: IncreaseFontSize   }
+  - { key: Subtract, mods: Control,          action: DecreaseFontSize   }
+  - { key: Minus,    mods: Control,          action: DecreaseFontSize   }
+  - { key: P,        mods: Control,          action: Paste              }
+  - { key: Y,        mods: Control,          action: Copy               }
+  - { key: Insert,   mods: Shift,            action: PasteSelection     }
+  - { key: Paste,                            action: Paste              }
+  - { key: Copy,                             action: Copy               }
+  - { key: L,         mods: Control,         action: ClearLogNotice     }
+  - { key: L,         mods: Control, chars: "\x0c"                      }
+  - { key: B,         mods: Shift|Control,   action: ScrollPageUp,      }
+  - { key: F,         mods: Shift|Control,   action: ScrollPageDown,    }
+  - { key: K,         mods: Shift|Control,   action: ScrollLineUp,      }
+  - { key: J,         mods: Shift|Control,   action: ScrollLineDown,    }
+  - { key: Home,      mods: Shift,   action: ScrollToTop,    mode: ~Alt }
+  - { key: End,       mods: Shift,   action: ScrollToBottom, mode: ~Alt }

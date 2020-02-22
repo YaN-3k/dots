@@ -38,6 +38,12 @@ def_key "K"
     move_sort_order_up
 def_key "h"
   jump_to_parent_directory
+def_key "K"
+  select_item
+  scroll_up
+def_key "J"
+  select_item
+  scroll_down
 
 # Library
 def_key "m"

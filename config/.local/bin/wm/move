@@ -25,7 +25,6 @@ if ! is_tiled; then
 	esac
 	bspc node -v $coordinates
 
-
 # Otherwise, window is tiled: switch with window in given direction
 else
 	bspc node -s "$dir"

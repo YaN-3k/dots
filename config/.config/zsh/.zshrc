@@ -4,10 +4,6 @@
 #   / / \__ \| | | |
 #  /___||___/|_| |_|
 
-# Load shell-agnostic configs
-[ -f "$HOME/.config/shortcutrc" ] && source ~/.config/shortcutrc
-[ -f "$HOME/.config/aliasrc" ] && source ~/.config/aliasrc
-
 export HISTFILE="$HOME/.config/zsh/.zsh_history"
 source "${HOME}/.zgen/zgen.zsh"
 
@@ -80,9 +76,9 @@ fi
 # ╰─%B${user_symbol}%b "
 # export RPROMPT="%B${return_code}%b"
 
-PROMPT="
+export PROMPT="
 %(?:%F{blue}»:%F{red}») %f"
-RPROMPT="%B%{%F{240}%}%~%f%b"
+export RPROMPT="%B%{%F{240}%}%~%f%b"
 
 # Use vim keys in tab complete menu:
 bindkey -M menuselect 'h' vi-backward-char
@@ -174,6 +170,10 @@ bindkey '^M' expand-multiple-dots-then-accept-line
 
 # Load fzf keybindings
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Load shell-agnostic configs
+[ -f "$HOME/.config/shortcutrc" ] && source ~/.config/shortcutrc
+[ -f "$HOME/.config/aliasrc" ] && source ~/.config/aliasrc
 
 # Autostart tmux
 # if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then

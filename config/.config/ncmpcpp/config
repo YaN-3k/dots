@@ -37,14 +37,14 @@ display_bitrate = "yes"
 browser_playlist_prefix = "$2playlist$9 "
 playlist_display_mode = "columns" (classic/columns)
 playlist_show_remaining_time = "yes"
-playlist_separate_albums = "yes"
+playlist_separate_albums = "no"
 
 # apperance
 user_interface = "alternative"
 browser_display_mode = "columns" (classic/columns)
 search_engine_display_mode = "columns" (classic/columns)
 default_place_to_search_in = "database"
-titles_visibility = "yes"
+titles_visibility = "no"
 enable_window_title = "no"
 autocenter_mode = "yes"
 centered_cursor = "yes"
@@ -55,17 +55,18 @@ discard_colors_if_item_is_selected = "yes"
 colors_enabled = "yes"
 header_visibility = "no"
 header_window_color = "245"
-alternative_header_first_line_format = "$8{%t}$9"
-alternative_header_second_line_format = "$4{%a}$9 $6$9 $8{%b}$9"
+alternative_header_first_line_format = "$8$b{%t}$/b$9"
+# alternative_header_second_line_format = "$4{%a}$9 $6-$9 $8{%b}$9"
+alternative_header_second_line_format = "$4{%a}$9"
 main_window_color = "white"
 progressbar_color = "240"
 progressbar_elapsed_color = "green"
 alternative_ui_separator_color = "red"
 empty_tag_marker = ""
 
-current_item_prefix = $(250)$r$b
+current_item_prefix = $5$b$r
 current_item_suffix = $/r$(end)$/b
-current_item_inactive_column_prefix = $(245)$r
+current_item_inactive_column_prefix = $r
 current_item_inactive_column_suffix = $/r$(end)
 
 now_playing_prefix = $b
@@ -76,5 +77,5 @@ modified_item_prefix = $3> $9
 song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
 song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
 song_library_format = {%t}|{%f}
-song_columns_list_format = "(30)[yellow]{a} (30)[blue]{t|f:Title} (30)[cyan]{b} (7f)[244]{l}"
+song_columns_list_format = "(7)[244]{l} (30)[yellow]{a} (40)[blue]{t|f:Title} (20)[cyan]{b}"
 progressbar_look = "=>-"

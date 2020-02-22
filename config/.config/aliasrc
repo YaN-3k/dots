@@ -68,7 +68,7 @@ cdf() { cd "$(find . -type d | fzf --preview '')" ;}
 fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
 
 # function
-open() { xdg-open $1 &> /dev/null &disown;}
+open() { xdg-open "$1" &> /dev/null & disown;}
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
