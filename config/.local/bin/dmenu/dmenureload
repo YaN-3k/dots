@@ -3,10 +3,10 @@ opt="bspwm sxhkd polybar mpd dunst picom"
 program="$(echo "$opt" | sed 's/ /\n/g' | dmenu -i -p "Which program do you want to restart?")"
 case $program in
 	bspwm) bspc wm -r;;
-	sxhkd) pkill -USR1 -x sxhkd;;
-	polybar) pkill polybar; ~/.config/polybar/launch.sh;;
+	sxhkd) pkill -USR1 -x sxhkd || sxhkd &;;
+	polybar) pkill polybar; ~/.config/polybar/launch.sh &;;
 	mpd) pkill mpd; mpd &;;
-	dunst) pkill dunst; dunst;;
+	dunst) pkill dunst; dunst &;;
 	picom) pkill picom; picom -b;;
 	*) exit
 esac

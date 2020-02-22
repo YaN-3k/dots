@@ -9,6 +9,7 @@
 super + t
 	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
 	bspc node --state \~$state
+
 # Switch the node state on tiled - pseudo tiled
 super + p
 	bspc node --state \~pseudo_tiled
