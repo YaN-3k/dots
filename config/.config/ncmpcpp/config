@@ -20,6 +20,7 @@ regular_expressions = "extended"
 message_delay_time = "2"
 jump_to_now_playing_song_at_start = "yes"
 ignore_leading_the = "yes"
+# execute_on_song_change = notify-send "Now Playing ♫" "$(mpc current)"
 
 # visualizer
 visualizer_fifo_path = "/tmp/mpd.fifo"
@@ -57,14 +58,16 @@ header_window_color = "245"
 alternative_header_first_line_format = "$8{%t}$9"
 alternative_header_second_line_format = "$4{%a}$9 $6$9 $8{%b}$9"
 main_window_color = "white"
-progressbar_color = "green"
+progressbar_color = "240"
+progressbar_elapsed_color = "green"
 alternative_ui_separator_color = "red"
 empty_tag_marker = ""
 
-current_item_prefix = $(blue)$r$b
+current_item_prefix = $(250)$r$b
 current_item_suffix = $/r$(end)$/b
-current_item_inactive_column_prefix = $(4)$r
+current_item_inactive_column_prefix = $(245)$r
 current_item_inactive_column_suffix = $/r$(end)
+
 now_playing_prefix = $b
 now_playing_suffix = $/b
 selected_item_prefix = $6
@@ -73,5 +76,5 @@ modified_item_prefix = $3> $9
 song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
 song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
 song_library_format = {%t}|{%f}
-song_columns_list_format = "(25)[blue]{a} (40)[blue]{t|f:Title} (30)[blue]{b} (7f)[blue] {l}"
+song_columns_list_format = "(30)[yellow]{a} (30)[blue]{t|f:Title} (30)[cyan]{b} (7f)[244]{l}"
 progressbar_look = "=>-"
