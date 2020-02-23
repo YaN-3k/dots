@@ -1,9 +1,90 @@
 ## My Setup:
 ![screenshot](screenshot.jpg)
 ## Table of Contents
-1. [Dependencies](https://github.com/Cherrry9/Dotfiles#Dependencies)
-1. [Installation Guide](https://github.com/Cherrry9/Dotfiles#InstallationGuide)
-# Dependencies
+1. [Installation Guide](#Installation-guide)
+1. [Dependencies](#dependencies)
+## Installation Guide
+#### Install dependencies.
+Check the list of [dependencies](#dependencies) and install the necessary programs and fonts.
+#### Clone the repo.
+```
+$ git clone https://github.com/Cherrry9/Dotfiles ~/Dotfiles
+```
+#### Create user directories like ~/Music and ~/Pictures.
+```
+$ xdg-user-dirs-update
+```
+#### Go to dotfiles directory.
+```
+$ cd ~/Dotfiles
+```
+#### Pull submodules.
+```
+$ git submodule update --init --recursive
+```
+#### Use [stow](https://www.gnu.org/software/stow/) to make symlinks.
+```
+$ stow -vS --no-folding config
+```
+or manually copy, make symlink to my dotfiles<br/>
+If you see something like that:
+```
+WARNING! stowing config would cause conflicts:
+  * existing target is neither a link nor a directory: .bashrc
+  * existing target is neither a link nor a directory: .bash_profile
+All operations aborted.
+```
+Delete or copy/move to another directory this file, and run again `stow`.
+#### Install fzf from my repo.
+```
+$ yes | ~/.fzf/install
+```
+#### Dmenu
+```
+$ cd ~/.config/dmenu/dmenu-4.9/
+$ sudo make clean install
+$ cd ../j4-dmenu-desktop
+$ cmake .
+$ make
+$ sudo make install
+```
+#### Neovim
+Install plugins:
+```
+$ nvim
+```
+#### Cron
+`sudo systemctl enable cronie && sudo systemctl start cronie`, `crontab -e` and add these lines (replace "<you_user>" with the name of your user):
+```
+# Syncs repositories and notify if there are updates
+0,30 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/checkup
+# Notify me with notify-send if my battery is low
+*/5 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/cronbat
+```
+
+#### Installation complete.
+Log out and log in to see the changes.
+#### Note
+My wallpapers are in [Cherrry9/Wallpapers](https://github.com/Cherrry9/Wallpapers)<br>
+I created the telegram theme for my rice - [Dotfiles/config/.local/share/TelegramDesktop](https://github.com/Cherrry9/Dotfiles/tree/master/config/.local/share/TelegramDesktop)<br>
+You can see all my keybindings with the description using `super + F2` (`$ show_help`)<br>
+To see the custom sudo prompt with the bee, add these lines to `/etc/sudoers`:
+```
+Defaults  lecture="always"
+Defaults  lecture_file="/home/<your_user>/.local/share/sudoers.bee"
+```
+To view the custom login screen with Arch logo on tty:
+```
+$ cd /etc/
+$ mv issue issue-old
+$ ~/.scripts/makeissue
+```
+If you use Arch add this to you `/etc/pacman.conf` (easter egg):
+```
+ILoveCandy
+```
+And update you computer :)
+## Dependencies
 Package name | Description
 :--- | :---
 bspwm | is awesome tiling window manager
@@ -51,15 +132,16 @@ zathura-djvu | DjVu support for Zathura
 zathura-pdf-mupdf | PDF support for zathura
 cli-visualizer | is a nice music visualizer working in the terminal
 cronie | is a cron implementations
-One liner for Arch:
+
+#### One liner for Arch:
 ```
 sudo pacman -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim vifm dunst python-pip zsh fzf pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
 ```
-AUR:
+#### AUR:
 ```
 yay -S polybar ranger-git
 ```
-Pip:
+#### Pip:
 ```
 pip3 install --user pynvim ueberzug
 ```
@@ -67,82 +149,3 @@ pip3 install --user pynvim ueberzug
 [ttf-font-awesome]: https://fontawesome.com/download
 [zgen]: https://github.com/tarjoilija/zgen
 [fzf]: https://github.com/junegunn/fzf#using-git
-
-# Installation Guide
-#### Install dependencies.
-Check the list of [dependencies](Dependencies) and install the necessary programs and fonts.
-#### Clone the repo.
-```
-$ git clone https://github.com/Cherrry9/Dotfiles ~/Dotfiles
-```
-#### Create user directories like ~/Music and ~/Pictures.
-```
-$ xdg-user-dirs-update
-```
-#### Go to dotfiles directory.
-```
-$ cd ~/Dotfiles
-```
-#### Pull submodules.
-```
-$ git submodule update --init --recursive
-```
-#### Use [stow](https://www.gnu.org/software/stow/) to make symlinks.
-```
-$ stow -vS --no-folding config
-```
-or manually copy, make symlink to my dotfiles<br/>
-If you see something like that:
-```
-WARNING! stowing config would cause conflicts:
-  * existing target is neither a link nor a directory: .bashrc
-  * existing target is neither a link nor a directory: .bash_profile
-All operations aborted.
-```
-Delete or copy/move to another directory this file, and run again `stow`.
-#### Install fzf from my repo.
-```
-$ yes | ~/.fzf/install
-```
-#### dmenu
-```
-$ cd ~/.config/dmenu/dmenu-4.9/
-$ sudo make clean install
-$ cd ../j4-dmenu-desktop
-$ cmake .
-$ make
-$ sudo make install
-```
-#### Neovim
-Install plugins:
-```
-$ nvim
-```
-#### Cron
-`sudo systemctl enable cronie && sudo systemctl start cronie`, `crontab -e` and add these lines (replace "<you_user>" with the name of your user):
-```
-# Syncs repositories and notify if there are updates
-0,30 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/checkup
-# Notify me with notify-send if my battery is low
-*/5 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/cronbat
-```
-### Note
-My wallpapers are in [Cherrry9/Wallpapers](https://github.com/Cherrry9/Wallpapers)<br>
-I created the telegram theme for my rice - [Dotfiles/config/.local/share/TelegramDesktop](https://github.com/Cherrry9/Dotfiles/tree/master/config/.local/share/TelegramDesktop)<br>
-You can see all my keybindings with the description using `super + F2` (`$ show_help`)<br>
-To see the custom sudo prompt with the bee, add these lines to `/etc/sudoers`:
-```
-Defaults  lecture="always"
-Defaults  lecture_file="/home/<your_user>/.local/share/sudoers.bee"
-```
-To view the custom login screen with Arch logo on tty:
-```
-$ cd /etc/
-$ mv issue issue-old
-$ ~/.scripts/makeissue
-```
-If you use Arch add this to you `/etc/pacman.conf` (easter egg):
-```
-ILoveCandy
-```
-And update you computer :)

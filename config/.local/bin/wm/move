@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 dir=$1
 move="${2:-20}"
