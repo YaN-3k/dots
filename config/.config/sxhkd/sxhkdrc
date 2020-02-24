@@ -319,6 +319,9 @@ super + Escape
 # Update OS
 super + ctrl + u
 	prompt "Update packages?" "update"
+# Network menu
+super + ctrl + n
+	dmenuwnet
 # Open terminal if desktop is empty
 ~button1
 	click_desktop
