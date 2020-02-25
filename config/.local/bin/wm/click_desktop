@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Did I just click the desktop?
 #Get the window id of the window that is under the pointer and set variable WINDOW to it
 eval "$(xdotool getmouselocation --shell)"

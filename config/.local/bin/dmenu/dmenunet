@@ -1,17 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # It's simple script to control a wirelless network connection
 # using wpa_supplicant and dhcpcd
 interface='wlp2s0'
 conf='/etc/wpa_supplicant.conf'
 
 network_add() {
-	wpa_cli scan_internal 3
 	wpa_cli scan
-	sleep 3
+	sleep 4
 
-	ssid=$(wpa_cli scan_results | awk 'NR>2 && NF == 5 && seen[$NF]++ == 0 {print $NF}' | dmenu -i -p "Select ESSID")
-
-	[ -z "$ssid" ] && return
+	ssid=$(wpa_cli scan_results | awk 'NR>2 && NF == 5 && seen[$NF]++ == 0 {print $NF}' | dmenu -i -p "Select ESSID") || return
 
 	id=$(wpa_cli add_network | awk 'NR>1 { print $1 }')
 	psk=$(dmenu -P -p "Password for $ssid" <&- && echo)
@@ -34,9 +31,7 @@ network_switch() {
 		return
 	}
 
-	selected=$(echo "${ssid[@]}" | dmenu -i -p "Select ESSID")
-
-	[ -z "$selected" ] && return
+	selected=$(echo "${ssid[@]}" | dmenu -i -p "Select ESSID") || return
 
 	selected_id=$(wpa_cli list_networks | awk -v var="$selected" '$2 == var { print $1 }')
 	wpa_cli select_network "$selected_id" && notify-send "$selected successfully conected."
@@ -52,9 +47,7 @@ network_remove() {
 		return
 	}
 
-	selected=$(echo -n "${ssid[@]}" | dmenu -i -p "Select ESSID")
-
-	[ -z "$selected" ] && return
+	selected=$(echo -n "${ssid[@]}" | dmenu -i -p "Select ESSID") || return
 
 	selected_id=$(wpa_cli list_networks | awk -v var="$selected" '$2 == var { print $1 }')
 	wpa_cli remove_network "$selected_id"
@@ -64,10 +57,7 @@ network_remove() {
 # Create wpa_supplicant configuration file
 create_conf() {
 	notify-send "Creating wpa_supplicant configuration file"
-	sudo -A killall wpa_supplicant || {
-		notify-send "Wrong password."
-		exit
-	}
+	sudo -A killall wpa_supplicant
 	sudo -A tee -a $conf >/dev/null <<EOF
 ctrl_interface=DIR=/run/wpa_supplicant GROUP=wheel
 update_config=1

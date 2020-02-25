@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 sound="/usr/share/sounds/freedesktop/stereo/complete.oga"
 
 calc() {

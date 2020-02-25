@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #                           ██            ████
 #                          ░░            ░██░
 #   ██████  ██   ██  ██████ ██ ███████  ██████  ██████
@@ -33,13 +33,16 @@ draw() {
 	perc=$1
 	size=$2
 	inc=$((perc * size / 100))
-	[ -z "$3" ] && color="36" || color="$3"
-	for v in $(seq 0 $((size - 1))); do
-		[ "$v" -le "$inc" ] &&
-			out="${out}\e[1;${color}m${FULL}" ||
+	color="${3-36}"
+	for ((v = 0; v <= 10; v++)); do
+		if ((v <= inc))
+		then
+			out="${out}\e[1;${color}m${FULL}"
+		else
 			out="${out}\e[0;${color}m${EMPTY}"
+		fi
 	done
-	printf $out
+	printf "%b\n" "$out"
 }
 
 #█▓▒░ colors

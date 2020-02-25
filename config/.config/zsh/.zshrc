@@ -28,6 +28,9 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)		# Include hidden files.
 
+autoload -Uz tetriscurses # tetris
+alias tetris="tetriscurses"
+
 # Zgen, need to 'zgen reset' after changing
 if ! zgen saved; then
 
@@ -76,8 +79,14 @@ fi
 # ╰─%B${user_symbol}%b "
 # export RPROMPT="%B${return_code}%b"
 
+if [[ $UID -eq 0 ]]; then
+    color='%F{yellow}'
+else
+    color='%F{blue}'
+fi
+
 export PROMPT="
-%(?:%F{blue}»:%F{red}») %f"
+%(?:$color»:%F{red}») %f"
 export RPROMPT="%B%{%F{240}%}%~%f%b"
 
 # Use vim keys in tab complete menu:

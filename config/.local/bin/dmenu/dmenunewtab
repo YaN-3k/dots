@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env sh
 options="4chan youtube riot.im arch-linux facebook disroot github"
-choice=$(echo -e "$options" | sed 's/ /\n/g' | dmenu -i -p "Open")
+choice=$(echo "$options" | sed 's/ /\n/g' | dmenu -i -p "Open")
 [ -z "$choice" ] && exit
 case "$choice" in
 	disroot) url='https://cloud.disroot.org/login';;

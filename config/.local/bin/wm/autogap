@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 # Dynamic gaps
 MIN_GAP=0
 

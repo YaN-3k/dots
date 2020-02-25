@@ -1,0 +1,21 @@
+[Unit]
+Description=Wireless network connectivity (%i)
+Wants=network.target
+Before=network.target
+BindsTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+ExecStart=/usr/sbin/ip link set dev %i up
+ExecStart=/usr/sbin/wpa_supplicant -B -i %i -c /etc/wpa_supplicant.conf
+ExecStart=/usr/bin/dhcpcd -q -b
+
+ExecStop=/usr/sbin/ip link set dev %i down
+ExecStop=/usr/sbin/wpa_cli terminate
+ExecStop=/usr/bin/dhcpcd -x
+
+[Install]
+WantedBy=multi-user.target

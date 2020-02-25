@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 echo -e '\e[H\e[2J' > issue
 echo -e '                                                            \e[1;30m| \e[34m\\s \\r' >> issue
 echo -e '       \e[36;1m/\\\\                      \e[37m||     \e[36m| |                   \e[30m|' >> issue

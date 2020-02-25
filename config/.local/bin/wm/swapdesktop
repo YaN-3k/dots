@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 TARGET_DESKTOP=$1
 LOCAL_NODES=($(bspc query -N -d))
 TARGET_NODES=($(bspc query -N -d "$TARGET_DESKTOP"))

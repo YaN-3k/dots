@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 dir=$1
 size="${2:-10}"

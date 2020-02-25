@@ -194,9 +194,6 @@ super + shift + Return
 # Open the file manager
 alt + f
 	$TERMINAL -e $FILE
-# Open the network configuration
-alt + n
-	$TERMINAL -e nmtui
 # Open the browser
 alt + w
 	$BROWSER

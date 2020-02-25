@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #  Generate a wallpaper with some static
 read -r _ XY _ < <(xdpyinfo | grep 'dimensions:'); X=${XY%x*} Y=${XY#*x}
 

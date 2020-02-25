@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Get PID of process whose window this is
 WPID=$(xdotool getactivewindow getwindowpid)
 # Get last child process (shell, vim, etc)

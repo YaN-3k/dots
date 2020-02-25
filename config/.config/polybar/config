@@ -154,7 +154,7 @@ label = %{F#84A0C6}%{F-} %percentage%%
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~
 [module/network]
 type = internal/network
-interface = wlp2s0
+interface = wlan0
 interval = 1
 
 format-connected = <label-connected>

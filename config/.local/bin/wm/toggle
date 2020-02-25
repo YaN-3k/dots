@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 action=$1
 wid=$(xdotool getactivewindow)
 did=$(xdotool get_desktop)
