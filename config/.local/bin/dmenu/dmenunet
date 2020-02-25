@@ -1,4 +1,6 @@
 #!/bin/bash
+# It's simple script to control a wirelless network connection
+# using wpa_supplicant and dhcpcd
 interface='wlp2s0'
 conf='/etc/wpa_supplicant.conf'
 
@@ -6,8 +8,11 @@ network_add() {
 	wpa_cli scan_internal 3
 	wpa_cli scan
 	sleep 3
+
 	ssid=$(wpa_cli scan_results | awk 'NR>2 && NF == 5 && seen[$NF]++ == 0 {print $NF}' | dmenu -i -p "Select ESSID")
-	[ -z "$ssid" ] && exit
+
+	[ -z "$ssid" ] && return
+
 	id=$(wpa_cli add_network | awk 'NR>1 { print $1 }')
 	psk=$(dmenu -P -p "Password for $ssid" <&- && echo)
 	wpa_cli <<EOF
@@ -26,12 +31,12 @@ network_switch() {
 
 	[ "${#ssid}" -eq 0 ] && {
 		notify-send "There isn't network to switch."
-		exit
+		return
 	}
 
 	selected=$(echo "${ssid[@]}" | dmenu -i -p "Select ESSID")
 
-	[ -z "$selected" ] && exit
+	[ -z "$selected" ] && return
 
 	selected_id=$(wpa_cli list_networks | awk -v var="$selected" '$2 == var { print $1 }')
 	wpa_cli select_network "$selected_id" && notify-send "$selected successfully conected."
@@ -44,18 +49,25 @@ network_remove() {
 
 	[ "${#ssid}" -eq 0 ] && {
 		notify-send "There isn't network to delete."
-		exit
+		return
 	}
 
 	selected=$(echo -n "${ssid[@]}" | dmenu -i -p "Select ESSID")
-	selected_id=$(wpa_cli list_networks | awk -v var="$choice" '$2 == var { print $1 }')
+
+	[ -z "$selected" ] && return
+
+	selected_id=$(wpa_cli list_networks | awk -v var="$selected" '$2 == var { print $1 }')
 	wpa_cli remove_network "$selected_id"
 	notify-send "$selected successfully delted."
 }
 
+# Create wpa_supplicant configuration file
 create_conf() {
 	notify-send "Creating wpa_supplicant configuration file"
-	sudo -A killall wpa_supplicant
+	sudo -A killall wpa_supplicant || {
+		notify-send "Wrong password."
+		exit
+	}
 	sudo -A tee -a $conf >/dev/null <<EOF
 ctrl_interface=DIR=/run/wpa_supplicant GROUP=wheel
 update_config=1
@@ -63,25 +75,35 @@ EOF
 	sudo -A chmod 600 $conf
 	sudo -A wpa_supplicant -B -i $interface -c $conf || {
 		notify-send "wpa_supplicant failed to start correctly." "Try run it manually or edit configuration file ($conf)"
-		exit
+		return
 	}
 }
 
+if ! command -v dhcpcd || ! command -v wpa_supplicant; then
+	exit
+fi
+
 if [ -f $conf ] && pgrep -x wpa_supplicant; then
-	! wpa_cli list_networks >/dev/null && create_conf
+	wpa_cli list_networks || create_conf
 elif ! pgrep -x wpa_supplicant; then
 	sudo -A wpa_supplicant -B -i $interface -c $conf || create_conf
 else
 	create_conf
 fi
 
-options="switch network\nadd network\nremove network\nterminate"
-choice=$(printf "$options" | dmenu -i -p "wpa supplicant")
+! pgrep -x dhcpcd && dhcpcd &
 
-case $choice in
-"add network") network_add ;;
-"remove network") network_remove ;;
-"switch network") network_switch ;;
-"terminate") wpa_cli terminate && notify-send "wpa_supplicant terminated." ;;
-esac
+while true; do
+	options="switch network\nadd network\nremove network\nterminate"
+	choice=$(printf "$options" | dmenu -i -p "wpa supplicant")
+
+	[ -z "$choice" ] && break
+
+	case $choice in
+	"add network") network_add ;;
+	"remove network") network_remove ;;
+	"switch network") network_switch ;;
+	"terminate") wpa_cli terminate && notify-send "wpa_supplicant terminated." && break ;;
+	esac
+done
 wpa_cli save_config

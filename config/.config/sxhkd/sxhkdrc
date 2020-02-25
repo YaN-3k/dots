@@ -321,7 +321,7 @@ super + ctrl + u
 	prompt "Update packages?" "update"
 # Network menu
 super + ctrl + n
-	dmenuwnet
+	dmenu_wpa_supplicant
 # Open terminal if desktop is empty
 ~button1
 	click_desktop

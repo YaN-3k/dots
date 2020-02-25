@@ -35,7 +35,6 @@ alias svim='sudoedit'
 # tmux
 alias tm="tmux"
 alias tmn="tmux new -s"
-alias tmls"tmux ls"
 alias tma="tmux a -t"
 alias tmk="tmux kill-session -t"
 alias tmks="tmux kill-server"

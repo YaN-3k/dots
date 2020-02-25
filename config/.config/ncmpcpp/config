@@ -24,49 +24,54 @@ ignore_leading_the = "yes"
 
 # visualizer
 visualizer_fifo_path = "/tmp/mpd.fifo"
-visualizer_output_name = "my_fifo"
-visualizer_sync_interval = "30"
+visualizer_output_name = "visualizer"
 visualizer_in_stereo = "yes"
-visualizer_type = "spectrum"
-visualizer_look = "+#"
+visualizer_sample_multiplier = 2
+visualizer_sync_interval = 30
+visualizer_look = ●●
 
 # playlist
 clock_display_seconds = "no"
 display_volume_level = "yes"
 display_bitrate = "yes"
 browser_playlist_prefix = "$2playlist$9 "
-playlist_display_mode = "columns" (classic/columns)
+playlist_display_mode = "classic" (classic/columns)
 playlist_show_remaining_time = "yes"
 playlist_separate_albums = "no"
 
 # apperance
+colors_enabled = "yes"
 user_interface = "alternative"
-browser_display_mode = "columns" (classic/columns)
-search_engine_display_mode = "columns" (classic/columns)
+browser_display_mode = "classic" (classic/columns)
+search_engine_display_mode = "classic" (classic/columns)
 default_place_to_search_in = "database"
 titles_visibility = "no"
 enable_window_title = "no"
 autocenter_mode = "yes"
 centered_cursor = "yes"
-statusbar_visibility = "yes"
+statusbar_visibility = "no"
 mouse_support = "yes"
 display_remaining_time = "no"
 discard_colors_if_item_is_selected = "yes"
-colors_enabled = "yes"
 header_visibility = "no"
-header_window_color = "245"
-alternative_header_first_line_format = "$8$b{%t}$/b$9"
+header_window_color = "white"
+# alternative_header_first_line_format = "-( $8$b{%t}$/b$8 )-"
 # alternative_header_second_line_format = "$4{%a}$9 $6-$9 $8{%b}$9"
-alternative_header_second_line_format = "$4{%a}$9"
+alternative_header_second_line_format = "$8{%a}$8"
 main_window_color = "white"
-progressbar_color = "240"
-progressbar_elapsed_color = "green"
-alternative_ui_separator_color = "red"
+
+progressbar_color = "cyan"
+progressbar_elapsed_color = "blue"
+progressbar_look = "━┄┄"
+
+volume_color = "blue"
+
+alternative_ui_separator_color = "244"
 empty_tag_marker = ""
 
-current_item_prefix = $5$b$r
-current_item_suffix = $/r$(end)$/b
-current_item_inactive_column_prefix = $r
+current_item_prefix = "$5$b>> "
+current_item_suffix = $(end)$/b
+current_item_inactive_column_prefix = $6
 current_item_inactive_column_suffix = $/r$(end)
 
 now_playing_prefix = $b
@@ -74,8 +79,9 @@ now_playing_suffix = $/b
 selected_item_prefix = $6
 selected_item_suffix = $9
 modified_item_prefix = $3> $9
-song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
+# song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
 song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
 song_library_format = {%t}|{%f}
+song_list_format = "$7{%a} $8● $5{%t}$R{%l}"
 song_columns_list_format = "(7)[244]{l} (30)[yellow]{a} (40)[blue]{t|f:Title} (20)[cyan]{b}"
-progressbar_look = "=>-"
+# song_columns_list_format = "(20)[cyan]{ar} (50)[yellow]{t}"

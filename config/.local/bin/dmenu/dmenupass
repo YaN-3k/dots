@@ -1,3 +1,13 @@
 #!/bin/sh
-# rofi -dmenu -password -lines 0 -width 35% -p "Password for $(whoami)"
-dmenu -P -p "Password for $(whoami)" <&- && echo
+
+# This script is the SUDO_ASKPASS variable, meaning that it will be used as a
+# password prompt if needed.
+
+# dmenu
+#dmenu  -p "Password for $(whoami)" <&- && echo
+
+# patched dmenu
+dmenu -P -p "Password for $(whoami)"
+
+# rofi
+#rofi -dmenu -password -p "Password for $(whoami)"
