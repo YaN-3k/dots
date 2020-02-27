@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+color="#F7E599'>"
+col="<span color='"
+end="</span>"
+FULL="•"
+EMPTY="○"
+value="${3:-10}"
+
+case $1 in
+alsa)
+	send_notification() {
+		vol=$(amixer get Master | awk '/Left:/{gsub(/[[:punct:]]/,"",$5);left=$5}
+    	/Right:/{gsub(/[[:punct:]]/,"",$5);right=$5}
+		END {print left}')
+		barFull=$(seq -s "$FULL" $((vol / 5)) | sed 's/[0-9]//g')
+		barEmpty=$(seq -s "$EMPTY" $((20 - vol / 5)) | sed 's/[0-9]//g')
+		dunstify -t 1000 -r 2593 -u normal "ALSA Volume $vol%" "$col$color$barFull$end$barEmpty"
+	}
+
+	case $2 in
+	up)
+		amixer sset Master $value%+
+		send_notification
+		;;
+	down)
+		amixer sset Master $value%-
+		send_notification
+		;;
+	esac
+	;;
+mpc)
+	send_notification() {
+		vol=$(mpc volume | awk  -F "\t|%|:" '{ print $2 }' | tr -d " ")
+		barFull=$(seq -s "$FULL" $((vol / 5)) | sed 's/[0-9]//g')
+		barEmpty=$(seq -s "$EMPTY" $((20 - vol / 5)) | sed 's/[0-9]//g')
+		dunstify -t 1000 -r 2593 -u normal "MPD Volume $vol%" "$col$color$barFull$end$barEmpty"
+	}
+
+	case $2 in
+	up)
+		mpc volume +$value
+		send_notification
+		;;
+	down)
+		mpc volume -$value
+		send_notification
+		;;
+	esac
+	;;
+esac

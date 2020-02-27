@@ -218,10 +218,10 @@ super + F2
 # BACKLIGHT/AUDIO {{
 # increase the volume (mpd or alsa)
 super + {equal,shift + plus}
-	{amixer sset Master 5%+,mpc volume +5}
+	{volume alsa up,volume mpc up}
 # decrease the volume (mpd or alsa)
 super {_,shift} + minus
-	{amixer sset Master 5%-,mpc volume -5}
+	{volume alsa down,volume mpc down}
 
 # mute the sound
 super + shift + m
@@ -244,13 +244,13 @@ super + {_,shift +} bracketleft
 	mpc seek -{10,120}
 
 # increase the backlight
-alt + {_,shift +} equal
-	{xbacklight -inc 15, sudo -A keybacklight -inc}
+alt + {_,shift +} minus
+	{brightness down, sudo -A keybacklight -inc}
 # decrease the backlight
-alt  + {_,shift +} minus
-	{xbacklight -dec 15, sudo -A keybacklight -dec}
+alt  + {_,shift +} equal
+	{brightness up, sudo -A keybacklight -dec}
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
-	{xbacklight -dec 15,xbacklight -inc 15}
+	{brightness down,brightness up}
 
 # }}
 
@@ -318,7 +318,7 @@ super + ctrl + u
 	prompt "Update packages?" "update"
 # Network menu
 super + ctrl + n
-	dmenu_wpa_supplicant
+	dmenuiwd
 # Open terminal if desktop is empty
 ~button1
 	click_desktop
@@ -330,7 +330,7 @@ super + ctrl + n
 XF86AudioMute
 	amixer sset Master toggle
 XF86Audio{Raise,Lower}Volume
-	amixer sset Master 5%{+,-}
+	volume {up,down}
 XF86Audio{Next,Prev}
 	mpc {next,prev}
 XF86Audio{Pause,Play,Stop}
