@@ -127,8 +127,8 @@ key_bindings:
   - { key: Add,      mods: Control,          action: IncreaseFontSize   }
   - { key: Subtract, mods: Control,          action: DecreaseFontSize   }
   - { key: Minus,    mods: Control,          action: DecreaseFontSize   }
-  - { key: P,        mods: Control,          action: Paste              }
-  - { key: Y,        mods: Control,          action: Copy               }
+  # - { key: P,        mods: Control,          action: Paste              }
+  # - { key: Y,        mods: Control,          action: Copy               }
   - { key: Insert,   mods: Shift,            action: PasteSelection     }
   - { key: Paste,                            action: Paste              }
   - { key: Copy,                             action: Copy               }
