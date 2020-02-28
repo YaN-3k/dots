@@ -96,7 +96,7 @@ augroup END
 "=============
 " Colorscheme
 "=============
-hi LineNr                       ctermfg=11  cterm=italic
+hi LineNr                       ctermfg=244 cterm=italic
 hi CursorLineNr                 ctermfg=3   cterm=bold
 hi ColorColumn                  ctermfg=1   cterm=undercurl
 hi SignColumn                   ctermfg=7
@@ -106,13 +106,20 @@ hi Visual           ctermbg=8
 hi Search           ctermbg=8               cterm=bold,reverse
 hi MatchParen       ctermbg=0   ctermfg=4   cterm=reverse
 
+"hi Comment                      ctermfg=4
+"hi String                       ctermfg=1
+"hi Type                         ctermfg=2
+"hi Statement                    ctermfg=3
+"hi Constant                     ctermfg=1
+"hi PreProc                      ctermfg=5
+"hi Special                      ctermfg=5
+
 hi Comment                      ctermfg=245
-" hi String                       ctermfg=6
-hi String                       ctermfg=1
+hi String                       ctermfg=6
 hi Type                         ctermfg=4
 hi Statement                    ctermfg=4
 hi Constant                     ctermfg=5
-" hi PreProc                      ctermfg=2
+hi PreProc                      ctermfg=2
 hi PreProc                      ctermfg=5
 hi Special                      ctermfg=5
 
@@ -126,6 +133,7 @@ hi! link            Delimiter    shOperator
 hi! link            shRange      shOperator
 
 hi vimHiGroup                   ctermfg=6
+" hi vimHiGroup                   ctermfg=2
 hi!                 link vimGroup  vimHiGroup
 
 hi ErrorMsg         ctermbg=0   ctermfg=1
