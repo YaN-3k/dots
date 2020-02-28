@@ -1,6 +1,9 @@
-## My Setup:
+## Overview
 ![screenshot](screenshot.jpg)
+My Arch Linux configuration files for programs and bspwm. I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup.<br>
+If you have any problem you can write to me on telegram [@Cherrry9](https://t.me/Cherrry9).
 ## Table of Contents
+1. [Overview](#Overview)
 1. [Installation Guide](#Installation-guide)
 1. [Dependencies](#dependencies)
 ## Installation Guide

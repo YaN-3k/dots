@@ -69,14 +69,14 @@
 #def_key "space"
 #  toggle_visualization_type
 #
-def_key "x"
-  delete_playlist_items
+#def_key "delete"
+#  delete_playlist_items
 #
 #def_key "delete"
 #  delete_browser_items
 #
-def_key "x"
-  delete_stored_playlist
+#def_key "delete"
+#  delete_stored_playlist
 #
 #def_key "right"
 #  next_column
@@ -135,8 +135,8 @@ def_key "x"
 #def_key "4"
 #  toggle_media_library_columns_mode
 #
-# def_key "5"
-#   show_playlist_editor
+#def_key "5"
+#  show_playlist_editor
 #
 #def_key "6"
 #  show_tag_editor
@@ -324,13 +324,13 @@ def_key "x"
 #def_key "m"
 #  move_sort_order_up
 #
-#def_key "ctrl-k"
+#def_key "m"
 #  move_selected_items_up
 #
 #def_key "n"
 #  move_sort_order_down
 #
-#def_key "ctrl-j"
+#def_key "n"
 #  move_selected_items_down
 #
 #def_key "M"
@@ -402,16 +402,23 @@ def_key "x"
 #def_key "f"
 #	find_item_forward
 
-def_key "+"
-    show_clock
-def_key "="
-    volume_up
-
 def_key "j"
     scroll_down
 def_key "k"
     scroll_up
 
+def_key "h"
+    previous_column
+def_key "l"
+    next_column
+def_key "l"
+  enter_directory
+def_key "l"
+  run_action
+def_key "l"
+  play_item
+def_key "h"
+  jump_to_parent_directory
 def_key "ctrl-u"
     page_up
 def_key "ctrl-d"
@@ -420,52 +427,34 @@ def_key "u"
     page_up
 def_key "d"
     page_down
-def_key "h"
-    previous_column
-def_key "l"
-    next_column
-
-def_key "."
-    show_lyrics
+def_key "G"
+  move_end
+def_key "g"
+  move_home
 
 def_key "n"
     next_found_item
 def_key "N"
     previous_found_item
 
-# not used but bound
 def_key "J"
     move_sort_order_down
 def_key "K"
     move_sort_order_up
-def_key "h"
-  jump_to_parent_directory
-def_key "l"
-  enter_directory
-def_key "l"
-  run_action
-def_key "l"
-  play_item
-def_key "m"
-  show_media_library
-def_key "m"
-  toggle_media_library_columns_mode
-def_key "t"
-  show_tag_editor
-def_key "v"
-  show_visualizer
-def_key "G"
-  move_end
-def_key "g"
-  move_home
+
 def_key "ctrl-k"
   move_selected_items_up
 def_key "ctrl-j"
   move_selected_items_down
-def_key "space"
-  select_item
-  scroll_down
-#jump_to_position_in_song
+# def_key "space"
+#   select_item
+#   scroll_down
+
+def_key "x"
+  delete_playlist_items
+def_key "x"
+  delete_stored_playlist
+
 def_key "U"
   update_database
 def_key "s"
@@ -480,3 +469,18 @@ def_key "x"
   delete_playlist_items
 def_key "P"
   show_playlist
+def_key "m"
+  show_media_library
+def_key "m"
+  toggle_media_library_columns_mode
+def_key "v"
+  show_visualizer
+def_key "t"
+  show_tag_editor
+
+def_key "."
+    show_lyrics
+def_key "+"
+    show_clock
+def_key "="
+    volume_up

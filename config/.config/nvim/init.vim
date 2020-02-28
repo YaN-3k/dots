@@ -115,7 +115,7 @@ hi MatchParen       ctermbg=0   ctermfg=4   cterm=reverse
 "hi Special                      ctermfg=5
 
 hi Comment                      ctermfg=245
-hi String                       ctermfg=6
+hi String                       ctermfg=1
 hi Type                         ctermfg=4
 hi Statement                    ctermfg=4
 hi Constant                     ctermfg=5

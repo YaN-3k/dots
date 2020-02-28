@@ -117,6 +117,9 @@ map mkd :mkdir<space>
 map R :restart<CR>
 nmap q :write<CR>ZQ
 
+"Open all images in current directory in sxiv thumbnail mode
+nnoremap sx :!sxiv -t %d & <cr>
+
 fileview */,.*/,../ tree %c -L 1 --dirsfirst
 
 " Web
@@ -154,7 +157,7 @@ fileviewer *.[1-8] man ./%c | col -b
 
 " Images
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm vifmimg draw %px %py %pw %ph %c %pc vifmimg clear
-filextype *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm  rotdir %f 2>/dev/null | sxiv -ia 2>/dev/null &
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm sxiv -ia 2>/dev/null &
 
 filextype *.svg inkscape %f 2>/dev/null &
 filextype *.xcf gimp %f 2>/dev/null &
