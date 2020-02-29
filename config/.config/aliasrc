@@ -14,6 +14,7 @@ alias cp="cp -riv"
 alias mv="mv -iv"
 alias rm="rm -v"
 alias mkd="mkdir -pv"
+alias zman="man zshall"
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
@@ -22,6 +23,7 @@ alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 
 # programs
+alias gr="grep"
 alias yt="youtube-dl --add-metadata -i"
 alias yta="yt -x -f bestaudio/best"
 alias nc='ncmpcpp'
@@ -60,15 +62,17 @@ alias yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%
 
 # Pacmna
 alias up="sudo pacman -Syu"
-alias p="sudo pacman"
 alias owo="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -S -"
 alias uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | xargs -ro yay -Rns"
 alias ser="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -"
 alias sel="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -"
 alias paco="sudo pacman -Rns $(pacman -Qtdq)"
 
+alias y='xclip -selection clipboard -in'
+alias p='xclip -selection clipboard -out'
+
 # fzf
-fe()   { find . -type f | fzf | xargs -r "$EDITOR" ;}
+fe()   { find . -type f,l | fzf | xargs -r "$EDITOR" ;}
 cdf() { cd "$(find . -type d | fzf --preview '')" ;}
 fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
 
@@ -77,6 +81,13 @@ open() { xdg-open "$1" &> /dev/null & disown;}
 psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+
+autoload -U zmv
+
+r() {
+	local time=$1; shift
+	sched +"$time" "notify-send --urgency=critical 'Reminder' '$@'";
+}
 
 conf() {
 	case $1 in
@@ -87,12 +98,17 @@ conf() {
 		ncmpcpp)	$EDITOR ~/.config/ncmpcpp/config ;;
 		pacman)		sudoedit /etc/pacman.conf ;;
 		ranger)		$EDITOR ~/.config/ranger/rc.conf ;;
+		vifm)		$EDITOR ~/.config/vifm/vifmrc ;;
+		term)       $EDITOR ~/..config/alacritty/alacritty.yml ;;
+		picom)      $EDITOR ~/.config/picom.conf ;;
+		dunst)      $EDITOR ~/.config/dunst/dunstrc ;;
 		tmux)	    $EDITOR	~/.tmux.conf ;;
 		vim)		$EDITOR ~/.config/nvim/init.vim ;;
 		xinit)		$EDITOR ~/.xinitrc ;;
 		xresources)	$EDITOR ~/.Xresources && xrdb ~/.Xresources ;;
 		zathura)	$EDITOR ~/.config/zathura/zathurarc ;;
 		zsh)		$EDITOR ~/.config/zsh/.zshrc && source ~/.config/zsh/.zshrc ;;
+		bash)		$EDITOR ~/.bashrc && source ~/.bashrc ;;
 		hosts)		sudoedit /etc/hosts ;;
 		sudo)		sudoedit /etc/sudoers ;;
 		*)			echo "Unknown application: $1" ;;

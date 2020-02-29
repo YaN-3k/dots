@@ -114,12 +114,12 @@ super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
 # Move the node to selected desktop
-alt + shift + {1-9,0}
-	swapdesktop {1-9,10}
+#alt + shift + {1-9,0}
+#	swapdesktop {1-9,10}
 
 # Swap nodes betwen desktops
-alt + {1-9,0}
-	bspc node --to-desktop ^{1-9,10} --focus
+#alt + {1-9,0}
+#	bspc node --to-desktop ^{1-9,10} --focus
 
 # Move node to the left, rigt desktop
 ctrl + shift + {h,l}
@@ -158,7 +158,7 @@ super + alt + {p,b,comma,period}
 	bspc node --focus @{parent,brother,first,second}
 
 # Cancel the preselection
-alt + {_,shift +} c
+super + {_,shift +} e
 	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
 
 # Preselect the ratio

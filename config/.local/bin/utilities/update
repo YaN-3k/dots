@@ -12,7 +12,7 @@ if [ ! "$package" -eq 0 ]; then
 	if sudo pacman --noconfirm -Syu; then
 		notify-send "✅ Updating completed!" "$package packages have been updated."
 	else
-		notify-send "❌ Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
+		notify-send -u critical "❌ Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
 		exit
 	fi
 else

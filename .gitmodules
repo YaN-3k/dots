@@ -1,9 +1,6 @@
 [submodule "config/.config/dmenu/j4-dmenu-desktop"]
 	path = config/.config/dmenu/j4-dmenu-desktop
 	url = https://github.com/enkore/j4-dmenu-desktop
-[submodule "config/.fzf"]
-	path = config/.fzf
-	url = https://github.com/junegunn/fzf
 [submodule "config/.zgen"]
 	path = config/.zgen
 	url = https://github.com/tarjoilija/zgen

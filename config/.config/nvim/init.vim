@@ -19,7 +19,7 @@ endif
 call plug#begin('~/.config/nvim/bundle')
 
 	" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug '~/.fzf'
+	Plug '~/.zgen/junegunn/fzf-master'
 	Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree'
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 shopt -s globstar dotglob
 for file in "$HOME"/Dotfiles/config/**; do
-	if [[ -f "$file" && "$file" != */.zgen/* && "$file" != */.fzf/* && "$file" != */dmenu/* && "$file" != */bundle/* && "$file" != */wallpaper ]]; then
+	if [[ -f "$file" && "$file" != */.zgen/* && "$file" != */.config/dmenu/* && "$file" != */bundle/* && "$file" != */wallpaper ]]; then
 		options+=("${file#$HOME/Dotfiles/config/}")
 	fi
 done

@@ -1,11 +1,13 @@
 ## Overview
 ![screenshot](screenshot.jpg)
-My Arch Linux configuration files for programs and bspwm. I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup.<br>
+### My Arch Linux configuration files for programs and bspwm.
+I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup.<br>
 If you have any problem you can write to me on telegram [@Cherrry9](https://t.me/Cherrry9).
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Installation Guide](#Installation-guide)
 1. [Dependencies](#dependencies)
+1. [Note](#note)
 ## Installation Guide
 #### Install dependencies.
 Check the list of [dependencies](#dependencies) and install the necessary programs and fonts.
@@ -38,10 +40,6 @@ WARNING! stowing config would cause conflicts:
 All operations aborted.
 ```
 Delete or copy/move to another directory this file, and run again `stow`.
-#### Install fzf from my repo.
-```
-$ yes | ~/.fzf/install
-```
 #### Dmenu
 ```
 $ cd ~/.config/dmenu/dmenu-4.9/
@@ -66,27 +64,7 @@ $ nvim
 ```
 
 #### Installation complete.
-Log out and log in to see the changes.
-#### Note
-My wallpapers are in [Cherrry9/Wallpapers](https://github.com/Cherrry9/Wallpapers)<br>
-I created the telegram theme for my rice - [Dotfiles/config/.local/share/TelegramDesktop](https://github.com/Cherrry9/Dotfiles/tree/master/config/.local/share/TelegramDesktop)<br>
-You can see all my keybindings with the description using `super + F2` (`$ show_help`)<br>
-To see the custom sudo prompt with the bee, add these lines to `/etc/sudoers`:
-```
-Defaults  lecture="always"
-Defaults  lecture_file="/home/<your_user>/.local/share/sudoers.bee"
-```
-To view the custom login screen with Arch logo on tty:
-```
-$ cd /etc/
-$ mv issue issue-old
-$ ~/.scripts/makeissue
-```
-If you use Arch add this to you `/etc/pacman.conf` (easter egg):
-```
-ILoveCandy
-```
-And update you computer :)
+Log out and log in to see the changes. Check [note](#note) to view additional configuration steps.
 ## Dependencies
 Package name | Description
 :--- | :---
@@ -117,7 +95,6 @@ python-pip | is a tool for managing python 3 packages
 [ueberzug] | is an alternative for w3mimgdisplay
 zsh | is the best UNIX shell
 [zgen] (submodule) | is a Zsh plugin manager
-[fzf] (submodule) | is a fuzzy finder
 pulseaudio-alsa | is a Pulseaudio output plugin for ALSA
 mpd | is a lightweight music player daemon
 mpc | is a command-line client for the mpd
@@ -138,11 +115,11 @@ cronie | is a cron implementations
 
 #### One liner for Arch:
 ```
-sudo pacman -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim vifm dunst python-pip zsh fzf pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
+sudo pacman --needed -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim vifm dunst python-pip zsh pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
 ```
 #### AUR:
 ```
-yay -S polybar ranger-git
+yay --needed -S polybar ranger-git
 ```
 #### Pip:
 ```
@@ -151,4 +128,24 @@ pip3 install --user pynvim ueberzug
 [ueberzug]: https://github.com/seebye/ueberzug
 [ttf-font-awesome]: https://fontawesome.com/download
 [zgen]: https://github.com/tarjoilija/zgen
-[fzf]: https://github.com/junegunn/fzf#using-git
+## Note
+My wallpapers are in [Cherrry9/Wallpapers](https://github.com/Cherrry9/Wallpapers)<br>
+You can find useful scripts in [config/.local/bin](config/.local/bin) directory.<br>
+I created [startpage](https://github.com/Cherrry9/startpage) and the telegram [theme](config/.local/share/TelegramDesktop/Iceberg.tdesktop-theme) for my rice<br>
+You can see all my keybindings with the description using `super + F2` (`$ show_help`)<br>
+To see the custom sudo prompt with the bee, add these lines to `/etc/sudoers`:
+```
+Defaults  lecture="always"
+Defaults  lecture_file="/home/<your_user>/.local/share/sudoers.bee"
+```
+To view the custom login screen with Arch logo on tty:
+```
+$ cd /etc/
+$ mv issue issue-old
+$ ~/.scripts/makeissue
+```
+If you use Arch add this to you `/etc/pacman.conf` (easter egg):
+```
+ILoveCandy
+```
+And update you computer :)

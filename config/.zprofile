@@ -6,7 +6,7 @@
 #  |_|
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+export PATH="$PATH:$HOME/.zgen/junegunn/fzf-master/bin:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 
 # Default programs:
 export EDITOR="nvim"
@@ -14,10 +14,6 @@ export TERMINAL="alacritty"
 export READER="zathura"
 export FILE="ranger"
 export BROWSER="qutebrowser"
-
-# History
-export HISTSIZE=1000
-export SAVEHIST=1000
 
 # ~/ Clean-up:
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
@@ -48,11 +44,11 @@ export FZF_DEFAULT_OPTS='
 --color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
 --height 50%
 --reverse
---preview "cat {}"
+--preview "preview {}"
 '
+
 export FZF_DEFAULT_COMMAND="find ."
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_OPTS='--preview-window=:0%'
 export FZF_CTRL_R_OPTS='--preview-window=:0%'
 export FZF_ALT_C_COMMAND='find . -type d'
 
