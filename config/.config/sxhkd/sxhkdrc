@@ -245,10 +245,10 @@ super + {_,shift +} bracketleft
 
 # increase the backlight
 alt + {_,shift +} minus
-	{brightness down, sudo -A keybacklight -inc}
+	{brightness down, sudo -A keybacklight -dec}
 # decrease the backlight
 alt  + {_,shift +} equal
-	{brightness up, sudo -A keybacklight -dec}
+	{brightness up, sudo -A keybacklight -inc}
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
 	{brightness down,brightness up}
 

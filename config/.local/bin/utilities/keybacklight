@@ -3,14 +3,14 @@ FILE="/sys/class/leds/dell::kbd_backlight/brightness"
 if [ -f "$FILE" ]; then
 	case $1 in
 		-inc) current=$(cat $FILE)
-			[ "$current" -lt 4 ] && echo $((++current)) > $FILE;;
+			[ "$current" -lt 4 ] && echo $((current + 1)) > $FILE;;
 		-dec) current=$(cat $FILE)
-			[ "$current" -gt 0 ] && echo $((--current)) > $FILE;;
+			[ "$current" -gt 0 ] && echo $((current - 1)) > $FILE;;
 		-set) [ -n "$2" ] && {
 			echo "$2" > $FILE
 		}
 	esac
 else
-	echo "File don't exist!"
+	echo "File doesn't exist!"
 	exit 1
 fi

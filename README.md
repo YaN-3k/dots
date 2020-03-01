@@ -1,8 +1,7 @@
 ## Overview
 ![screenshot](screenshot.jpg)
 ### My Arch Linux configuration files for programs and bspwm.
-I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup.<br>
-If you have any problem you can write to me on telegram [@Cherrry9](https://t.me/Cherrry9).
+I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup. Feel free to take, modify and use anything in this repo. If you have any problem you can write to me on telegram [@Cherrry9](https://t.me/Cherrry9).
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Installation Guide](#Installation-guide)
@@ -88,6 +87,7 @@ unclutter | hides an inactive mouse.
 dmenu (buil in my repo) | is a dynamic menu for X
 tmux | is a terminal multiplexer
 neovim | is a amazing modal text editor with many plugins
+exa | is an improved version of ls
 vifm | is a vim-like file manager
 ranger-git | is also a vim-like file manager
 dunst | is a lightweight notification-daemons
@@ -115,7 +115,7 @@ cronie | is a cron implementations
 
 #### One liner for Arch:
 ```
-sudo pacman --needed -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim vifm dunst python-pip zsh pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
+sudo pacman --needed -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim exa vifm dunst python-pip zsh pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
 ```
 #### AUR:
 ```

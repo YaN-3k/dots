@@ -1,6 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 preset=$1
-read -r _ XY _ < <(xdpyinfo | grep 'dimensions:'); X=${XY%x*} Y=${XY#*x}
+XY=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
+X="${XY%x*}"
+Y="${XY#*x}"
 case $preset in
 'top-left')
 	# top left
@@ -31,8 +33,8 @@ case $preset in
 	;;
 'center')
 	# center
-	x=$((X/4))
-	y=$((Y/4))
+	x=$((X / 4))
+	y=$((Y / 4))
 	h=$((Y / 2))
 	w=$((X / 2))
 	;;

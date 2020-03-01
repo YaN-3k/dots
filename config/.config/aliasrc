@@ -82,8 +82,6 @@ psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
-autoload -U zmv
-
 r() {
 	local time=$1; shift
 	sched +"$time" "notify-send --urgency=critical 'Reminder' '$@'";
