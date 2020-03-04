@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+# This is a alpha version, don't run it.
+# install all necessary packages
+ins --needed bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim exa vifm dunst python-pip zsh pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie polybar ranger-git
+pip3 install --user pynvim ueberzug
+
+# update directories
+xdg-user-dirs-update
+
+# clone repo && stow
+git clone "https://github.com/Cherrry9/Dotfiles" ~/Dotfiles
+cd ~/Dotfiles || exit
+git submodule update --init --recursive
+stow --no-folding --adopt --dir ~/Dotfiles -Sv config -t ~/
+git reset --hard
+
+# vim
+nvim --headless -c q -c q
+
+# dmenu
+cd ~/.config/dmenu/dmenu-4.9/ || exit
+sudo make install
+
+cd ~/.config/dmenu/j4-dmenu-desktop || exit
+cmake .
+make
+sudo make install
+
+# cronjobs
+(
+	crontab -l 2>/dev/null
+	echo "0,30 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/$USER_NAME/.local/bin/cron/checkup"
+) | crontab -
+(
+	crontab -l 2>/dev/null
+	echo "*/5 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/$USER_NAME/.local/bin/cron/cronbat"
+) | crontab -
+
+# issue
+cd /etc
+sudo mv issue issue-old
+sudo ~/.local/bin/utilities/makeissue

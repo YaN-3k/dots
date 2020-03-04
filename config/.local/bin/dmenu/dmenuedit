@@ -1,10 +1,21 @@
 #!/usr/bin/env sh
-shopt -s globstar dotglob
-for file in "$HOME"/Dotfiles/config/**; do
-	if [[ -f "$file" && "$file" != */.zgen/* && "$file" != */.config/dmenu/* && "$file" != */bundle/* && "$file" != */wallpaper ]]; then
-		options+=("${file#$HOME/Dotfiles/config/}")
+list="$HOME/.cache/files.list"
+find "$HOME/Dotfiles/config" -type f > "$list"
+while read -r file; do
+	if [ -f "$file" ]; then
+		case $file in
+		*/.zgen/* | */.config/dmenu/* | */bundle/* | */wallpaper) ;;
+		*)
+			if [ -n "$options" ]; then
+				options="$options\n${file#$HOME/Dotfiles/config/}"
+			else
+				options="${file#$HOME/Dotfiles/config/}"
+			fi
+			;;
+		esac
 	fi
-done
-choice=$(printf '%s\n' "${options[@]}" | dmenu -i -p 'Edit a config file: ') || exit 1
+done <"$list"
+rm "$list"
+choice=$(printf '%b\n' "$options" | dmenu -i -p 'Edit a config file') || exit 1
 choice="$HOME"/Dotfiles/config/"$choice"
 $TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"

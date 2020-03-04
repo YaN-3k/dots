@@ -13,7 +13,7 @@ send_notification() {
 	brightness=$(printf %.$2f $(xbacklight -get))
 	barFull=$(seq -s "$FULL" $((brightness / 5)) | sed 's/[0-9]//g')
 	barEmpty=$(seq -s "$EMPTY" $((20 - brightness / 5)) | sed 's/[0-9]//g')
-	dunstify -t 1000 -r 2593 -u normal "Brightness" "$col$color$barFull$end$barEmpty"
+	dunstify -t 1000 -r 2593 -u normal "Brightness $brightness%" "$col$color$barFull$end$barEmpty"
 }
 
 case $1 in

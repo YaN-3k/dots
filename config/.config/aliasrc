@@ -26,7 +26,7 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias gr="grep"
 alias yt="youtube-dl --add-metadata -i"
 alias yta="yt -x -f bestaudio/best"
-alias nc='ncmpcpp'
+alias nc='ncmpcpp 2>/dev/null'
 alias ra='ranger'
 alias nm='neomutt'
 alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
@@ -78,7 +78,7 @@ fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
 
 # function
 open() { xdg-open "$1" &> /dev/null & disown;}
-psgrep() { ps axuf | grep -v grep | grep "$@" -i --color=auto;}
+psgrep() { ps axufc | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
 mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
