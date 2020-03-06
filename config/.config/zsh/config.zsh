@@ -79,7 +79,7 @@ _comp_options+=(globdots)  # Include hidden files.
 # show available tmux sessions
 if [[ -z $TMUX ]]; then
     sessions=$( tmux ls 2> /dev/null | awk '! /attached/ { sub(":", "", $1); print $1; }' | xargs echo )
-    if [[ ! -z $sessions ]]; then
+    if [[ -n $sessions ]]; then
         echo "==> Available tmux sessions: $sessions"
     fi
     unset sessions

@@ -86,7 +86,7 @@ set statusline+=\/%#MyStatuslineFiletypeBody#%{SetFiletype(&filetype)}
 set statusline+=%#MyStatuslineFiletype#░▒▓█
 
 " Setup the colors
-hi StatusLine               ctermfg=5     ctermbg=NONE  cterm=NONE
+hi StatusLine               ctermbg=NONE  ctermfg=5     cterm=NONE
 hi StatusLineNC             ctermbg=NONE  ctermfg=8     cterm=bold
 
 hi MyStatuslineSeparator    ctermbg=NONE  ctermfg=0     cterm=reverse
@@ -94,7 +94,7 @@ hi MyStatuslineSeparator    ctermbg=NONE  ctermfg=0     cterm=reverse
 hi MyStatuslineModified     ctermbg=NONE  ctermfg=0     cterm=NONE
 
 hi MyStatuslineFiletype     ctermbg=NONE  ctermfg=0     cterm=reverse
-hi MyStatuslineFiletypeBody ctermfg=5     cterm=italic  ctermbg=0
+hi MyStatuslineFiletypeBody ctermbg=0     ctermfg=5     cterm=italic
 
 hi MyStatuslineLineCol      ctermbg=NONE  ctermfg=0     cterm=reverse
 hi MyStatuslineLineColBody  ctermbg=0     ctermfg=2     cterm=none

@@ -44,6 +44,8 @@ hi CursorColumn ctermbg=0      ctermfg=NONE   cterm=NONE
 hi MatchParen   ctermbg=NONE   ctermfg=4      cterm=underline
 hi ModeMsg      ctermbg=NONE   ctermfg=8      cterm=NONE
 hi NormalNC     ctermbg=NONE   ctermfg=15     cterm=NONE
+hi Folded       ctermbg=0      ctermfg=4      cterm=NONE
+hi FoldColumn   ctermbg=0      ctermfg=4      cterm=NONE
 
 " language syntax
 hi Comment      ctermbg=NONE   ctermfg=8      cterm=NONE
@@ -54,17 +56,17 @@ hi Number       ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Boolean      ctermbg=NONE   ctermfg=11     cterm=NONE
 hi Float        ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Identifier   ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Function     ctermbg=NONE   ctermfg=3      cterm=NONE
+hi Function     ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Conditional  ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Repeat       ctermbg=NONE   ctermfg=1      cterm=NONE
+hi Repeat       ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Label        ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Operator     ctermbg=NONE   ctermfg=NONE   cterm=NONE
-hi Keyword      ctermbg=NONE   ctermfg=1      cterm=NONE
+hi Keyword      ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Exception    ctermbg=NONE   ctermfg=1      cterm=NONE
 hi Include      ctermbg=NONE   ctermfg=2      cterm=NONE
 hi Define       ctermbg=NONE   ctermfg=2      cterm=NONE
-hi Macro        ctermbg=NONE   ctermfg=1      cterm=NONE
-hi PreCondit    ctermbg=NONE   ctermfg=1      cterm=NONE
+hi Macro        ctermbg=NONE   ctermfg=3      cterm=NONE
+hi PreCondit    ctermbg=NONE   ctermfg=3      cterm=NONE
 hi Type         ctermbg=NONE   ctermfg=4      cterm=NONE
 hi StorageClass ctermbg=NONE   ctermfg=15     cterm=NONE
 hi PreProc      ctermbg=NONE   ctermfg=5      cterm=NONE
@@ -77,8 +79,9 @@ hi Ignore       ctermbg=NONE   ctermfg=1      cterm=NONE
 hi Error        ctermbg=NONE   ctermfg=1      cterm=bold
 hi Todo         ctermbg=NONE   ctermfg=3      cterm=bold
 hi Statement    ctermbg=NONE   ctermfg=4      cterm=bold
+hi Include      ctermbg=NONE   ctermfg=5      cterm=NONE
 
-" sh syntax adjustments
+" sh
 hi shStatement  ctermbg=NONE   ctermfg=4      cterm=NONE
 hi shFunction   ctermbg=NONE   ctermfg=7      cterm=NONE
 hi shOperator   ctermbg=NONE   ctermfg=7      cterm=NONE

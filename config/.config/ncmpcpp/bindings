@@ -437,18 +437,18 @@ def_key "n"
 def_key "N"
     previous_found_item
 
-def_key "J"
-    move_sort_order_down
-def_key "K"
-    move_sort_order_up
+#def_key "J"
+#    move_sort_order_down
+#def_key "K"
+#    move_sort_order_up
 
-def_key "ctrl-k"
+def_key "K"
   move_selected_items_up
-def_key "ctrl-j"
+def_key "J"
   move_selected_items_down
-# def_key "space"
-#   select_item
-#   scroll_down
+#def_key "space"
+#  select_item
+#  scroll_down
 
 def_key "x"
   delete_playlist_items

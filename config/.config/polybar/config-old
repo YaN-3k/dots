@@ -9,11 +9,13 @@
 ; Colors & Settings
 ;~~~~~~~~~~~~~~~~~~~
 [color]
-bg = #00000000
-fg = ${xrdb:foreground}
-bg-alt = ${xrdb:background}
-fg-alt = ${xrdb:color15}
-secondary = ${xrdb:color4}
+white = #FFFFFF
+black = #000000
+
+bg = #161821
+fg = #C6C8D1
+fg-alt = #6b7089
+blue = #84A0C6
 
 [general]
 padding = 2
@@ -33,21 +35,18 @@ foreground = ${color.fg}
 overline-size = 2
 
 padding-left = 0
-padding-right = 0
+padding-right = 1
 
-module-margin-left = 0
-module-margin-right = 0
+module-margin-left = 1
+module-margin-right = 1
 
-font-0 = "DejaVu Sans Mono:style=bold:pixelsize=7;2"
+font-0 = "Inconsolata:pixelsize=8;2"
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
 font-2 = "Font Awesome 5 Brands:pixelsize=10;2"
 
-; For separator
-font-3 = "DejaVu Sans Mono:pixelsize=20;2"
-
-modules-left = bspwm left
-modules-center = right mpd left
-modules-right = right pkg record xkeyboard volume xbacklight network wired-network battery date powermenu
+modules-left = bspwm
+modules-center = mpd
+modules-right = pkg record xkeyboard volume xbacklight network wired-network battery date powermenu
 
 wm-restack = bspwm
 
@@ -70,21 +69,6 @@ screenchange-reload = true
 format-foreground = ${color.fg}
 format-background = ${color.bg}
 
-;~~~~~~~~~~~
-; Separator
-;~~~~~~~~~~~
-[module/left]
-type = custom/text
-content-background = ${color.bg}
-content-foreground = ${color.bg-alt}
-content = "%{T4}█▓▒░%{T-}"
-
-[module/right]
-type = custom/text
-content-background = ${color.bg
-content-foreground = ${color.bg-alt}
-content = "%{T4}░▒▓█%{T-}"
-
 ;~~~~~~~~~~~~~~~~~~
 ; BSPWM Workspaces
 ;~~~~~~~~~~~~~~~~~~
@@ -98,28 +82,36 @@ enable-scroll = false
 reverse-scroll = false
 fuzzy-match = true
 
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 0;
+
 format = <label-state><label-mode>
 
-label-focused = %name%
-
-label-focused-foreground = ${color.secondary}
-label-focused-background = ${xrdb:color0}
-
-label-focused-overline = ${color.secondary}
+label-monitor = %name%
+label-padding = 2
+label-focused = %name% %icon%
+label-focused-foreground = ${color.blue}
+label-focused-background = #262a3f
+label-focused-overline = ${color.blue}
 label-focused-padding = ${general.padding}
 
-label-occupied = %name%
+label-occupied = %name% %icon%
 label-occupied-padding = ${general.padding}
-label-occupied-background = ${color.bg-alt}
-label-occupied-foreground = ${color.secondary}
 
-label-urgent = %name%
+label-urgent = %name% %icon%
 label-urgent-padding = ${general.padding}
 
-label-empty = %name%
-label-empty-padding = ${general.padding}
-label-empty-background = ${color.bg-alt}
-; label-empty-foreground = ${color.fg-alt}
+label-empty =
+label-empty-padding = 0
+label-empty-foreground = ${color.fg-alt}
 
 ;~~~~~
 ; MPD
@@ -134,7 +126,6 @@ interval = 2
 
 format-online = <label-song>
 
-format-online-background = ${color.bg-alt}
 label-song = %{F#84A0C6}%{F-} %artist% - %title%
 label-offline = %{F#84A0C6}%{F-} mpd is offline
 
@@ -158,9 +149,6 @@ type = internal/xbacklight
 format = <label>
 label = %{F#84A0C6}%{F-} %percentage%%
 
-format-background = ${color.bg-alt}
-format-padding = 1
-
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; Wireless Network / WiFi
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,14 +157,8 @@ type = internal/network
 interface = wlan0
 interval = 1
 
-format-connected-padding = 1
-format-disconnected-padding = 1
-
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-
-format-connected-background = ${color.bg-alt}
-format-disconnected-background = ${color.bg-alt}
 
 label-connected = %{F#84A0C6} %{F-}%essid%
 label-disconnected = %{F#84A0C6} %{F-}disconnected
@@ -200,12 +182,8 @@ format-connected-foreground = ${color.fg}
 type = internal/date
 interval = 1
 label =  %time%
-
 time = %{F#84A0C6}%{F-} %I:%M %p
 time-alt = %{F#84A0C6}%{F-} %Y-%m-%d
-
-format-padding = 1
-format-background = ${color.bg-alt}
 
 ;~~~~~~~~~~~~
 ; PulseAudio
@@ -214,11 +192,7 @@ format-background = ${color.bg-alt}
 type = internal/pulseaudio
 format-volume = <ramp-volume> <label-volume>
 format-muted = <label-muted>
-ramp-volume-foreground = ${color.secondary}
-format-volume-padding = 1
-format-muted-padding = 1
-format-volume-background = ${color.bg-alt}
-format-muted-background = ${color.bg-alt}
+ramp-volume-foreground = ${color.blue}
 
 label-muted   = "%{F#84A0C6}%{F-} muted"
 ramp-volume-0 = 
@@ -243,14 +217,6 @@ format-charging    = %{F#84A0C6}<animation-charging>%{F-} <label-charging>
 format-discharging = %{F#84A0C6}<ramp-capacity>%{F-} <label-discharging>
 format-full        = %{F#84A0C6}<ramp-capacity>%{F-} <label-full>
 
-format-full-padding = 1
-format-charging-padding = 1
-format-discharging-padding = 1
-
-format-charging-background = ${color.bg-alt}
-format-full-background = ${color.bg-alt}
-format-discharging-background = ${color.bg-alt}
-
 ramp-capacity-0 = "%{F#de373d} "
 ramp-capacity-1 = "%{F#de373d} "
 ramp-capacity-2 = ""
@@ -274,10 +240,8 @@ animation-charging-framerate = 750
 [module/powermenu]
 type = custom/script
 exec = echo ""
-format-foreground = ${color.secondary}
-format-background = ${color.bg-alt}
+format-foreground = ${color.blue}
 click-left = dmenupower
-format-padding = 1
 
 ;~~~~
 ; pkg
@@ -287,8 +251,6 @@ type = custom/script
 format-foreground = ${color.fg}
 exec = ~/.config/polybar/update
 click-left = ~/.local/bin/update
-format-background = ${color.bg-alt}
-format-padding = 1
 
 ;~~~~~~~~
 ; Record

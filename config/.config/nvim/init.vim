@@ -18,18 +18,17 @@ endif
 
 call plug#begin('~/.config/nvim/bundle')
 
-	" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug '~/.zgen/junegunn/fzf-master'
-	Plug 'junegunn/fzf.vim'
+	"Plug '~/.zgen/junegunn/fzf-master'
+	"Plug 'junegunn/fzf.vim'
 	Plug 'scrooloose/nerdtree'
+	Plug 'kien/ctrlp.vim'
 
 	Plug 'dense-analysis/ale'
+	Plug '~/.config/nvim/bundle/vim-trailing-whitespace'
 
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 	Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 	Plug 'Shougo/deoplete-clangx'
-	" Plug 'https://github.com/Shougo/neco-vim'
-	" Plug 'https://github.com/Shougo/neoinclude.vim'
 	Plug 'deoplete-plugins/deoplete-jedi'
 	Plug 'deoplete-plugins/deoplete-zsh'
 	Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
@@ -43,20 +42,13 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'airblade/vim-gitgutter'
 	Plug 'tpope/vim-fugitive'
 
-	Plug '~/.config/nvim/bundle/vim-trailing-whitespace'
 	Plug 'tpope/vim-surround'
 	Plug 'tpope/vim-commentary'
 	Plug 'jiangmiao/auto-pairs'
 
-	" Plug 'itchyny/lightline.vim'
-	" Plug '~/.config/nvim/bundle/lightline-simple/'
-
 	Plug 'sheerun/vim-polyglot'
-	" Plug 'luochen1990/rainbow'
 
 	Plug 'christoomey/vim-tmux-navigator'
-	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-	Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
@@ -134,10 +126,10 @@ nnoremap <S-s> :call ToggleHiddenAll()<CR>
 " Plugin configs
 "================
 " ALE - Asynchronous Lint Engine
-hi ALEWarning       ctermbg=NONE ctermfg=3   cterm=underline
-hi ALEError         ctermbg=NONE   ctermfg=1   cterm=underline
-hi ALEWarningSign    		    ctermfg=3   cterm=bold
-hi ALEErrorSign      		    ctermfg=1   cterm=bold
+hi ALEWarning       ctermbg=NONE  ctermfg=3   cterm=underline
+hi ALEError         ctermbg=NONE  ctermfg=1   cterm=underline
+hi ALEWarningSign   ctermbg=NONE  ctermfg=3   cterm=bold
+hi ALEErrorSign     ctermbg=NONE  ctermfg=1   cterm=bold
 
 let g:ale_linters = {
 \   'c': ['ccls', 'clang'],
@@ -183,6 +175,11 @@ let g:fzf_colors =
 " Default fzf layout
 let g:fzf_layout = { 'down': '~50%' }
 
+" ctrlp configuration
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_follow_symlinks = 2
+let g:ctrlp_cmd = 'CtrlP'
+
 " Python paths, needed for virtualenvs
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
@@ -192,12 +189,6 @@ let g:python_highlight_all = 1
 
 " Go - $ go get -u github.com/stamblerre/gocode
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-
-" LaTeX
-let g:livepreview_previewer = 'zathura'
-
-" Enable "Rainbow Parentheses Improved"
-let g:rainbow_active = 1
 
 " Whitspace
 let g:extra_whitespace_ignored_filetypes = [ 'help', 'vim-plug' ]
@@ -228,11 +219,11 @@ call deoplete#custom#source('ultisnips', 'rank', 1000)
 " AutoPairs
 let g:AutoPairs={'(':')', '[':']', '{':'}', "'":"'", '"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"} "'<':'>',
 
-"On startup, go to the last changes
+" On startup, go to the last changes
 "au BufEnter * :'.
 
 " If you want :UltiSnipsEdit to split your window.
-" let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 "===================
 " Language-specific
@@ -255,10 +246,10 @@ augroup END
 " Leader key
 let mapleader = ' '
 
-" enable/disable deoplete
+" Enable/Disable deoplete
 map <Leader>d :call deoplete#toggle()<CR>
 
-" gitgutter maping
+" Gitgutter maping
 map <Leader>gt :GitGutterToggle<CR>
 nmap gn <Plug>(GitGutterNextHunk)
 nmap gN <Plug>(GitGutterPrevHunk)
@@ -273,8 +264,8 @@ map <C-s> :noh<CR>
 map <Leader>l :'.<CR>
 
 " Complete with <TAB>
-" inoremap <expr> <silent> <Tab>  pumvisible()?"\<C-n>":"\<TAB>"
-" inoremap <expr> <silent> <S-TAB>  pumvisible()?"\<C-p>":"\<S-TAB>"
+"inoremap <expr> <silent> <Tab>  pumvisible()?"\<C-n>":"\<TAB>"
+"inoremap <expr> <silent> <S-TAB>  pumvisible()?"\<C-p>":"\<S-TAB>"
 
 " When line overflows, it will go
 " one _visual_ line and not actual
@@ -282,17 +273,16 @@ map j gj
 map k gk
 
 " fzf, fuzzy finder
-nnoremap <C-p> :Files<CR>
-nnoremap <C-g> :GFiles<CR>
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
+"nnoremap <C-p> :Files<CR>
+"nnoremap <C-g> :GFiles<CR>
+"let g:fzf_action = {
+"  \ 'ctrl-t': 'tab split',
+"  \ 'ctrl-x': 'split',
+"  \ 'ctrl-v': 'vsplit' }
 
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
+" CtrlP
+let g:ctrlp_map = '<c-p>'
+map <C-i> :CtrlPBufTag<CR>
 
 map <C-n> :NERDTreeToggle<CR>
 
@@ -300,9 +290,6 @@ map <C-n> :NERDTreeToggle<CR>
 let g:SuperTabMappingTabLiteral = '<a-tab>'
 let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabContextDefaultCompletionType = '<c-n>'
-
-" LaTeX
-map <Leader>l :LLPStartPreview<CR>
 
 " ALE - Asynchronous Lint Engine
 map fw :FixWhitespace<CR>
