@@ -26,10 +26,6 @@ if ! zgen saved; then
   zgen save
 fi
 
-# Plug config
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=245'
-bindkey -v '^N' autosuggest-accept
-
 # Load shell-agnostic configs
 source ~/.config/shortcutrc
 source ~/.config/aliasrc
@@ -37,7 +33,6 @@ source ~/.config/aliasrc
 # Load config
 source $ZDOTDIR/arrow.zsh
 source $ZDOTDIR/config.zsh
-source $ZDOTDIR/completion.zsh
 source $ZDOTDIR/keybinds.zsh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.zsh

@@ -12,7 +12,10 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey -M vicmd '^E' edit-command-line
 #bindkey '^E' edit-command-line
 
-# last parametr
+# Autocompletion
+bindkey -v '^N' autosuggest-accept
+
+# Last parametr
 bindkey -s '^g' '!*'
 
 # Rebind clear screen for tmux
@@ -24,3 +27,9 @@ bindkey '^H' backward-delete-char
 bindkey -M vicmd "^[[3~" delete-char
 bindkey "^[[3~" delete-char
 
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect '^[[Z' reverse-menu-complete

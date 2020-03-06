@@ -11,6 +11,19 @@ setopt IGNOREEOF
 setopt COMPLETE_ALIASES
 setopt PROMPT_SUBST
 
+# Completion
+setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
+setopt PATH_DIRS           # Perform path search even on command names with slashes.
+setopt AUTO_MENU           # Show completion menu on a successive tab press.
+setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
+setopt AUTO_PARAM_SLASH    # If completed parameter is a directory, add a trailing slash.
+setopt AUTO_PARAM_KEYS
+setopt FLOW_CONTROL        # Disable start/stop characters in shell editor.
+unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
+unsetopt COMPLETE_ALIASES  # Completion for aliases
+unsetopt ALWAYS_TO_END     # Move cursor to the end of a completed word.
+unsetopt CASE_GLOB
+
 # Jobs
 setopt LONG_LIST_JOBS     # List jobs in the long format by default.
 setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
@@ -55,6 +68,13 @@ unsetopt AUTO_NAME_DIRS     # Don't add variable-stored paths to ~ list
 #if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
 #    tmux
 #fi
+
+# Basic auto/tab complete:
+autoload -U compinit
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)  # Include hidden files.
 
 # show available tmux sessions
 if [[ -z $TMUX ]]; then

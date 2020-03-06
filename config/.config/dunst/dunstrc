@@ -18,7 +18,7 @@
     #  * frame: use the same color as the frame;
     #  * anything else will be interpreted as a X color.
     separator_color = auto
-	separator_height = 4
+	separator_height = 2
 
     # Sort messages by urgency.
     sort = yes

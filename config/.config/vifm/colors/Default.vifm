@@ -54,21 +54,21 @@ highlight Socket        ctermfg=magenta ctermbg=default	cterm=bold
 highlight Device        ctermfg=red     ctermbg=default	cterm=bold
 highlight Fifo          ctermfg=cyan    ctermbg=default	cterm=bold
 highlight Executable    ctermfg=yellow	ctermbg=default	cterm=none
-highlight Selected      ctermfg=default ctermbg=8       cterm=bold
+highlight Selected      ctermfg=default ctermbg=0       cterm=bold
 highlight CurrLine      ctermfg=default ctermbg=default	cterm=bold,reverse
-highlight TopLine       ctermfg=7       ctermbg=8       cterm=none
-highlight OtherLine     ctermfg=4       ctermbg=8
+highlight TopLine       ctermfg=7       ctermbg=0       cterm=none
+highlight OtherLine     ctermfg=4       ctermbg=0
 highlight TopLineSel    ctermfg=4       ctermbg=default cterm=bold
-highlight StatusLine    ctermfg=white   ctermbg=8       cterm=bold
+highlight StatusLine    ctermfg=white   ctermbg=0       cterm=bold
 highlight WildMenu      ctermfg=4       ctermbg=black   cterm=reverse
-highlight CmdLine       ctermfg=green   ctermbg=black   cterm=none
+highlight CmdLine       ctermfg=green   ctermbg=default cterm=none
 highlight ErrorMsg      ctermfg=red     ctermbg=black   cterm=none
-highlight Border        ctermfg=black   ctermbg=8       cterm=none
+highlight Border        ctermfg=black   ctermbg=0       cterm=none
 highlight JobLine       ctermfg=black   ctermbg=white   cterm=bold,reverse
 highlight SuggestBox 	ctermfg=default ctermbg=default cterm=bold
 highlight CmpMismatch 	ctermfg=white 	ctermbg=red     cterm=bold
 highlight AuxWin        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
-highlight TabLine       ctermfg=4       ctermbg=0       cterm=none
+highlight TabLine       ctermfg=4       ctermbg=default cterm=none
 highlight TabLineSel    ctermfg=default ctermbg=default cterm=bold,reverse
 highlight User1	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
 highlight User2	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic

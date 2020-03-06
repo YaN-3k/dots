@@ -61,15 +61,15 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   cursor:
-     cursor: '0xc6c8d1'
-     text:   '0x161821'
+    cursor: '0xc6c8d1'
+    text:   '0x161821'
   primary:
     background: '0x161821'
     foreground: '0xc6c8d1'
 
   # Normal colors
   normal:
-    black:   '0x161821'
+    black:   '0x22262e'
     red:     '0xe27878'
     green:   '0xb4be82'
     yellow:  '0xe2a478'
@@ -80,7 +80,7 @@ colors:
 
   # Bright colors
   bright:
-    black:   '0x22262e'
+    black:   '0x6b7089'
     red:     '0xe98989'
     green:   '0xc0ca8e'
     yellow:  '0xe9b189'

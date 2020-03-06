@@ -3,7 +3,7 @@
 set realname = "Jan Wiśniewski"
 set from = "cherrry9@disroot.org"
 alias me Jan Wiśniewski <cherrry9@disroot.org>
-# set sendmail = "msmtp -a cherrry9"
+set sendmail = "msmtp -a cherrry9"
 set folder = "imaps://cherrry9@disroot.org@disroot.org:993"
 set imap_user = "cherrry9@disroot.org"
 set header_cache = ~/.cache/mutt/cherrry9/headers

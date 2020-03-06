@@ -48,27 +48,34 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'tpope/vim-commentary'
 	Plug 'jiangmiao/auto-pairs'
 
-	Plug 'itchyny/lightline.vim'
-	Plug '~/.config/nvim/bundle/lightline-simple/'
+	" Plug 'itchyny/lightline.vim'
+	" Plug '~/.config/nvim/bundle/lightline-simple/'
 
 	Plug 'sheerun/vim-polyglot'
 	" Plug 'luochen1990/rainbow'
 
 	Plug 'christoomey/vim-tmux-navigator'
 	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
 "=============
 " Basic stuff
 "=============
+" Enable true color
+"if exists('+termguicolors')
+"  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"  set termguicolors
+"endif
 syntax on
 filetype plugin indent on
 set scrolloff=5
 set pumheight=10
 set autoindent
 set smarttab
-" set number relativenumber
+set number relativenumber
 set clipboard=unnamedplus
 set inccommand=nosplit
 set tabstop=4
@@ -76,10 +83,13 @@ set shiftwidth=4
 set ignorecase
 set smartcase
 set undofile
-set background=light
+set background=dark
 set mouse=a
+set tabpagemax=15
+set showtabline=1  " 1 to show tabline only when more than one tab is present
 set splitright
 set splitbelow
+color term
 
 " Restore cursor position
 function! ResCur()
@@ -93,127 +103,39 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-"=============
-" Colorscheme
-"=============
-hi LineNr                       ctermfg=244 cterm=italic
-hi CursorLineNr                 ctermfg=3   cterm=bold
-hi ColorColumn                  ctermfg=1   cterm=undercurl
-hi SignColumn                   ctermfg=7
-hi VertSplit        ctermbg=8   ctermfg=0
-
-hi Visual           ctermbg=8
-hi Search           ctermbg=8               cterm=bold,reverse
-hi MatchParen       ctermbg=0   ctermfg=4   cterm=reverse
-
-"hi Comment                      ctermfg=4
-"hi String                       ctermfg=1
-"hi Type                         ctermfg=2
-"hi Statement                    ctermfg=3
-"hi Constant                     ctermfg=1
-"hi PreProc                      ctermfg=5
-"hi Special                      ctermfg=5
-
-hi Comment                      ctermfg=245
-hi String                       ctermfg=1
-hi Type                         ctermfg=4
-hi Statement                    ctermfg=4
-hi Constant                     ctermfg=5
-hi PreProc                      ctermfg=2
-hi PreProc                      ctermfg=5
-hi Special                      ctermfg=5
-
-hi shFunction                   ctermfg=7
-hi shOperator                   ctermfg=7
-hi shQuote                      ctermfg=1
-hi shFunctionKey                ctermfg=3
-
-hi! link            shTestOpr    shOperator
-hi! link            Delimiter    shOperator
-hi! link            shRange      shOperator
-
-hi vimHiGroup                   ctermfg=6
-" hi vimHiGroup                   ctermfg=2
-hi!                 link vimGroup  vimHiGroup
-
-hi ErrorMsg         ctermbg=0   ctermfg=1
-hi Error            ctermbg=1   ctermfg=0   cterm=undercurl
-
-hi SpellBad         ctermbg=1   ctermfg=0   cterm=undercurl
-hi SpellCap         ctermbg=2   ctermfg=0   cterm=undercurl
-hi SpellRare        ctermbg=3   ctermfg=0   cterm=undercurl
-hi SpellLocal       ctermbg=5   ctermfg=0   cterm=undercurl
-
-hi DiffAdd          ctermbg=2   ctermfg=0
-hi DiffChange       ctermbg=4   ctermfg=0
-hi DiffDelete       ctermbg=1   ctermfg=0
-hi DiffText         ctermbg=4   ctermfg=0
-
-hi Folded           ctermbg=8
-hi FoldColumn       ctermbg=8
-
-hi Pmenu            ctermbg=0   ctermfg=4
-hi PmenuSel         ctermbg=8   ctermfg=4
-hi PmenuThumb       ctermbg=8   ctermfg=8
-hi PmenuSbar        ctermbg=0   ctermfg=0
-
-" Highlight current line
-hi CursorLine       ctermbg=8               cterm=NONE
-hi CursorColumn     ctermbg=8               cterm=NONE
-augroup CursorLine
-	au!
-	"au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
-augroup END
-
 " Statusline
+source $HOME/.config/nvim/statusline.vim
+
 set laststatus=2
-hi StatusLine   ctermbg=8 ctermfg=blue cterm=NONE
-hi StatusLineNC ctermbg=8 ctermfg=blue cterm=NONE
-hi User1        ctermbg=NONE ctermfg=blue
-hi User2        ctermbg=NONE ctermfg=blue
-hi User3        ctermbg=NONE ctermfg=blue
-hi User4        ctermbg=8    ctermfg=blue
-
-set statusline+=\ %t                " File type
-set statusline+=\ %1*\              " Padding & switch colour
-set statusline+=%r\                 " File name
-set statusline+=%M                  " Modified flag
-set statusline+=\ %2*\              " Padding & switch colour
-set statusline+=%=                  " Switch to right-side
-set statusline+=\ %3*\              " Padding & switch colour
-set statusline+=%p%%                " Current line
-set statusline+=\ %4*\              " Padding & switch colour
-set statusline+=%y	                " File type
-set statusline+=\ \|                " File type
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}\   " File coding
-
-" Lightline - statusline
-hi StatusLine       ctermbg=8   ctermfg=4    cterm=NONE
-hi StatusLineNC     ctermbg=8   ctermfg=4    cterm=NONE
+set noruler
+set showcmd
 set noshowmode
 
-let g:lightline = {
-	\ 'colorscheme': 'simple',
-	\ 'active': {
-	\ 'left': [  [ 'mode' ],
-	\            [ 'readonly', 'filename', 'gitbranch' ],
-	\            [ 'modified' ] ],
-    \ 'right': [ [ 'filetype', 'fileencoding' ],
-	\            [ 'percent' ] ]
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'fugitive#head'
-	\ },
-	\ }
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+	if s:hidden_all  == 0
+		let s:hidden_all = 1
+		set laststatus=1
+		set noruler
+		set noshowcmd
+		set showmode
+	else
+		let s:hidden_all = 0
+		set laststatus=2
+		set noruler
+		set noshowcmd
+		set noshowmode
+	endif
+endfunction
+
+nnoremap <S-s> :call ToggleHiddenAll()<CR>
 
 "================
 " Plugin configs
 "================
 " ALE - Asynchronous Lint Engine
-hi ALEWarning       ctermbg=3   ctermfg=0   cterm=undercurl
-hi ALEError         ctermbg=1   ctermfg=0   cterm=undercurl
+hi ALEWarning       ctermbg=NONE ctermfg=3   cterm=underline
+hi ALEError         ctermbg=NONE   ctermfg=1   cterm=underline
 hi ALEWarningSign    		    ctermfg=3   cterm=bold
 hi ALEErrorSign      		    ctermfg=1   cterm=bold
 
@@ -249,9 +171,9 @@ let g:fzf_colors =
   \ 'hl':      ['fg', 'Statement'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'CursorLineNr'],
+  \ 'hl+':     ['fg', 'Function'],
   \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
+  \ 'border':  ['fg', 'Visual'],
   \ 'prompt':  ['fg', 'Conditional'],
   \ 'pointer': ['fg', 'ErrorMsg'],
   \ 'marker':  ['fg', 'Keyword'],
@@ -281,7 +203,7 @@ let g:rainbow_active = 1
 let g:extra_whitespace_ignored_filetypes = [ 'help', 'vim-plug' ]
 
 " GitGutter
-set updatetime=1000
+set updatetime=100
 hi GitGutterChange       ctermfg=3    cterm=bold
 hi GitGutterAdd          ctermfg=2    cterm=bold
 hi GitGutterDelete       ctermfg=1    cterm=bold

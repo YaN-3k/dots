@@ -15,7 +15,7 @@ class biual(ColorScheme):
                 attr |= bold | reverse
             if context.empty or context.error:
                 bg = 1
-                fg = 0
+                fg = 235
                 attr |= bold
             if context.border:
                 fg = default
@@ -50,14 +50,14 @@ class biual(ColorScheme):
                 else:
                     fg = red
             if not context.selected and (context.cut or context.copied):
-                fg = 244
+                fg = 8
                 attr |= bold
             if context.main_column:
                 if context.selected:
                     attr |= bold
                 if context.marked:
                     attr |= bold
-                    bg = 8
+                    bg = 0
             if context.badinfo:
                 if attr & reverse:
                     bg = 1
