@@ -73,6 +73,8 @@ hi PreProc      ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Structure    ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Special      ctermbg=NONE   ctermfg=5      cterm=NONE
 hi SpecialChar  ctermbg=NONE   ctermfg=5      cterm=NONE
+hi SpecialKey   ctermbg=NONE   ctermfg=5      cterm=NONE
+hi NonText      ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Delimiter    ctermbg=NONE   ctermfg=NONE   cterm=NONE
 hi Underliend   ctermbg=NONE   ctermfg=1      cterm=underline
 hi Ignore       ctermbg=NONE   ctermfg=1      cterm=NONE
@@ -102,12 +104,14 @@ hi markdownCode           ctermbg=NONE   ctermfg=5       cterm=NONE
 hi markdownBlockquote     ctermbg=NONE   ctermfg=3       cterm=NONE
 hi markdownCodeDelimiter  ctermbg=NONE   ctermfg=5       cterm=NONE
 
-" Highlight current line
-hi CursorLine             ctermbg=0  ctermfg=NONE        cterm=NONE
-hi CursorColumn           ctermbg=0  ctermfg=NONE        cterm=NONE
-augroup CursorLine
-	au!
-	"au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
-augroup END
+" ALE - Asynchronous Lint Engine
+hi ALEWarning       ctermbg=NONE  ctermfg=3   cterm=underline
+hi ALEError         ctermbg=NONE  ctermfg=1   cterm=underline
+hi ALEWarningSign   ctermbg=NONE  ctermfg=3   cterm=bold
+hi ALEErrorSign     ctermbg=NONE  ctermfg=1   cterm=bold
+
+" Git gutter
+hi GitGutterChange        ctermbg=NONE   ctermfg=3       cterm=bold
+hi GitGutterAdd           ctermbg=NONE   ctermfg=2       cterm=bold
+hi GitGutterDelete        ctermbg=NONE   ctermfg=1       cterm=bold
+hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5 	     cterm=bold

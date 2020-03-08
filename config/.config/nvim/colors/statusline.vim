@@ -61,8 +61,8 @@ set statusline=%{RedrawModeColors(mode())}
 " Left side items
 "=================
 " Filename
-set statusline+=%#MyStatuslineFiletype#█▓▒░
-set statusline+=/\%#MyStatuslineFilename#%t
+set statusline+=%#MyStatuslineFiletype#▒░
+set statusline+=%#MyStatuslineFilename#%t
 set statusline+=%#MyStatuslineSeparator#░▒▓█
 
 " Modified status
@@ -73,17 +73,17 @@ set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Rese
 "==================
 " Current scroll percentage and total lines of the file
 set statusline+=%=
-set statusline+=%#MyStatuslineLineCol#█▓▒░
-set statusline+=\/%#MyStatuslineLineColBody#%2p%%
-set statusline+=%#MyStatuslineLineCol#░▒▓█
+set statusline+=%#MyStatuslineLineCol#▓▒░
+set statusline+=\%#MyStatuslineLineColBody#%2p%%
+set statusline+=%#MyStatuslineLineCol#░▒
 
 " Padding
 "set statusline+=\ \
 
 " Filetype
-set statusline+=%#MyStatuslineFiletype#█▓▒░
-set statusline+=\/%#MyStatuslineFiletypeBody#%{SetFiletype(&filetype)}
-set statusline+=%#MyStatuslineFiletype#░▒▓█
+set statusline+=%#MyStatuslineFiletype#▒░
+set statusline+=\%#MyStatuslineFiletypeBody#%{SetFiletype(&filetype)}
+set statusline+=\ \%#MyStatuslineFiletype#▒
 
 " Setup the colors
 hi StatusLine               ctermbg=NONE  ctermfg=5     cterm=NONE

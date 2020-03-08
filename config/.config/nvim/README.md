@@ -1,2 +1,0 @@
-## NEOVim
-![screenshot](screenshot.jpg)
