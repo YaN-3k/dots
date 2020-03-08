@@ -49,6 +49,7 @@ call plug#begin('~/.config/nvim/bundle')
 	Plug 'sheerun/vim-polyglot'
 
 	Plug 'christoomey/vim-tmux-navigator'
+	Plug 'melonmanchan/vim-tmux-resizer'
 
 call plug#end()
 
