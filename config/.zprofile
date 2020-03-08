@@ -1,9 +1,11 @@
-#                    __ _ _
-#   _ __  _ __ ___  / _(_) | ___
-#  | '_ \| '__/ _ \| |_| | |/ _ \
-#  | |_) | | | (_) |  _| | |  __/
-#  | .__/|_|  \___/|_| |_|_|\___|
-#  |_|
+#                            ████ ██  ██
+#  ██████                   ░██░ ░░  ░██
+# ░██░░░██ ██████  ██████  ██████ ██ ░██  █████
+# ░██  ░██░░██░░█ ██░░░░██░░░██░ ░██ ░██ ██░░░██
+# ░██████  ░██ ░ ░██   ░██  ░██  ░██ ░██░███████
+# ░██░░░   ░██   ░██   ░██  ░██  ░██ ░██░██░░░░
+# ░██     ░███   ░░██████   ░██  ░██ ███░░██████
+# ░░      ░░░     ░░░░░░    ░░   ░░ ░░░  ░░░░░░
 
 # Adds `~/.local/bin` to $PATH
 export PATH="$PATH:$HOME/.zgen/junegunn/fzf-master/bin:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
@@ -40,8 +42,8 @@ export LESS_TERMCAP_us=$(tput setaf 2)
 
 # Fzf
 export FZF_DEFAULT_OPTS='
---color fg:#D8DEE9,hl:#84a0c6,fg+:#D8DEE9,bg+:#22262e,hl+:#e2a478
---color pointer:#BF616A,info:#4C566A,spinner:#4C566A,header:#4C566A,prompt:#81A1C1,marker:#EBCB8B
+--color fg:7,hl:4,fg+:15,bg+:0,hl+:3
+--color pointer:1,info:8,spinner:3,header:8,prompt:8,marker:8
 --height 50%
 --reverse
 --preview "preview {}"

@@ -1,3 +1,12 @@
+#                        ██     ██
+#                       ░██    ░██
+#  ██████████  ██   ██ ██████ ██████
+# ░░██░░██░░██░██  ░██░░░██░ ░░░██░
+#  ░██ ░██ ░██░██  ░██  ░██    ░██
+#  ░██ ░██ ░██░██  ░██  ░██    ░██
+#  ███ ░██ ░██░░██████  ░░██   ░░██
+# ░░░  ░░  ░░  ░░░░░░    ░░     ░░
+
 # vim: filetype=neomuttrc
 set mailcap_path = ~/.config/mutt/etc/mailcap
 source "$HOME/.config/mutt/accounts/cherrry9"

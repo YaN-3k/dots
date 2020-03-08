@@ -73,9 +73,9 @@ aliases = {
 
 settings = {
   core = {
-    real_name = "neongold";
-    user_name = "neongold";
-    nick = "neongold";
+    real_name = "Cherrry9";
+    user_name = "Cherrry9";
+    nick = "Cherrry9";
   };
   "fe-text" = {
     actlist_sort = "refnum";
