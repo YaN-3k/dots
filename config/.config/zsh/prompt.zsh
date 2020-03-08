@@ -79,8 +79,8 @@ PROMPT='%F{white}
 ;;
 #█▓▒░ dual line
 dual)
-PROMPT='${USER_LEVEL}┏[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)
-${USER_LEVEL}┗━ ━ %f'
+PROMPT='${USER_LEVEL}┌[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)
+${USER_LEVEL}└─ ─ %f'
 ;;
 #█▓▒░ classic
 *)
