@@ -89,5 +89,5 @@ front() {
 	echo "#[bg=$C0]#[fg=colour0]▓░"
 }
 CPU_INFO=$(cpu)
-RAM_INFO=20
+RAM_INFO=$(ram)
 echo "$(front) $(bat) $(draw "$RAM_INFO" 5) $(temp) $(draw "$CPU_INFO" 7) $(vpn) $(clock)"

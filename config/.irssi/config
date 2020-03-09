@@ -19,6 +19,14 @@ servers = (
     autoconnect = "yes";
   },
   {
+    address = "chat.freenode.net";
+    chatnet = "freenode";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "no";
+    autoconnect = "yes";
+  },
+  {
     address = "irc.mzima.net";
     chatnet = "efnet";
     port = "9999";
@@ -45,6 +53,7 @@ chatnets = {
   ircnet = { type = "IRC"; nick = "Cherrry9"; };
   efnet = { type = "IRC"; nick = "Cherrry9"; };
   cyberia = { type = "IRC"; nick = "Cherrry9"; };
+  freenode = { type = "IRC"; };
 };
 
 channels = (

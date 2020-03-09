@@ -34,15 +34,15 @@ tabspaces: 2
 # Font configurations
 font:
   normal:
-    family: Inconsolata
+    family: xos4 Terminus
     style: Regular
 
   bold:
-    family: Inconsolata
+    family: xos4 Terminus
     style: Bold
 
   Italic:
-    family: Inconsolata
+    family: xos4 Terminus
     style: Italic
 
   size: 10.0

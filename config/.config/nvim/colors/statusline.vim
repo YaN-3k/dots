@@ -61,7 +61,7 @@ set statusline=%{RedrawModeColors(mode())}
 " Left side items
 "=================
 " Filename
-set statusline+=%#MyStatuslineFiletype#▒░
+set statusline+=%#MyStatuslineSeparator#▒░
 set statusline+=%#MyStatuslineFilename#%t
 set statusline+=%#MyStatuslineSeparator#░▒▓█
 
@@ -71,32 +71,36 @@ set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Rese
 "==================
 " Right side items
 "==================
-" Current scroll percentage and total lines of the file
+" Current scroll percentage
 set statusline+=%=
-set statusline+=%#MyStatuslineLineCol#▓▒░
-set statusline+=\%#MyStatuslineLineColBody#%2p%%
-set statusline+=%#MyStatuslineLineCol#░▒
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=\%#MyStatuslineLinePerc#%2p%%
+set statusline+=%#MyStatuslineSeparator#░▒▓
+
+" Line and Column
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=%#MyStatuslineLineCol#%2l
+set statusline+=\/%#MyStatuslineLineCol#%2c
+set statusline+=%#MyStatuslineSeparator#░▒▓
 
 " Padding
 "set statusline+=\ \
 
 " Filetype
-set statusline+=%#MyStatuslineFiletype#▒░
-set statusline+=\%#MyStatuslineFiletypeBody#%{SetFiletype(&filetype)}
-set statusline+=\ \%#MyStatuslineFiletype#▒
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=\%#MyStatuslineFiletype#%{SetFiletype(&filetype)}
+set statusline+=\ \%#MyStatuslineSeparator#▒
 
 " Setup the colors
 hi StatusLine               ctermbg=NONE  ctermfg=5     cterm=NONE
 hi StatusLineNC             ctermbg=NONE  ctermfg=8     cterm=bold
 
-hi MyStatuslineSeparator    ctermbg=NONE  ctermfg=0     cterm=reverse
-
 hi MyStatuslineModified     ctermbg=NONE  ctermfg=0     cterm=NONE
 
-hi MyStatuslineFiletype     ctermbg=NONE  ctermfg=0     cterm=reverse
-hi MyStatuslineFiletypeBody ctermbg=0     ctermfg=5     cterm=italic
+hi MyStatuslineLineCol      ctermbg=0     ctermfg=3     cterm=none
+hi MyStatuslineLinePerc     ctermbg=0     ctermfg=2     cterm=none
 
-hi MyStatuslineLineCol      ctermbg=NONE  ctermfg=0     cterm=reverse
-hi MyStatuslineLineColBody  ctermbg=0     ctermfg=2     cterm=none
+hi MyStatuslineFiletype     ctermbg=0     ctermfg=5     cterm=italic
 
 hi Reset                    ctermbg=NONE  ctermfg=NONE  cterm=NONE
+hi MyStatuslineSeparator    ctermbg=NONE  ctermfg=0     cterm=reverse

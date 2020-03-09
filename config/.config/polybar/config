@@ -26,7 +26,7 @@ padding = 2
 [bar/top]
 monitor = ${env:MONITOR:}
 width = 100%
-height = 17
+height = 20
 fixed-center = true
 
 background = ${color.bg}
@@ -40,12 +40,12 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
-font-0 = "DejaVu Sans Mono:style=bold:pixelsize=7;2"
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
-font-2 = "Font Awesome 5 Brands:pixelsize=10;2"
+font-0 = "xos4 Terminus:pixelsize=10;2"
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=9;2"
+font-2 = "Font Awesome 5 Brands:pixelsize=6;2"
 
 ; For separator
-font-3 = "DejaVu Sans Mono:pixelsize=20;2"
+font-3 = "xos4 Terminus:pixelsize=25;2"
 
 modules-left = bspwm left
 modules-center = right mpd left
