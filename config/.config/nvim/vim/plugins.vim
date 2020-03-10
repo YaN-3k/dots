@@ -1,10 +1,14 @@
 " setup vim-plug
-if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
-	echo "Downloading junegunn/vim-plug to manage plugins..."
-	silent !pip3 install --user pynvim
-	silent !mkdir -p ~/.config/nvim/autoload/
-	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
-	autocmd VimEnter * PlugInstall
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+	echo 'Downloading junegunn/vim-plug to manage plugins...'
+	silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache,undo,backups,swaps}')
+	silent call system('pip3 install --user pynvim msgpack')
+	silent call system('curl -flo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+	execute 'source  ~/.config/nvim/autoload/plug.vim'
+	augroup plugsetup
+		au!
+		autocmd VimEnter * PlugInstall
+	augroup end
 endif
 
 call plug#begin('~/.config/nvim/bundle')
@@ -24,21 +28,26 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'mattn/emmet-vim'
 
 " stylize
 Plug 'lilydjwg/colorizer'
 Plug 'scrooloose/nerdtree'
+Plug 'isa/vim-matchit'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 
 " features
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kien/ctrlp.vim'
+Plug 'matze/vim-move'
 "Plug '~/.zgen/junegunn/fzf-master'
 "Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'melonmanchan/vim-tmux-resizer'
 
 call plug#end()

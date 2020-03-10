@@ -15,6 +15,7 @@ set clipboard=unnamedplus
 
 " use indents of 4 spaces
 set shiftwidth=4
+set shiftround
 
 " tabs are tabs
 set noexpandtab
@@ -29,8 +30,11 @@ set infercase
 
 " maintain undo history between sessions
 set undofile
-set undodir=~/.config/nvim/undo
+set nobackup
 set noswapfile
+set undodir=~/.config/nvim/undo
+"set backupdir=~/.config/nvim/backups
+"set directory=~/.config/nvim/swaps
 
 " plebs mode
 set mouse=a

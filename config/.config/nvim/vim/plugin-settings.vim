@@ -56,6 +56,47 @@ let g:fzf_colors =
 " default fzf layout
 let g:fzf_layout = { 'down': '~50%' }
 
+" distraction free writing mode
+let g:limelight_conceal_ctermfg = 8
+function! s:goyo_enter()
+	Limelight
+	noremap ZZ :Goyo\|x!<CR>
+	noremap ZQ :Goyo\|q!<CR>
+	call deoplete#disable()
+	silent !tmux set status off
+	silent !tmux list-panes -F '\#F' | grep -q Z | tmux resize-pane -Z
+	set noshowmode
+	set noshowcmd
+	set wrap
+	set scrolloff=999
+endfunction
+
+function! s:goyo_leave()
+	Limelight!
+	unmap ZZ
+	unmap ZQ
+	silent !tmux set status on
+	silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+	set showmode
+	set showcmd
+	set nowrap
+	set scrolloff=0
+endfunction
+
+augroup goyoactions
+	au!
+	autocmd! User GoyoEnter nested call <SID>goyo_enter()
+	autocmd! User GoyoLeave nested call <SID>goyo_leave()
+augroup end
+
+map <leader>w :Goyo<CR>
+
+" Enable Goyo by default for mutt writting
+autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
+autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
+autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
+
 " python paths, needed for virtualenvs
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
@@ -92,8 +133,11 @@ let NERDTreeDirArrows = 1
 let g:webdevicons_enable_nerdtree = 1
 
 " open Nerd Tree if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup NerdTree
+	au!
+	autocmd StdinReadPre * let s:std_in=1
+	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup end
 
 " emmet settings
 let g:user_emmet_mode='a'
@@ -103,13 +147,13 @@ autocmd FileType html,css EmmetInstall
 
 " omnifuncs
 augroup omnifuncs
-  au!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-  autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+	au!
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+	autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
 augroup end
 
 " deoplete
@@ -129,10 +173,10 @@ set completeopt-=preview
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 
 " autoPairs
-let g:AutoPairs={'(':')', '[':']', '{':'}', "'":"'", '"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"} "'<':'>',
+let g:AutoPairs={'(':')', '[':']', '{':'}', "'":"'", '"':'"', '`':'`', '```':'```', '"""':'"""', "'''":"'''",} "'<':'>'}
 
 " if you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit='vertical'
 
 " enable/disable deoplete
 map <Leader>d :call deoplete#toggle()<CR>
@@ -161,3 +205,6 @@ let g:SuperTabContextDefaultCompletionType = '<c-n>'
 let g:UltiSnipsExpandTrigger='<C-z>'
 let g:UltiSnipsJumpForwardTrigger='<C-s>'
 let g:UltiSnipsJumpBackwardTrigger='<C-g>'
+
+" UndoTree
+nnoremap <F5> :UndotreeToggle<cr>

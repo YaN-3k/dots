@@ -34,11 +34,8 @@ hi Title        ctermbg=NONE   ctermfg=15     cterm=NONE
 hi Visual       ctermbg=0      ctermfg=NONE   cterm=NONE
 hi WildMenu     ctermbg=NONE   ctermfg=4      cterm=NONE
 hi WarningMsg   ctermbg=NONE   ctermfg=11     cterm=NONE
-hi DIffAdd      ctermbg=NONE   ctermfg=2      cterm=NONE
-hi DiffDelete   ctermbg=NONE   ctermfg=1      cterm=NONE
-hi DiffChange   ctermbg=NONE   ctermfg=1      cterm=NONE
 hi EndOfBuffer  ctermbg=NONE   ctermfg=0      cterm=NONE
-hi CursorLine   ctermbg=NONE   ctermfg=NONE   cterm=NONE
+hi CursorLine   ctermbg=0      ctermfg=NONE   cterm=NONE
 hi CursorLineNr ctermbg=NONE   ctermfg=15     cterm=bold
 hi CursorColumn ctermbg=0      ctermfg=NONE   cterm=NONE
 hi MatchParen   ctermbg=NONE   ctermfg=4      cterm=underline
@@ -115,3 +112,6 @@ hi GitGutterChange        ctermbg=NONE   ctermfg=3       cterm=bold
 hi GitGutterAdd           ctermbg=NONE   ctermfg=2       cterm=bold
 hi GitGutterDelete        ctermbg=NONE   ctermfg=1       cterm=bold
 hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5 	     cterm=bold
+
+" Statusline
+source $HOME/.config/nvim/colors/statusline.vim

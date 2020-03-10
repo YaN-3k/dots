@@ -1,8 +1,12 @@
 " show matching brackets/parenthesis
 set showmatch
+set matchtime=3
 
 " disable startup message
 set shortmess+=I
+
+" hide buffers, not close them
+set hidden
 
 " colorscheme
 color term
@@ -16,8 +20,6 @@ filetype plugin indent on
 set pumheight=10
 
 " Statusline
-source $HOME/.config/nvim/colors/statusline.vim
-
 set laststatus=2
 set noruler
 set showcmd
@@ -29,11 +31,12 @@ set noshowmode
 "set foldminlines=99
 "set foldlevelstart=99
 
-" no line wrapping
-"set nowrap
+" line wrapping
+set wrap
 
 " show line numbers
 set number relativenumber
+set numberwidth=1
 
 " show invisibles
 set list
@@ -45,8 +48,6 @@ set listchars+=precedes:«
 set listchars+=nbsp:░
 
 " highlight current line
-hi CursorLine             ctermbg=0  ctermfg=NONE  cterm=NONE
-hi CursorColumn           ctermbg=0  ctermfg=NONE  cterm=NONE
 augroup CursorLine
 	au!
 	"au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
