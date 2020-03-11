@@ -1,0 +1,118 @@
+#                               ██████          ██████  ██████
+#  ███████   █████  ██████████ ░██░░░██  █████ ░██░░░██░██░░░██
+# ░░██░░░██ ██░░░██░░██░░██░░██░██  ░██ ██░░░██░██  ░██░██  ░██
+#  ░██  ░██░██  ░░  ░██ ░██ ░██░██████ ░██  ░░ ░██████ ░██████
+#  ░██  ░██░██   ██ ░██ ░██ ░██░██░░░  ░██   ██░██░░░  ░██░░░
+#  ███  ░██░░█████  ███ ░██ ░██░██     ░░█████ ░██     ░██
+# ░░░   ░░  ░░░░░  ░░░  ░░  ░░ ░░       ░░░░░  ░░      ░░
+
+# Directories
+mpd_music_dir = "~/Music/"
+lyrics_directory  = "~/.config/ncmpcpp/lyrics"
+ncmpcpp_directory  = "~/.config/ncmpcpp"
+mpd_host = "127.0.0.1"
+mpd_port = "6600"
+
+# Behaviour
+# execute_on_song_change = "bash ~/.config/ncmpcpp/mpd-notification"
+message_delay_time = 2
+autocenter_mode = "yes"
+centered_cursor = "yes"
+ignore_leading_the = "yes"
+allow_for_physical_item_deletion = "no"
+external_editor = "nvim"
+default_place_to_search_in = "database"
+
+# Visualizer
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "visualizer"
+visualizer_in_stereo = "yes"
+visualizer_sync_interval = 30
+visualizer_look = ●●
+
+# Appearance
+colors_enabled = "yes"
+main_window_color = "white"
+
+user_interface = "alternative"
+browser_display_mode = "classic" (classic/columns)
+search_engine_display_mode = "classic" (classic/columns)
+
+titles_visibility = "no"
+enable_window_title = "no"
+statusbar_visibility = "no"
+mouse_support = "yes"
+display_remaining_time = "no"
+discard_colors_if_item_is_selected = "yes"
+header_visibility = "no"
+header_window_color = "white"
+alternative_header_second_line_format = "$8{%a}$8"
+
+progressbar_color = "cyan"
+progressbar_elapsed_color = "blue"
+progressbar_look = "━┄┄"
+
+volume_color = "blue"
+
+playlist_display_mode = "classic" (classic/columns)
+playlist_separate_albums = "no"
+playlist_show_remaining_time = "yes"
+browser_playlist_prefix = "$b$6playlist$/b$5 "
+
+clock_display_seconds = "no"
+display_volume_level = "yes"
+display_bitrate = "yes"
+
+alternative_ui_separator_color = "244"
+empty_tag_marker = ""
+
+current_item_prefix = "$2$b>> $/b$0"
+current_item_suffix = $(end)$/b$9
+current_item_inactive_column_prefix = $5
+current_item_inactive_column_suffix = $/r$(end)$0
+
+now_playing_prefix = $b
+now_playing_suffix = $/b
+
+#selected_item_prefix = "$2"
+selected_item_suffix = "$b$4 *$0$/b"
+
+modified_item_prefix = $3> $9
+
+song_status_format = $b{{$5"%t"}} $3by {$4%a{ $3in $7%b{ (%y)}} $3}|{$8%f}
+
+song_library_format = {%t}|{%f}
+
+#song_list_format = {%t}|{$8%f$9}$R{$3(%l)$9}
+song_list_format = "$7{%a $8●}|{%f} $5{%t}$0"
+
+#song_columns_list_format = "(20)[cyan]{ar} (50)[yellow]{t}"
+song_columns_list_format = "(7)[244]{l} (30)[yellow]{a} (40)[blue]{t|f:Title} (20)[cyan]{b}"
+
+# █▓▒░ cheat sheet
+# %l - length
+# %f - filename
+# %D - directory
+# %a - artist
+# %t - title
+# %b - album
+# %y - year
+# %n - track number (01/12 -> 01)
+# %N - full track info (01/12 -> 01/12)
+# %g - genre
+# %c - composer
+# %p - performer
+# %d - disc
+# %C - comment
+# $R - begin right alignment
+# █▓▒░ colors
+# $0 - default window color
+# $1 - black
+# $2 - red
+# $3 - green
+# $4 - yellow
+# $5 - blue
+# $6 - magenta
+# $7 - cyan
+# $8 - white
+# $9 - end of current color

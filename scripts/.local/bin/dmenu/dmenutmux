@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+sessions="$(tmux ls 2> /dev/null | awk '! /attached/ { sub(":", "", $1); print $1 ; }')" 
+[ -z "$sessions" ] && sessions+="new" || sessions+="\nnew"
+choice=$(echo -e "$sessions" | dmenu -i -p "attach") || exit
+if [ "$choice" = "new" ]; then
+	$TERMINAL -e tmux new
+else
+	$TERMINAL -e tmux a -t "$choice"
+fi

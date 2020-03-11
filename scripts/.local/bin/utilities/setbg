@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# Sets the background. If given an argument, will set file as background.
+[ -n "$1" ] && cp "$1" ~/Pictures/wallpaper && notify-send -i "$HOME/Pictures/wallpaper" "Wallpaper changed."
+xwallpaper --daemon --zoom ~/Pictures/wallpaper

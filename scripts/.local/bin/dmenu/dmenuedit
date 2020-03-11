@@ -1,0 +1,59 @@
+#!/usr/bin/env sh
+
+edit_package() {
+	cd ~/dotfiles || exit
+	for i in *; do
+		case $i in
+		previews | .git | wallpapers ) ;;
+		*) if [ -d "$i" ]; then
+			if [ -n "$packages" ]; then
+				packages="$packages\n$i"
+			else
+				packages="$i"
+			fi
+		fi ;;
+		esac
+	done
+	package_name=$(printf "%b\n" "$packages" | dmenu -p "Enter package name to edit")
+	[ -z "$package_name" ] && exit
+	cd "$package_name" || exit
+
+	list="$HOME/.cache/files.list"
+	find . -type f >"$list"
+	while read -r file; do
+		if [ -n "$files" ]; then
+			files="$files\n${file#./}"
+		else
+			files="${file#./}"
+		fi
+	done <"$list"
+	rm "$list"
+	files_name=$(printf '%b\n' "$files" | dmenu -i -p 'Edit a config file')
+	[ -z "$files_name" ] && exit
+	choice="$HOME/dotfiles/$package_name/$files_name"
+	$TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"
+}
+
+edit_all() {
+	list="$HOME/.cache/files.list"
+	find "$HOME/dotfiles" -type f >"$list"
+	while read -r file; do
+		case $file in
+		*/.git/* | */dmenu/dmenu-*/* | */wallpaper/*) ;;
+		*)
+			if [ -n "$options" ]; then
+				options="$options\n${file#$HOME/dotfiles/}"
+			else
+				options="${file#$HOME/dotfiles/}"
+			fi
+			;;
+		esac
+	done <"$list"
+	rm "$list"
+	choice=$(printf '%b\n' "$options" | dmenu -i -p 'Edit a config file')
+	[ -z "$choice" ] && exit
+	choice="$HOME"/dotfiles/"$choice"
+	$TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"
+}
+
+edit_package

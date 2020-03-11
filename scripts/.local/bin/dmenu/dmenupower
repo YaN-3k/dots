@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+ANS="$(printf "lock\nshutdown\nreboot\nexit" | dmenu -i -p 'System')"
+case "$ANS" in
+	lock) slock & mpc pause;;
+	shutdown) shutdown now;;
+	reboot) reboot;;
+	exit) bspc quit
+esac

@@ -1,0 +1,85 @@
+" You can edit this file by hand.
+" The " character at the beginning of a line comments out the line.
+" Blank lines are ignored.
+
+" The Default color scheme is used for any directory that does not have
+" a specified scheme and for parts of user interface like menus. A
+" color scheme set for a base directory will also
+" be used for the sub directories.
+
+" The standard ncurses colors are:
+" Default = -1 = None, can be used for transparency or default color
+" Black = 0
+" Red = 1
+" Green = 2
+" Yellow = 3
+" Blue = 4
+" Magenta = 5
+" Cyan = 6
+" White = 7
+
+" Light versions of colors are also available (set bold attribute):
+" LightBlack
+" LightRed
+" LightGreen
+" LightYellow
+" LightBlue
+" LightMagenta
+" LightCyan
+" LightWhite
+
+" Available attributes (some of them can be combined):
+" bold
+" underline
+" reverse or inverse
+" standout
+" italic (on unsupported systems becomes reverse)
+" none
+
+" Vifm supports 256 colors you can use color numbers 0-255
+" (requires properly set up terminal: set your TERM environment variable
+" (directly or using resources) to some color terminal name (e.g.
+" xterm-256color) from /usr/lib/terminfo/; you can check current number
+" of colors in your terminal with tput colors command)
+
+" highlight group cterm=attrs ctermfg=foreground_color ctermbg=background_color
+
+highlight clear
+
+highlight Win           ctermfg=default ctermbg=default	cterm=none
+highlight Directory     ctermfg=blue    ctermbg=default	cterm=none
+highlight Link          ctermfg=blue    ctermbg=default	cterm=none
+highlight BrokenLink    ctermfg=red     ctermbg=default	cterm=bold
+highlight Socket        ctermfg=magenta ctermbg=default	cterm=bold
+highlight Device        ctermfg=red     ctermbg=default	cterm=bold
+highlight Fifo          ctermfg=cyan    ctermbg=default	cterm=bold
+highlight Executable    ctermfg=yellow	ctermbg=default	cterm=none
+highlight Selected      ctermfg=default ctermbg=0       cterm=bold
+highlight CurrLine      ctermfg=default ctermbg=default	cterm=bold,reverse
+highlight TopLine       ctermfg=7       ctermbg=0       cterm=none
+highlight OtherLine     ctermfg=4       ctermbg=0
+highlight TopLineSel    ctermfg=4       ctermbg=default cterm=bold
+highlight StatusLine    ctermfg=white   ctermbg=0       cterm=bold
+highlight WildMenu      ctermfg=4       ctermbg=black   cterm=reverse
+highlight CmdLine       ctermfg=green   ctermbg=default cterm=none
+highlight ErrorMsg      ctermfg=red     ctermbg=black   cterm=none
+highlight Border        ctermfg=black   ctermbg=0       cterm=none
+highlight JobLine       ctermfg=black   ctermbg=white   cterm=bold,reverse
+highlight SuggestBox 	ctermfg=default ctermbg=default cterm=bold
+highlight CmpMismatch 	ctermfg=white 	ctermbg=red     cterm=bold
+highlight AuxWin        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight TabLine       ctermfg=4       ctermbg=default cterm=none
+highlight TabLineSel    ctermfg=default ctermbg=default cterm=bold,reverse
+highlight User1	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User2	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User3	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User4	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User5	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User6	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User7	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User8	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+highlight User9	        ctermfg=default ctermbg=default cterm=bold,underline,reverse,standout,italic
+
+highlight /^.*\.(mp3|ogg|oga|flac|m4a)$/ ctermfg=magenta
+highlight /^.*\.(jpg|jpeg|png|gif|tiff|webp|bmp|svg|svgz)$/ ctermfg=green
+highlight /^.*\.(zip|gz|bz2|xz|tar|tgz|tbz2|7z|rar|iso|rpm|deb)$/ ctermfg=red

@@ -1,0 +1,348 @@
+#                  ██      ██          ██
+#                 ░██     ░██         ░██
+#   ██████ ██   ██░██     ░██  ██     ░██
+#  ██░░░░ ░░██ ██ ░██████ ░██ ██   ██████
+# ░░█████  ░░███  ░██░░░██░████   ██░░░██
+#  ░░░░░██  ██░██ ░██  ░██░██░██ ░██  ░██
+#  ██████  ██ ░░██░██  ░██░██░░██░░██████
+# ░░░░░░  ░░   ░░ ░░   ░░ ░░  ░░  ░░░░░░
+
+# STATE/FLAGS {{
+# Switch the node state on tiled - floating
+super + t
+	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
+	bspc node --state \~$state
+
+# Switch the node state on tiled - pseudo tiled
+super + p
+	bspc node --state \~pseudo_tiled
+# Switch the node state on tiled - fullscreen
+super + f
+	bspc node --state \~fullscreen
+
+# Set marked,locked,sticky,private flag
+super + {m,x,s,z}
+	bspc node -g {marked,locked,sticky,private}
+
+# Un/Hide the scratchpad
+super + F1
+ 	id=$(head -1 /tmp/scratchid);\
+ 	bspc node $id --flag hidden;bspc node -f $id
+
+# Un/Uide the currently active node
+super + {_,shift +} u
+    toggle {hide,show}
+
+# Un/Hide the currently active node
+super + {_,shift +} w
+	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
+
+# }}
+
+# MOVE/RESIZE {{
+# focus/swap the node in the given direction
+#super + {_,shift + }{h,j,k,l}
+#	bspc node -{f,s} {west,south,north,east}
+
+
+# move a floating node
+#alt + {h,j,k,l}
+#	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Change the node focus
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
+
+# Swap the tiled node or move the floating node
+super + shift + {h,j,k,l}
+	move {west,south,north,east}
+
+# Focus/Swap the last node/desktop
+super + {grave,shift + grave,apostrophe}
+	bspc {node -f last.local,desktop -f last,node --swap last}
+
+# Focus or send the node to the given desktop
+super + {_,shift +}g
+	bspc node {-f,-s} biggest.local
+
+# Focus the next/previous node in the current desktop
+super + {_,shift + }n
+	bspc node -f {next,prev}.local
+
+# expand a window by moving one of its side outward
+#ctrl + super + {h,j,k,l}
+#	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+#ctrl + super + shift + {h,j,k,l}
+#	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# Resize the node
+ctrl + super + {h,j,k,l}
+	resize {west,south,north,east}
+
+# Move the floating node to the top left
+alt + ctrl + k
+    preset 'top-left'
+
+# Move the floating node to the bottom left
+alt + ctrl + j
+    preset 'bottom-left'
+
+# Move the floating node to the right (vertical)
+alt + ctrl + l
+    preset 'vertical-right'
+
+# Move the floating node to the left (wide vertical)
+alt + ctrl + h
+    preset 'wide-vertical-left'
+
+# Move the floating node to the center
+alt + ctrl + s
+    preset 'center'
+
+# Resize gaps
+ctrl + alt + g: {k,j}
+      bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
+
+# }}
+
+# DESKTOP {{
+# Focus the next/previous desktop
+super + {_,shift + }Tab
+	bspc desktop --focus {next,prev}.occupied
+
+# Move/Send the node to selected desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# Move the node to selected desktop
+#alt + shift + {1-9,0}
+#	swapdesktop {1-9,10}
+
+# Swap nodes betwen desktops
+#alt + {1-9,0}
+#	bspc node --to-desktop ^{1-9,10} --focus
+
+# Move node to the left, rigt desktop
+ctrl + shift + {h,l}
+    bspc node --to-desktop {prev,next} --focus
+
+# }}
+
+# LAYOUTS {{
+# Flip the layout vertically/horizontally
+super + {v,b}
+	bspc node @/ --flip {vertical,horizontal}
+
+# Rotate nodes tree
+super + {_,shift +} r
+   bspc node @/ -R {90,270}
+
+# Circulate the leaves of the tree
+super + {_,shift + } c
+	bspc node @/ --circulate {forward,backward}
+
+# Enable/Disable the monocle layout
+super + {_,shift + }space
+	bspc desktop --layout {next,prev}
+
+# Make the split ratios equal/balanced
+super + shift + {e,b}
+	bspc node @/ {--equalize,--balance}
+
+# }}
+
+# PRESELECTION {{
+# Make a new split
+alt + shift + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+super + alt + {p,b,comma,period}
+	bspc node --focus @{parent,brother,first,second}
+
+# Cancel the preselection
+super + {_,shift +} e
+	{bspc node -p cancel,bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel}
+
+# Preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# Send the focused node to the newest preselected node
+super + y
+	bspc node focused -n newest.!automatic.local
+
+# Send the newest marked node to the newest preselected node
+super + shift + y
+	bspc node newest.marked -n newest.!automatic.local
+
+# }}
+
+# APPLICATION {{
+# Close/Kill the node
+super + {_,shift + }q
+	bspc node -{c,k}
+# Run the dmenu desktop
+super + d
+	j4-dmenu-desktop
+# Open the terminal
+super + Return
+	$TERMINAL
+# Open the floating terminal
+alt + Return
+	$TERMINAL --class float
+# Open the terminal in the same directory
+super + shift + Return
+	samedir
+# Open the file manager
+alt + f
+	$TERMINAL -e $FILE
+# Open the browser
+alt + w
+	$BROWSER
+# Open the mpd client
+alt + m
+	$TERMINAL -e ncmpcpp
+# Open the neovim
+alt + v
+	$TERMINAL -e nvim
+# Open the sound configurations
+alt + a
+	$TERMINAL -e alsamixer
+# Open the mail client
+alt + e
+	$TERMINAL -e neomutt
+# Show help
+super + F2
+	 $TERMINAL --class float -e show_help
+
+# }}
+
+# BACKLIGHT/AUDIO {{
+# increase the volume (mpd or alsa)
+super + {equal,shift + plus}
+	{volume alsa up,volume mpc up}
+# decrease the volume (mpd or alsa)
+super {_,shift} + minus
+	{volume alsa down,volume mpc down}
+
+# mute the sound
+super + shift + m
+	amixer sset Master toggle
+
+# Pause mpd audio
+super + shift + p
+	mpc toggle
+# Changes to the next/previous tracks
+super + {comma,period}
+	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
+# Restart track
+super + shift + less
+	mpc seek 0%
+# Seek foward in song
+super + {_,shift +} bracketright
+	mpc seek +{10,120}
+# Seek backward in song
+super + {_,shift +} bracketleft
+	mpc seek -{10,120}
+
+# increase the backlight
+alt + {_,shift +} minus
+	{brightness down, sudo -A keybacklight -dec}
+# decrease the backlight
+alt  + {_,shift +} equal
+	{brightness up, sudo -A keybacklight -inc}
+{XF86MonBrightnessDown,XF86MonBrightnessUp}
+	{brightness down,brightness up}
+
+# }}
+
+# SCRIPTS {{
+# Open the menu for mpd
+super + ctrl + slash
+	dmenumpd
+# Open the new browser tab menu
+super + ctrl + o
+	dmenunewtab
+# Open the passmenu
+super + ctrl + p
+	passmenu
+# Opem the menu for edit configuration file
+super + ctrl + e
+	dmenuedit
+# Show the unicode symbols
+super + ctrl + i
+	dmenuunicode
+# Open the tmux menu
+super + ctrl + t
+	dmenutmux
+# Reload the programs
+super + ctrl + Delete
+	dmenureload
+# Lock, shutdown ,reboot, exit?
+super + ctrl + m
+	dmenupower
+# Take a screenshot
+super + End
+	dmenuscreen
+# Record the screen
+super + ctrl + Insert
+	dmenurecord
+# Kill the recording
+super + ctrl + w
+	dmenurecord kill; notify-send "Recording finished"
+# Mount, umount a device
+super + ctrl + d
+	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
+# Display the information
+super + slash
+	notify-send \
+	"$(date "+%a %d %b - %I:%M %p")" \
+	"Desktop: $(bspc query -D -d focused --names)\n\
+	Volume: $(amixer -D pulse get Master | grep -o '[0-9][0-9]*%' | head -1)\n\
+	$(acpi)"
+# Show the clicboard content
+super + Insert
+	showclip
+# Lock the screen
+super + ctrl + x
+	prompt "Lock screen" "slock & mpc pause"
+# Shutdown the computer
+super + ctrl + q
+	prompt "Shutdown computer?" "shutdown -h now"
+# Reboot the computer
+super + ctrl + BackSpace
+	prompt "Reboot computer?" "reboot"
+# Kill the xorg
+super + Escape
+	prompt 'Leave Xorg?' 'killall Xorg'
+# Update OS
+super + ctrl + u
+	prompt "Update packages?" "update"
+# Network menu
+super + ctrl + n
+	dmenuiwd
+# Open terminal if desktop is empty
+~button1
+	click_desktop
+
+# }}
+
+# MEDIA KEYS {{
+# Audiokeys
+XF86AudioMute
+	amixer sset Master toggle
+XF86Audio{Raise,Lower}Volume
+	volume {up,down}
+XF86Audio{Next,Prev}
+	mpc {next,prev}
+XF86Audio{Pause,Play,Stop}
+	mpc {pause,play,stop}
+XF86Audio{Rewind,Forward}
+	mpc seek {-,+}10
+XF86AudioMedia
+	$TERMINAL -e ncmpcpp
+
+# }}
+
+# vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker nospell:

@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-[ -f "$1" ] && o="cat"
-"${o:-echo}" "${1:-$(cat -)}" | curl -F file='@-' 'http://0x0.st'

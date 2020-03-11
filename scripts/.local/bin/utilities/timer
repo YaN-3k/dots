@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+sound="/usr/share/sounds/freedesktop/stereo/complete.oga"
+
+calc() {
+	seconds="$(echo "${1}*$2" | bc | sed 's/\..*$//')"
+}
+
+case "$1" in
+	*h) calc "${1%?}" 3600;;
+	*m) calc "${1%?}"   60;;
+	*s) seconds="${1%?}"  ;;
+	*)  calc "$1"       60;;
+esac
+
+{
+	for i in $(seq "$seconds" -1 1); do
+		printf "\r  %s" "$(date -d"0+$i sec" +%H:%M:%S)" &
+		echo "$(date -d"0+$i sec" +%H:%M:%S)" > "/tmp/timer-$$" &
+		sleep 1
+	done
+	printf "\r%s\n" "Timer Finished"
+	rm "/tmp/timer-$$"
+
+	paplay "$sound" 2>/dev/null &
+	notify-send -u critical "Timer finished" "$2"
+} &

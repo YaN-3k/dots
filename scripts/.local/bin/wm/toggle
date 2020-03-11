@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+action=$1
+wid=$(xdotool getactivewindow)
+did=$(xdotool get_desktop)
+list=/tmp/toggle.window_list.$did
+
+push() {
+    echo $1>>$list
+}
+
+pop() {
+    local id=$(tail -n 1 $list)
+    local size=$(wc -c $list | cut -d' ' -f1)
+    local item=$(echo "$id" | wc -c)
+
+    truncate -s $(( $size - $item )) $list
+    return $id
+}
+
+case $action in
+    'hide')
+        xdotool windowunmap $wid
+        push $wid
+        ;;
+    'show')
+        pop
+        xdotool windowmap $?
+        ;;
+esac

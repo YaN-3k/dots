@@ -1,151 +1,113 @@
-## Overview
-![screenshot](screenshot.jpg)
-### My Arch Linux configuration files for programs and bspwm.
-I created for you [installation guide](#Installation-guide) and in the [depencences](#dependencies) section you will find a description of the applications required to run full setup. Feel free to take, modify and use anything in this repo. If you have any problem you can write to me on telegram [@Cherrry9](https://t.me/Cherrry9).
-## Table of Contents
-1. [Overview](#Overview)
-1. [Installation Guide](#Installation-guide)
-1. [Dependencies](#dependencies)
-1. [Note](#note)
-## Installation Guide
-#### Install dependencies.
-Check the list of [dependencies](#dependencies) and install the necessary programs and fonts.
-#### Clone the repo.
 ```
-$ git clone https://github.com/Cherrry9/Dotfiles ~/Dotfiles
-```
-#### Create user directories like ~/Music and ~/Pictures.
-```
-$ xdg-user-dirs-update
-```
-#### Go to dotfiles directory.
-```
-$ cd ~/Dotfiles
-```
-#### Pull submodules.
-```
-$ git submodule update --init --recursive
-```
-#### Use [stow](https://www.gnu.org/software/stow/) to make symlinks.
-```
-$ stow -vS --no-folding config
-```
-or manually copy, make symlink to my dotfiles<br/>
-If you see something like that:
-```
-WARNING! stowing config would cause conflicts:
-  * existing target is neither a link nor a directory: .bashrc
-  * existing target is neither a link nor a directory: .bash_profile
-All operations aborted.
-```
-Delete or copy/move to another directory this file, and run again `stow`.
-#### Dmenu
-```
-$ cd ~/.config/dmenu/dmenu-4.9/
-$ sudo make clean install
-$ cd ../j4-dmenu-desktop
-$ cmake .
-$ make
-$ sudo make install
-```
-#### Neovim
-Install plugins:
-```
-$ nvim
-```
-#### Cron
-`sudo systemctl enable cronie && sudo systemctl start cronie`, `crontab -e` and add these lines (replace "<you_user>" with the name of your user):
-```
-# Syncs repositories and notify if there are updates
-0,30 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/checkup
-# Notify me with notify-send if my battery is low
-*/5 * * * * export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; /home/<you_user>/.local/bin/cron/cronbat
+      ██            ██     ████ ██  ██
+     ░██           ░██    ░██░ ░░  ░██
+     ░██  ██████  ██████ ██████ ██ ░██  █████   ██████
+  ██████ ██░░░░██░░░██░ ░░░██░ ░██ ░██ ██░░░██ ██░░░░
+ ██░░░██░██   ░██  ░██    ░██  ░██ ░██░███████░░█████
+░██  ░██░██   ░██  ░██    ░██  ░██ ░██░██░░░░  ░░░░░██
+░░██████░░██████   ░░██   ░██  ░██ ███░░██████ ██████
+ ░░░░░░  ░░░░░░     ░░    ░░   ░░ ░░░  ░░░░░░ ░░░░░░
+
+  ▓▓▓▓▓▓▓▓▓▓
+ ░▓ about  ▓ custom linux config files
+ ░▓ author ▓ Cherrry9 <cherrry9@disroot.org>
+ ░▓ code   ▓ https://github.com/Cherrry9/dotfiles
+ ░▓▓▓▓▓▓▓▓▓▓
+ ░░░░░░░░░░
+
 ```
 
-#### Installation complete.
-Log out and log in to see the changes. Check [note](#note) to view additional configuration steps.
-## Dependencies
-Package name | Description
-:--- | :---
-bspwm | is awesome tiling window manager
-sxhkd | is simple X hotkey daemon
-polybar | is a fast and easy to use status bar
-alacritty | is a cross-platform, gpu-accelerated terminal emulator
-stow | manage farms of symbolic links (easy storage dotfiles)
-xorg-server | is our old, but still working graphical server
-xorg-xinit | is a tool to start session X (instead of dm)
-xdotool | command-line X11 automation tool
-xdo | perform actions on windows
-picom | is a compositor for X11
-xwallpaper | wallpaper setting utility for X
-sxiv | is Simple X Image Viewer
-xdg-user-dirs |	is a tool to manage user directories like ~/Music and ~/Pictures
-xcape | configures modifier keys to act as other keys when pressed and released on their own
-xclip | is a command-line interface to the X11 clipboard
-slock | allows you to lock your computer, and quickly unlock with your password.
-unclutter | hides an inactive mouse.
-dmenu (buil in my repo) | is a dynamic menu for X
-tmux | is a terminal multiplexer
-neovim | is a amazing modal text editor with many plugins
-exa | is an improved version of ls
-vifm | is a vim-like file manager
-ranger-git | is also a vim-like file manager
-dunst | is a lightweight notification-daemons
-python-pip | is a tool for managing python 3 packages
-[ueberzug] | is an alternative for w3mimgdisplay
-zsh | is the best UNIX shell
-[zgen] (submodule) | is a Zsh plugin manager
-pulseaudio-alsa | is a Pulseaudio output plugin for ALSA
-mpd | is a lightweight music player daemon
-mpc | is a command-line client for the mpd
-ncmpcpp | is a mpd client working in the terminal
-neomutt | is a terminal mail clent
-abook | is a text based address book program (for neomutt)
-firefox | is rather fine browser
-qutebrowser | is a keyboard-driven, vim-like browser
-arc-gtk-theme | nice gtk theme
-ttf-dejavu | is a pretty nice font
-ttf-inconsolata | is the monospace font
-[ttf-font-awesome] | is a popular icon font
-zathura | is minimalistic vim-like document viewer
-zathura-djvu | DjVu support for Zathura
-zathura-pdf-mupdf | PDF support for zathura
-cli-visualizer | is a nice music visualizer working in the terminal
-cronie | is a cron implementations
+## table of contents
+ - [introduction](#dotfiles)
+ - [managing](#managing)
+ - [installing](#installing)
+ - [how it works](#how-it-works)
+ - [tl;dr](#tldr)
+ - [previews](#previews)
+ - [license](#license)
 
-#### One liner for Arch:
-```
-sudo pacman --needed -S bspwm sxhkd alacritty stow xorg-server xorg-xinit xdo xdotool picom xwallpaper sxiv xdg-user-dirs xcape xclip slock unclutter tmux neovim exa vifm dunst python-pip zsh pulseaudio-alsa mpd mpc ncmpcpp neomutt abook firefox qutebrowser arc-gtk-theme ttf-dejavu ttf-inconsolata ttf-font-awesome zathura zathura-djvu zathura-pdf-mupdf cronie
-```
-#### AUR:
-```
-yay --needed -S polybar ranger-git
-```
-#### Pip:
-```
-pip3 install --user pynvim ueberzug
-```
-[ueberzug]: https://github.com/seebye/ueberzug
-[ttf-font-awesome]: https://fontawesome.com/download
-[zgen]: https://github.com/tarjoilija/zgen
-## Note
-My wallpapers are in [Cherrry9/Wallpapers](https://github.com/Cherrry9/Wallpapers)<br>
-You can find useful scripts in [config/.local/bin](config/.local/bin) directory.<br>
-I created [startpage](https://github.com/Cherrry9/startpage) and the telegram [theme](config/.local/share/TelegramDesktop/Iceberg.tdesktop-theme) for my rice<br>
-You can see all my keybindings with the description using `super + F2` (`$ show_help`)<br>
-To see the custom sudo prompt with the bee, add these lines to `/etc/sudoers`:
-```
-Defaults  lecture="always"
-Defaults  lecture_file="/home/<your_user>/.local/share/sudoers.bee"
-```
-To view the custom login screen with Arch logo on tty:
-```
-$ cd /etc/
-$ mv issue issue-old
-$ ~/.scripts/makeissue
-```
-If you use Arch add this to you `/etc/pacman.conf` (easter egg):
-```
-ILoveCandy
-```
-And update you computer :)
+# dotfiles
+in the unix world programs are commonly configured in two different ways, via shell arguments or text based configuration files. programs with many options like window managers or text editors are configured on a per-user basis with files in your home directory `~`. in unix like operating systems any file or directory name that starts with a period or full stop character is considered hidden, and in a default view will not be displayed. thus the name dotfiles. 
+
+it's been said of every console user: 
+> _"you are your dotfiles"_.
+
+since they dictate how your system will look and function. to many users (see [ricers](http://unixporn.net) and [beaners](http://nixers.net)) these files are very important, and need to be backed up and shared. people who create custom themes have the added challenge of managing multiple versions of them. i have tried many organization techniques. and just take my word for it when i say, keeping a git repo in the root of your home directory is a bad idea. i've written custom shell scripts for moving or symlinking files into place. there are even a few dotfile managers, but they all seem to have lots of dependencies. i knew there had to be a simple tool to help me.
+
+# managing
+i manage mine with [gnu stow](http://www.gnu.org/software/stow/), a free, portable, lightweight symlink farm manager. this allows me to keep a versioned directory of all my config files that are virtually linked into place via a single command. this makes sharing these files among many users (root) and computers super simple. and does not clutter your home directory with version control files.
+
+# installing
+stow is available for all linux and most other unix like distributions via your package manager.
+
+- `sudo pacman -S stow`
+- `sudo apt-get install stow`
+- `brew install stow`
+
+or clone it [from source](https://savannah.gnu.org/git/?group=stow) and [build it](http://git.savannah.gnu.org/cgit/stow.git/tree/INSTALL.md) yourself.
+
+# how it works
+by default the stow command will create symlinks for files in the parent directory of where you execute the command. so my dotfiles setup assumes this repo is located in the root of your home directory `~/dotfiles`. and all stow commands should be executed in that directory. otherwise you'll need to use the `-d` flag with the repo directory location.
+
+to install most of my configs you execute the stow command with the folder name as the only argument. 
+
+to install my **bspwm** config use the command:
+
+`stow bspwm`
+
+this will symlink files to `~/.config/bspwm` and various other places.
+
+but you can override the default behavior and symlink files to another location with the `-t` (target) argument flag. 
+
+to install **scripts** for root you need to execute the command:
+
+`stow -t /root scripts` 
+
+this will symlink the file to `/root/.local/bin`.
+
+**note:** stow can only create a symlink if a config file does not already exist. if a default file was created upon program installation you must delete it first before you can install a new one with stow. this does not apply to directories, only files.
+
+# tl;dr
+navigate to your home directory
+
+`cd ~`
+
+clone the repo:
+
+`git clone http://github.com/Cherrry9/dotfiles`
+
+enter the dotfiles directory
+
+`cd dotfiles`
+
+install the shell settings
+
+`stow shell`
+
+install zsh settings for the root user
+
+`sudo stow shell -t /root`
+
+install neovim configuration
+
+`stow nvim`
+
+uninstall neovim configuration
+
+`stow -D nvim`
+
+install bspwm
+
+`stow bspwm`
+
+etc, etc, etc...
+
+# previews
+
+![ice tmux](previews/ice-tmux.png)
+
+# license
+
+![kopimi logo](previews/kopimi.png)
+
+all files and scripts in this repo are released [CC0](https://creativecommons.org/publicdomain/zero/1.0/) / [kopimi](https://kopimi.com)! in the spirit of _freedom of information_, i encourage you to fork, modify, change, share, or do whatever you like with this project! `^c^v`

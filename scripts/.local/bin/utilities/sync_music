@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+dir="$(xdg-user-dir MUSIC)"
+archive="$HOME/.local/share/archive.list"
+links="$HOME/.local/share/songs.list"
+
+mkdir -p "$dir"
+touch "$archive"
+
+file="$(sed 's/\s*#.*//g; /^$/ d' "$links")"
+
+for line_link in $file; do
+	# if song is in the archive file,
+	# it will not be downloaded
+	skip=''
+	while read -r line_arch; do
+		if [ "$line_link" = "$line_arch" ]; then
+			skip='true'
+			break
+		fi
+	done <"$archive"
+	[ -n "$skip" ] && continue
+
+	# else add to archive file and download
+	echo "$line_link" >>"$archive"
+	youtube-dl --audio-quality 0 \
+		-x --audio-format mp3 \
+		--embed-thumbnail \
+		--add-metadata \
+		--metadata-from-title \
+		"%(artist)s - %(title)s" \
+		--output "$dir/%(title)s.%(ext)s" \
+		-R infinite \
+		"$line_link"
+done

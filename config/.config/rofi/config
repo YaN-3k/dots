@@ -1,7 +1,0 @@
-rofi.modi: drun,window
-rofi.font: DejaVu San Mono for Powerline 12
-rofi.show-icons: true
-rofi.m: 0
-rofi.lines:  10
-rofi.width:  40
-rofi.theme: icebergs

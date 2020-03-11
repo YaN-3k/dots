@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# This script is the SUDO_ASKPASS variable, meaning that it will be used as a
+# password prompt if needed.
+
+# dmenu
+#dmenu  -p "Password for $(whoami)" <&- && echo
+
+# patched dmenu
+dmenu -P -p "Password for $(whoami)"
+
+# rofi
+#rofi -dmenu -password -p "Password for $(whoami)"
