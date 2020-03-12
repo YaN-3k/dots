@@ -1,3 +1,7 @@
+" ┳━┓┳  ┳ ┓┏━┓o┏┓┓  ┓━┓┳━┓┏┓┓┏┓┓o┏┓┓┏━┓┓━┓
+" ┃━┛┃  ┃ ┃┃ ┳┃┃┃┃  ┗━┓┣━  ┃  ┃ ┃┃┃┃┃ ┳┗━┓
+" ┇  ┇━┛┇━┛┇━┛┇┇┗┛  ━━┛┻━┛ ┇  ┇ ┇┇┗┛┇━┛━━┛
+
 " ALE - Asynchronous Lint Engine
 let g:ale_linters = {
 \   'c': ['ccls', 'clang'],
@@ -30,12 +34,12 @@ let g:ale_sign_column_always = 1
 "let g:ale_open_list = 1
 "let g:ale_lint_on_text_changed = 'never'
 
-map <Leader>af :ALEFix<CR>
-map <Leader>an :ALENext<CR>
-map <Leader>aN :ALEPrevious<CR>
-map <Leader>ad :ALEDetail<CR>
-map <Leader>ag :ALEGoToDefinitionInSplit<CR>
-map <Leader>aG :ALEGoToDefinition<CR>
+map <Leader>af :ALEFix<cr>
+map <Leader>an :ALENext<cr>
+map <Leader>aN :ALEPrevious<cr>
+map <Leader>ad :ALEDetail<cr>
+map <Leader>ag :ALEGoToDefinitionInSplit<cr>
+map <Leader>aG :ALEGoToDefinition<cr>
 
 " fzf colors
 let g:fzf_colors =
@@ -60,8 +64,8 @@ let g:fzf_layout = { 'down': '~50%' }
 let g:limelight_conceal_ctermfg = 8
 function! s:goyo_enter()
 	Limelight
-	noremap ZZ :Goyo\|x!<CR>
-	noremap ZQ :Goyo\|q!<CR>
+	noremap ZZ :Goyo\|x!<cr>
+	noremap ZQ :Goyo\|q!<cr>
 	call deoplete#disable()
 	silent !tmux set status off
 	silent !tmux list-panes -F '\#F' | grep -q Z | tmux resize-pane -Z
@@ -89,15 +93,15 @@ augroup goyoactions
 	autocmd! User GoyoLeave nested call <SID>goyo_leave()
 augroup end
 
-map <leader>w :Goyo<CR>
+map <leader>w :Goyo<cr>
 
 " Enable Goyo by default for mutt writting
 augroup muttwrite
 	au!
 	autocmd BufRead,BufNewFile /tmp/neomutt* let g:goyo_width=80
 	autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
-	autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
-	autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
+	autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<cr>
+	autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<cr>
 augroup end
 
 " python paths, needed for virtualenvs
@@ -122,7 +126,7 @@ let g:gitgutter_sign_removed_first_line = '^'
 let g:gitgutter_sign_modified_removed = ':'
 
 " maping
-map <Leader>gt :GitGutterToggle<CR>
+map <Leader>gt :GitGutterToggle<cr>
 nmap gn <Plug>(GitGutterNextHunk)
 nmap gN <Plug>(GitGutterPrevHunk)
 nmap gs <Plug>(GitGutterStageHunk)
@@ -133,24 +137,60 @@ nmap gp <Plug>(GitGutterPreviewHunk)
 let g:winresizer_horiz_resize = 1
 let g:winresizer_vert_resize = 2
 
-" file browser
-let NERDTreeShowHidden = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let g:webdevicons_enable_nerdtree = 1
+" Start screen
+let g:ascii = [
+	\ '    ████     ██                           ██            ',
+	\ '   ░██░██   ░██                          ░░             ',
+	\ '   ░██░░██  ░██  █████   ██████  ██    ██ ██ ██████████ ',
+	\ '   ░██ ░░██ ░██ ██░░░██ ██░░░░██░██   ░██░██░░██░░██░░██',
+	\ '   ░██  ░░██░██░███████░██   ░██░░██ ░██ ░██ ░██ ░██ ░██',
+	\ '   ░██   ░░████░██░░░░ ░██   ░██ ░░████  ░██ ░██ ░██ ░██',
+	\ '   ░██    ░░███░░██████░░██████   ░░██   ░██ ███ ░██ ░██',
+	\ '   ░░      ░░░  ░░░░░░  ░░░░░░     ░░    ░░ ░░░  ░░  ░░ ',
+	\]
+let g:startify_custom_header = g:ascii
 
-" open Nerd Tree if no files were specified
-augroup NerdTree
-	au!
-	autocmd StdinReadPre * let s:std_in=1
-	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-augroup end
+let g:startify_lists = [
+	\ { 'type': 'bookmarks', 'header': ['   Dotfiles'] },
+	\ ]
+
+let g:startify_bookmarks = [
+	\ { 'bs': '~/.config/bspwm/bspwmrc' },
+	\ { 'sx': '~/.config/sxhkd/sxhkdrc' },
+	\ { 'pp': '~/.config/polybar/config' },
+	\ { 'al': '~/.config/alacritty/alacritty.yml' },
+	\ { 'ds': '~/.config/dunst/dunstrc' },
+	\ { 'nc': '~/.config/ncmpcpp/config' },
+	\ { 'nb': '~/.config/ncmpcpp/bindings' },
+	\ { 'bb': '~/.config/qutebrowser/config.py' },
+	\ { 'mn': '~/.config/mutt/muttrc' },
+	\ { 'za': '~/.config/zathura/zathurarc' },
+	\ { 'pi': '~/.config/picom.conf' },
+	\ { 'tm': '~/.tmux.conf' },
+	\ { 'vv': '~/.config/nvim' },
+	\ { 'vf': '~/.config/vifm/vifmrc' },
+	\ { 'zz': '~/.config/zsh' },
+	\ { 'sh': '~/.config/shell' },
+	\ { 'zp': '~/.zprofile' },
+	\ { 'bi': '~/.local/bin/' },
+	\ { 'ra': '~/.config/ranger' },
+	\ ]
 
 " emmet settings
 let g:user_emmet_mode='a'
 let g:user_emmet_leader_key=','
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
+" completion with tab
+inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+
+"inoremap <tab> <c-n>
+"inoremap <S-tab> <c-p>
+
+" real tab
+inoremap <A-tab> <tab>
 
 " omnifuncs
 augroup omnifuncs
@@ -165,32 +205,45 @@ augroup end
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-" let g:deoplete#disable_auto_complete = 1
 let g:deoplete#enable_ignore_case = 1
-if !exists('g:deoplete#omni#input_patterns')
-	let g:deoplete#omni#input_patterns = {}
-endif
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 call deoplete#custom#source('ultisnips', 'rank', 1000)
 
+" ignore case
+call deoplete#custom#option('smart_case', v:false)
+
+" disable preview
 set completeopt-=preview
+
+" the delay for completion after input, measured in milliseconds
+call deoplete#custom#option('auto_complete_delay', 100)
+
+" enable zsh autocompletion in sh buffers
+call deoplete#custom#source('zsh', 'filetypes', ['sh', 'zsh'])
+
+" ignore certain sources, because they only cause nosie most of the time
+"call deoplete#custom#option('ignore_sources', {
+"   \ '_': ['around', 'buffer', 'tag']
+"   \ })
+
+" candidate list item number limit
+call deoplete#custom#option('max_list', 30)
+
+" the number of processes used for the deoplete parallel feature
+call deoplete#custom#option('num_processes', 16)
 
 " go - $ go get -u github.com/stamblerre/gocode
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-
-" autoPairs
-let g:AutoPairs={'(':')', '[':']', '{':'}', "'":"'", '"':'"', '`':'`', '```':'```', '"""':'"""', "'''":"'''",} "'<':'>'}
 
 " if you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit='vertical'
 
 " enable/disable deoplete
-map <Leader>d :call deoplete#toggle()<CR>
+map <Leader>d :call deoplete#toggle()<cr>
 
 " fzf, fuzzy finder
-"nnoremap <C-p> :Files<CR>
-"nnoremap <C-g> :GFiles<CR>
+"nnoremap <C-p> :Files<cr>
+"nnoremap <C-g> :GFiles<cr>
 "let g:fzf_action = {
 "  \ 'ctrl-t': 'tab split',
 "  \ 'ctrl-x': 'split',
@@ -201,12 +254,7 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_map = '<c-p>'
-map <C-i> :CtrlPBufTag<CR>
-
-" SuperTab
-let g:SuperTabMappingTabLiteral = '<a-tab>'
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabContextDefaultCompletionType = '<c-n>'
+map <C-i> :CtrlPBufTag<cr>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger='<C-z>'

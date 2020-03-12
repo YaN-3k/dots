@@ -1,24 +1,28 @@
-" ~~~~ Statusline configuration ~~~~
+" ┓━┓┏┓┓┳━┓┏┓┓┳ ┓┓━┓┳  o┏┓┓┳━┓
+" ┗━┓ ┃ ┃━┫ ┃ ┃ ┃┗━┓┃  ┃┃┃┃┣━
+" ━━┛ ┇ ┛ ┇ ┇ ┇━┛━━┛┇━┛┇┇┗┛┻━┛
+
+" ~~ Statusline configuration ~~
 " ':help statusline' is your friend!
 
-" Color depending on mode
+" color depending on mode
 function! RedrawModeColors(mode) " {{{
-	" Normal mode
+	" normal mode
 	if a:mode == 'n'
 		hi MyStatuslineFilename ctermfg=4 cterm=none ctermbg=0
-	" Insert mode
+	" insert mode
 	elseif a:mode == 'i'
 		hi MyStatuslineFilename ctermfg=3 cterm=none ctermbg=0
-	" Replace mode
+	" replace mode
 	elseif a:mode == 'R'
 		hi MyStatuslineFilename ctermfg=1 cterm=none ctermbg=0
-	" Visual mode
+	" visual mode
 	elseif a:mode == 'v' || a:mode == 'V' || a:mode == '^V'
 		hi MyStatuslineFilename ctermfg=5 cterm=none ctermbg=0
-	" Command mode
+	" command mode
 	elseif a:mode == 'c'
 		hi MyStatuslineFilename ctermfg=6 cterm=none ctermbg=0
-	" Terminal mode
+	" terminal mode
 	elseif a:mode == 't'
 		hi MyStatuslineFilename ctermfg=1 cterm=none ctermbg=0
 	endif
@@ -27,7 +31,7 @@ function! RedrawModeColors(mode) " {{{
 endfunction
 " }}}
 
-" Modification mark
+" modification mark
 function! SetModifiedSymbol(modified) " {{{
 	if a:modified == 1
 		hi MyStatuslineModifiedBody ctermbg=NONE cterm=NONE ctermfg=7
@@ -39,7 +43,7 @@ function! SetModifiedSymbol(modified) " {{{
 endfunction
 " }}}
 
-" Filetype
+" filetype
 function! SetFiletype(filetype) " {{{
 	if a:filetype == ''
 		return '-'
@@ -50,17 +54,17 @@ endfunction
 " }}}
 
 "=================
-" Statusbar items
+" statusbar items
 "=================
-" This will not be displayed, but the function RedrawModeColors will be
+" this will not be displayed, but the function RedrawModeColors will be
 " called every time the mode changes, thus updating the colors used for the
 " components.
 set statusline=%{RedrawModeColors(mode())}
 
 "=================
-" Left side items
+" left side items
 "=================
-" Filename
+" filename
 set statusline+=%#MyStatuslineSeparator#▒░
 set statusline+=%#MyStatuslineFilename#%t
 set statusline+=%#MyStatuslineSeparator#░▒▓█
@@ -69,29 +73,29 @@ set statusline+=%#MyStatuslineSeparator#░▒▓█
 set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
 
 "==================
-" Right side items
+" right side items
 "==================
-" Current scroll percentage
+" current scroll percentage
 set statusline+=%=
 set statusline+=%#MyStatuslineSeparator#▓▒░
 set statusline+=\%#MyStatuslineLinePerc#%2p%%
 set statusline+=%#MyStatuslineSeparator#░▒▓
 
-" Line and Column
+" line and column
 set statusline+=%#MyStatuslineSeparator#▓▒░
 set statusline+=%#MyStatuslineLineCol#%2l
 set statusline+=\/%#MyStatuslineLineCol#%2c
 set statusline+=%#MyStatuslineSeparator#░▒▓
 
-" Padding
+" padding
 "set statusline+=\ \
 
-" Filetype
+" filetype
 set statusline+=%#MyStatuslineSeparator#▓▒░
 set statusline+=\%#MyStatuslineFiletype#%{SetFiletype(&filetype)}
 set statusline+=\ \%#MyStatuslineSeparator#▒
 
-" Setup the colors
+" setup the colors
 hi StatusLine               ctermbg=NONE  ctermfg=5     cterm=NONE
 hi StatusLineNC             ctermbg=NONE  ctermfg=8     cterm=bold
 

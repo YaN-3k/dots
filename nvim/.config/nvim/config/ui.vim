@@ -1,3 +1,7 @@
+" ┳ ┓o
+" ┃ ┃┃
+" ┇━┛┇
+
 " show matching brackets/parenthesis
 set showmatch
 set matchtime=3
@@ -57,11 +61,6 @@ augroup CursorLine
 	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
 	au WinLeave * setlocal nocursorline
 augroup END
-
-" tree style file explorer
-let g:netrw_liststyle=3
-let g:netrw_browse_split=4
-let g:netrw_winsize=25
 
 " Enable true color
 "if exists('+termguicolors')

@@ -1,3 +1,7 @@
+" ┏━┓┳━┓┏┓┓┳━┓┳━┓┳━┓┳
+" ┃ ┳┣━ ┃┃┃┣━ ┃┳┛┃━┫┃
+" ┇━┛┻━┛┇┗┛┻━┛┇┗┛┛ ┇┇━┛
+
 " minimal number to keep above/below the cursor
 set scrolloff=5
 

@@ -33,8 +33,8 @@ if ! zgen saved; then
 fi
 
 # load shell-agnostic configs
-source ~/.config/shortcutrc
-source ~/.config/aliasrc
+source ~/.config/shell/shortcutrc
+source ~/.config/shell/aliasrc
 
 # load config
 source $ZDOTDIR/prompt.zsh
