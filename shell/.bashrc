@@ -15,7 +15,7 @@
 [ -f ~/.config/shortcutrc ] && source ~/.config/shell/shortcutrc
 
 # history file
-export HISTFILE="$HOME/.config/zsh/.bash_history"
+export HISTFILE="$HOME/.cache/bash_history"
 
 # vim mode
 set -o vi

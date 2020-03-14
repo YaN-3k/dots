@@ -88,6 +88,9 @@ hi Todo         ctermbg=NONE   ctermfg=3      cterm=bold
 hi Statement    ctermbg=NONE   ctermfg=4      cterm=bold
 hi Include      ctermbg=NONE   ctermfg=5      cterm=NONE
 
+" c/cpp
+hi cBlock       ctermbg=NONE ctermfg=NONE cterm=NONE
+
 " sh
 hi shStatement  ctermbg=NONE   ctermfg=4      cterm=NONE
 hi shFunction   ctermbg=NONE   ctermfg=7      cterm=NONE

@@ -15,7 +15,8 @@ notify-send -i ~/Pictures/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
 telegram-desktop &
-$TERMINAL --class scratchpad -e scratch &
+#$TERMINAL --class scratchpad -e scratch &
+$TERMINAL -name scratchpad -e scratch &
 mkdir -p ~/.config/bspwm/log
 
 #===============

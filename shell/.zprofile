@@ -12,7 +12,7 @@ export PATH="$PATH:$HOME/.zgen/junegunn/fzf-master/bin:$(du "$HOME/.local/bin/" 
 
 # Default programs:
 export EDITOR="nvim"
-export TERMINAL="alacritty"
+export TERMINAL="urxvt"
 export READER="zathura"
 export FILE="ranger"
 export BROWSER="qutebrowser"

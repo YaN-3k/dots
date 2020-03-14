@@ -45,7 +45,7 @@ font:
     family: xos4 Terminus
     style: Italic
 
-  size: 10.0
+  size: 12.0
 
   offset:
     x: 0
@@ -125,14 +125,12 @@ shell:
 
 key_bindings:
   #- { key: Return,   mods: Alt,              action: ToggleFullscreen   }
-  - { key: Key0,     mods: Control,          action: ResetFontSize      }
-  - { key: Equals,   mods: Control,          action: IncreaseFontSize   }
-  - { key: Add,      mods: Control,          action: IncreaseFontSize   }
-  - { key: Subtract, mods: Control,          action: DecreaseFontSize   }
-  - { key: Minus,    mods: Control,          action: DecreaseFontSize   }
+  - { key: Equals,    mods: Control,         action: ResetFontSize      }
+  - { key: Subtract,  mods: Control,         action: DecreaseFontSize   }
+  - { key: Add,       mods: Control|Shift,   action: IncreaseFontSize   }
   # - { key: P,        mods: Control,          action: Paste              }
   # - { key: Y,        mods: Control,          action: Copy               }
-  - { key: Insert,   mods: Shift,            action: PasteSelection     }
+  - { key: Insert,    mods: Shift,            action: PasteSelection     }
   - { key: Paste,                            action: Paste              }
   - { key: Copy,                             action: Copy               }
   - { key: L,         mods: Control,         action: ClearLogNotice     }

@@ -1,0 +1,90 @@
+#!/usr/bin/env sh
+# Clean fullscreen aims to provide a means to have a clean desktop when using
+# transparency in bspwm, the issue I found was that when a window entered,
+# fullscreen mode I was still able to see the windows behind it, I think this
+# looks kind of gross so that's why this exists.
+
+HideBar() {
+  if pgrep "polybar"; then
+    polybar-msg cmd hide
+  fi
+}
+
+ShowBar() {
+  if pgrep "polybar"; then
+    polybar-msg cmd show
+  fi
+}
+
+HideNodes() {
+  NODES=$(bspc query -N -n .tiled -d "$1")
+
+  for node in $NODES; do
+    bspc node "$node" -g hidden=on
+  done
+}
+
+ShowNodes() {
+  NODES=$(bspc query -N -n .hidden -d "$1")
+  SCRATCHPAD=$(cat /tmp/scratchid)
+
+  for node in $NODES; do
+	  if [ "$node" != "$SCRATCHPAD" ]; then
+		bspc node "$node" -g hidden=off
+	  fi
+  done
+}
+
+bspc subscribe node_state | while read -r Event
+do
+  Desktop=$(echo "$Event" | awk '{print $3}')
+  State=$(echo "$Event" | awk '{print $5}')
+  Active=$(echo "$Event" | awk '{print $6}')
+  # Hide bar and nodes when node becomes fullscreen, otherwise show
+  if [ "$State" = "fullscreen" ]; then
+    if [ "$Active" = "on" ]; then
+      HideNodes "$Desktop"
+      HideBar
+    else
+      ShowNodes "$Desktop"
+      ShowBar
+    fi
+  fi
+done &
+
+bspc subscribe node_remove | while read -r Event
+do
+  Desktop=$(echo "$Event" | awk '{print $3}')
+
+  # Show bar if no nodes are fullscreen on current desktop
+  if [ -z "$(bspc query -N -n .fullscreen -d "$Desktop")" ]; then
+    ShowBar
+  fi
+  ShowNodes "$Desktop"
+done &
+
+bspc subscribe node_transfer | while read -r Event
+do
+  SrcNode=$(echo "$Event" | awk '{print $4}')
+  # Show nodes on src desktop and hide nodes on dest desktop
+  # If src node is in full screen mode
+  if [ -n "$(bspc query -N -n "$SrcNode".fullscreen)" ]; then
+    SrcDesktop=$(echo "$Event" | awk '{print $3}')
+    ShowNodes "$SrcDesktop"
+    DestDesktop=$(echo "$Event" | awk '{print $6}')
+    HideNodes "$DestDesktop"
+    ShowBar
+  fi
+done &
+
+bspc subscribe desktop_focus | while read -r Event
+do
+  Desktop=$(echo "$Event" | awk '{print $3}')
+
+  # Hide bar if desktop contains fullscreen node, otherwise show it
+  if [ -n "$(bspc query -N -n .fullscreen -d "$Desktop")" ]; then
+    HideBar
+  else
+    ShowBar
+  fi
+done &

@@ -5,7 +5,7 @@ cfa	~/.config/aliasrc
 cfz	$ZDOTDIR/.zshrc
 cfv	~/.config/nvim/init.vim
 cfm	~/.config/mutt/muttrc
-cfd	~/.Xresources
+cfd	~/.Xdefaults
 cfmb	~/.config/ncmpcpp/bindings
 cfmc	~/.config/ncmpcpp/config
 cfk	~/.config/sxhkd/sxhkdrc
