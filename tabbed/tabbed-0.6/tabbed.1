@@ -1,0 +1,144 @@
+.TH TABBED 1 tabbed\-VERSION
+.SH NAME
+tabbed \- generic tabbed interface
+.SH SYNOPSIS
+.B tabbed
+.RB [ \-c ]
+.RB [ \-d ]
+.RB [ \-h ]
+.RB [ \-s ]
+.RB [ \-v ]
+.RB [ \-g
+.IR geometry ]
+.RB [ \-n
+.IR name ]
+.RB [ \-p
+.IR [ s +/- ] pos ]
+.RB [ \-r
+.IR narg ]
+.IR [ command ... ]
+.SH DESCRIPTION
+.B tabbed
+is a simple tabbed container for applications which support XEmbed. Tabbed
+will then run the provided command with the xid of tabbed as appended
+argument. (See EXAMPLES.) The automatic spawning of the command can be
+disabled by providing the -s parameter. If no command is provided
+tabbed will just print its xid and run no command.
+.SH OPTIONS
+.TP
+.B \-c
+close tabbed when the last tab is closed. Mutually exclusive with -f.
+.TP
+.B \-d
+detaches tabbed from the terminal and prints its XID to stdout.
+.TP
+.B \-f
+fill up tabbed again by spawning the provided command, when the last tab is
+closed. Mutually exclusive with -c.
+.TP
+.B \-h
+will print the usage of tabbed.
+.TP
+.BI \-g " geometry"
+defines the X11 geometry string, which will fixate the height and width of
+tabbed.
+Them form is [=][<width>{xX}<height>][{+-}<xoffset>{+-}<yoffset>]. See
+.BR XParseGeometry (3)
+for further details.
+.TP
+.BI \-n " name"
+will set the WM_CLASS attribute to
+.I name.
+.TP
+.BI \-p " [ s +/-] pos"
+will set the absolute or relative position of where to start a new tab. When
+.I pos
+is is given without 's' in front it is an absolute position. Then negative
+numbers will be the position from the last tab, where -1 is the last tab.
+If 's' is given, then
+.I pos
+is a relative position to the current selected tab. If this reaches the limits
+of the tabs; those limits then apply.
+.TP
+.BI \-r " narg"
+will replace the
+.I narg
+th argument in
+.I command
+with the window id, rather than appending it to the end.
+.TP
+.B \-s
+will disable automatic spawning of the command.
+.TP
+.BI \-t " color"
+defines the selected background color.
+.IR #RGB ,
+.IR #RRGGBB ,
+and X color names are supported.
+.TP
+.BI \-T " color"
+defines the selected foreground color.
+.TP
+.BI \-u " color"
+defines the normal background color.
+.TP
+.BI \-U " color"
+defines the normal foreground color.
+.TP
+.B \-v
+prints version information to stderr, then exits.
+.SH USAGE
+.TP
+.B Ctrl\-Shift\-Return
+open new tab
+.TP
+.B Ctrl\-Shift\-h
+previous tab
+.TP
+.B Ctrl\-Shift\-l
+next tab
+.TP
+.B Ctrl\-Shift\-j
+move selected tab one to the left
+.TP
+.B Ctrl\-Shift\-k
+move selected tab one to the right
+.TP
+.B Ctrl\-Tab
+toggle between the selected and last selected tab
+.TP
+.B Ctrl\-t
+open dmenu to either create a new tab appending the entered string or select
+an already existing tab.
+.TP
+.B Ctrl\-q
+close tab
+.TP
+.B Ctrl\-[0..9]
+jumps to nth tab
+.TP
+.B F11
+Toggle fullscreen mode.
+.SH EXAMPLES
+$ tabbed surf -e
+.TP
+$ tabbed urxvt -embed
+.TP
+$ tabbed xterm -into
+.TP
+$ $(tabbed -d >/tmp/tabbed.xid); urxvt -embed $(</tmp/tabbed.xid);
+.TP
+$ tabbed -r 2 st -w '' -e tmux
+.SH CUSTOMIZATION
+.B tabbed
+can be customized by creating a custom config.h and (re)compiling the source
+code. This keeps it fast, secure and simple.
+.SH AUTHORS
+See the LICENSE file for the authors.
+.SH LICENSE
+See the LICENSE file for the terms of redistribution.
+.SH SEE ALSO
+.BR st (1)
+.SH BUGS
+Please report them.
+

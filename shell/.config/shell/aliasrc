@@ -83,7 +83,7 @@ fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
 open() { xdg-open "$1" &> /dev/null & disown;}
 psgrep() { ps axufc | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
-mkdircd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+mkdcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
 
 conf() {
 	case $1 in

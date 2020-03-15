@@ -76,6 +76,7 @@ bspc rule -a TelegramDesktop desktop='^4'
 bspc rule -a Steam desktop='^8'
 bspc rule -a network-manager state=floating sticky=on
 bspc rule -a *::scratchpad sticky=on state=floating hidden=on locked=on
-bspc rule -a lock  sticky=on state=floating locked=on
-bspc rule -a *::float state=floating
+bspc rule -a lock sticky=on state=floating locked=on
 bspc rule -a Zathura state=tiled
+bspc rule -a *::float state=floating
+bspc rule -a *::tiled state=tiled

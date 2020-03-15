@@ -31,7 +31,7 @@ edit_package() {
 	files_name=$(printf '%b\n' "$files" | dmenu -i -p 'Edit a config file')
 	[ -z "$files_name" ] && exit
 	choice="$HOME/dotfiles/$package_name/$files_name"
-	$TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"
+	$TERMINAL -e nvim "$choice"
 }
 
 edit_all() {
@@ -53,7 +53,7 @@ edit_all() {
 	choice=$(printf '%b\n' "$options" | dmenu -i -p 'Edit a config file')
 	[ -z "$choice" ] && exit
 	choice="$HOME"/dotfiles/"$choice"
-	$TERMINAL -e zsh -c "sleep 0.05 && nvim $choice"
+	$TERMINAL -e nvim "$choice"
 }
 
 edit_package

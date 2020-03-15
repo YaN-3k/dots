@@ -51,6 +51,9 @@ hi DiffAdd      ctermbg=NONE   ctermfg=2      cterm=NONE
 hi DiffDelete   ctermbg=NONE   ctermfg=1      cterm=NONE
 hi DiffChange   ctermbg=NONE   ctermfg=3      cterm=NONE
 hi DiffText     ctermbg=NONE   ctermfg=7      cterm=NONE
+hi diffAdded    ctermbg=NONE   ctermfg=2      cterm=NONE
+hi diffRemoved  ctermbg=NONE   ctermfg=1      cterm=NONE
+hi diffSubname  ctermbg=NONE   ctermfg=3      cterm=NONE
 
 " language syntax
 hi Comment      ctermbg=NONE   ctermfg=8      cterm=NONE
@@ -79,7 +82,7 @@ hi Structure    ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Special      ctermbg=NONE   ctermfg=5      cterm=NONE
 hi SpecialChar  ctermbg=NONE   ctermfg=5      cterm=NONE
 hi SpecialKey   ctermbg=NONE   ctermfg=5      cterm=NONE
-hi NonText      ctermbg=NONE   ctermfg=5      cterm=NONE
+hi NonText      ctermbg=NONE   ctermfg=8      cterm=NONE
 hi Delimiter    ctermbg=NONE   ctermfg=NONE   cterm=NONE
 hi Underliend   ctermbg=NONE   ctermfg=1      cterm=underline
 hi Ignore       ctermbg=NONE   ctermfg=1      cterm=NONE

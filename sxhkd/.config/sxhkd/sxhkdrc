@@ -125,8 +125,8 @@ super + {_,shift + }{1-9,0}
 #	bspc node --to-desktop ^{1-9,10} --focus
 
 # Move node to the left, rigt desktop
-ctrl + shift + {h,l}
-    bspc node --to-desktop {prev,next} --focus
+#ctrl + shift + {h,l}
+#    bspc node --to-desktop {prev,next} --focus
 
 # }}
 
@@ -187,10 +187,10 @@ super + d
 	j4-dmenu-desktop
 # Open the terminal
 super + Return
-	$TERMINAL
+	tabterm
 # Open the floating terminal
 alt + Return
-	$TERMINAL -name float
+	tabterm float
 # Open the terminal in the same directory
 super + shift + Return
 	samedir
