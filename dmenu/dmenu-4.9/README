@@ -7,7 +7,6 @@ Requirements
 ------------
 In order to build dmenu you need the Xlib header files.
 
-
 Installation
 ------------
 Edit config.mk to match your local setup (dmenu is installed into
@@ -18,6 +17,10 @@ Afterwards enter the following command to build and install dmenu
 
     make clean install
 
+Patches included
+----------------
+* password
+* xresources
 
 Running dmenu
 -------------

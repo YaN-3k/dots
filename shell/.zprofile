@@ -22,7 +22,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export INPUTRC="$HOME/.config/shell/inputrc"
 export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export LESSHISTFILE="-"
-export WGETRC="$HOME/.config/wget/wgetrc"
+#export WGETRC="$HOME/.config/wget/wgetrc"
 export ZDOTDIR="$HOME/.config/zsh"
 export PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 

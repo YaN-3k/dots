@@ -190,7 +190,7 @@ super + Return
 	$TERMINAL
 # Open the floating terminal
 alt + Return
-	$TERMINAL --class float
+	$TERMINAL -name float
 # Open the terminal in the same directory
 super + shift + Return
 	samedir
@@ -214,7 +214,7 @@ alt + e
 	$TERMINAL -e neomutt
 # Show help
 super + F2
-	 $TERMINAL --class float -e show_help
+	 $TERMINAL -name float -e show_help
 
 # }}
 

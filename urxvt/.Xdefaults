@@ -48,11 +48,18 @@
 *.color7:       #c6c8d1
 *.color15:      #d2d4de
 
+! █▓▒░ dmenu
+dmenu.background:    #161821
+dmenu.foreground:    #c6c8d1
+dmenu.selbackground: #84a0c6
+dmenu.selforeground: #22262e
+dmenu.font: xos4 Terminus:size=10
+
 ! █▓▒░ misc
 URxvt.scrollBar: false
 URxvt.saveLines: 9999
 URxvt.iso14755: false
-URxvt.geometry: 80x25
+URxvt.geometry: 80x30
 URxvt.cursorUnderline:1
 
 ! █▓▒░ perl extensions
