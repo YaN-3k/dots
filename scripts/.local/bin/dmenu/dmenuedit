@@ -14,7 +14,7 @@ edit_package() {
 		fi ;;
 		esac
 	done
-	package_name=$(printf "%b\n" "$packages" | dmenu -p "Enter package name to edit")
+	package_name=$(printf "%b\n" "$packages" | $DMENU -i)
 	[ -z "$package_name" ] && exit
 	cd "$package_name" || exit
 
@@ -28,7 +28,7 @@ edit_package() {
 		fi
 	done <"$list"
 	rm "$list"
-	files_name=$(printf '%b\n' "$files" | dmenu -i -p 'Edit a config file')
+	files_name=$(printf '%b\n' "$files" | $DMENU -i)
 	[ -z "$files_name" ] && exit
 	choice="$HOME/dotfiles/$package_name/$files_name"
 	$TERMINAL -e nvim "$choice"
@@ -50,7 +50,7 @@ edit_all() {
 		esac
 	done <"$list"
 	rm "$list"
-	choice=$(printf '%b\n' "$options" | dmenu -i -p 'Edit a config file')
+	choice=$(printf '%b\n' "$options" | $DMENU -i)
 	[ -z "$choice" ] && exit
 	choice="$HOME"/dotfiles/"$choice"
 	$TERMINAL -e nvim "$choice"

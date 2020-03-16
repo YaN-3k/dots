@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 echo "Getting colours from xrdb"
-colours=$(xrdb -query | grep "color" | sed 's/*.color//g' | sort -n | awk -F "#" '{ print $2 }')
+colours=$(xrdb -query | grep "color[0-9]" | sed 's/*.color//g' | sort -n | awk -F "#" '{ print $2 }')
 bg=$(xrdb -query | grep "background" | awk -F "#" '{ print $2 }')
 
 echo "Writing to '$HOME/bin/ttycol.sh'"
@@ -23,6 +23,7 @@ echo "Writing to '$HOME/bin/ttycol.sh'"
 		esac
 		echo "echo -en \"\e]P$n$c\" > \"\$tty\""
 		i=$((i + 1))
+		[ "$i" -gt 15 ] && exit
 	done
 
 	echo 'done'

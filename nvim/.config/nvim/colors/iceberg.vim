@@ -8,7 +8,7 @@ if exists('syntax_on')
     syntax reset
 endif
 
-let g:colors_name='term'
+let g:colors_name='iceberg'
 
 set numberwidth=1
 
@@ -64,7 +64,7 @@ hi Number       ctermbg=NONE   ctermfg=5      cterm=NONE
 hi Boolean      ctermbg=NONE   ctermfg=11     cterm=NONE
 hi Float        ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Identifier   ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Function     ctermbg=NONE   ctermfg=5      cterm=NONE
+hi Function     ctermbg=NONE   ctermfg=3      cterm=NONE
 hi Conditional  ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Repeat       ctermbg=NONE   ctermfg=4      cterm=NONE
 hi Label        ctermbg=NONE   ctermfg=4      cterm=NONE

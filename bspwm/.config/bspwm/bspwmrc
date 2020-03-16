@@ -15,18 +15,18 @@ notify-send -i ~/Pictures/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
 telegram-desktop &
+"$HOME"/.config/polybar/launch.sh
 #$TERMINAL --class scratchpad -e scratch &
-$TERMINAL -name scratchpad -e scratch &
 mkdir -p ~/.config/bspwm/log
 
 #===============
 # Configuration
 #===============
-# bspc monitor -d 1 2 3 4 5 6 7 8 9 10
-# bspc monitor -d I II III IV V VI VII VIII IX X
-bspc monitor -d 0000 0001 0010 0011 0100 0101 0111 1000 1100 #1010
-# bspc monitor LVDS1 -d 1 2 3 4 5 6 7 8 9
-# bspc monitor HDMI1 -d 1 2 3 4 5 6 7 8 9
+#bspc monitor -d 1 2 3 4 5 6 7 8 9 10
+bspc monitor -d I II III IV V VI VII VIII IX X
+#bspc monitor -d 0000 0001 0010 0011 0100 0101 0111 1000 1100 #1010
+#bspc monitor LVDS1 -d 1 2 3 4 5 6 7 8 9
+#bspc monitor HDMI1 -d 1 2 3 4 5 6 7 8 9
 
 # Mouse setings
 bspc config pointer_modifier mod4
@@ -41,14 +41,15 @@ bspc config pointer_action1 move
 # bspc config left_padding 5
 # bspc config bottom_padding 5
 # bspc config top_padding 15
-# bspc config right_monocle_padding 5
-# bspc config left_monocle_padding 5
-# bspc config bottom_monocle_padding 5
-# bspc config top_monocle_padding 10
+bspc config right_monocle_padding 15
+bspc config left_monocle_padding 15
+bspc config bottom_monocle_padding 15
+bspc config top_monocle_padding 15
 
 # Gaps && Border
 autogap &
-bspc config border_width 1
+2bspwm &
+bspc config border_width 10
 # bspc config window_gap 10
 # Disable border when is only one window
 bspc config single_monocle true
@@ -61,9 +62,11 @@ bspc config initial_polarity first_child
 bspc config split_ratio          0.52
 
 # Colorscheme
-bspc config normal_border_color "#161821"
-bspc config focused_border_color "#84A0C6"
-bspc config presel_feedback_color "#272932"
+alt=$(xrdb -query | awk '/\*.color8/ { printf $2 }')
+bg=$(xrdb -query | awk '/\*.background/ { printf $2 }')
+bspc config normal_border_color "$bg"
+bspc config focused_border_color "$bg"
+bspc config presel_feedback_color "$alt"
 
 #======
 # Rule
@@ -80,3 +83,4 @@ bspc rule -a lock sticky=on state=floating locked=on
 bspc rule -a Zathura state=tiled
 bspc rule -a *::float state=floating
 bspc rule -a *::tiled state=tiled
+$TERMINAL -name scratchpad -e scratch &

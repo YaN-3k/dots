@@ -184,7 +184,7 @@ super + {_,shift + }q
 	bspc node -{c,k}
 # Run the dmenu desktop
 super + d
-	j4-dmenu-desktop
+	$DMENU_RUN
 # Open the terminal
 super + Return
 	$TERMINAL
@@ -289,13 +289,13 @@ super + End
 	dmenuscreen
 # Record the screen
 super + ctrl + Insert
-	dmenurecord
+	blaze
 # Kill the recording
 super + ctrl + w
-	dmenurecord kill; notify-send "Recording finished"
+	blaze -s
 # Mount, umount a device
 super + ctrl + d
-	ANS="$(printf "mount\numount" | dmenu -p 'Device')"; case "$ANS" in; mount) dmenumount;; umount) dmenuumount; esac
+	ANS=$(printf "mount\numount" | $DMENU -p 'Device'); case "$ANS" in mount) dmenumount;; umount) dmenuumount;; esac
 # Display the information
 super + slash
 	notify-send \

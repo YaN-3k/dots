@@ -13,7 +13,7 @@ set shortmess+=I
 set hidden
 
 " colorscheme
-color term
+color iceberg
 
 " syntax highlighting
 syntax on
@@ -36,7 +36,7 @@ set noshowmode
 "set foldlevelstart=99
 
 " line wrapping
-set nowrap
+set wrap
 
 " show line numbers
 set number relativenumber

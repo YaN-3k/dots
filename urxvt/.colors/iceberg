@@ -34,5 +34,8 @@ dmenu.foreground:    #c6c8d1
 dmenu.selbackground: #84a0c6
 dmenu.selforeground: #161821
 
+! border
+URxvt.borderColor: #161821
+
 ! wallpaper
 wallpaper: iceberg.jpg

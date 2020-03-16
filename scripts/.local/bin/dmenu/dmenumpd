@@ -2,14 +2,14 @@
 cmd_list="play stop next prev toggle add volume seek repeat single consume random clear crop status"
 
 mpc_add() {
-    file="$(mpc listall | dmenu -i -l 15 -p "mpc add")" || return
+    file="$(mpc listall | $DMENU -i -p "mpc add")" || return
     mpc add "$file"
     mpc play
 }
 
 mpc_seek() {
 	options="-20 -40 -100 +20 +40 +100 0%"
-	time="$(echo "$options" | sed 's/ /\n/g' | dmenu -i -p "seek")"
+	time="$(echo "$options" | sed 's/ /\n/g' | $DMENU -i -p "seek")"
 	mpc seek "$time"
 }
 mpc_status() {
@@ -18,13 +18,13 @@ mpc_status() {
 
 mpc_volume() {
 	options="-15 -30 +15 +30"
-	volume="$(echo "$options" | sed 's/ /\n/g' | dmenu -i -p "seek")"
+	volume="$(echo "$options" | sed 's/ /\n/g' | $DMENU -i -p "seek")"
 	mpc volume "$volume"
 }
 
 mpc_status
 while true; do
-	cmd="$(echo "$cmd_list" | sed 's/ /\n/g' | dmenu -i -p "mpc")" || exit
+	cmd="$(echo "$cmd_list" | sed 's/ /\n/g' | $DMENU -i -p "mpc")" || exit
 	case $cmd in
 		add) mpc_add;;
 		seek)mpc_seek;;

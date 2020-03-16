@@ -4,10 +4,10 @@
 # password prompt if needed.
 
 # dmenu
-#dmenu  -p "Password for $(whoami)" <&- && echo
+#$DMENU -p "Password" <&- && echo
 
 # patched dmenu
-dmenu -P -p "Password for $(whoami)"
+$DMENU -P -p "Password"
 
 # rofi
 #rofi -dmenu -password -p "Password for $(whoami)"

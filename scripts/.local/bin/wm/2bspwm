@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+#   double borders
+#
+
+bg=$(xrdb -query | awk -F "#" '/\*.background/ { printf $2 }')
+
+outer="0x$bg"
+inner1="0x84a0c6"
+inner2="0xa093c7"
+
+draw() { chwb2 -I "$i" -O "$o" -i "2" -o "8" $@ 2>/dev/null; }
+
+# initial draw, and then subscribe to events
+{
+	echo
+	bspc subscribe node_geometry node_focus
+} |
+	while read -r _; do
+		i=$inner1 o=$outer draw "$(targets focused)"
+		i=$inner2 o=$outer draw "$(targets normal)"
+	done

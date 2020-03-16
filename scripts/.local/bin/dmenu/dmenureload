@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 opt="bspwm sxhkd polybar mpd dunst picom autogap"
-program="$(echo "$opt" | sed 's/ /\n/g' | dmenu -i -p "Which program do you want to restart?")"
+program="$(echo "$opt" | sed 's/ /\n/g' | $DMENU -i -p "Restart")"
 case $program in
 	bspwm) bspc wm -r;;
 	sxhkd) pkill -USR1 -x sxhkd || sxhkd &;;

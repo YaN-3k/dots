@@ -2,7 +2,7 @@
 
 ZSH_HIGHLIGHT_STYLES[default]='none'
 ZSH_HIGHLIGHT_STYLES[links]='none'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'

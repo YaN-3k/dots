@@ -9,7 +9,7 @@ sudo pacman -Syyuw --noconfirm || notify-send "❌ Error downloading updates." "
 
 if pacman -Qu | grep -v "\[ignored\]"
 then
-	notify-send "🎁 Repository Sync" "Updates available. Click statusbar icon   for update."
+	notify-send "🎁 Repository Sync" "Updates available."
 else
 	notify-send "📦 Repository Sync"  "Sync complete. No new packages for update."
 fi

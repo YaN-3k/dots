@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
 # dmenu prompts
-TYPE="$(printf "Screen\nWindow/Area\n" | dmenu -i -p 'What do you want to screenshot?')"
+TYPE="$(printf "Screen\nWindow/Area\n" | $DMENU -i -p 'Type')"
 if [ -z "$TYPE" ]; then exit; fi
-SAVE="$(printf "Yes\nNo"               | dmenu -i -p 'Do you want to copy to clipboard?')"
+SAVE="$(printf "Yes\nNo"               | $DMENU -i -p 'Save to clicboard')"
 if [ -z "$SAVE" ]; then exit; fi
-TIME="$(printf "0.7\n5\n10\n15"        | dmenu -i -p 'How many seconds you want to wait?')"
+TIME="$(printf "0.7\n5\n10\n15"        | $DMENU -i -p 'Seconds to wait')"
 if [ -z "$TIME" ]; then exit; fi
 
 # Set flag if selected "Window"

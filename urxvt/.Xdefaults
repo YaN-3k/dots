@@ -58,6 +58,10 @@ URxvt.scrollTtyKeypress: true
 URxvt.keysym.Control-Shift-K: command:\033]720;1\007
 URxvt.keysym.Control-Shift-J: command:\033]721;1\007
 
+! border
+URxvt*internalBorder: 10
+URxvt*borderLess:false
+
 ! █▓▒░ matcher
 URxvt.colorUL: #84a0c6
 URxvt.matcher.button: 1

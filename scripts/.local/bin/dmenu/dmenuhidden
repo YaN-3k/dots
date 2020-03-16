@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 windows=($(bspc query -N -n .window.hidden))
-index="$(for i in "${!windows[@]}"; do printf "%s %s\n" $i "$(xtitle ${windows[i]})"; done | dmenu -i -p "Hidden windows")" &&
+index="$(for i in "${!windows[@]}"; do printf "%s %s\n" $i "$(xtitle ${windows[i]})"; done | $DMENU -i -p "Hidden")" &&
 bspc node "${windows[${index%% *}]}" -g hidden=off &&
 bspc node "${windows[${index%% *}]}" -g sticky=off &&
 bspc node -f "${windows[${index%% *}]}"

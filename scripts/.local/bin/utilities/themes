@@ -2,20 +2,140 @@
 xfile="$HOME/.Xdefaults"
 xdef=$(grep "\.colors" "$xfile" | cut -d '"' -f2)
 xdef="${xdef#*/}"
-cd ~/.colors || exit
-for file in *
-do
-    if [ -f "$file" ] || [ -h "$file" ] && [ "$xdef" != "$file" ]; then
-		[ -n "$files" ] && files="$files\n$file" || files="$file"
-    fi
-done
-theme=$(printf "%b" "$files" | dmenu -i)
-[ -z "$theme" ] && exit
-sed -i "s/#include.*/#include \".colors\/$theme\"/" "$xfile"
 
-xrdb -merge "$xfile"
+cd ~/.colors || exit
+for file in *; do
+	if [ -f "$file" ] || [ -h "$file" ] && [ "$xdef" != "$file" ]; then
+		[ -n "$files" ] && files="$files\n$file" || files="$file"
+	fi
+done
+
+theme=$(printf "%b" "$files" | $DMENU -i -p "Themes")
+
+[ -z "$theme" ] && exit
+
+sed -i --follow-symlinks \
+	-e "s/#include.*/#include \".colors\/$theme\"/" \
+	"$xfile"
+
+# get colors
+xrdb "$xfile"
+fg=$(xrdb -query       | awk '/\*.foreground/ { printf $2 }')
+bg=$(xrdb -query       | awk '/\*.background/ { printf $2 }')
+
+black=$(xrdb -query    | awk '/color0/ { printf $2 }')
+red=$(xrdb -query      | awk '/color1:/ { printf $2 }')
+green=$(xrdb -query    | awk '/color2/ { printf $2 }')
+yellow=$(xrdb -query   | awk '/color3/ { printf $2 }')
+blue=$(xrdb -query     | awk '/color4/ { printf $2 }')
+magenta=$(xrdb -query  | awk '/color5/ { printf $2 }')
+cyan=$(xrdb -query     | awk '/color6/ { printf $2 }')
+white=$(xrdb -query    | awk '/color7/ { printf $2 }')
+
 wallpaper=$(xrdb -query | awk '/wallpaper/ { printf $2 }')
+
+case $theme in
+iceberg)
+	inner1=$blue
+	inner2=$magenta
+	accent=$blue
+	pol='color4'
+	news_unread='color4'
+	news_readed='color3'
+	;;
+coal)
+	inner1=$yellow
+	inner2=$magenta
+	accent=$yellow
+	pol='color3'
+	news_unread='color3'
+	news_readed='color1'
+	;;
+lovelace)
+	inner1=$red
+	inner2=$cyan
+	accent=$cyan
+	pol='color6'
+	news_unread='color6'
+	news_readed='color1'
+	;;
+planty)
+	inner1=$green
+	inner2=$magenta
+	accent=$green
+	pol='color2'
+	news_unread='color4'
+	news_readed='color3'
+	;;
+devil)
+	inner1=$red
+	inner2=$yellow
+	accent=$red
+	pol='color1'
+	news_unread='color4'
+	news_readed='color1'
+	;;
+esac
+
+# set wallpaper
 setbg ~/Pictures/wallpapers/"$wallpaper"
-pkill polybar
-"$HOME/.config/polybar/launch.sh"
+
+# dunst
+sed -i --follow-symlinks \
+	-e "s/\tforeground =.*/\tforeground = \"$fg\"/" \
+	-e "s/\tbackground =.*/\tbackground = \"$bg\"/" \
+	 ~/.config/dunst/dunstrc
+
+# vim
+sed -i --follow-symlinks \
+	-e "s/^color.*/color $theme/" \
+	~/.config/nvim/config/ui.vim
+
+# border
+sed -i --follow-symlinks \
+	-e "s/^inner1.*/inner1=\"0x${inner1#\#}\"/" \
+	-e "s/^inner2.*/inner2=\"0x${inner2#\#}\"/" \
+	~/.local/bin/wm/2bspwm
+
+# polybar
+sed -i --follow-symlinks \
+	-e"s/bar-volume-fill.*/bar-volume-fill = %{F$accent}\//" \
+	-e "s/bar-volume-empty.*/bar-volume-empty = %{F$fg}\//" \
+	-e "s/label-muted.*/label-muted = %{F$red}\/\/\/\/\/\/\/\/\/\//" \
+	-e "s/^secondary.*/secondary = \${xrdb:$pol}/" \
+	~/.config/polybar/config
+
+# qutebrowser
+sed -i --follow-symlinks \
+	-e "s/^black.*/black = \"$bg\"/" \
+	-e "s/^white.*/white = \"$fg\"/" \
+	-e "s/^red.*/red = \"$red\"/" \
+	-e "s/^green.*/green = \"$green\"/" \
+	-e "s/^yellow.*/yellow = \"$yellow\"/" \
+	-e "s/^blue.*/blue = \"$accent\"/" \
+	-e "s/^magenta.*/magenta = \"$magenta\"/" \
+	-e "s/^cyan.*/cyan = \"$cyan\"/" \
+	-e "s/^backgroundAlt.*/backgroundAlt = \"$black\"/" \
+	~/.config/qutebrowser/config.py
+
+# newsboat
+sed -i --follow-symlinks \
+	-e "s/^color listfocus_unread.*/color listfocus_unread    $news_unread  color0/" \
+	-e "s/^color listfocus .*/color listfocus           $news_readed  color0/" \
+	-e "s/^color info.*/color info                $news_unread  color0/" \
+	~/.config/newsboat/config
+
+# reload
+"$HOME"/.config/polybar/launch.sh
+
+killall qutebrowser
+qutebrowser &
+
+pkill dunst
+dunst &
+
+pkill 2bspwm
+2bspwm &
+echo "$theme"
+
 notify-send "You theme was been changed to $theme"

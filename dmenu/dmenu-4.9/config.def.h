@@ -14,7 +14,8 @@ static const char *colors[SchemeLast][2] = {
 	[SchemeOut] = { "#000000", "#00ffff" },
 };
 /* -l option; if nonzero, dmenu uses vertical list with given number of lines */
-static unsigned int lines      = 0;
+static unsigned int lines      = 10;
+static unsigned int lineheight = 15;         /* -h option; minimum height of a menu line     */
 
 /*
  * Characters not considered part of a word while deleting words

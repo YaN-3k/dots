@@ -34,8 +34,11 @@
 ! dmenu
 dmenu.background:    #1D1F28
 dmenu.foreground:    #FDFDFD
-dmenu.selbackground: #8897F4
+dmenu.selbackground: #79E6F3
 dmenu.selforeground: #282A36
+
+! border
+URxvt.borderColor: #1D1F28
 
 ! wallpaper
 wallpaper: mechanical.jpg

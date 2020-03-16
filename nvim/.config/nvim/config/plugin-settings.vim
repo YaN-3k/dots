@@ -232,6 +232,22 @@ call deoplete#custom#option('max_list', 30)
 " the number of processes used for the deoplete parallel feature
 call deoplete#custom#option('num_processes', 16)
 
+" Neovim default
+let g:Hexokinase_highlighters = [ 'virtual' ]
+
+" Vim default
+let g:Hexokinase_highlighters = [ 'sign_column' ]
+
+" All possible highlighters
+let g:Hexokinase_highlighters = [
+\   'virtual',
+\   'sign_column',
+\   'background',
+\   'backgroundfull',
+\   'foreground',
+\   'foregroundfull'
+\ ]
+
 " go - $ go get -u github.com/stamblerre/gocode
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 

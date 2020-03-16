@@ -5,4 +5,4 @@
 # `./prompt "Do you want to shutdown?" "shutdown -h now"`
 
 # [ "$(printf "No\\nYes" | rofi -lines 2 -width 30 -dmenu -p "$1")" = "Yes" ] && $2
-[ "$(printf "No\\nYes" | dmenu -i -p "$1" )" = "Yes" ] && (eval $2)
+[ "$(printf "No\\nYes" | $DMENU -i -p "$1" )" = "Yes" ] && (eval $2)

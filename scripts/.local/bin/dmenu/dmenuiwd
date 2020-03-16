@@ -7,8 +7,8 @@ add() {
 	list_all=$(iwctl station wlan0 get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
 	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
 	list=$(comm -23 <(sort -u <<<"$list_all") <(sort -u <<<"$list_known"))
-	ssid=$(printf "%s" "$list" | dmenu -i -p "add") || return
-	pass=$(dmenu -P -p "Enter password for $choice") || return
+	ssid=$(printf "%s" "$list" | $DMENU -i -p "add") || return
+	pass=$($DMENU -P) || return
 	if iwctl --passphrase "$pass" station $interface connect "$ssid"; then
 		notify-send "Successfully added $ssid"
 		exit
@@ -26,7 +26,7 @@ switch() {
 		notify-send "There is no network to switch."
 		return
 	}
-	ssid=$(printf "%s" "$list" | dmenu -i -p "switch") || return
+	ssid=$(printf "%s" "$list" | $DMENU -p "switch") || return
 	if iwctl station $interface connect "$ssid"; then
 		notify-send "Successfully connected with $ssid"
 		exit
@@ -42,7 +42,7 @@ forget() {
 		notify-send "There is no network to forget."
 		return
 	}
-	ssid=$(printf "%s" "$list" | dmenu -i -p "forget") || return
+	ssid=$(printf "%s" "$list" | $DMENU -p "forget") || return
 	iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
 }
 
@@ -67,7 +67,7 @@ fi
 
 while true; do
 	options="switch\nadd\nscan\nforget"
-	choice=$(printf "%b" "$options" | dmenu -i -p "Network") || exit
+	choice=$(printf "%b" "$options" | $DMENU -p "Network") || exit
 	case $choice in
 	"add") add ;;
 	"switch") switch ;;

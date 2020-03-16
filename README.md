@@ -105,6 +105,8 @@ etc, etc, etc...
 # previews
 
 ![ice tmux](previews/ice-tmux.png)
+![colorfull](previews/colorfull.png)
+![colorfull](previews/clean.png)
 
 # license
 

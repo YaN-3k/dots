@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-[ "$1" = 'float' ] && { opt='-n float'; shift; } || opt='-n tiled'
-tabbed -g 600x400 -c $opt -r 2 urxvt -embed 2 $@

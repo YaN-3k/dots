@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Dynamic gaps
-MIN_GAP=0
+MIN_GAP=15
 
 if [ "$(pgrep -cx autogap)" -gt 1 ]; then
 	killall autogap && exit 0

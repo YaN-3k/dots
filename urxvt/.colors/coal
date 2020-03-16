@@ -1,11 +1,11 @@
 ! Anna s color scheme
 
 *.foreground:  #daddee
-*.background:  #141417
+*.background:  #0D0D0F
 *.cursorColor: #daddee
 
-*.color0:      #262628
-*.color8:      #484a5b
+*.color0:      #151517
+*.color8:      #484e5b
 
 *.color1:      #e56f92
 *.color9:      #e56f92
@@ -33,10 +33,13 @@
 *.color17:     #c488ec
 
 ! dmenu
-dmenu.background:    #141417
+dmenu.background:    #0D0D0F
 dmenu.foreground:    #a6a9b7
-dmenu.selbackground: #79aeeb
+dmenu.selbackground: #e9967e
 dmenu.selforeground: #141417
+
+! border
+URxvt.borderColor: #0D0D0F
 
 ! wallpaper
 wallpaper: vulcan.jpg
