@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+xfile="$HOME/.Xdefaults"
+xdef=$(grep "\.colors" "$xfile" | cut -d '"' -f2)
+xdef="${xdef#*/}"
+cd ~/.colors || exit
+for file in *
+do
+    if [ -f "$file" ] || [ -h "$file" ] && [ "$xdef" != "$file" ]; then
+		[ -n "$files" ] && files="$files\n$file" || files="$file"
+    fi
+done
+theme=$(printf "%b" "$files" | dmenu -i)
+[ -z "$theme" ] && exit
+sed -i "s/#include.*/#include \".colors\/$theme\"/" "$xfile"
+
+xrdb -merge "$xfile"
+wallpaper=$(xrdb -query | awk '/wallpaper/ { printf $2 }')
+setbg ~/Pictures/wallpapers/"$wallpaper"
+pkill polybar
+"$HOME/.config/polybar/launch.sh"
+notify-send "You theme was been changed to $theme"

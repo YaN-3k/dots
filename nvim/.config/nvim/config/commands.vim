@@ -56,7 +56,7 @@ augroup BufferWrite
 	" when shortcut files are updated, renew bash and ranger configs with new material:
 	autocmd BufWritePost files,directories !shortcuts
 	" run xrdb whenever Xdefaults or Xresources are updated.
-	autocmd BufWritePost *Xresources,*Xdefaults !xrdb %
+	autocmd BufWritePost *Xresources,*Xdefaults !xrdb -merge %
 	" update binds when sxhkdrc is updated.
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 	" reload vim when configuration is updated

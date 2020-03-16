@@ -187,10 +187,10 @@ super + d
 	j4-dmenu-desktop
 # Open the terminal
 super + Return
-	tabterm
+	$TERMINAL
 # Open the floating terminal
 alt + Return
-	tabterm float
+	$TERMINAL -name float
 # Open the terminal in the same directory
 super + shift + Return
 	samedir
@@ -276,6 +276,8 @@ super + ctrl + i
 # Open the tmux menu
 super + ctrl + t
 	dmenutmux
+super + ctrl + s
+	themes
 # Reload the programs
 super + ctrl + Delete
 	dmenureload

@@ -7,53 +7,9 @@
 !  ██   ░░██░░██████░░██████  ░██  ░░████████░░██████ ███  ░░██  ██████
 ! ░░     ░░  ░░░░░░  ░░░░░░   ░░    ░░░░░░░░  ░░░░░░ ░░░    ░░  ░░░░░░
 
+
 ! █▓▒░ colorscheme
-! specia1
-*.foreground:   #c6c8d1
-*.cursorColor:  #c6c8d1
-*.background:   #161821
-! transparency
-!*.background:   [95]#161821
-!*.depth: 32
-
-! black
-*.color0:       #22262e
-*.color8:       #6b7089
-
-! red
-*.color1:       #e27878
-*.color9:       #e98989
-
-! green
-*.color2:       #b4be82
-*.color10:      #c0ca8e
-
-! yellow
-*.color3:       #e2a478
-*.color11:      #e9b189
-
-! blue
-*.color4:       #84a0c6
-*.color12:      #91acd1
-
-! magenta
-*.color5:       #a093c7
-*.color13:      #ada0d3
-
-! cyan
-*.color6:       #89b8c2
-*.color14:      #95c4ce
-
-! white
-*.color7:       #c6c8d1
-*.color15:      #d2d4de
-
-! █▓▒░ dmenu
-dmenu.background:    #161821
-dmenu.foreground:    #c6c8d1
-dmenu.selbackground: #84a0c6
-dmenu.selforeground: #22262e
-dmenu.font: xos4 Terminus:size=10
+#include ".colors/iceberg"
 
 ! █▓▒░ misc
 URxvt.scrollBar: false
@@ -73,6 +29,7 @@ URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 
 ! █▓▒░ font settings
 URxvt.font: xft:xos4 Terminus:style=Regular:size=10
+dmenu.font: xos4 Terminus:size=10
 
 Xft.dpi: 96
 Xft.antialias: true
