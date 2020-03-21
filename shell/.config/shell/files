@@ -1,5 +1,5 @@
-bf	~/.config/files
-bd	~/.config/directories
+bf	~/.config/shell/files
+bd	~/.config/shell/directories
 bw	~/.config/bookmarks
 cfa	~/.config/aliasrc
 cfz	$ZDOTDIR/.zshrc

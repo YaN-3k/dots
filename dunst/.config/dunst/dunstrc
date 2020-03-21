@@ -10,8 +10,8 @@
 [global]
 	monitor = 0
 	follow = keyboard
-	geometry = "240-15+40"
-	corner_radius = 6
+	geometry = "250-10+30"
+	corner_radius = 0
 	indicate_hidden = yes
 	shrink = false
 	transparency = 10

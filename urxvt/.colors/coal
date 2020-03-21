@@ -38,8 +38,5 @@ dmenu.foreground:    #a6a9b7
 dmenu.selbackground: #e9967e
 dmenu.selforeground: #141417
 
-! border
-URxvt.borderColor: #0D0D0F
-
 ! wallpaper
 wallpaper: vulcan.jpg

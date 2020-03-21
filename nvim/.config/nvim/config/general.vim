@@ -30,9 +30,9 @@ set infercase
 set undofile
 set nobackup
 set noswapfile
-set undodir=~/.config/nvim/undo
-"set backupdir=~/.config/nvim/backups
-"set directory=~/.config/nvim/swaps
+set undodir=~/.config/nvim/cache/undo
+"set backupdir=~/.config/nvim/cache/backups
+"set directory=~/.config/nvim/cache/swaps
 
 " plebs mode
 set mouse=a

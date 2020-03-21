@@ -13,7 +13,7 @@ deps() {
 	}
 	printf "\033[34mRequired dependencies\033[0m\n"
 	printf " - \033[34mffmpeg\033[0m         Actually recording\n"
-	printf " - \033[34mrofi\033[0m           Selecting the options\n"
+	printf " - \033[34mdmenu\033[0m          Selecting the options\n"
 	printf "\n"
 	printf "\033[35mAt least one of these is required\033[0m\n"
 	printf " - \033[35mxorg-xrandr\033[0m    Selecting a display to record\n"
@@ -21,8 +21,6 @@ deps() {
 	printf "\n"
 	printf "\033[32mOptional dependencies\033[0m\n"
 	printf " - \033[32mnotify-send\033[0m    Letting the user know when the recording starts/ends\n"
-	printf "\n"
-	exit 1
 }
 
 # check all necessary dependencies
@@ -32,7 +30,7 @@ _ dmenu            || deps="$deps dmenu"
 _ ffmpeg           || deps="$deps ffmpeg"
 _ xrandr || _ slop || deps="$deps xorg-xrandr/slop"
 
-[ "$deps" ] && deps "$deps"
+[ "$deps" ] && { deps "$deps"; exit 1; }
 
 # menu to use
 m() { ${DMENU:-dmenu} "$@"; }
@@ -55,6 +53,8 @@ kill_recording() {
 		kill -15 "$recpid"
 		rm -f /tmp/blaze-pid
 		echo "Recording Stopped"
+		# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
+		( sleep 3; kill -9 "$recpid" ) >/dev/null 2>&1 &
 		notify-send -t 2000 "Recording Stopped"
 	else
 		echo "Recording isn't active"
@@ -118,7 +118,7 @@ while [ "$1" ]; do
 		-a|--audio)   audio                         ;;
 		--)           shift
 		              [ "$1" ] && output="$1"
-		              break                         ;;
+		                                     break  ;;
 		-*)           echo "Invalid option '$1'"
 		                                     exit   ;;
 		*)            output="$1"          ; break  ;;
@@ -170,7 +170,7 @@ if [ "$method" = display ]; then
 		[ ! "$display" ] && display="$(printf "%b" "$monitors" | m -p "Display to record")"
 	fi
 
-	set -- $(xrandr -q | grep "$display" | grep -o '[0-9][0-9]*x[0-9][0-9]*+[0-9][0-9]*+[0-9][0-9]*' | tr 'x+' ' ')
+	set -- $(xrandr -q | grep "$display" | grep -oP '\d*x\d*\+\d*\+\d*' | tr '+x' ' ')
 
 	width="$1"
 	height="$2"
@@ -198,11 +198,11 @@ else
 
 fi
 
-# ask the user what they want the framerate of the video to be
-[ ! "$rate" ] && rate="$(printf "30\n60" | m -p "Framerate")"
-
 # detect if the user has a nvidia card and use nvenc
 [ ! "$nvenc" ] && lspci | grep -qi nvidia && nvenc="-vcodec h264_nvenc"
+
+# ask the user what they want the framerate of the video to be
+[ ! "$rate" ] && rate="$(printf "30\n60" | m -p "Framerate")"
 
 # ask the user if they want to start the recording
 [ ! "$ready" ] && ready="$(printf "yes\nno" | m -p "Start the recording")"
@@ -247,7 +247,7 @@ EOF
 	  -i "$DISPLAY.0+$offX,$offY"  \
 	  $bitrate                     \
 	  -pix_fmt yuv420p             \
-	  $nvenc                       \
+	  $nvenc                      \
 	  -q:v 0                       \
 	  "$output" &
 

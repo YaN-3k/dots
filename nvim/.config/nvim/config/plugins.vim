@@ -5,7 +5,7 @@
 " setup vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	echo 'Downloading junegunn/vim-plug to manage plugins...'
-	silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache,undo,backups,swaps}')
+	silent call system('mkdir -p ~/test/nvim/{autoload,bundle,cache/{cache,undo,backups,swaps}}')
 	silent call system('pip3 install --user pynvim msgpack')
 	silent call system('curl -flo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 	execute 'source  ~/.config/nvim/autoload/plug.vim'

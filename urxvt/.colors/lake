@@ -1,0 +1,45 @@
+! special
+*.foreground:   #9ca1b8
+*.background:   #0f0f13
+*.cursorColor:  #9ca1b8
+
+! black
+*.color0:       #18181e
+*.color8:       #30343d
+
+! red
+*.color1:       #e75e87
+*.color9:       #e75e87
+
+! green
+*.color2:       #83d1a2
+*.color10:      #83d1a2
+
+! yellow
+*.color3:       #dc8b73
+*.color11:      #dc8b73
+
+! blue
+*.color4:       #639ce8
+*.color12:      #639ce8
+
+! magenta
+*.color5:       #b972e9
+*.color13:      #b972e9
+
+! cyan
+*.color6:       #62b3e4
+*.color14:      #62b3e4
+
+! white
+*.color7:       #b4c1ce
+*.color15:      #b4c1ce
+
+! dmenu
+dmenu.background:    #0f0f13
+dmenu.foreground:    #a6a9b7
+dmenu.selbackground: #b4c1ce
+dmenu.selforeground: #141417
+
+! wallpaper
+wallpaper: lake.png

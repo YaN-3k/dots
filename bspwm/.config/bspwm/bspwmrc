@@ -15,8 +15,9 @@ notify-send -i ~/Pictures/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
 telegram-desktop &
-"$HOME"/.config/polybar/launch.sh
+"$HOME"/.config/polybar/launch.sh ice
 #$TERMINAL --class scratchpad -e scratch &
+#$TERMINAL -name scratchpad -e scratch &
 mkdir -p ~/.config/bspwm/log
 
 #===============
@@ -41,15 +42,16 @@ bspc config pointer_action1 move
 # bspc config left_padding 5
 # bspc config bottom_padding 5
 # bspc config top_padding 15
-bspc config right_monocle_padding 15
-bspc config left_monocle_padding 15
-bspc config bottom_monocle_padding 15
-bspc config top_monocle_padding 15
+bspc config right_monocle_padding 0
+bspc config left_monocle_padding 0
+bspc config bottom_monocle_padding 0
+bspc config top_monocle_padding 0
 
 # Gaps && Border
 autogap &
-2bspwm &
-bspc config border_width 10
+cleanfullscreen &
+#2bspwm &
+bspc config border_width 0
 # bspc config window_gap 10
 # Disable border when is only one window
 bspc config single_monocle true
@@ -83,4 +85,3 @@ bspc rule -a lock sticky=on state=floating locked=on
 bspc rule -a Zathura state=tiled
 bspc rule -a *::float state=floating
 bspc rule -a *::tiled state=tiled
-$TERMINAL -name scratchpad -e scratch &

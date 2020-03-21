@@ -258,6 +258,7 @@ let g:UltiSnipsEditSplit='vertical'
 map <Leader>d :call deoplete#toggle()<cr>
 
 " fzf, fuzzy finder
+"let g:fzf_preview_window = 'right:60%'
 "nnoremap <C-p> :Files<cr>
 "nnoremap <C-g> :GFiles<cr>
 "let g:fzf_action = {

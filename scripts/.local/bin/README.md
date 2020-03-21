@@ -1,5 +1,5 @@
 # Scripts
-You will find here my collection of scripts for my setup.
+You will find here my scripts for my setup.
 ### ascii
 * showcolors - print colors with hex codes from ~/.Xresources
 * sysinfo - show a system information
@@ -15,19 +15,19 @@ You will find here my collection of scripts for my setup.
 ### dmenu
 * dmenuedit - edit a config from ~/Dotfiles directory
 * dmenuhidden - show hidden windows and restore selected (xtitle)
-* dmenumount - mount a device
-* dmenuumount - umount a device
+* dmenumount - mount a device (credit to luke smith)
+* dmenuumount - umount a device (credit to luke smith)
 * dmenumpd - control mpd (mpc)
 * dmenunewtab - open a new tab with selected page
 * dmenupass - password script for sudo
 * dmenupower - lock, shutdown, reboot, exit?
-* dmenurecord - record screen using ffmpeg
 * dmenureload - reload program
 * dmenuscreen - take screenshot
 * dmenutmux - attach or open new tmux session
 * dmenuunicode - display menu with uncode symbols/emoji and copy selected
 * dmenuiwd - wraper for iwctl
 ### utilities
+* blaze - record screen using ffmpeg
 * 0x0 - uploud selected file or pasted string to [0x0.st](https://0x0.st/)
 * brightness - change brightness and notify about current backlight
 * volume - change mpd/alsa volume and notify about current volume
@@ -35,11 +35,12 @@ You will find here my collection of scripts for my setup.
 * ext - extract archive
 * ins - pacman/makepkg/git wrapper for the aur
 * makkeissue - generate issue for tty
+* ttycolgen.sh - generate color for tty depend from Xresources
 * preview - preview script for fzf
 * prompt - simple yes/no menu
 * remps - remap CapsLock -> Super/Escape (xcape)
 * setbg - set image as wallpaper
-* shortcuts - generate shell shortcuts from ~/.config/file and ~/.config/directory file
+* shortcuts - generate shell shortcuts from ~/.config/file and ~/.config/directory file (credit to luke smith)
 * sync_music - download songs from links in file
 * showclip - show clipboard content
 * update - update OS

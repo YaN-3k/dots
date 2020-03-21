@@ -21,6 +21,6 @@ export HISTFILE="$HOME/.cache/bash_history"
 set -o vi
 
 # bash prompt
-PS1="\033[0;34m[\033[0m\w\033[0;34m]── ─ \033[0m"
+PS1='\033[0;34m[\033[0m\w\033[0;34m]── ─ \033[0m'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

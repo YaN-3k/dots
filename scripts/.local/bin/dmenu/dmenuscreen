@@ -11,7 +11,7 @@ if [ -z "$TIME" ]; then exit; fi
 # Set flag if selected "Window"
 case "$TYPE" in
 	Window/Area) TYPE="-s -u";;
-	*)           TYPE=""
+	*)           TYPE="-u"
 esac
 
 # Prepere for screenshot
