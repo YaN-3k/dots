@@ -7,34 +7,29 @@
 #  ██████ ██████ ░██  ░██
 # ░░░░░░ ░░░░░░  ░░   ░░
 
-[ ! -d "$ZDOTDIR/.zgen" ] &&
-	git clone https://github.com/tarjoilija/zgen "$ZDOTDIR/.zgen"
+PLUG_DIR="$ZDOTDIR/plugs/"
 
-source "$ZDOTDIR/.zgen/zgen.zsh"
+# clone plugins
+[ ! -d "$ZDOTDIR/plugs" ] && {
+	mkdir -p "$PLUG_DIR"
+	cd "$PLUG_DIR"
+	git clone https://github.com/tarjoilija/zgen
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting
+	git clone https://github.com/zsh-users/zsh-autosuggestions
+	git clone --depth 1 https://github.com/junegunn/fzf
+	"$PLUG_DIR/fzf/install" --no-bash --no-fish --xdg --all
+}
 
-# tetris
-autoload -Uz tetriscurses
-alias tetris="tetriscurses"
-
-# zgen, need to 'zgen reset' after changing
-if ! zgen saved; then
-
-	zgen load zsh-users/zsh-syntax-highlighting
-	zgen load zsh-users/zsh-autosuggestions
-	"$ZDOTDIR/.zgen/junegunn/fzf-master/install" --no-bash --no-fish --xdg --all
-	zgen load junegunn/fzf
-
-  zgen save
-fi
+# load plugins
+. "$PLUG_DIR"/zsh-autosuggestions/zsh-autosuggestions.zsh
+. "$PLUG_DIR"/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+. "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 # load config
-source "$ZDOTDIR/shortcutrc"
-source "$ZDOTDIR/aliasrc"
-source "$ZDOTDIR/prompt.zsh"
-source "$ZDOTDIR/env.zsh"
-source "$ZDOTDIR/commands.zsh"
-source "$ZDOTDIR/syntax.zsh"
-source "$ZDOTDIR/keybinds.zsh"
-
-# load fzf
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+. "$ZDOTDIR/shortcutrc"
+. "$ZDOTDIR/aliasrc"
+. "$ZDOTDIR/prompt.zsh"
+. "$ZDOTDIR/env.zsh"
+. "$ZDOTDIR/commands.zsh"
+. "$ZDOTDIR/syntax.zsh"
+. "$ZDOTDIR/keybinds.zsh"

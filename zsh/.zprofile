@@ -8,7 +8,7 @@
 # ░░      ░░░     ░░░░░░    ░░   ░░ ░░░  ░░░░░░
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:$HOME/.config/zsh/.zgen/junegunn/fzf-master/bin:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+export PATH="$PATH:$HOME/.config/zsh/plugs/fzf/bin:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 
 # Default programs:
 export EDITOR="nvim"
@@ -31,13 +31,6 @@ export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export LESSHISTFILE="-"
-
-export XDG_DOWNLOAD_DIR="$HOME/dl"
-export XDG_DOCUMENTS_DIR="$HOME/dox"
-# export XDG_MUSIC_DIR="$HOME/"
-export XDG_PICTURES_DIR="$HOME/pix"
-export XDG_VIDEOS_DIR="$HOME/vids"
-
 
 # Sudo
 export SUDO_PROMPT="$(printf "\033[1;36m")[sudo]$(printf "\033[0m") password for %p: "
