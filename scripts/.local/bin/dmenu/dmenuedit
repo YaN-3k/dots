@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 edit_package() {
-	cd ~/dotfiles || exit
+	cd ~/dots || exit
 	for i in *; do
 		case $i in
 		previews | .git | wallpapers ) ;;
@@ -30,21 +30,21 @@ edit_package() {
 	rm "$list"
 	files_name=$(printf '%b\n' "$files" | $DMENU -i)
 	[ -z "$files_name" ] && exit
-	choice="$HOME/dotfiles/$package_name/$files_name"
+	choice="$HOME/dots/$package_name/$files_name"
 	$TERMINAL -e nvim "$choice"
 }
 
 edit_all() {
 	list="$HOME/.cache/files.list"
-	find "$HOME/dotfiles" -type f >"$list"
+	find "$HOME/dots" -type f >"$list"
 	while read -r file; do
 		case $file in
 		*/.git/* | */dmenu/dmenu-*/* | */wallpaper/*) ;;
 		*)
 			if [ -n "$options" ]; then
-				options="$options\n${file#$HOME/dotfiles/}"
+				options="$options\n${file#$HOME/dots/}"
 			else
-				options="${file#$HOME/dotfiles/}"
+				options="${file#$HOME/dots/}"
 			fi
 			;;
 		esac
@@ -52,7 +52,7 @@ edit_all() {
 	rm "$list"
 	choice=$(printf '%b\n' "$options" | $DMENU -i)
 	[ -z "$choice" ] && exit
-	choice="$HOME"/dotfiles/"$choice"
+	choice="$HOME"/dots/"$choice"
 	$TERMINAL -e nvim "$choice"
 }
 

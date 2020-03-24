@@ -27,7 +27,7 @@ pkgs=$(pacman -Qqs | wc -l)
 wm=$(awk '/exec/ { printf $2 }' ~/.xinitrc)
 font=$(xrdb -query | awk -F ":" '/*.font/ { printf $3 }')
 
-xdef=$(grep "\.colors" ~/.Xdefaults | cut -d '"' -f2)
+xdef=$(grep "themes" ~/.config/xrdb/Xdefaults | cut -d '"' -f2)
 xdef="${xdef#*/}"
 colors="$xdef"
 

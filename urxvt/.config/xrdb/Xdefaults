@@ -7,9 +7,8 @@
 !  ██   ░░██░░██████░░██████  ░██  ░░████████░░██████ ███  ░░██  ██████
 ! ░░     ░░  ░░░░░░  ░░░░░░   ░░    ░░░░░░░░  ░░░░░░ ░░░    ░░  ░░░░░░
 
-
 ! █▓▒░ colorscheme
-#include ".colors/iceberg"
+#include "themes/iceberg"
 
 ! █▓▒░ misc
 URxvt.scrollBar: false

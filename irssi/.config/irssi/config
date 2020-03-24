@@ -93,7 +93,7 @@ settings = {
     paste_verify_line_count = "0";
   };
   "fe-common/core" = {
-    theme = "fro";
+    theme = "fro.theme";
     autolog_path = "~/.cache/irc/$tag/$0.log";
     autolog = "yes";
   };

@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
-cd ~/dotfiles || exit
+cd ~/dots || exit
 list="$HOME/.cache/dir.list"
 find . -maxdepth 1 -type d >"$list"
+case $1 in
+-D) flags='-D' ;;
+-f) flags='--no-folding -S --adopt' ;;
+*) flags='--no-folding -S ' ;;
+esac
+
 while read -r line; do
 	line="${line#./}"
 	case $line in
 	.git | tabbed | dmenu | figlet | previews | .) ;;
-	*)
-		if [ "$1" = "-f" ]; then
-			stow --no-folding --adopt -Sv "$line"
-		else
-			stow --no-folding -Sv "$line"
-		fi
-		;;
+	*) stow -v $flags "$line" ;;
 	esac
 done <"$list"
 rm "$list"

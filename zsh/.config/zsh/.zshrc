@@ -7,10 +7,10 @@
 #  ██████ ██████ ░██  ░██
 # ░░░░░░ ░░░░░░  ░░   ░░
 
-if [ ! -d "$HOME/.zgen" ]; then
-	git clone https://github.com/tarjoilija/zgen "$HOME/.zgen"
-fi
-source "$HOME/.zgen/zgen.zsh"
+[ ! -d "$ZDOTDIR/.zgen" ] &&
+	git clone https://github.com/tarjoilija/zgen "$ZDOTDIR/.zgen"
+
+source "$ZDOTDIR/.zgen/zgen.zsh"
 
 # tetris
 autoload -Uz tetriscurses
@@ -19,29 +19,22 @@ alias tetris="tetriscurses"
 # zgen, need to 'zgen reset' after changing
 if ! zgen saved; then
 
-	zgen oh-my-zsh
-	zgen oh-my-zsh plugins/git
-	zgen oh-my-zsh plugins/command-not-found
-	zgen oh-my-zsh plugins/alias-finder
-	zgen oh-my-zsh plugins/common-aliases
 	zgen load zsh-users/zsh-syntax-highlighting
 	zgen load zsh-users/zsh-autosuggestions
+	"$ZDOTDIR/.zgen/junegunn/fzf-master/install" --no-bash --no-fish --xdg --all
 	zgen load junegunn/fzf
-	"$HOME"/.zgen/junegunn/fzf-master/install --all
 
   zgen save
 fi
 
-# load shell-agnostic configs
-source ~/.config/shell/shortcutrc
-source ~/.config/shell/aliasrc
-
 # load config
-source $ZDOTDIR/prompt.zsh
-source $ZDOTDIR/env.zsh
-source $ZDOTDIR/commands.zsh
-source $ZDOTDIR/syntax.zsh
-source $ZDOTDIR/keybinds.zsh
+source "$ZDOTDIR/shortcutrc"
+source "$ZDOTDIR/aliasrc"
+source "$ZDOTDIR/prompt.zsh"
+source "$ZDOTDIR/env.zsh"
+source "$ZDOTDIR/commands.zsh"
+source "$ZDOTDIR/syntax.zsh"
+source "$ZDOTDIR/keybinds.zsh"
 
 # load fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.zsh
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh

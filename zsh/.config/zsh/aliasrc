@@ -26,6 +26,8 @@ alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 
 # programs
+alias ir='irssi --home "$HOME"/.config/irssi'
+alias irssi='irssi --home "$HOME"/.config/irssi'
 alias gr="grep"
 alias yt="youtube-dl --add-metadata -i"
 alias yta="yt -x -f bestaudio/best"
@@ -44,11 +46,11 @@ alias vf="vifmrun"
 alias svim='sudoedit'
 
 # tmux
-alias tm="tmux"
-alias tmn="tmux new -s"
-alias tma="tmux a -t"
-alias tmk="tmux kill-session -t"
-alias tmks="tmux kill-server"
+alias tm='tmux -f $HOME/.config/tmux/tmux.conf'
+alias tmn='tmux new -s -f $HOME/.config/tmux/tmux.conf'
+alias tma='tmux a -t -f $HOME/.config/tmux/tmux.conf'
+alias tmk='tmux kill-session -t'
+alias tmks='tmux kill-server'
 
 # cURL
 wttr()    { curl wttr.in/"${1}" ;}

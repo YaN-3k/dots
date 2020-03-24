@@ -7,7 +7,7 @@
 # ░░░   ░░  ░░░░░  ░░░  ░░  ░░ ░░       ░░░░░  ░░      ░░
 
 # Directories
-mpd_music_dir = "~/Music/"
+mpd_music_dir = "~/music/"
 lyrics_directory  = "~/.config/ncmpcpp/lyrics"
 ncmpcpp_directory  = "~/.config/ncmpcpp"
 mpd_host = "127.0.0.1"
