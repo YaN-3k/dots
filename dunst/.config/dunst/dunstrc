@@ -34,7 +34,7 @@
 	sort = yes
 
 	idle_threshold = 120
-	font = Incosolata 10
+	font = DejaVu Sans Mono 10
 	line_height = 0
 	markup = full
 
@@ -89,10 +89,10 @@
 [urgency_low]
 	# IMPORTANT: colors have to be defined in quotation marks.
 	# Otherwise the "#" and following would be interpreted as a comment.
-	#background = "#161821"
-	#foreground = "#cccccc"
-	#frame_color = "#89b8c2"
-	#timeout = 5
+	background = "#22262e"
+	foreground = "#cccccc"
+	frame_color = "#89b8c2"
+	timeout = 5
 	# Icon for notifications with low urgency, uncomment to enable
 	#icon = ~/.local/share/arch.png
 
@@ -103,10 +103,10 @@
 	timeout = 5
 
 [urgency_critical]
-	#background = "#e27878"
-	#foreground = "#161821"
-	#frame_color = "#e27878"
-	#timeout = 0
+	background = "#e27878"
+	foreground = "#161821"
+	frame_color = "#e27878"
+	timeout = 0
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

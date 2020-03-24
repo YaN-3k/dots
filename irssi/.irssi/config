@@ -94,7 +94,7 @@ settings = {
   };
   "fe-common/core" = {
     theme = "fro";
-    autolog_path = "~/irc/$tag/$0.log";
+    autolog_path = "~/.cache/irc/$tag/$0.log";
     autolog = "yes";
   };
   "irc / core" = {

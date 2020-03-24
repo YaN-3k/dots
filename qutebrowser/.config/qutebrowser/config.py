@@ -43,7 +43,7 @@ config.set("search.ignore_case", "always")
 c.confirm_quit = ["downloads"]
 
 # Fonts
-c.fonts.default_family ="Inconsolata"
+c.fonts.default_family ="DejaVu Sans Mono"
 c.fonts.completion.category = "10pt DejaVu Sans Mono"
 c.fonts.completion.entry = "10pt DejaVu Sans Mono"
 c.fonts.tabs = "10pt DejaVu Sans Mono"

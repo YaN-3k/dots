@@ -272,7 +272,7 @@ super + ctrl + e
 	dmenuedit
 # Show the unicode symbols
 super + ctrl + i
-	dmenuunicode
+	dmenukaomoji
 # Open the tmux menu
 super + ctrl + t
 	dmenutmux

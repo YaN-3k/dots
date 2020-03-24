@@ -17,7 +17,7 @@ export READER="zathura"
 export FILE="ranger"
 export BROWSER="qutebrowser"
 export DMENU_RUN="dmenu_run -w 245 -x 10 -y 30"
-export DMENU="dmenu -w 250 -x 15 -y 40"
+export DMENU="dmenu -w 245 -x 10 -y 30"
 
 # ~/ Clean-up:
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"

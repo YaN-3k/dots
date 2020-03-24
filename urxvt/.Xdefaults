@@ -28,7 +28,9 @@ URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 
 ! █▓▒░ font settings
-*.font: xft:xos4 Terminus:style=Regular:size=8
+URxvt.font: xft:Terminess Powerline:style=Regular:size=10
+dmenu.font: Terminus:size=10
+*.font: xft:Terminus:style=Regular:size=8
 
 Xft.dpi: 96
 Xft.antialias: true

@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+chosen=$(grep -v "#" ~/.local/share/kaomoji | ${DMENU:-dmenu})
+[ ! "$chosen" ] && exit
+
+notify-send "$chosen" "copied to clipboard."
+c="${chosen%% [A-Z]*}"
+echo "$c" | xclip -sel clip

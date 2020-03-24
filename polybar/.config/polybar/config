@@ -178,11 +178,11 @@ fg-alt = ${xrdb:color15}
 secondary = ${xrdb:color4}
 
 [ice-fonts]
-font-0 = "xos4 Terminus:pixelsize=12;2"
+font-0 = "Terminess Powerline:pixelsize=12;2"
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=9;2"
 font-2 = "Font Awesome 5 Brands:pixelsize=6;2"
 ; For separator
-font-3 = "xos4 Terminus:pixelsize=25;2"
+font-3 = "Terminus:pixelsize=25;2"
 
 ;==============;
 ; Bar Settings ;

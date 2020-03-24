@@ -10,7 +10,7 @@ for file in *; do
 	fi
 done
 
-theme=$(printf "%b" "$files" | $DMENU -i -p "Themes")
+theme=$(printf "%b" "$files" | ${DMENU:-dmenu} -i -p "Themes")
 
 [ -z "$theme" ] && exit
 

@@ -20,13 +20,16 @@ EMPTY=┄
 
 name=$USER
 host=$(hostname)
-battery="/sys/class/power_supply/BAT0"
+battery="/sys/class/power_supply/BAT?"
 distro="Arch Linux"
 kernel=$(uname -r)
 pkgs=$(pacman -Qqs | wc -l)
-colors='Iceberg'
-font='Inconsolata'
-wm='bspwm'
+wm=$(awk '/exec/ { printf $2 }' ~/.xinitrc)
+font=$(xrdb -query | awk -F ":" '/*.font/ { printf $3 }')
+
+xdef=$(grep "\.colors" ~/.Xdefaults | cut -d '"' -f2)
+xdef="${xdef#*/}"
+colors="$xdef"
 
 #█▓▒░ progress bar
 draw() {
@@ -79,8 +82,8 @@ printf "   \033[0;36m%-4s \033[1;36m%-5s %-25s \n" " ram" "$ram%" "$(draw "$ram"
 #█▓▒░ battery
 b_full=$battery/charge_full
 b_now=$battery/charge_now
-bf=$(cat "$b_full")
-bn=$(cat "$b_now")
+bf=$(cat $b_full)
+bn=$(cat $b_now)
 charge=$((100 * bn / bf))
 
 [ "$charge" -le 20 ] && color='31' || color='36'
