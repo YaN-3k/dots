@@ -1,0 +1,143 @@
+#             ██ ██
+#            ░██░░
+#   ██████   ░██ ██  ██████    ██████
+#  ░░░░░░██  ░██░██ ░░░░░░██  ██░░░░
+#   ███████  ░██░██  ███████ ░░█████
+#  ██░░░░██  ░██░██ ██░░░░██  ░░░░░██
+# ░░████████ ███░██░░████████ ██████
+#  ░░░░░░░░ ░░░ ░░  ░░░░░░░░ ░░░░░░
+
+# aliases
+alias \
+	sudo='sudo '\
+	ls='ls --color=auto --group-directories-first' \
+	hc="history -c" \
+	out="pkill -kill -u $(whoami)" \
+	bat="cat /sys/class/power_supply/BAT?/capacity" \
+	cp="cp -riv" \
+	mv="mv -iv" \
+	rm="rm -v" \
+	mkd="mkdir -pv" \
+	zman="man zshall"
+
+# changing "ls" to "exa"
+alias \
+	ls='exa -al --color=always --group-directories-first' \
+	la='exa -a --color=always --group-directories-first' \
+	ll='exa -l --color=always --group-directories-first' \
+	lt='exa -aT --color=always --group-directories-first' \
+
+# programs
+alias \
+	ir='irssi --home "$HOME"/.config/irssi' \
+	irssi='irssi --home "$HOME"/.config/irssi' \
+	gr="grep" \
+	yt="youtube-dl --add-metadata -i" \
+	yta="yt -x -f bestaudio/best" \
+	nc='ncmpcpp 2>/dev/null' \
+	ra='ranger' \
+	nm='neomutt' \
+	ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook' \
+	installfont='sudo fc-cache -f -v'
+
+# dots
+alias \
+	d='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME' \
+	ds='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status' \
+	dss='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status --short' \
+	dl='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME log' \
+	da='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME add' \
+	dc='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME commit'
+
+dp() { /usr/bin/git --git-dir="$HOME/.config/dots/" --work-tree="$HOME" push "${1:--u}" "${2:-origin}" master; }
+
+# git
+alias \
+	ga="git add" \
+	gp="git push" \
+	gc="git commit" \
+	gl="git log" \
+	gst="git status" \
+	gss="git status --short"
+
+# vi
+alias \
+	e="$EDITOR" \
+	f="$FILE" \
+	vi="nvim" \
+	vidiff="nvim -d" \
+	vf="vifmrun" \
+	svim='sudoedit'
+
+# tmux
+alias \
+	tm='tmux -f $HOME/.config/tmux/tmux.conf' \
+	tmn='tmux new -s -f $HOME/.config/tmux/tmux.conf' \
+	tma='tmux a -t -f $HOME/.config/tmux/tmux.conf' \
+	tmk='tmux kill-session -t' \
+	tmks='tmux kill-server'
+
+# cURL
+wttr()    { curl wttr.in/"${1}" ;}
+cht() { curl cht.sh/"${1}" ;}
+
+# youtube-dl
+alias \
+	yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s" -4' \
+	yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s" -4' \
+	yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s" -4' \
+	yt-music='youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0 -o "%(title)s.%(ext)s" -4' \
+	yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s" -4' \
+	yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s" -4' \
+	yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%(ext)s" -4'
+
+# Pacmna
+alias \
+	up="sudo pacman -Syu" \
+	owo="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 10% | yay -S -" \
+	uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | xargs -ro yay -Rns" \
+	ser="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -" \
+	sel="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -" \
+	paco="sudo pacman -Rns $(pacman -Qtdq)"
+
+alias y='xclip -selection clipboard -in'
+alias p='xclip -selection clipboard -out'
+
+# fzf
+fe()   { find . -type f,l | fzf | xargs -r "$EDITOR" ;}
+cdf() { cd "$(find . -type d | fzf --preview '')" ;}
+fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
+
+# function
+open() { xdg-open "$1" &> /dev/null & disown;}
+psgrep() { ps axufc | grep -v grep | grep "$@" -i --color=auto;}
+fname() { find . -iname "*$@*";}
+mkdcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+
+conf() {
+	case $1 in
+		bspwm)		$EDITOR ~/.config/bspwm/bspwmrc ;;
+		sxhkd)		$EDITOR ~/.config/sxhkd/sxhkdrc ;;
+		mpd)		$EDITOR ~/.config/mpd/mpd.conf ;;
+		mutt)		$EDITOR ~/.config/mutt/muttrc ;;
+		ncmpcpp)	$EDITOR ~/.config/ncmpcpp/config ;;
+		pacman)		sudoedit /etc/pacman.conf ;;
+		ranger)		$EDITOR ~/.config/ranger/rc.conf ;;
+		vifm)		$EDITOR ~/.config/vifm/vifmrc ;;
+		term)       $EDITOR ~/..config/alacritty/alacritty.yml ;;
+		picom)      $EDITOR ~/.config/picom.conf ;;
+		dunst)      $EDITOR ~/.config/dunst/dunstrc ;;
+		tmux)	    $EDITOR	~/.tmux.conf ;;
+		vim)		$EDITOR ~/.config/nvim/init.vim ;;
+		xinit)		$EDITOR ~/.xinitrc ;;
+		xresources)	$EDITOR ~/.Xresources && xrdb ~/.Xresources ;;
+		zathura)	$EDITOR ~/.config/zathura/zathurarc ;;
+		zsh)		$EDITOR ~/.config/zsh/.zshrc && source ~/.config/zsh/.zshrc ;;
+		bash)		$EDITOR ~/.bashrc && source ~/.bashrc ;;
+		hosts)		sudoedit /etc/hosts ;;
+		sudo)		sudoedit /etc/sudoers ;;
+		*)			echo "Unknown application: $1" ;;
+	esac
+}
+
+# vim: filetype=zsh

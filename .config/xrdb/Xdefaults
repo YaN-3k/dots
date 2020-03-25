@@ -1,0 +1,78 @@
+!  ██     ██      ██           ████                    ██   ██
+! ░░██   ██      ░██          ░██░                    ░██  ░██
+!  ░░██ ██       ░██  █████  ██████  ██████   ██   ██ ░██ ██████  ██████
+!   ░░███     ██████ ██░░░██░░░██░  ░░░░░░██ ░██  ░██ ░██░░░██░  ██░░░░
+!    ██░██   ██░░░██░███████  ░██    ███████ ░██  ░██ ░██  ░██  ░░█████
+!   ██ ░░██ ░██  ░██░██░░░░   ░██   ██░░░░██ ░██  ░██ ░██  ░██   ░░░░░██
+!  ██   ░░██░░██████░░██████  ░██  ░░████████░░██████ ███  ░░██  ██████
+! ░░     ░░  ░░░░░░  ░░░░░░   ░░    ░░░░░░░░  ░░░░░░ ░░░    ░░  ░░░░░░
+
+! █▓▒░ colorscheme
+#include "themes/iceberg"
+
+! █▓▒░ misc
+URxvt.scrollBar: false
+URxvt.saveLines: 9999
+URxvt.iso14755: false
+URxvt.geometry: 80x30
+URxvt.cursorUnderline:1
+
+! █▓▒░ perl extensions
+URxvt.perl-lib: /usr/lib/urxvt/perl
+URxvt.perl-ext: default,matcher,clipboard,url-select,keyboard-select,resize-font
+
+! █▓▒░ clipboard
+URxvt.clipboard.autocopy: true
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
+! █▓▒░ font settings
+URxvt.font: xft:Terminus:style=Regular:size=10
+dmenu.font: Terminus:size=10
+*.font: xft:Terminus:style=Regular:size=8
+
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+! reisze
+URxvt.keysym.C-minus: resize-font:smaller
+URxvt.keysym.C-plus:  resize-font:bigger
+URxvt.keysym.C-equal: resize-font:reset
+
+! █▓▒░ interface
+! do not scroll with output
+URxvt.scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt.scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt.scrollTtyKeypress: true
+
+! vim like scrolling
+URxvt.keysym.Control-Shift-K: command:\033]720;1\007
+URxvt.keysym.Control-Shift-J: command:\033]721;1\007
+
+! border
+URxvt*internalBorder: 10
+URxvt*borderLess:false
+
+! █▓▒░ matcher
+URxvt.colorUL: #84a0c6
+URxvt.matcher.button: 1
+
+! █▓▒░ keyboard select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.clipboard.copycmd: xclip -sel clip
+URxvt.clipboard.pastecmd: xclip -o
+
+! █▓▒░ url select
+URxvt.url-select.underline: false
+URxvt.url-select.autocopy: true
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open

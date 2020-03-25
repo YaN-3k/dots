@@ -1,0 +1,693 @@
+;                    ██          ██
+;  ██████           ░██  ██   ██░██
+; ░██░░░██  ██████  ░██ ░░██ ██ ░██       ██████   ██████
+; ░██  ░██ ██░░░░██ ░██  ░░███  ░██████  ░░░░░░██ ░░██░░█
+; ░██████ ░██   ░██ ░██   ░██   ░██░░░██  ███████  ░██ ░
+; ░██░░░  ░██   ░██ ░██   ██    ░██  ░██ ██░░░░██  ░██
+; ░██     ░░██████  ███  ██     ░██████ ░░████████░███
+; ░░       ░░░░░░  ░░░  ░░      ░░░░░    ░░░░░░░░ ░░░
+
+;------;
+; 2BAR ;
+;------;
+[2bar]
+fg = ${xrdb:foreground}
+fg-alt = ${xrdb:foreground}
+bg = ${xrdb:background}
+bg-alt = ${xrdb:background}
+primary = ${xrdb:color5}
+secondary = ${xrdb:color4}
+alert = ${xrdb:color17}
+
+[2fonts]
+font-0 = "xos4 Terminus:pixelsize=10;2"
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=9;2"
+font-2 = "Font Awesome 5 Brands:pixelsize=6;2"
+; For separator
+font-3 = "xos4 Terminus:pixelsize=25;2"
+
+;--------------;
+; Bar Settings ;
+;--------------;
+[bar/2bar]
+override-redirect = false
+height = 25
+;offset-y = 0.85%
+offset-y = 1%
+bottom = false
+wm-restack = bspwm
+
+underline-size = 2
+overline-size = 2
+background = ${2bar.bg}
+radius = 6
+module-margin = 0
+enable-ipc = true
+
+inherit = 2fonts
+
+[bar/2left]
+inherit = bar/2bar
+;offset-x = 1%
+offset-x = 15
+width = 250
+modules-center = 2bspwm
+
+[bar/2right]
+inherit = bar/2bar
+offset-x = 81.5%
+;offset-x = 1100
+width = 240
+modules-center = 2date 2battery 2volume
+spacing = 1
+
+;------------------;
+; BSPWM Workspaces ;
+;------------------;
+[module/2bspwm]
+type = internal/bspwm
+
+pin-workspaces = true
+inline-mode = false
+enable-click = true
+enable-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+
+format = <label-state><label-mode>
+
+label-focused = %name%
+
+label-focused-foreground = ${2bar.secondary}
+label-focused-background = ${xrdb:color0}
+
+label-focused-overline = ${2bar.secondary}
+label-focused-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+label-occupied-background = ${2bar.bg-alt}
+label-occupied-foreground = ${2bar.secondary}
+
+label-urgent = %name%
+label-urgent-padding = 1
+label-urgent-background = ${2bar.bg-alt}
+label-urgent-foreground = ${2bar.secondary}
+
+label-empty = %name%
+label-empty-padding = 1
+label-empty-background = ${2bar.bg-alt}
+label-empty-foreground = ${2bar.fg-alt}
+
+;------;
+; Date ;
+;------;
+[module/2date]
+type = internal/date
+
+interval = 1.0
+
+time =  %H:%M:%S
+time-alt =  %Y-%m-%d%
+
+
+format-padding = 1
+format-background = ${2bar.bg}
+format-foreground = ${2bar.fg}
+
+label = %time%
+
+;--------;
+; Volume ;
+;--------;
+[module/2volume]
+type = internal/alsa
+
+format-volume = <bar-volume>
+format-volume-padding = 1
+format-volume-background = ${2bar.bg}
+format-volume-foreground = ${2bar.fg}
+
+
+bar-volume-format =  %fill%%empty%
+bar-volume-width = 10
+bar-volume-foreground = ${2bar.fg}
+
+bar-volume-fill = %{F#84a0c6}/
+bar-volume-empty = %{F#c6c8d1}/
+
+format-muted-prefix = " "
+format-muted-foreground = ${2bar.fg}
+format-muted-background = ${2bar.bg-alt}
+format-muted-padding = 1
+label-muted = %{F#e27878}//////////
+
+;---------;
+; Battery ;
+;---------;'
+[module/2battery]
+type = internal/battery
+battery = BAT0
+adapter = ACAD
+full-at = 98
+
+format-charging =  <label-charging>
+format-charging-padding = 1
+format-discharging-padding = 1
+format-discharging =  <label-discharging>
+format-full =  FULL
+format-full-padding = 1
+
+format-charging-background = ${2bar.bg-alt}
+format-charging-foreground = ${2bar.fg}
+
+format-discharging-background = ${2bar.bg-alt}
+format-discharging-foreground = ${2bar.fg}
+
+format-full-background = ${2bar.bg-alt}
+format-full-foreground = ${2bar.fg}
+
+;=========;
+; ICEBERG ;
+;=========;
+[ice]
+bg = #00000000
+fg = ${xrdb:foreground}
+bg-alt = ${xrdb:background}
+fg-alt = ${xrdb:color15}
+secondary = ${xrdb:color4}
+
+[ice-fonts]
+font-0 = "Terminus:pixelsize=12;2"
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=9;2"
+font-2 = "Font Awesome 5 Brands:pixelsize=6;2"
+; For separator
+font-3 = "Terminus:pixelsize=25;2"
+
+;==============;
+; Bar Settings ;
+;==============;
+[bar/ice]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 20
+fixed-center = true
+
+background = ${ice.bg}
+foreground = ${ice.fg}
+
+overline-size = 2
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+# fonts
+inherit = ice-fonts
+
+modules-left = ice-bspwm ice-left
+modules-center = ice-right ice-mpd ice-left
+modules-right = ice-right ice-pkg ice-volume ice-xbacklight ice-network ice-wired-network ice-battery ice-date ice-powermenu
+
+wm-restack = bspwm
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+; show, hide polybar 
+; polybar-msg cmd hide/show
+enable-ipc = true
+
+;===========;
+; Separator ;
+;===========;
+[module/ice-left]
+type = custom/text
+content-background = ${ice.bg}
+content-foreground = ${ice.bg-alt}
+content = "%{T4}█▓▒░%{T-}"
+
+[module/ice-right]
+type = custom/text
+content-background = ${ice.bg
+content-foreground = ${ice.bg-alt}
+content = "%{T4}░▒▓█%{T-}"
+
+;==================;
+; BSPWM Workspaces ;
+;==================;
+[module/ice-bspwm]
+type = internal/bspwm
+
+pin-workspaces = true
+inline-mode = false
+enable-click = true
+enable-scroll = false
+reverse-scroll = false
+fuzzy-match = true
+
+format = <label-state><label-mode>
+
+label-focused = %name%
+
+label-focused-foreground = ${ice.secondary}
+label-focused-background = ${xrdb:color0}
+
+label-focused-overline = ${ice.secondary}
+label-focused-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+label-occupied-background = ${ice.bg-alt}
+label-occupied-foreground = ${ice.secondary}
+
+label-urgent = %name%
+label-urgent-padding = 1
+label-urgent-background = ${ice.bg-alt}
+label-urgent-foreground = ${ice.secondary}
+
+label-empty = %name%
+label-empty-padding = 1
+label-empty-background = ${ice.bg-alt}
+; label-empty-foreground = ${ice.fg-alt}
+
+;=====;
+; MPD ;
+;=====;
+[module/ice-mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 6600
+
+interval = 2
+
+format-online = <label-song>
+
+format-online-background = ${ice.bg-alt}
+label-song = %{F#84A0C6}%{F-} %artist% - %title%
+label-offline = %{F#84A0C6}%{F-} mpd is offline
+
+;===========;
+; Backlight ;
+;===========;
+[module/ice-xbacklight]
+type = internal/xbacklight
+format = <label>
+label = %{F#84A0C6}%{F-} %percentage%%
+
+format-background = ${ice.bg-alt}
+format-padding = 1
+
+;=========================;
+; Wireless Network / WiFi ;
+;=========================;
+[module/ice-network]
+type = internal/network
+interface = wlan0
+interval = 1
+
+format-connected-padding = 1
+format-disconnected-padding = 1
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+format-connected-background = ${ice.bg-alt}
+format-disconnected-background = ${ice.bg-alt}
+
+label-connected = %{F#84A0C6} %{F-}%essid%
+label-disconnected = %{F#84A0C6} %{F-}disconnected
+
+;==========================;
+; Wired Network / Ethernet ;
+;==========================;
+[module/ice-wired-network]
+type = internal/network
+interface = ${env:WIRED}
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-connected = %{F#84A0C6} %{F-}%local_ip%
+; label-disconnected = %{F#84A0C6} %{F-}disconnected
+format-connected-foreground = ${ice.fg}
+
+;==============;
+; Date + Clock ;
+;==============;
+[module/ice-date]
+type = internal/date
+interval = 1
+label =  %time%
+
+time = %{F#84A0C6}%{F-} %I:%M %p
+time-alt = %{F#84A0C6}%{F-} %Y-%m-%d
+
+format-padding = 1
+format-background = ${ice.bg-alt}
+
+;========;
+; Volume ;
+;========;
+[module/ice-volume]
+type = internal/alsa
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+ramp-volume-foreground = ${ice.secondary}
+format-volume-padding = 1
+format-muted-padding = 1
+format-volume-background = ${ice.bg-alt}
+format-muted-background = ${ice.bg-alt}
+
+format-muted-prefix = "%{F#84A0C6}%{F-} "
+label-muted = muted
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+;=========;
+; Battery ;
+;=========;
+[module/ice-battery]
+type = internal/battery
+poll-interval = 1
+label-padding = 30
+
+; Use $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+full-at = 98
+bar-capacity-width = 10
+
+format-charging    = %{F#84A0C6}<animation-charging>%{F-} <label-charging>
+format-discharging = %{F#84A0C6}<ramp-capacity>%{F-} <label-discharging>
+format-full        = %{F#84A0C6}<ramp-capacity>%{F-} <label-full>
+
+format-full-padding = 1
+format-charging-padding = 1
+format-discharging-padding = 1
+
+format-charging-background = ${ice.bg-alt}
+format-full-background = ${ice.bg-alt}
+format-discharging-background = ${ice.bg-alt}
+
+ramp-capacity-0 = "%{F#de373d} "
+ramp-capacity-1 = "%{F#de373d} "
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-5 = ""
+ramp-capacity-6 = ""
+ramp-capacity-7 = ""
+ramp-capacity-8 = ""
+ramp-capacity-9 = ""
+
+animation-charging-0 = ""
+animation-charging-1 = ""
+animation-charging-2 = ""
+animation-charging-3 = ""
+animation-charging-framerate = 750
+
+
+;============;
+; Power Menu ;
+;============;
+[module/ice-powermenu]
+type = custom/script
+exec = echo ""
+format-foreground = ${ice.secondary}
+format-background = ${ice.bg-alt}
+click-left = dmenupower
+format-padding = 1
+
+;+++++;
+; pkg ;
+;+++++;
+[module/ice-pkg]
+type = custom/script
+format-foreground = ${ice.fg}
+exec = ~/.config/polybar/update
+click-left = ~/.local/bin/update
+format-background = ${ice.bg-alt}
+format-padding = 1
+
+;───────────────────;
+; Colors & Settings ;
+;───────────────────;
+[color]
+white = #FFFFFF
+black = #000000
+
+bg = #161821
+fg = #C6C8D1
+fg-alt = #6b7089
+blue = #84A0C6
+
+[general]
+padding = 2
+
+;──────────────;
+; Bar Settings ;
+;──────────────;
+[bar/clean]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 20
+fixed-center = true
+
+background = #00000000
+foreground = ${color.fg}
+
+overline-size = 2
+underline-size = 2
+
+padding-left = 3
+padding-right = 3
+
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = "Inconsolata:style=bold:pixelsize=8;2"
+font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=10;2"
+font-2 = "Font Awesome 5 Brands:pixelsize=10;2"
+
+modules-left = volume battery discord mpd
+modules-center = bspwm
+modules-right = pkg network wired-network cpu date
+
+offset-y = 0.5%
+
+wm-restack = bspwm
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+;──────────────────;
+; BSPWM Workspaces ;
+;──────────────────;
+[module/bspwm]
+type = internal/bspwm
+
+enable-click = true
+pin-workspaces = true
+
+format = <label-state>
+
+label-focused = 
+label-focused-padding = 2
+
+label-occupied = 
+label-occupied-padding = 2
+
+label-urgent = 
+label-urgent-padding = 2
+
+label-empty = •
+label-empty-padding = 2
+
+;─────;
+; MPD ;
+;─────;
+[module/mpd]
+type = internal/mpd
+format-online =  "<icon-prev>  <toggle>  <icon-next>"
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+label-song-maxlen = 40
+label-song-ellipsis = true
+
+;──────────;
+; Keyboard ;
+;──────────;
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${color.blue}
+
+label-layout = %layout%
+
+;───────────;
+; Backlight ;
+;───────────;
+[module/xbacklight]
+type = internal/xbacklight
+format = <label>
+label = %{F#84A0C6}%{F-} %percentage%%
+
+;─────────────────────────;
+; Wireless Network / WiFi ;
+;─────────────────────────;
+[module/network]
+type = internal/network 
+interface = wlan0 
+interval = 1 
+
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+
+label-connected =  %essid%
+label-disconnected =  disconnected
+
+[module/cpu]
+type = internal/cpu
+label =  %percentage%%
+
+;──────────────────────────;
+; Wired Network / Ethernet ;
+;──────────────────────────;
+[module/wired-network]
+type = internal/network
+interface = ${env:WIRED}
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
+label-connected = %{F#84A0C6} %{F-}%local_ip%
+; label-disconnected = %{F#84A0C6} %{F-}disconnected
+format-connected-foreground = ${color.fg}
+
+;──────────────;
+; Date + Clock ;
+;──────────────;
+[module/date]
+type = internal/date
+interval = 1
+label =  %time%
+time =  %I:%M %p
+time-alt =  %Y-%m-%d
+
+;────────;
+; Volume ;
+;────────;
+[module/volume]
+type = internal/alsa
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+
+label-muted = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+;─────────;
+; Battery ;
+;─────────;
+[module/battery]
+type = internal/battery
+poll-interval = 1
+label-padding = 30
+
+; Use $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+full-at = 98
+bar-capacity-width = 10
+
+format-charging    = <animation-charging> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full        = <ramp-capacity> <label-full>
+
+ramp-capacity-0 = "%{F#de373d} "
+ramp-capacity-1 = "%{F#de373d} "
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-5 = ""
+ramp-capacity-6 = ""
+ramp-capacity-7 = ""
+ramp-capacity-8 = ""
+ramp-capacity-9 = ""
+
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-framerate = 750
+
+[module/discord]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = 
+label-close = 
+label-separator = |
+
+
+menu-0-0 = TG
+menu-0-0-exec = telegram-desktop &
+menu-0-1 = DSCRD
+menu-0-1-exec = discord &
+menu-0-2 = KILL
+menu-0-2-exec = killall Discord | killall Discord | killall telegram-deskto
+
+
+;────────────;
+; Power Menu ;
+;────────────;
+[module/powermenu]
+type = custom/script
+exec = echo ""
+format-foreground = ${color.blue}
+click-left = dmenupower
+
+;─────;
+; pkg ;
+;─────;
+[module/pkg]
+type = custom/script
+format-foreground = ${color.fg}
+exec = ~/.config/polybar/update
+click-left = ~/.local/bin/update
+
+;────────;
+; Record ;
+;────────;
+[module/record]
+type = custom/script
+format-foreground = ${color.blue}
+exec = cat /tmp/recordingicon 2> /dev/null
+
+[settings]
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+compositing-background = source
+compositing-foreground = source
+compositing-overline = source
+compositing-underline = source
+compositing-border = source
+screenchange-reload = true
+format-foreground = ${xrdb:foreground}
+;format-background = ${xrdb:background}
+
+; vim:ft=dosini
