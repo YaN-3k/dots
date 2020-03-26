@@ -43,6 +43,7 @@ alias \
 # dots
 alias \
 	d='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME' \
+	dot='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME' \
 	ds='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status' \
 	dss='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status --short' \
 	dl='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME log' \
