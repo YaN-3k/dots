@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+# Generate colors for tty from X server resource databas
+
 echo "Getting colours from xrdb"
 colours=$(xrdb -query | grep "color[0-9]" | sed 's/*.color//g' | sort -n | awk -F "#" '{ print $2 }')
 bg=$(xrdb -query | grep "\*.background" | awk -F "#" '{ print $2 }')

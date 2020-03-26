@@ -34,7 +34,7 @@ export LESSHISTFILE="-"
 
 # Sudo
 export SUDO_PROMPT="$(printf "\033[1;36m")[sudo]$(printf "\033[0m") password for %p: "
-export SUDO_ASKPASS="$HOME/.local/bin/dmenu/dmenupass"
+export SUDO_ASKPASS="$HOME/.local/bin/etc/dmenupass"
 
 # Less
 export LESS=-R

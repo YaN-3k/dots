@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+#
 # It's simple script to control a wirelless network connection
 # using iwd and dhcpcd
+#
+
 interface='wlan0'
 
 add() {

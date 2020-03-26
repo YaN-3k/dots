@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
+# Display a manual in zathura
 manpage=$(man -k . | dmenu -l 10 | awk '{ print $1 }')
 if [ -z "$manpage" ]; then exit; else man -Tpdf "$manpage" | zathura - & fi

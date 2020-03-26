@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+#
+# Create a note
+#
 
 : "${EDITOR:=vim}"
 m() { ${DMENU:-dmenu} "$@"; }

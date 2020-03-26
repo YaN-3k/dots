@@ -1,6 +1,10 @@
-#!/usr/bin/env bash
-#  Generate a wallpaper with some static
-read -r _ XY _ < <(xdpyinfo | grep 'dimensions:'); X=${XY%x*} Y=${XY#*x}
+#!/bin/sh
+
+# Generate a wallpaper with some static
+
+XY=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
+X="${XY%x*}"
+Y="${XY#*x}"
 
 NAME="$(xdg-user-dir PICTURES)"/genwall-"$(date +%G-%m-%d_%s.png)"
 

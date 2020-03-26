@@ -1,12 +1,17 @@
-#!/usr/bin/env sh
+#!/bin/sh
+#
+# Take screenshot
+#
+
+m() { ${DMENU:-dmenu} "$@";}
 
 # dmenu prompts
-TYPE="$(printf "Screen\nWindow/Area\n" | $DMENU -i -p 'Type')"
-if [ -z "$TYPE" ]; then exit; fi
-SAVE="$(printf "Yes\nNo"               | $DMENU -i -p 'Save to clicboard')"
-if [ -z "$SAVE" ]; then exit; fi
-TIME="$(printf "0.7\n5\n10\n15"        | $DMENU -i -p 'Seconds to wait')"
-if [ -z "$TIME" ]; then exit; fi
+TYPE="$(printf "Screen\nWindow/Area\n" | m -i -p 'Type')"
+[ ! "$TYPE" ] && exit
+SAVE="$(printf "Yes\nNo"               | m -i -p 'Save to clicboard')"
+[ ! "$SAVE" ] && exit
+TIME="$(printf "0.7\n5\n10\n15"        | m -i -p 'Seconds to wait')"
+[ ! "$TIME" ] && exit
 
 # Set flag if selected "Window"
 case "$TYPE" in
@@ -15,12 +20,16 @@ case "$TYPE" in
 esac
 
 # Prepere for screenshot
-mkdir "$(xdg-user-dir PICTURES)"/Screenshot
+command -v xdg-user-dir >/dev/null 2>&1 &&
+	DIR="$(xdg-user-dir PICTURES)"/ss ||
+	DIR="$HOME"/Pictures/ss
+
+mkdir -p "$DIR"
 sleep "$TIME"
 
 # Copy to clipboard or save to file
 case "$SAVE" in
-	Yes) maim $TYPE | xclip -selection clipboard -t image/png;;
-	*)   maim $TYPE "$(xdg-user-dir PICTURES)"/ss/"$(date +%G-%m-%d_%s.png)"
+	Yes) maim $TYPE | tee "$DIR"/"$(date +%G-%m-%d_%s.png)" | xclip -selection clipboard -t image/png;;
+	*)   maim $TYPE "$DIR"/"$(date +%G-%m-%d_%s.png)"
 esac
 notify-send " Screenshot taken."

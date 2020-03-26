@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
-# Preview script built for use with lf and fzf
-LINES=30
+# Preview script for fzf
 case "$1" in
 *.png | *.jpg | *.jpeg | *.mkv | *.mp4 | *.mp3) mediainfo "$1" ;;
 *.pdf) pdftotext "$1" - ;;
@@ -12,7 +11,7 @@ case "$1" in
 *.7z) 7z l "$1" ;;
 *.html | *.xml) w3m -dump "$1" ;;
 *)
-	[ -f "$1" ] && highlight "$1" -O ansi --force
+	[ -f "$1" ] && cat "$1"
 	[ -d "$1" ] && tree "$1" -L 1 --dirsfirst
 	;;
 esac
