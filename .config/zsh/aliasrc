@@ -40,17 +40,16 @@ alias \
 	ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook' \
 	installfont='sudo fc-cache -f -v'
 
-# dots
 alias \
-	d='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME' \
-	dot='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME' \
-	ds='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status' \
-	dss='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME status --short' \
-	dl='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME log' \
-	da='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME add' \
-	dc='/usr/bin/git --git-dir=$HOME/.config/dots/ --work-tree=$HOME commit'
-
-dp() { /usr/bin/git --git-dir="$HOME/.config/dots/" --work-tree="$HOME" push "${1:--u}" "${2:-origin}" master; }
+	d='dots' \
+	ds='dots status' \
+	dss='dots status --short' \
+	dl='dots log' \
+	da='dots add' \
+	dap='dots add --patch' \
+	df='dots diff' \
+	dc='dots commit' \
+	dp='dots push'
 
 # git
 alias \

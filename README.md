@@ -1,23 +1,26 @@
-# preview
-![ss](pix/prev/ice.png)
-![ss](pix/prev/sea.png)
-
-# installation guide
+# Preview
+![ice](pix/prev/ice.png)
+![sea](pix/prev/sea.png)
+# Installation guide
 ## Install dependencies
 Packages from official arch repositories:
 ```
-sudo pacman -S 
+sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg maim
 ```
 Packages from AUR:
 ```
-sudo yay -S
+yay -S --needed polybar ranger-git
 ```
+Python packages:
+````
+pip install --user pynvim msgpack
+````
 ## Install dotfiles
 Download dotfiles
 ```
-$ git clone --bare https://github.com/Cherrry9/dots $HOME/.config/dots
-$ alias dot='git --git-dir=$HOME/.config/dots/ --work-tree=$HOME'
-$ dot checkout
+$ git clone --bare https://github.com/Cherrry9/dots.git $HOME/.config/dots-git
+$ alias dots='git --git-dir=$HOME/.config/dots-git/ --work-tree=$HOME'
+$ dots checkout
 ```
 If it will fail and show message like this:
 ```
@@ -27,23 +30,9 @@ error: The following untracked working tree files would be overwritten by checko
 Please move or remove them before you can switch branches.
 Aborting
 ```
-You can backup these files with this simple method:
-
+Move these files to another directories or force chekout (delete all these files)
 ```
-$ mkdir -p .config/config-backup && \
-$ biual checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-$ xargs -I{} mv {} .config/config-backup/{}
-```
-Or just remove them:
-
-```
-$ biual checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-$ xargs -I{} rm -rf {}
-```
-Re-run to check out if you have still problems:
-
-```
-$ biual checkout
+$ dots checkout -f
 ```
 Create user directories like ~/Music and ~/Pictures
 ```
@@ -51,11 +40,11 @@ $ xdg-user-dirs-update
 ```
 Set the flag showUntrackedFiles to no for biual git repository
 ```
-$ dot config --local status.showUntrackedFiles no
+$ dots config --local status.showUntrackedFiles no
 ```
 Set zsh as default shell
 ```
-$ chsh -s /bin/zsh
+$ chsh -s /usr/bin/zsh
 ```
 Install dmenu
 ```
@@ -64,18 +53,16 @@ $ sudo make clean install
 ```
 Remove LICENSE and README.md from your $HOME
 ```
-$ dot update-index --assume-unchanged LICENSE README.md
+$ dots update-index --assume-unchanged LICENSE README.md
 $ rm -rf LICENSE README.md
 ```
 You can revert this later with --no-assume-unchanged flag.
-
 ## Finished
-That's it, dotfiles are ready! It is recommended to restart your computer. Now you can type dot up to update dotfiles or use regular git commands:
-
+That's it, dotfiles are ready! It is recommended to restart your computer. Now you can type `dots up` to update dotfiles or use regular git commands:
 ```
-$ dot status
-$ dot pull
-$ dot add
-$ dot commit
-$ dot push
+$ dots status
+$ dots pull
+$ dots add
+$ dots commit
+$ dots push
 ```
