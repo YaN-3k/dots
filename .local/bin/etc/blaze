@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 #
 # Blaze - record screen and audio
-# My fork of https://github.com/GaugeK/blaze
 #
 
 deps() {
@@ -12,15 +11,16 @@ deps() {
 		printf "\n"
 	}
 	printf "\033[34mRequired dependencies\033[0m\n"
-	printf " - \033[34mffmpeg\033[0m         Actually recording\n"
-	printf " - \033[34mdmenu\033[0m          Selecting the options\n"
+	printf " - \033[34mffmpeg\033[0m          Actually recording\n"
+	printf " - \033[34mdmenu\033[0m           Selecting the options\n"
 	printf "\n"
 	printf "\033[35mAt least one of these is required\033[0m\n"
-	printf " - \033[35mxorg-xrandr\033[0m    Selecting a display to record\n"
-	printf " - \033[35mslop\033[0m           Selecting an area to record\n"
+	printf " - \033[35mxorg-xrandr\033[0m     Selecting a display to record\n"
+	printf " - \033[35mslop\033[0m            Selecting an area to record\n"
 	printf "\n"
 	printf "\033[32mOptional dependencies\033[0m\n"
-	printf " - \033[32mnotify-send\033[0m    Letting the user know when the recording starts/ends\n"
+	printf " - \033[32mnotify-send\033[0m     Letting the user know when the recording starts/ends\n"
+	printf " - \033[32mxdg-desktop-dir\033[0m Use directory from xdg instead \$HOME/Videos\n"
 }
 
 # check all necessary dependencies
@@ -32,11 +32,22 @@ _ xrandr || _ slop || deps="$deps xorg-xrandr/slop"
 
 [ "$deps" ] && { deps "$deps"; exit 1; }
 
+# output file, use $BLAZE_DIR and $BLAZE_FILE if they are set
+if [ ! "$BLAZE_DIR" ]; then
+	_ xdg-user-dir &&
+		BLAZE_DIR=$(xdg-user-dir VIDEOS 2>/dev/null) ||
+		BLAZE_DIR="$HOME/Videos"
+fi
+
+[ ! -d "$BLAZE_DIR" ] && mkdir -p "$BLAZE_DIR" >/dev/null 2>&1
+
+output="$BLAZE_DIR/${BLAZE_FILE:-blaze-$(date '+%Y-%m-%d_%H-%M-%S').mp4}"
+
 # menu to use
 m() { ${DMENU:-dmenu} "$@"; }
 
 # exit if X isn't running
-[ ! "$DISPLAY" ] && { printf "Can't open display; exiting"; exit; }
+[ ! "$DISPLAY" ] && { echo "Can't open display; exiting"; exit; }
 
 # find default audio device
 audio() {
@@ -62,11 +73,6 @@ kill_recording() {
 	fi
 }
 
-# output file, use $BLAZE_DIR and $BLAZE_FILE if they are set
-[ "$BLAZE_DIR" ] && mkdir -p "$BLAZE_DIR" >/dev/null 2>&1
-
-output="${BLAZE_DIR:-$HOME/Videos}/${BLAZE_FILE:-blaze-$(date '+%Y-%m-%d_%H-%M-%S').mp4}"
-
 help() {
 	printf "\033[34mOptions\033[0m\n"
 	printf "  \033[34m-s / --save\033[0m        End the recording\n"
@@ -91,7 +97,7 @@ help() {
 	printf "\n"
 	printf "\033[34mVariables\033[0m\n"
 	printf "  \033[34mBLAZE_DIR\033[0m    Location to save the video\n"
-	printf "    \033[37mDefault:     \$HOME/Videos\033[0m\n"
+	printf "    \033[37mDefault:     xdg-user-dir VIDEOS or \$HOME/Videos\033[0m\n"
 	printf "\n"
 	printf "  \033[34mBLAZE_FILE\033[0m   Name of the saved video\n"
 	printf "    \033[37mDefault:     blaze-%s.mp4\033[0m\n" "\$(date +%Y-%m-%d_%H-%M-%S)"

@@ -24,6 +24,7 @@ let g:ale_fixers = {
 \   'php': ['prettier'],
 \   'python': ['black'],
 \   'sh': ['shfmt'],
+\   'zsh': ['shfmt'],
 \   'scss': ['prettier'],
 \   'yaml': ['prettier'],
 \}

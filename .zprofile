@@ -16,8 +16,8 @@ export TERMINAL="urxvt"
 export READER="zathura"
 export FILE="ranger"
 export BROWSER="qutebrowser"
-export DMENU_RUN="dmenu_run -w 245 -x 10 -y 30"
-export DMENU="dmenu -w 245 -x 10 -y 30"
+export DMENU_RUN="dmenu_run -w 245 -x 10 -y 30 -i"
+export DMENU="dmenu -w 245 -x 10 -y 30 -i"
 
 # ~/ Clean-up:
 export XDG_DATA_HOME="$HOME/.local/share"

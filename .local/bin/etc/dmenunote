@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+: "${EDITOR:=vim}"
+m() { ${DMENU:-dmenu} "$@"; }
+
 find_notes() {
 	list="$HOME/.cache/notes.list"
 	find . -type f >"$list"
@@ -11,33 +14,33 @@ find_notes() {
 }
 
 add_note() {
-	title=$($DMENU -p "Title" <&- && echo)
+	title=$(m -p "Title" <&- && echo)
 	[ -z "$title" ] && exit
 	$TERMINAL -e sh -c "$EDITOR $title"
 }
 
 remove_note() {
 	find_notes
-	title=$(printf "%b" "$notes" | $DMENU -p "Remove")
+	title=$(printf "%b" "$notes" | m -p "Remove")
 	[ -z "$title" ] && exit
 	rm "$title"
 }
 
 edit_note() {
 	find_notes
-	title=$(printf "%b" "$notes" | $DMENU -p "Edit")
+	title=$(printf "%b" "$notes" | m -p "Edit")
 	[ -z "$title" ] && exit
 	$TERMINAL -e sh -c "$EDITOR $title"
 }
 
 add_task() {
-	task=$($DMENU -p "Enter new task" <&- && echo)
+	task=$(m -p "Enter new task" <&- && echo)
 	[ -z "$task" ] && exit
-	echo "$task" > "$tasks_list"
+	echo "$task" >>"$tasks_list"
 }
 
 remove_task() {
-	list=$(comm -23 "$tasks_list" "$task")
+	list=$(comm -23 "$tasks_list" "$tasks_list")
 }
 
 edit_task() {
@@ -45,9 +48,12 @@ edit_task() {
 }
 
 tasks() {
-	tasks_list="$HOME/.local/share/tasks.list"
 	options="add\nremove\nedit\n"
-	choice=$(printf "%b" "$options" | $DMENU)
+	tasks_list="$HOME/.local/share/tasks.list"
+	content=$(cat "$tasks_list")
+	[ "$content" ] && task=$(printf "%b" "$content" | m)
+
+	choice=$(printf "%b" "$options" | m -p "Task")
 	case $choice in
 	add) add_task ;;
 	remove) remove_task ;;
@@ -61,7 +67,7 @@ mkdir -p "$dir"
 cd "$dir" || exit
 
 options="add\nremove\nedit\ntasks\n"
-choice=$(printf "%b" "$options" | $DMENU)
+choice=$(printf "%b" "$options" | m)
 case $choice in
 add) add_note ;;
 remove) remove_note ;;
