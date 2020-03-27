@@ -1,115 +1,85 @@
-#!/usr/bin/env zsh
-#             ██ ██
-#            ░██░░
-#   ██████   ░██ ██  ██████    ██████
-#  ░░░░░░██  ░██░██ ░░░░░░██  ██░░░░
-#   ███████  ░██░██  ███████ ░░█████
-#  ██░░░░██  ░██░██ ██░░░░██  ░░░░░██
-# ░░████████ ███░██░░████████ ██████
-#  ░░░░░░░░ ░░░ ░░  ░░░░░░░░ ░░░░░░
+#     ---
+#   aliases
+#     ---
 
-# aliases
-alias \
-	sudo='sudo '\
-	ls='ls --color=auto --group-directories-first' \
-	hc="history -c" \
-	out="pkill -kill -u $(whoami)" \
-	bat="cat /sys/class/power_supply/BAT?/capacity" \
-	cp="cp -riv" \
-	mv="mv -iv" \
-	rm="rm -v" \
-	mkd="mkdir -pv" \
-	zman="man zshall"
-
-# changing "ls" to "exa"
-alias \
-	ls='exa -al --color=always --group-directories-first' \
-	la='exa -a --color=always --group-directories-first' \
-	ll='exa -l --color=always --group-directories-first' \
-	lt='exa -aT --color=always --group-directories-first' \
+alias sudo='sudo '
+alias ls='ls --color=auto --group-directories-first'
+alias ll="ls -A -h --group-directories-first --color=auto"
+alias la="ls -lA -h --group-directories-first --color=auto"
+alias grep="grep --color=auto"
+alias hc="history -c"
+alias out="pkill -kill -u $(whoami)"
+alias fuck="pkill -9"
+alias cp="cp -riv"
+alias mv="mv -iv"
+alias rm="rm -iv"
+alias mkd="mkdir -pv"
+alias w="which"
+alias ss="sudo systemctl"
+alias installfont='sudo fc-cache -f -v'
 
 # programs
-alias \
-	ir='irssi --home "$HOME"/.config/irssi' \
-	irssi='irssi --home "$HOME"/.config/irssi' \
-	nc='ncmpcpp 2>/dev/null' \
-	ra='ranger' \
-	nm='neomutt' \
-	ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook' \
-	installfont='sudo fc-cache -f -v'
+alias ir='irssi --home "$HOME"/.config/irssi'
+alias irssi='irssi --home "$HOME"/.config/irssi'
+alias nc='ncmpcpp 2>/dev/null'
+alias ra='ranger'
+alias nm='neomutt'
+alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
 
-alias \
-	d='dots' \
-	ds='dots status' \
-	dss='dots status --short' \
-	dl='dots log' \
-	da='dots add' \
-	dap='dots add --patch' \
-	df='dots diff' \
-	dc='dots commit' \
-	dp='dots push'
+# dots
+alias d='dots'
+alias ds='dots status'
+alias da='dots add'
+alias df='dots diff'
+alias dc='dots commit'
+alias dp='dots push'
+alias dl="dots log --all --decorate --oneline --graph"
 
 # git
-alias \
-	ga="git add" \
-	gp="git push" \
-	gc="git commit" \
-	gl="git log" \
-	gst="git status" \
-	gss="git status --short"
-
-# vi
-alias \
-	e="$EDITOR" \
-	f="$FILE" \
-	vi="nvim" \
-	vidiff="nvim -d" \
-	vf="vifmrun" \
-	svim='sudoedit'
+alias ga="git add"
+alias gd="git diff"
+alias gp="git push"
+alias gs="git status"
+alias gc="git commit"
+alias gaa="git add -A"
+alias gpf="git push -f"
+alias gcm="git commit -m"
+alias gca="git commit --amend"
+alias gl="git log --all --decorate --oneline --graph"
 
 # tmux
-alias \
-	tm='tmux -f $HOME/.config/tmux/tmux.conf' \
-	tmn='tmux new -s -f $HOME/.config/tmux/tmux.conf' \
-	tma='tmux a -t -f $HOME/.config/tmux/tmux.conf' \
-	tmk='tmux kill-session -t' \
-	tmks='tmux kill-server'
-
-# cURL
-wttr()    { curl wttr.in/"${1}" ;}
-cht() { curl cht.sh/"${1}" ;}
+alias tm='tmux -f $HOME/.config/tmux/tmux.conf'
+alias tma='tmux a -t -f $HOME/.config/tmux/tmux.conf'
+alias tmk='tmux kill-session -t'
+alias tmks='tmux kill-server'
 
 # youtube-dl
-alias \
-	yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s" -4' \
-	yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s" -4' \
-	yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s" -4' \
-	yt-music='youtube-dl -f bestaudio -x --audio-format mp3 --audio-quality 0 -o "%(title)s.%(ext)s" -4' \
-	yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s" -4' \
-	yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s" -4' \
-	yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%(ext)s" -4'
+alias yt="youtube-dl --add-metadata --embed-thumbnail --embed-subs --ignore-errors -o '%(upload_date)s-%(title)s.%(ext)s'"
+alias yta="youtube-dl --add-metadata --ignore-errors --extract-audio -f bestaudio/best --audio-format mp3 --audio-quality 0"
 
-# Pacman
-alias \
-	up="sudo pacman -Syu" \
-	owo="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 10% | yay -S -" \
-	uwu="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | xargs -ro yay -Rns" \
-	ser="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -" \
-	sel="yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -" \
-	paco="sudo pacman -Rns $(pacman -Qtdq)"
+# random
+mc() { mkdir -p "$1" && cd "$1"; }
+calc() { echo "scale=5; $*" | bc; }
+f() { find . -iname "*$**"; }
+F() { find . -name "$*"; }
 
-alias y='xclip -selection clipboard -in'
-alias p='xclip -selection clipboard -out'
+# vim
+v() {
+	if [ ! "$1" ]; then
+		$EDITOR
+	elif [ ! -e "$1" ] || [[ "$(stat -c '%U' "$1")" = "$USER" ]]; then
+		$EDITOR "$1"
+	else
+		sudo $EDITOR "$1"
+	fi
+}
+vb() {
+	local file="$(find "$HOME/.local/bin/" -type f,l | fzf)" &&
+		[ "$file" ] && v "$file"
+}
 
-# fzf
-fe()   { find . -type f,l | fzf | xargs -r "$EDITOR" ;}
-cdf() { cd "$(find . -type d | fzf --preview '')" ;}
-fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
-
-# function
-open() { xdg-open "$1" &>/dev/null & disown;}
-psgrep() { ps axufc | grep -v grep | grep "$@" -i --color=auto;}
-fname() { find . -iname "*$@*";}
-mkdcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
+# convert colors
+hextorgb() { printf "%d %d %d\n" "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }
+rgbtohex() { printf "%02X%02X%02X\n" "$@"; }
 
 # vim: filetype=zsh

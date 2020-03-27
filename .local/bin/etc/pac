@@ -1,0 +1,26 @@
+#!/bin/sh
+fzf_wrapper() {
+	case "$1" in
+	install)
+		yay -Slq | fzf -m --preview 'yay -Si {1}' --height 10% | yay -S -
+		;;
+	remove)
+		yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | xargs -ro yay -Rns
+		;;
+	search)
+		yay -Slq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -
+		#yay -Qq | fzf -m --preview 'yay -Si {1}' --height 60% | yay -Si -
+		;;
+	esac
+}
+
+case $1 in
+-f)
+	choice=$(printf "%b" "install\nremove\nsearch" | fzf --preview '')
+	fzf_wrapper "$choice"
+	;;
+-O)
+	sudo pacman -Rns $(pacman -Qtdq)
+	;;
+*) yay "$@" ;;
+esac

@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-#
 #                 ██
 #                ░██
 #  ██████  ██████░██
@@ -81,12 +79,12 @@ FZF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/fzf"
 	"$FZF_DIR/fzf/install" --no-bash --no-fish --xdg --all
 	cd "$pwd"
 }
-source "$FZF_DIR/fzf.zsh"
+source "$FZF_DIR/fzf.zsh" 2>/dev/null
 
 #
 #   SYNTAX HIGHLIGHTING
 #
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
 
 ZSH_HIGHLIGHT_STYLES[default]='none'
 ZSH_HIGHLIGHT_STYLES[links]='none'
@@ -118,7 +116,7 @@ ZSH_HIGHLIGHT_STYLES[assign]='none'
 #
 HISTSIZE=999999
 SAVEHIST=999999
-HISTFILE="${XDG_CONFIG_HOME:-~/.config}/zsh/,zsh_history"
+HISTFILE="${XDG_CONFIG_HOME:-~/.config}/zsh/.zsh_history"
 setopt extended_history   # Record timestamp of command in HISTFILE
 setopt hist_ignore_dups   # Ignore duplicated commands history list
 setopt share_history      # Share command history data
@@ -201,8 +199,8 @@ preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 set -k                       # Allow comments in shell
 setopt auto_cd               # cd by just typing the directory name
 unsetopt flowcontrol         # Disable Ctrl-S + Ctrl-Q
-source "$ZDOTDIR/aliases"
-source "$ZDOTDIR/shortcutrc"
+source "$ZDOTDIR/aliases" 2>/dev/null
+source "$ZDOTDIR/shortcutrc" 2>/dev/null
 
 # bind `^n` to ls
 els() { clear; ls; zle redisplay; }
