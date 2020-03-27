@@ -34,15 +34,15 @@ Move these files to another directories or force chekout (delete all these files
 ```
 $ dots checkout -f
 ```
-Create user directories like ~/Music and ~/Pictures
+Create user directories like ~/music and ~/pix
 ```
 $ xdg-user-dirs-update
 ```
-Set the flag showUntrackedFiles to no for biual git repository
+Set the flag `showUntrackedFiles` to `no` for dots git repository
 ```
 $ dots config --local status.showUntrackedFiles no
 ```
-Set zsh as default shell
+Set `zsh` as default shell
 ```
 $ chsh -s /usr/bin/zsh
 ```
@@ -51,12 +51,12 @@ Install dmenu
 $ cd ~/.config/dmenu
 $ sudo make clean install
 ```
-Remove LICENSE and README.md from your $HOME
+Remove `LICENSE` and `README.md` from your `$HOME`
 ```
 $ dots update-index --assume-unchanged LICENSE README.md
 $ rm -rf LICENSE README.md
 ```
-You can revert this later with --no-assume-unchanged flag.
+You can revert this later with `--no-assume-unchanged` flag.
 ## Finished
 That's it, dotfiles are ready! It is recommended to restart your computer. Now you can type `dots up` to update dotfiles or use regular git commands:
 ```
