@@ -189,8 +189,8 @@ super + d
 super + Return
 	$TERMINAL
 # Open the floating terminal
-alt + Return
-	$TERMINAL -name float
+#alt + Return
+#	$TERMINAL -name float
 # Open the terminal in the same directory
 super + shift + Return
 	samedir

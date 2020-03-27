@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 #             ██ ██
 #            ░██░░
 #   ██████   ░██ ██  ██████    ██████
@@ -31,9 +32,6 @@ alias \
 alias \
 	ir='irssi --home "$HOME"/.config/irssi' \
 	irssi='irssi --home "$HOME"/.config/irssi' \
-	gr="grep" \
-	yt="youtube-dl --add-metadata -i" \
-	yta="yt -x -f bestaudio/best" \
 	nc='ncmpcpp 2>/dev/null' \
 	ra='ranger' \
 	nm='neomutt' \
@@ -91,7 +89,7 @@ alias \
 	yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s" -4' \
 	yt-thumbnail='youtube-dl --write-thumbnail --skip-download -o "%(title)s.%(ext)s" -4'
 
-# Pacmna
+# Pacman
 alias \
 	up="sudo pacman -Syu" \
 	owo="yay -Slq | fzf -m --preview 'yay -Si {1}' --height 10% | yay -S -" \
@@ -109,35 +107,9 @@ cdf() { cd "$(find . -type d | fzf --preview '')" ;}
 fs() { $FILE "$(find . -type d | fzf --preview '')" ;}
 
 # function
-open() { xdg-open "$1" &> /dev/null & disown;}
+open() { xdg-open "$1" &>/dev/null & disown;}
 psgrep() { ps axufc | grep -v grep | grep "$@" -i --color=auto;}
 fname() { find . -iname "*$@*";}
 mkdcd () { mkdir -p "$@" && eval cd "\"\$$#\""; }
-
-conf() {
-	case $1 in
-		bspwm)		$EDITOR ~/.config/bspwm/bspwmrc ;;
-		sxhkd)		$EDITOR ~/.config/sxhkd/sxhkdrc ;;
-		mpd)		$EDITOR ~/.config/mpd/mpd.conf ;;
-		mutt)		$EDITOR ~/.config/mutt/muttrc ;;
-		ncmpcpp)	$EDITOR ~/.config/ncmpcpp/config ;;
-		pacman)		sudoedit /etc/pacman.conf ;;
-		ranger)		$EDITOR ~/.config/ranger/rc.conf ;;
-		vifm)		$EDITOR ~/.config/vifm/vifmrc ;;
-		term)       $EDITOR ~/..config/alacritty/alacritty.yml ;;
-		picom)      $EDITOR ~/.config/picom.conf ;;
-		dunst)      $EDITOR ~/.config/dunst/dunstrc ;;
-		tmux)	    $EDITOR	~/.tmux.conf ;;
-		vim)		$EDITOR ~/.config/nvim/init.vim ;;
-		xinit)		$EDITOR ~/.xinitrc ;;
-		xresources)	$EDITOR ~/.Xresources && xrdb ~/.Xresources ;;
-		zathura)	$EDITOR ~/.config/zathura/zathurarc ;;
-		zsh)		$EDITOR ~/.config/zsh/.zshrc && source ~/.config/zsh/.zshrc ;;
-		bash)		$EDITOR ~/.bashrc && source ~/.bashrc ;;
-		hosts)		sudoedit /etc/hosts ;;
-		sudo)		sudoedit /etc/sudoers ;;
-		*)			echo "Unknown application: $1" ;;
-	esac
-}
 
 # vim: filetype=zsh
