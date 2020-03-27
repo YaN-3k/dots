@@ -4,10 +4,8 @@
 
 let configs = [
 \  'general',
-\  'ui',
 \  'commands',
 \  'plugins',
-\  'plugin-settings',
 \]
 
 for file in configs

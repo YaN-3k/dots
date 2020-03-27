@@ -48,6 +48,72 @@ set splitbelow
 
 set updatetime=100
 
+" leader key
+let mapleader = ' '
+
+" encoding
+scriptencoding utf-8
+
+" show matching brackets/parenthesis
+set showmatch
+set matchtime=3
+
+" disable startup message
+set shortmess+=I
+
+" hide buffers, not close them
+set hidden
+
+" colorscheme
+color iceberg
+
+" syntax highlighting
+syntax on
+set synmaxcol=512
+filetype plugin indent on
+
+" autocompletion menu
+set pumheight=10
+
+" Statusline
+set laststatus=2
+set noruler
+set showcmd
+set noshowmode
+
+" no folding
+"set nofoldenable
+"set foldlevel=99
+"set foldminlines=99
+"set foldlevelstart=99
+
+" line wrapping
+set wrap
+
+" show line numbers
+set number relativenumber
+set numberwidth=1
+
+" show invisibles
+set list
+set listchars=
+set listchars+=tab:·\ 
+set listchars+=trail:·
+set listchars+=extends:»
+set listchars+=precedes:«
+set listchars+=nbsp:░
+
+" split style
+set fillchars=vert:▒
+
+" highlight current line
+augroup CursorLine
+	au!
+	"au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+	au WinLeave * setlocal nocursorline
+augroup END
+
 " fuzzy find
 set path+=**
 " lazy file name tab completion
@@ -65,12 +131,6 @@ set wildignore+=*.eot,*.otf,*.ttf,*.woff
 set wildignore+=*.doc,*.pdf,*.cbr,*.cbz
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.kgb
 set wildignore+=*.swp,.lock,.DS_Store,._*
-
-" leader key
-let mapleader = ' '
-
-" encoding
-scriptencoding utf-8
 
 " language-specific
 augroup langindentation
