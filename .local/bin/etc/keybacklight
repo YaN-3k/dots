@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 FILE="/sys/class/leds/dell::kbd_backlight/brightness"
 if [ -f "$FILE" ]; then
 	case $1 in
@@ -6,7 +6,7 @@ if [ -f "$FILE" ]; then
 			[ "$current" -lt 4 ] && echo $((current + 1)) | sudo -A tee $FILE;;
 		-dec) current=$(cat $FILE)
 			[ "$current" -gt 0 ] && echo $((current - 1)) | sudo -A tee $FILE;;
-		-set) [ -n "$2" ] && { echo "$2" | sudo -A tee $FILE; }
+		-set) [ "$2" ] && echo "$2" | sudo -A tee $FILE
 	esac
 else
 	echo "File doesn't exist!"

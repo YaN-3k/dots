@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 opt="bspwm sxhkd polybar mpd dunst picom autogap"
 program="$(echo "$opt" | sed 's/ /\n/g' | $DMENU -i -p "Restart")"
 case $program in

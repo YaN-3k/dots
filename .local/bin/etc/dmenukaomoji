@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #
 # Fonts needed: gnu-free-fonts, ttf-arphic-uming, ttf-indic-otf, otf-ipafont
 #
@@ -8,4 +8,4 @@ chosen=$(grep -v "#" ~/.local/share/dots/kaomoji | ${DMENU:-dmenu})
 
 notify-send "$chosen" "copied to clipboard."
 c="${chosen%% [A-Z]*}"
-echo "$c" | xclip -sel clip
+printf "%s" "$c" | xclip -sel clip

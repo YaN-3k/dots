@@ -1,8 +1,7 @@
-#!/usr/bin/env sh
+#!/bin/sh
 # A dmenu binary prompt script.
 # Gives a dmenu prompt labeled with $1 to perform command $2.
 # For example:
 # `./prompt "Do you want to shutdown?" "shutdown -h now"`
 
-# [ "$(printf "No\\nYes" | rofi -lines 2 -width 30 -dmenu -p "$1")" = "Yes" ] && $2
-[ "$(printf "No\\nYes" | $DMENU -i -p "$1" )" = "Yes" ] && (eval $2)
+[ "$(printf "No\\nYes" | ${DMENU:-dmenu} -i -p "$1" )" = "Yes" ] && eval "$2"

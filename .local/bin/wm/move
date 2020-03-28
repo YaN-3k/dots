@@ -1,11 +1,9 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 dir=$1
 move="${2:-20}"
 
-is_tiled() {
-	bspc query -T -n | grep -q '"state":"tiled"'
-}
+is_tiled() { bspc query -T -n | grep -q '"state":"tiled"'; }
 
 if ! is_tiled; then
 	#only parse input if window is floating,tiled windows accept input as is

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 xfile="$HOME/.Xdefaults"
 xdef=$(grep "\.colors" "$xfile" | cut -d '"' -f2)
 xdef="${xdef#*/}"

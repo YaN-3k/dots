@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 ANS="$(printf "lock\nshutdown\nreboot\nexit" | $DMENU -i -p 'System')"
 case "$ANS" in
 	lock) slock & mpc pause;;

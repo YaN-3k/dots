@@ -23,6 +23,7 @@ alias ir='irssi --home "$HOME"/.config/irssi'
 alias irssi='irssi --home "$HOME"/.config/irssi'
 alias nc='ncmpcpp 2>/dev/null'
 alias ra='ranger'
+alias vf='vifmrun'
 alias nm='neomutt'
 alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
 

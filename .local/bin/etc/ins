@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #
 #  pacman/makepkg/git wrapper for the aur
 #
@@ -18,16 +18,15 @@ mkdir -p "$location"
 
 official() {
 	printf "\033[34m%s\033[0m found in official repos; installing normally.\n" "$officialhr"
-	sudo pacman $pac_opts $opts -S $official
+	sudo pacman $flags -S $1
 }
 
 aur() {
 	# if the package has already been cloned, rename the existing
 	# directory and clone again.
 	[ -e "$location/$i" ] && mv "$location/$i" "$location/$i-$(date "+%Y-%m-%d_%H-%M")"
-	#printf "\033[34m%s\033[0m found in AUR; cloning\n" "$i"
 	git clone "https://aur.archlinux.org/$i" "$location/$i"
-	cd "$location/$i" && makepkg $opts -si
+	cd "$location/$i" && makepkg -si
 }
 
 add() {
@@ -47,40 +46,45 @@ add() {
 	esac
 }
 
-for i in "$@"; do
+while [ "$1" ]; do
 	# check if the package exists in the official repos
-	case $i in
-	-*)
-		[ "$i" != "--asexplicit" ] && opts="$opts $i" || pac_opts="$pac_opts $i"
-		[ "$i" = "--needed" ] && needed='true'
+	case $1 in
+	--needed)
+		needed='true'
+		flags='--needed'
 		;;
 	*)
-		if (pacman -Si "$i" 2>&1) >/dev/null; then
-			add official "$i"
+		if pacman -Si "$1" >/dev/null 2>&1; then
+			add official "$1"
 		# check if the package exists in the aur
-		elif [ -n "$(git ls-remote "https://aur.archlinux.org/$i.git")" ]; then
-			add aur "$i"
+		elif git ls-remote "https://aur.archlinux.org/$1.git" >/dev/null 2>&1; then
+			add aur "$1"
 		else
-			add not_found "$i"
+			add not_found "$1"
 		fi
 		;;
 	esac
+	shift
 done
 
 # not found packages
-[ -n "$not_foundhr" ] && printf "\033[31merror:\033[0m package \033[34m%s\033[0m was not found\n" "$not_foundhr"
+[ "$not_foundhr" ] && printf "\033[31merror:\033[0m package \033[34m%s\033[0m was not found\n" "$not_foundhr"
 
 # install packages from official repositories
-[ -n "$official" ] && official $official
+[ "$official" ] && official "$official"
 
 # install packages from AUR
-if [ -n "$aurhr" ]; then
+if [ "$aurhr" ]; then
 	printf "\033[34m%s\033[0m found in AUR.\n" "$aurhr"
 	for i in $aur; do
-		if [ -n "$needed" ]; then
-			pacman -Q $i >/dev/null 2>&1 && printf "\033[34m%s\033[0m -- skipping\n" "$i" || aur $i
+		if [ "$needed" ]; then
+			if pacman -Q "$i" >/dev/null 2>&1; then
+				printf "\033[34m%s\033[0m -- skipping\n" "$i"
+			else
+				aur "$i"
+			fi
 		else
-			aur $i
+			aur "$i"
 		fi
 	done
 fi

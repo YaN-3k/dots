@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 dir="$(xdg-user-dir MUSIC)"
 archive="$HOME/.local/share/archive.list"
 links="$HOME/.local/share/songs.list"

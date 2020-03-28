@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 color="#F7E599'>"
 col="<span color='"
 end="</span>"

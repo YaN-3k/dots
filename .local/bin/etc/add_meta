@@ -1,14 +1,12 @@
-#!/usr/bin/env sh
+#!/bin/sh
 dir="$(xdg-user-dir MUSIC)"
 cd "$dir" || exit
-files="*"
-for file in $files; do
+for file in *; do
 	artist="${file%%-*}"
 	title="${file##*- }"
 	title="${title%%.*}"
-	echo "File name: $file"
-	echo "Artist: $artist"
-	echo "Title: $title"
-	echo
+	#echo "File name: $file"
+	#echo "Artist: $artist"
+	#echo "Title: $title"
 	id3v2 -a "$artist" -t "$title" "$file"
 done

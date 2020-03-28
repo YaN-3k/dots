@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 preset=$1
 XY=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
 X="${XY%x*}"

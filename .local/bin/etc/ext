@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 # Default behavior: Extract archive into new directory
 # Behavior with `-c` option: Extract contents into current directory
@@ -17,7 +17,7 @@ else
 	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)")"
 fi
 
-[ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
+[ ! "$archive" ] && printf "Give archive to extract as argument.\\n" && exit
 
 if [ -f "$archive" ] ; then
 	case "$archive" in

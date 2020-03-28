@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 # Preview script for fzf
 case "$1" in
 *.png | *.jpg | *.jpeg | *.mkv | *.mp4 | *.mp3) mediainfo "$1" ;;

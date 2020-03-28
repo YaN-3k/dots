@@ -1,5 +1,4 @@
 #!/bin/sh
-#
 # output focused / unfocused windows
 
 case $1 in

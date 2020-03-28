@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #                           ██            ████
 #                          ░░            ░██░
 #   ██████  ██   ██  ██████ ██ ███████  ██████  ██████
@@ -91,7 +91,7 @@ charge=$((100 * bn / bf))
 printf "   \033[0;${color}m%-4s \033[1;${color}m%-5s %-25s \n" " bat" "$charge%" "$(draw "$charge" 10 "$color")"
 
 #█▓▒░ volume
-vol=$(amixer get Master | awk '$0~/%/{print $5}' | tr -d '[]%' | uniq -d)
+vol=$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')
 if amixer get Master | grep -q '\[off\]'; then
 	color='31'
 else
