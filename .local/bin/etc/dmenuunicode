@@ -1,6 +1,8 @@
 #!/bin/sh
-
+#
 # The famous "get a menu of emojis to copy" script.
+#
+
 chosen=$(grep -v "#" ~/.local/share/dots/emoji | $DMENU -i -l 10 -fn Monospace-15)
 
 [ "$chosen" != "" ] || exit

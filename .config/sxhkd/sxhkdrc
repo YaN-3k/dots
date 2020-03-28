@@ -214,7 +214,7 @@ alt + e
 	$TERMINAL -e neomutt
 # Show help
 super + F2
-	 $TERMINAL -name float -e show_help
+	$TERMINAL -name float -e show_help
 
 # }}
 

@@ -15,8 +15,6 @@ notify-send -i ~/.local/share/dots/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
 telegram-desktop &
-"$HOME"/.config/polybar/launch.sh ice
-#$TERMINAL --class scratchpad -e scratch &
 #$TERMINAL -name scratchpad -e scratch &
 mkdir -p ~/.config/bspwm/log
 

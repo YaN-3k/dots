@@ -1,6 +1,7 @@
 #!/bin/sh
-
-# Generate a wallpaper with some static
+#
+# Generate a wallpaper with some noise
+#
 
 XY=$(xdpyinfo | awk '/dimensions:/ { print $2 }')
 X="${XY%x*}"

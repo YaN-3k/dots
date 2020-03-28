@@ -1,3 +1,4 @@
 #!/bin/sh
+# Upload string or file to https://0x0.st
 [ -f "$1" ] && o="cat"
 "${o:-echo}" "${@:-$(cat -)}" | curl -F file='@-' 'http://0x0.st'

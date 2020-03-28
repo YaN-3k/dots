@@ -1,6 +1,7 @@
 #!/bin/sh
-
+#
 # Wrapper for my dotfiles
+#
 
 d() { git --git-dir="$HOME/.config/dots-git/" --work-tree="$HOME" "$@"; }
 

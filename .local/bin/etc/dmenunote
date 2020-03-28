@@ -13,37 +13,37 @@ find_notes() {
 		[ -n "$notes" ] && notes="$notes\n${file#./}" || notes="${file#./}"
 	done <"$list"
 	rm "$list"
-	[ -z "$notes" ] && exit
+	[ ! "$notes" ] && exit
 }
 
 add_note() {
 	title=$(m -p "Title" <&- && echo)
-	[ -z "$title" ] && exit
+	[ ! "$title" ] && exit
 	$TERMINAL -e sh -c "$EDITOR $title"
 }
 
 remove_note() {
 	find_notes
 	title=$(printf "%b" "$notes" | m -p "Remove")
-	[ -z "$title" ] && exit
+	[ ! "$title" ] && exit
 	rm "$title"
 }
 
 edit_note() {
 	find_notes
 	title=$(printf "%b" "$notes" | m -p "Edit")
-	[ -z "$title" ] && exit
+	[ ! "$title" ] && exit
 	$TERMINAL -e sh -c "$EDITOR $title"
 }
 
 add_task() {
 	task=$(m -p "Enter new task" <&- && echo)
-	[ -z "$task" ] && exit
+	[ ! "$task" ] && exit
 	echo "$task" >>"$tasks_list"
 }
 
 remove_task() {
-	list=$(comm -23 "$tasks_list" "$tasks_list")
+	sed -i "/$task/ d" "$tasks_list"
 }
 
 edit_task() {
@@ -51,11 +51,15 @@ edit_task() {
 }
 
 tasks() {
-	options="add\nremove\nedit\n"
 	tasks_list="$HOME/.local/share/tasks.list"
 	content=$(cat "$tasks_list")
-	[ "$content" ] && task=$(printf "%b" "$content" | m)
-
+	if [ "$content" ]; then
+		options="add\nremove\nedit\n"
+		task=$(printf "%b" "$content" | m)
+		[ ! "$task" ] && exit
+	else
+		options="add\nedit\n"
+	fi
 	choice=$(printf "%b" "$options" | m -p "Task")
 	case $choice in
 	add) add_task ;;
@@ -68,9 +72,8 @@ dir="$HOME/.local/share/note/"
 current_dir="$PWD"
 mkdir -p "$dir"
 cd "$dir" || exit
-
 options="add\nremove\nedit\ntasks\n"
-choice=$(printf "%b" "$options" | m)
+choice=$(printf "%b" "$options" | m -p "Note")
 case $choice in
 add) add_note ;;
 remove) remove_note ;;
