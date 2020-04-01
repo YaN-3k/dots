@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 #
 # Blaze - record screen and audio
 #
@@ -21,6 +21,7 @@ deps() {
 	printf "\033[32mOptional dependencies\033[0m\n"
 	printf " - \033[32mnotify-send\033[0m     Letting the user know when the recording starts/ends\n"
 	printf " - \033[32mxdg-desktop-dir\033[0m Use directory from xdg instead \$HOME/Videos\n"
+	exit
 }
 
 # check all necessary dependencies
@@ -30,7 +31,7 @@ _ dmenu            || deps="$deps dmenu"
 _ ffmpeg           || deps="$deps ffmpeg"
 _ xrandr || _ slop || deps="$deps xorg-xrandr/slop"
 
-[ "$deps" ] && { deps "$deps"; exit 1; }
+[ "$deps" ] && deps "$deps"
 
 # output file, use $BLAZE_DIR and $BLAZE_FILE if they are set
 if [ ! "$BLAZE_DIR" ]; then
@@ -57,43 +58,44 @@ audio() {
 	audio="-f pulse -i $(echo "$dev" | grep -o '[0-9]')"
 }
 
-kill_recording() {
+save() {
 	if [ -f "/tmp/blaze-pid" ]; then
 		recpid="$(cat /tmp/blaze-pid)"
 		# kill with SIGTERM, allowing finishing touches.
 		kill -15 "$recpid"
 		rm -f /tmp/blaze-pid
-		echo "Recording Stopped"
 		# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
 		( sleep 3; kill -9 "$recpid" ) >/dev/null 2>&1 &
+		echo "Recording Stopped"
 		notify-send -t 2000 "Recording Stopped"
+		exit
 	else
 		echo "Recording isn't active"
 		notify-send -t 2000 "Recording isn't active"
+		exit 1
 	fi
 }
 
 help() {
 	printf "\033[34mOptions\033[0m\n"
-	printf "  \033[34m-s / --save\033[0m        End the recording\n"
-	printf "  \033[34m-h / --help\033[0m        Display what you're reading right now\n"
-	printf "  \033[34m-d / --deps\033[0m        printf dependencies\n"
-	printf "  \033[34m-c / --confirm\033[0m     Don't ask if the user is ready to record\n"
-	printf "  \033[34m-p / --preset\033[0m   \033[35m[]\033[0m Save to and load from preset <x>\n"
-	printf "  \033[34m-r / --rate\033[0m     \033[35m[]\033[0m Force framerate\n"
-	printf "  \033[34m-b / --bitrate\033[0m  \033[35m[]\033[0m Force bitrate  (in MB)\n"
-	printf "  \033[34m-m / --method\033[0m   \033[35m[]\033[0m Force method   (slop, display)\n"
-	printf "  \033[34m-d / --display\033[0m  \033[35m[]\033[0m Force display  (Doesn't require -m)\n"
-	printf "  \033[34m-n / --nvenc\033[0m       Force disable NVENC\n"
-	printf "  \033[34m-S / --slop\033[0m        Options to use for slop (Needs to be quoted)\n"
-	printf "  \033[34m-a / --audio\033[0m       Record desktop audio\n"
+	printf "  \033[34m-o\033[0m     \033[35m[]\033[0m Specify the output file\n"
+	printf "  \033[34m-s\033[0m        End the recording\n"
+	printf "  \033[34m-h\033[0m        Display what you're reading right now\n"
+	printf "  \033[34m-d\033[0m        printf dependencies\n"
+	printf "  \033[34m-c\033[0m        Don't ask if the user is ready to record\n"
+	printf "  \033[34m-p\033[0m     \033[35m[]\033[0m Save to and load from preset <x>\n"
+	printf "  \033[34m-r\033[0m     \033[35m[]\033[0m Force framerate\n"
+	printf "  \033[34m-b\033[0m     \033[35m[]\033[0m Force bitrate  (in MB)\n"
+	printf "  \033[34m-m\033[0m     \033[35m[]\033[0m Force method   (slop, display)\n"
+	printf "  \033[34m-d\033[0m     \033[35m[]\033[0m Force display  (Doesn't require -m)\n"
+	printf "  \033[34m-n\033[0m        Force disable NVENC\n"
+	printf "  \033[34m-S\033[0m        Options to use for slop (Needs to be quoted)\n"
+	printf "  \033[34m-a\033[0m        Record desktop audio\n"
 	printf "\n"
 	printf "To select an area, install 'slop',\n"
 	printf "to select a display, install 'xorg-xrandr'\n"
 	printf "\n"
 	printf "\033[35m[]\033[0m = Option requires a value\n"
-	printf "\n"
-	printf "Final argument not starting with \`-\` will be output file\n"
 	printf "\n"
 	printf "\033[34mVariables\033[0m\n"
 	printf "  \033[34mBLAZE_DIR\033[0m    Location to save the video\n"
@@ -104,33 +106,48 @@ help() {
 	printf "\n"
 	printf "  \033[34mBLAZE_SLOP\033[0m   Options to use for slop\n"
 	printf "    \033[37mDefault:     None\033[0m\n"
+	exit
 }
 
-while [ "$1" ]; do
-	case "$1" in
-		-h|--help)    help                 ; exit   ;;
-		-d|--deps)    deps                 ; exit   ;;
-		-s|--save)    kill_recording       ; exit   ;;
-		-c|--confirm) ready="yes"                   ;;
-		-b|--bitrate) bitrate="-b:v ${2}M" ; shift  ;;
-		-m|--method)  method="$2"          ; shift  ;;
-		-r|--rate)    rate="$2"            ; shift  ;;
-		-n|--nvenc)   nvenc="  "                    ;;
-		-D|--display) display="$2"
-		              method="display"     ; shift  ;;
-		-S|--slop)    sloptions="$2"
-		              method="selection"   ; shift  ;;
-		-p|--preset)  preset="$2"          ; shift  ;;
-		-a|--audio)   audio                         ;;
-		--)           shift
-		              [ "$1" ] && output="$1"
-		                                     break  ;;
-		-*)           echo "Invalid option '$1'"
-		                                     exit   ;;
-		*)            output="$1"          ; break  ;;
+while getopts ':hdscb:m:r:nD:S:p:ao:' opt; do
+	case "$opt" in
+		h)
+			help;;
+		d)
+			deps;;
+		s)
+			save;;
+		c)
+			ready='yes';;
+		b)
+			bitrate="-b:v ${OPTARG}M";;
+		m)
+			method="$OPTARG";;
+		r)
+			rate="$OPTARG";;
+		n)
+			nvenc=' ';;
+		D)
+			display="$OPTARG"
+			method='display';;
+		S)
+			sloptions="$OPTARG"
+			method='selection';;
+		p)
+			preset="$OPTARG";;
+		a)
+			audio;;
+		o)
+			output="$OPTARG";;
+		\?)
+			echo "Invalid Option: -$OPTARG" 1>&2
+			exit 1;;
+		:)
+			echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+			exit 1;;
 	esac
-	shift
 done
+shift $((OPTIND -1))
 
 # exit if blaze is running
 [ -f /tmp/blaze-pid ] && { 
@@ -141,10 +158,10 @@ done
 
 [ "$preset" ] && {
 	# create preset location
-	mkdir -p "$HOME"/.config/blaze
+	mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}"
 
 	# load preset
-	preset_location="$HOME"/.config/blaze/"$preset"
+	preset_location="${XDG_CONFIG_HOME:-$HOME/.config}"/blaze/"$preset"
 	[ -f "$preset_location" ] &&
 		. "$preset_location"
 }
@@ -218,14 +235,7 @@ fi
 	cat >"$preset_location"<<EOF
 [ ! "\$rate" ]    && rate="$rate"
 [ ! "\$bitrate" ] && bitrate="$bitrate"
-[ ! "\$audio" ]   && audio="$audio"
-[ ! "\$method" ]  && {
-	method="$method"
-	width="$width"
-	height="$height"
-	offX="$offX"
-	offY="$offY"
-}
+[ ! "\$method" ]  && method="$method"
 EOF
 }
 
