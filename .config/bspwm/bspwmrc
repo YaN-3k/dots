@@ -11,6 +11,7 @@
 #===========
 # Autostart
 #===========
+~/.config/polybar/launch.sh ice &
 notify-send -i ~/.local/share/dots/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &

@@ -8,6 +8,5 @@ unclutter --timeout 3 -jitter 50 --ignore-scrolling & # Remove mouse when idle
 dunst &
 picom &
 mpd &
-~/.config/polybar/launch.sh ice &
 sxhkd &
 exec bspwm
