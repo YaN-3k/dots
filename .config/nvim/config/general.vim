@@ -71,6 +71,7 @@ color iceberg
 syntax on
 set synmaxcol=512
 filetype plugin indent on
+set nocompatible
 
 " autocompletion menu
 set pumheight=10

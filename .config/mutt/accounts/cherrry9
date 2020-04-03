@@ -9,8 +9,8 @@ set imap_user = "cherrry9@disroot.org"
 set header_cache = ~/.cache/mutt/cherrry9/headers
 set message_cachedir = ~/.cache/mutt/cherrry9/bodies
 set smtp_url = 'smtp://cherrry9@disroot.org:587'
-set imap_pass = "`pass cherrry9`"
-set smtp_pass = "`pass cherrry9`"
+set imap_pass = "`pass cherrry9@disroot.org`"
+set smtp_pass = "`pass cherrry9@disroot.org`"
 
 set mbox_type = Maildir
 set ssl_starttls = yes

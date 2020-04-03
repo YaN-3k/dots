@@ -45,6 +45,7 @@ Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'vimwiki/vimwiki'
 Plug 'kien/ctrlp.vim'
 Plug 'matze/vim-move'
 Plug 'simeji/winresizer'
@@ -155,6 +156,15 @@ augroup muttwrite
 	autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
 	autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<cr>
 	autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<cr>
+augroup end
+
+" Ensure files are read as what I want:
+map <leader>v :VimwikiIndex<CR>
+let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_list = [{'path': '~/dox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+augroup vimwiki
+	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+	autocmd BufRead,BufNewFile *.tex set filetype=tex
 augroup end
 
 " python paths, needed for virtualenvs

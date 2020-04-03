@@ -2,21 +2,18 @@
 #   aliases
 #     ---
 
+# common
 alias sudo='sudo '
-alias ls='ls --color=auto --group-directories-first'
-alias ll="ls -A -h --group-directories-first --color=auto"
-alias la="ls -lA -h --group-directories-first --color=auto"
+
 alias grep="grep --color=auto"
-alias hc="history -c"
-alias out="pkill -kill -u $(whoami)"
-alias fuck="pkill -9"
 alias cp="cp -riv"
 alias mv="mv -iv"
 alias rm="rm -iv"
 alias mkd="mkdir -pv"
-alias w="which"
-alias ss="sudo systemctl"
-alias installfont='sudo fc-cache -f -v'
+
+alias ls='ls --color=auto --group-directories-first'
+alias ll="ls -A -h --group-directories-first --color=auto"
+alias la="ls -lA -h --group-directories-first --color=auto"
 
 # programs
 alias ir='irssi --home "$HOME"/.config/irssi'
@@ -26,6 +23,7 @@ alias ra='ranger'
 alias vf='vifmrun'
 alias nm='neomutt'
 alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
+alias ss="sudo systemctl"
 
 # dots
 alias d='dots'
@@ -58,22 +56,35 @@ alias tmks='tmux kill-server'
 alias yt="youtube-dl --add-metadata --embed-thumbnail --embed-subs --ignore-errors -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yta="youtube-dl --add-metadata --ignore-errors --extract-audio -f bestaudio/best --audio-format mp3 --audio-quality 0"
 
-# random
+# head / tail shortcuts
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g L="| less"
+alias -g LL="2>&1 | less"
+alias -g NE="2> /dev/null"
+alias -g NUL="> /dev/null 2>&1"
+
+# find
+alias fd='find . -type d   -iname'
+alias ff='find . -type f,l -iname'
+alias Fd='find . -type d   -name'
+alias Ff='find . -type f,l -name'
+
 mc() { mkdir -p "$1" && cd "$1"; }
 calc() { echo "scale=5; $*" | bc; }
-f() { find . -iname "*$**"; }
-F() { find . -name "$*"; }
 
 # vim
 v() {
 	if [ ! "$1" ]; then
 		$EDITOR
-	elif [ ! -e "$1" ] || [[ "$(stat -c '%U' "$1")" = "$USER" ]]; then
+	elif [ ! -e "$1" ] || [[ "$(stat -c '%U' "$1" 2>/dev/null)" = "$USER" ]]; then
 		$EDITOR "$1"
 	else
 		sudo $EDITOR "$1"
 	fi
 }
+
 vb() {
 	local file="$(find "$HOME/.local/bin/" -type f,l | fzf)" &&
 		[ "$file" ] && v "$file"
@@ -82,5 +93,11 @@ vb() {
 # convert colors
 hextorgb() { printf "%d %d %d\n" "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }
 rgbtohex() { printf "%02X%02X%02X\n" "$@"; }
+
+# other
+alias hc="history -c"
+alias out="pkill -kill -u $(whoami)"
+alias fuck="pkill -9"
+alias installfont='sudo fc-cache -f -v'
 
 # vim: filetype=zsh
