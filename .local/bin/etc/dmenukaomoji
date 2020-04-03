@@ -3,7 +3,7 @@
 # Fonts needed: gnu-free-fonts, ttf-arphic-uming, ttf-indic-otf, otf-ipafont
 #
 
-chosen=$(grep -v "#" ~/.local/share/dots/kaomoji | ${DMENU:-dmenu})
+chosen=$(grep -v "^#" ~/.local/share/dots/kaomoji | ${DMENU:-dmenu})
 [ ! "$chosen" ] && exit
 
 notify-send "$chosen" "copied to clipboard."
