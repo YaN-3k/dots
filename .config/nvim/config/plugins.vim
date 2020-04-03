@@ -63,7 +63,7 @@ let g:ale_linters = {
 \   'php': ['php'],
 \   'python': ['pyls', 'flake8'],
 \   'sh': ['language_server', 'shellcheck', 'shell'],
-\   'zsh': ['language_server', 'shellcheck', 'shell'],
+\   'zsh': ['language_server', 'shell'],
 \}
 let g:ale_fixers = {
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
