@@ -6,6 +6,8 @@ dmenu is an efficient dynamic menu for X.
 Requirements
 ------------
 In order to build dmenu you need the Xlib header files.
+If you want to display unicode character you need patched version of libxft with glyphs / colored emoji rendering (libxft-bgra).
+Or you can disable this feature by uncommenting lines from 143 to 149 in drw.c.
 
 Installation
 ------------
