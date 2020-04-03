@@ -127,5 +127,12 @@ hi GitGutterAdd           ctermbg=NONE   ctermfg=2       cterm=bold
 hi GitGutterDelete        ctermbg=NONE   ctermfg=1       cterm=bold
 hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5 	     cterm=bold
 
+hi VimwikiHeader1         ctermfg=1
+hi VimwikiHeader2         ctermfg=2
+hi VimwikiHeader3         ctermfg=3
+hi VimwikiHeader4         ctermfg=4
+hi VimwikiHeader5         ctermfg=5
+hi VimwikiHeader6         ctermfg=6
+
 " Statusline
 source $HOME/.config/nvim/colors/statusline.vim
