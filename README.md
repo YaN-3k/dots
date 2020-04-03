@@ -51,7 +51,7 @@ Install dmenu
 $ cd ~/.config/dmenu
 $ sudo make clean install
 ```
-To display colorful emoji in dmenu you need libxft-bgra (see .config/dmenu/README "Requirements")
+To display colorful emoji in dmenu you need `libxft-bgra` (see [.config/dmenu/README](.config/dmenu/README) "Requirements")<br>
 Remove `LICENSE` and `README.md` from your `$HOME`
 ```
 $ dots update-index --assume-unchanged LICENSE README.md
