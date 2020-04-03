@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 #  ██
 # ░██              ██████
 # ░██       ██████░██░░░██ ███     ██ ██████████
@@ -11,7 +11,7 @@
 #===========
 # Autostart
 #===========
-~/.config/polybar/launch.sh ice &
+"$HOME"/.config/polybar/launch.sh ice &
 notify-send -i ~/.local/share/dots/arch.png "Welcome $(whoami)!" &
 qutebrowser &
 discord &
@@ -37,10 +37,10 @@ bspc config pointer_action2 resize_corner
 bspc config pointer_action1 move
 
 # Pading
-# bspc config right_padding 5
-# bspc config left_padding 5
-# bspc config bottom_padding 5
-# bspc config top_padding 15
+#bspc config right_padding 5
+#bspc config left_padding 5
+#bspc config bottom_padding 5
+#bspc config top_padding 15
 bspc config right_monocle_padding 0
 bspc config left_monocle_padding 0
 bspc config bottom_monocle_padding 0
@@ -50,8 +50,10 @@ bspc config top_monocle_padding 0
 autogap &
 cleanfullscreen &
 #2bspwm &
+
 bspc config border_width 0
-# bspc config window_gap 10
+#bspc config window_gap 10
+
 # Disable border when is only one window
 bspc config single_monocle       true
 bspc config borderless_monocle   true

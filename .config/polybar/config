@@ -430,7 +430,7 @@ format-padding = 1
 [module/ice-pkg]
 type = custom/script
 format-foreground = ${ice.fg}
-exec = ~/.config/polybar/update
+exec = ~/.config/polybar/pkg
 click-left = ~/.local/bin/update
 format-background = ${ice.bg-alt}
 format-padding = 1
@@ -666,7 +666,7 @@ click-left = dmenupower
 [module/pkg]
 type = custom/script
 format-foreground = ${color.fg}
-exec = ~/.config/polybar/update
+exec = ~/.config/polybar/pkg
 click-left = ~/.local/bin/update
 
 ;────────;
