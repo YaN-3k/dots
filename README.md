@@ -34,13 +34,17 @@ Move these files to another directories or force chekout (delete all these files
 ```
 $ dots checkout -f
 ```
-Create user directories like ~/music and ~/pix
-```
-$ xdg-user-dirs-update
-```
 Set the flag `showUntrackedFiles` to `no` for dots git repository
 ```
 $ dots config --local status.showUntrackedFiles no
+```
+Install fonts
+```
+$ sudo fc-cache -f -v
+```
+Create user directories like ~/music and ~/pix
+```
+$ xdg-user-dirs-update
 ```
 Set `zsh` as default shell
 ```
