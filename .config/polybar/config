@@ -208,7 +208,7 @@ module-margin-right = 0
 inherit = ice-fonts
 
 modules-left = ice-bspwm ice-left
-modules-center = ice-right ice-mpd ice-left
+modules-center = ice-mpd
 modules-right = ice-right ice-pkg ice-volume ice-xbacklight ice-network ice-wired-network ice-battery ice-date ice-powermenu
 
 wm-restack = bspwm
@@ -279,19 +279,25 @@ label-empty-background = ${ice.bg-alt}
 ;=====;
 ; MPD ;
 ;=====;
+;[module/ice-mpd]
+;type = internal/mpd
+
+;host = 127.0.0.1
+;port = 6600
+
+;interval = 2
+
+;format-online = <label-song>
+
+;format-online-background = ${ice.bg-alt}
+;label-song = %{F#84A0C6}%{F-} %artist% - %title%
+;label-offline = %{F#84A0C6}%{F-} mpd is offline
+
 [module/ice-mpd]
-type = internal/mpd
-
-host = 127.0.0.1
-port = 6600
-
-interval = 2
-
-format-online = <label-song>
-
-format-online-background = ${ice.bg-alt}
-label-song = %{F#84A0C6}%{F-} %artist% - %title%
-label-offline = %{F#84A0C6}%{F-} mpd is offline
+type = custom/script
+interval = 1
+format-foreground = ${color.fg}
+exec = ~/.config/polybar/mpd
 
 ;===========;
 ; Backlight ;
