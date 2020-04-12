@@ -5,15 +5,15 @@
 ## Install dependencies
 Packages from official arch repositories:
 ```
-sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg maim
+$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg maim
 ```
 Packages from AUR:
 ```
-yay -S --needed polybar ranger-git
+$ yay -S --needed polybar ranger-git
 ```
 Python packages:
 ````
-pip install --user pynvim msgpack
+$ pip install --user pynvim msgpack
 ````
 ## Install dotfiles
 Download dotfiles
