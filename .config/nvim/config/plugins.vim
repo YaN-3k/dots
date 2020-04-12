@@ -23,6 +23,7 @@ Plug 'Shougo/deoplete-clangx'
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'deoplete-plugins/deoplete-zsh'
 Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
+Plug 'sebastianmarkow/deoplete-rust'
 
 Plug 'dense-analysis/ale'
 Plug 'SirVer/ultisnips'
@@ -57,18 +58,21 @@ call plug#end()
 
 " ALE - Asynchronous Lint Engine
 let g:ale_linters = {
-\   'c': ['ccls', 'clang'],
-\   'cpp': ['ccls', 'clang'],
+\   'c': ['gcc'],
+\   'cpp': ['g++'],
 \   'javascript': ['eslint'],
 \   'php': ['php'],
 \   'python': ['pyls', 'flake8'],
-\   'sh': ['language_server', 'shellcheck', 'shell'],
-\   'zsh': ['language_server', 'shell'],
+\   'sh': ['shellcheck'],
+\   'zsh': ['shell'],
+\   'rust': ['cargo'],
 \}
+
 let g:ale_fixers = {
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
 \   'c': ['clang-format'],
 \   'cpp': ['clang-format'],
+\   'rust': ['rustfmt'],
 \   'css': ['prettier'],
 \   'go': ['gofmt'],
 \   'html': ['prettier'],
@@ -83,10 +87,11 @@ let g:ale_fixers = {
 \}
 
 " linting
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_sign_column_always = 1
-"let g:ale_open_list = 1
-"let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 1
+let g:ale_open_list = 0
+let g:ale_lint_on_text_changed = 'never'
 
 map <Leader>af :ALEFix<cr>
 map <Leader>an :ALENext<cr>
@@ -292,6 +297,12 @@ call deoplete#custom#option('num_processes', 16)
 
 " go - $ go get -u github.com/stamblerre/gocode
 let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+
+" racer for rust code autocompletion
+let g:deoplete#sources#rust#racer_binary = $CARGO_HOME.'/bin/racer'
+
+" rust source code
+let g:deoplete#sources#rust#rust_source_path = $XDG_DATA_HOME.'/rust/rust/src'
 
 " if you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit='vertical'
