@@ -120,7 +120,7 @@ hi ALEErrorSign     ctermbg=NONE  ctermfg=1   cterm=bold
 hi GitGutterChange        ctermbg=NONE   ctermfg=3       cterm=bold
 hi GitGutterAdd           ctermbg=NONE   ctermfg=2       cterm=bold
 hi GitGutterDelete        ctermbg=NONE   ctermfg=1       cterm=bold
-hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5 	     cterm=bold
+hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5       cterm=bold
 
 hi VimwikiHeader1         ctermfg=1
 hi VimwikiHeader2         ctermfg=2
