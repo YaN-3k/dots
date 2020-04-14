@@ -5,25 +5,26 @@
 # common
 alias sudo='sudo '
 
-alias grep="grep --color=auto"
-alias cp="cp -riv"
-alias mv="mv -iv"
-alias rm="rm -iv"
-alias mkd="mkdir -pv"
+alias grep='grep --color=auto'
+alias cp='cp -riv'
+alias mv='mv -iv'
+alias rm='rm -iv'
+alias mkd='mkdir -pv'
 
-alias ls='ls --color=auto --group-directories-first'
-alias ll="ls -A -h --group-directories-first --color=auto"
-alias la="ls -lA -h --group-directories-first --color=auto"
+alias ls='ls -CF --color=auto --group-directories-first'
+alias la='ls -ACF -h --group-directories-first --color=auto'
+alias ll='ls -lA -h --group-directories-first --color=auto'
 
 # programs
-alias ir='irssi --home "$HOME"/.config/irssi'
-alias irssi='irssi --home "$HOME"/.config/irssi'
+alias ir='irssi --home "$XDG_CONFIG_HOME"/irssi'
+alias irssi='irssi --home "$XDG_CONFIG_HOME"/irssi'
 alias nc='ncmpcpp 2>/dev/null'
 alias ra='ranger'
 alias vf='vifmrun'
 alias nm='neomutt'
-alias ab='abook -C $HOME/.config/abook/abookrc --datafile $HOME/.config/abook/addressbook'
+alias ab='abook -C "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_CONFIG_HOME"/abook/addressbook'
 alias ss="sudo systemctl"
+alias gdb='gdb -q -x "$XDG_CONFIG_HOME"/gdb/gdbinit'
 
 # dots
 alias d='dots'
@@ -35,26 +36,26 @@ alias dp='dots push'
 alias dl="dots log --all --decorate --oneline --graph"
 
 # git
-alias ga="git add"
-alias gd="git diff"
-alias gp="git push"
-alias gs="git status"
-alias gc="git commit"
-alias gaa="git add -A"
-alias gpf="git push -f"
-alias gcm="git commit -m"
-alias gca="git commit --amend"
-alias gl="git log --all --decorate --oneline --graph"
+alias ga='git add'
+alias gd='git diff'
+alias gp='git push'
+alias gs='git status'
+alias gc='git commit'
+alias gaa='git add -A'
+alias gpf='git push -f'
+alias gcm='git commit -m'
+alias gca='git commit --amend'
+alias gl='git log --all --decorate --oneline --graph'
 
 # tmux
-alias tm='tmux -f $HOME/.config/tmux/tmux.conf'
-alias tma='tmux a -t -f $HOME/.config/tmux/tmux.conf'
+alias tm='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
+alias tma='tmux a -t -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
 alias tmk='tmux kill-session -t'
 alias tmks='tmux kill-server'
 
 # youtube-dl
-alias yt="youtube-dl --add-metadata --embed-thumbnail --embed-subs --ignore-errors -o '%(upload_date)s-%(title)s.%(ext)s'"
-alias yta="youtube-dl --add-metadata --ignore-errors --extract-audio -f bestaudio/best --audio-format mp3 --audio-quality 0"
+alias yt='youtube-dl --add-metadata --embed-thumbnail --embed-subs --ignore-errors -o '%(upload_date)s-%(title)s.%(ext)s''
+alias yta='youtube-dl --add-metadata --ignore-errors --extract-audio -f bestaudio/best --audio-format mp3 --audio-quality 0'
 
 # head / tail shortcuts
 alias -g H='| head'
@@ -95,9 +96,9 @@ hextorgb() { printf "%d %d %d\n" "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }
 rgbtohex() { printf "%02X%02X%02X\n" "$@"; }
 
 # other
-alias hc="history -c"
-alias out="pkill -kill -u $(whoami)"
-alias fuck="pkill -9"
+alias hc='history -c'
+alias out='pkill -kill -u $(whoami)'
+alias fuck='pkill -9'
 alias installfont='sudo fc-cache -f -v'
 
 # vim: filetype=zsh

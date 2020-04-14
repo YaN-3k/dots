@@ -134,7 +134,7 @@ map R :restart<CR>
 nmap q :write<CR>ZQ
 
 " open all images in current directory in sxiv thumbnail mode
-nnoremap sx :!sxiv -t %d & <cr>
+" nnoremap x :!sxiv -t %d & <cr>
 
 fileview */,.*/,../ tree %c -L 1 --dirsfirst
 
