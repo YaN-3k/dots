@@ -2,7 +2,32 @@
 " ┃  ┃ ┃┃┃┃ ┃┃┃ ┃━┫┃┃┃┃ ┃┗━┓
 " ┗━┛┛━┛┛ ┇┛ ┇┛ ┇┇┗┛┇━┛━━┛
 
-" Switch to normal mode
+" basic file system commands
+nnoremap <C-t> :!touch<space>
+nnoremap <C-d> :!mkdir -p<space>
+nnoremap <C-v> :!mv %<space>
+
+function! Compile()
+	set makeprg=make
+	" build && run program
+	if &filetype ==# 'c'
+		nnoremap <leader>m :make<cr>
+		nnoremap <leader>b :!gcc % -o %:r.out<cr>
+		nnoremap <leader>r :!./%:r.out<cr>
+	elseif &filetype ==# 'cpp'
+		nnoremap <leader>m :make<cr>
+		nnoremap <leader>b :!g++ % -o %:r.out<cr>
+		nnoremap <leader>r :!./%:r.out<cr>
+	elseif &filetype ==# 'rust'
+		nnoremap <leader>r :!cargo run<cr>
+	else
+		" make file executable && execute
+		nnoremap <leader>x :!chmod +x %<cr>
+		nnoremap <leader>e :!./%<cr>
+	endif
+endfunction
+
+" switch to normal mode
 inoremap jk <esc>
 
 " when line overflows, it will go
@@ -13,8 +38,8 @@ vnoremap j gj
 vnoremap k gk
 
 " tab managment
-map <C-o> :tabnew<cr>
-map <C-c> :tabclose<cr>
+nnoremap <C-o> :tabnew<cr>
+nnoremap <C-c> :tabclose<cr>
 nnoremap <Leader>k gT
 nnoremap <Leader>j gt
 
@@ -31,8 +56,19 @@ nnoremap <C-h> <C-w><C-h>
 " disable hlsearch
 map <C-s> :noh<cr>
 
+" enable and disable auto comment
+nnoremap <leader>c :setlocal formatoptions-=cro<cr>
+nnoremap <leader>C :setlocal formatoptions+=cro<cr>
+inoremap <M-return> <esc>:setlocal formatoptions-=cro<cr>o<esc>:setlocal formatoptions+=cro<cr>i
+nnoremap <M-o> <esc>:setlocal formatoptions-=cro<cr>o<esc>:setlocal formatoptions+=cro<cr>i
+nnoremap <M-O> <esc>:setlocal formatoptions-=cro<cr>O<esc>:setlocal formatoptions+=cro<cr>i
+
+" enable and disable auto indent
+nnoremap <leader>i :setlocal autoindent<cr>
+nnoremap <leader>I :setlocal noautoindent<cr>
+
 " go to last change
-nnoremap <Leader>l :'.<cr>
+nnoremap <leader>l :'.<cr>
 
 " replace all is aliased to S.
 nnoremap S :%s//g<Left><Left>
@@ -40,15 +76,12 @@ nnoremap S :%s//g<Left><Left>
 " save file as sudo on files that require root permission
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
-" execute file
-nnoremap <leader>x :!chmod +x % && ./%<cr>
-
 " check file in shellcheck:
 "noremap <leader>s :!clear && shellcheck %<cr>
-noremap <leader>s :sp \| terminal shellcheck %<cr>
+noremap <leader>s :sp \| terminal shellcheck %<cr>:resize 15<cr>
 
 " deletes all trailing whitespace
-noremap <leader>c :%s/\s\+$//e<cr>
+noremap <leader>fw :%s/\s\+$//e<cr>
 
 augroup BufferWrite
 	" automatically deletes all trailing whitespace on save.
@@ -60,11 +93,13 @@ augroup BufferWrite
 	" update binds when sxhkdrc is updated.
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 	" reload vim when configuration is updated
-	autocmd BufWritePost init.vim,general.vim,commands.vim,ui.vim,term.vim,statusline.vim,plugin.vim,plugin-settings.vim source $MYVIMRC
+	autocmd BufWritePost init.vim,general.vim,commands.vim,statusline.vim,plugins.vim source $MYVIMRC
+	" build and run program
+	autocmd Filetype * call Compile()
 augroup end
 
 " open terminal
-noremap <C-A-t> :split term://zsh<cr>:resize 10<cr>
+noremap <C-A-t> :split term://zsh<cr>:resize 15<cr>
 
 " exit from terminal mode
 "tnoremap <Esc> <C-\><C-n>
@@ -97,64 +132,65 @@ let g:netrw_browse_split = 0
 let g:netrw_winsize = 20
 
 function! OpenToRight()
-  :normal v
-  let g:path=expand('%:p')
-  :q!
-  execute 'belowright vnew' g:path
-  :normal <C-l>
+	:normal v
+	let g:path=expand('%:p')
+	:q!
+	execute 'belowright vnew' g:path
+	:normal <C-l>
 endfunction
 
 function! OpenBelow()
-  :normal v
-  let g:path=expand('%:p')
-  :q!
-  execute 'belowright new' g:path
-  :normal <C-l>
+	:normal v
+	let g:path=expand('%:p')
+	:q!
+	execute 'belowright new' g:path
+	:normal <C-l>
 endfunction
 
 function! NetrwMappings()
-    " Hack fix to make ctrl-l work properly
-    noremap <buffer> <C-l> <C-w>l
-    noremap <buffer><c-v> :call OpenToRight()<cr>
-    noremap <buffer><C-x> :call OpenBelow()<cr>
+	" Hack fix to make ctrl-l work properly
+	noremap <buffer> <C-l> <C-w>l
+	noremap <buffer><c-v> :call OpenToRight()<cr>
+	noremap <buffer><C-x> :call OpenBelow()<cr>
 endfunction
 
 augroup netrw_mappings
-    autocmd!
-    autocmd filetype netrw call NetrwMappings()
+	autocmd!
+	autocmd filetype netrw call NetrwMappings()
 augroup END
 
 " restore cursor position
 function! ResCur()
-  if line("'\"") <= line('$')
-    normal! g`"
-    return 1
-  endif
+	if line("'\"") <= line('$')
+		normal! g`"
+		return 1
+	endif
 endfunction
 augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
+	autocmd!
+	autocmd BufWinEnter * call ResCur()
 augroup END
 
 " zoom
 function! Zoom() abort
-  if winnr('$') > 1
-    if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
-  else
-    execute 'silent !tmux resize-pane -Z'
-  endif
+	if winnr('$') > 1
+		if exists('t:zoomed') && t:zoomed
+		execute t:zoom_winrestcmd
+		let t:zoomed = 0
+	else
+		let t:zoom_winrestcmd = winrestcmd()
+		resize
+		vertical resize
+		let t:zoomed = 1
+		endif
+	else
+		execute 'silent !tmux resize-pane -Z'
+	endif
 endfunction
 map <leader>z :call Zoom()<cr>
 
 " toggle statusbar
+nnoremap <S-T> :call ToggleHiddenAll()<cr>
 let s:hidden_all = 0
 function! ToggleHiddenAll()
 	if s:hidden_all  == 0
@@ -172,9 +208,8 @@ function! ToggleHiddenAll()
 	endif
 endfunction
 
-nnoremap <S-T> :call ToggleHiddenAll()<cr>
-
 " auto pair
+nnoremap <Leader>p :call ToggleAutoPair()<cr>
 let s:pair = 1
 function! ToggleAutoPair()
 	if s:pair == 1
@@ -194,14 +229,17 @@ function! ToggleAutoPair()
 	endif
 endfunction
 call ToggleAutoPair()
-nnoremap <Leader>p :call ToggleAutoPair()<cr>
 
-" identify the syntax highlighting group
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
+" Show syntax highlighting groups for word under cursor
+nmap <F10> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+	if !exists('*synstack')
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
-" turns off highlighting on the bits of code that are changed, so the line that is changed is highlighted but the actual text that has changed stands out on the line and is readable.
+" vim diff highlighting
 if &diff
 	hi DiffAdd      ctermbg=NONE   ctermfg=2      cterm=NONE
 	hi DiffDelete   ctermbg=NONE   ctermfg=1      cterm=NONE
@@ -213,11 +251,11 @@ endif
 "nnoremap <silent><C-d> :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 
 " abbreviations

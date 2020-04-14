@@ -42,7 +42,7 @@ set tabpagemax=15
 " show tabline only when more than one tab is present
 set showtabline=1
 
-"  split
+" default split
 set splitright
 set splitbelow
 
@@ -71,7 +71,6 @@ color iceberg
 syntax on
 set synmaxcol=512
 filetype plugin indent on
-set nocompatible
 
 " autocompletion menu
 set pumheight=10
@@ -108,12 +107,8 @@ set listchars+=nbsp:░
 set fillchars=vert:▒
 
 " highlight current line
-augroup CursorLine
-	au!
-	"au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
-augroup END
+set cursorline
+"set cursorcolumn
 
 " fuzzy find
 set path+=**

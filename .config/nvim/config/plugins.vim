@@ -144,6 +144,7 @@ function! s:goyo_leave()
 	set showcmd
 	set nowrap
 	set scrolloff=0
+	set syntax=on
 endfunction
 
 augroup goyoactions

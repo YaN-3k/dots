@@ -2,15 +2,10 @@
 " ┃┃  ┣━ ┃━┃┣━ ┃┳┛┃ ┳
 " ┇┗━┛┻━┛┇━┛┻━┛┇┗┛┇━┛
 
-set background=dark
 hi clear
-if exists('syntax_on')
-    syntax reset
-endif
-
+syntax clear
+set background=dark
 let g:colors_name='iceberg'
-
-set numberwidth=1
 
 hi Normal       ctermbg=NONE   ctermfg=15     cterm=NONE
 hi Cursor       ctermbg=NONE   ctermfg=15     cterm=NONE
