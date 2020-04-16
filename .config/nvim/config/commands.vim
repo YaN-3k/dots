@@ -54,7 +54,7 @@ nnoremap <C-l> <C-w><C-l>
 nnoremap <C-h> <C-w><C-h>
 
 " disable hlsearch
-map <C-s> :noh<cr>
+map <C-s> :noh<cr>:echo<cr>
 
 " enable and disable auto comment
 nnoremap <leader>c :setlocal formatoptions-=cro<cr>

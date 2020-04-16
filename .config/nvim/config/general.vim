@@ -26,6 +26,11 @@ set ignorecase
 set smartcase
 set infercase
 
+" search/match with visual feedback
+set hlsearch
+set incsearch
+set inccommand=nosplit
+
 " maintain undo history between sessions
 set undofile
 set nobackup
