@@ -21,7 +21,7 @@ command -v xdg-user-dir >/dev/null 2>&1 &&
 	DIR="$(xdg-user-dir PICTURES)"/ss ||
 	DIR="$HOME"/Pictures/ss
 
-echo "" | xclip -sel clip # clear clipboard
+xclip -sel clip /dev/null # clear clipboard
 mkdir -p "$DIR"
 sleep "$TIME"
 
