@@ -3,33 +3,28 @@
 # Take screenshot
 #
 
-m() { ${DMENU:-dmenu} "$@";}
+m() { ${DMENU:-dmenu} "$@"; }
 
 # dmenu prompts
 TYPE="$(printf "Screen\nWindow/Area\n" | m -i -p 'Type')"
 [ ! "$TYPE" ] && exit
-SAVE="$(printf "Yes\nNo"               | m -i -p 'Save to clicboard')"
-[ ! "$SAVE" ] && exit
-TIME="$(printf "0.7\n5\n10\n15"        | m -i -p 'Seconds to wait')"
+TIME="$(printf "0.5\n5\n10" | m -i -p 'Seconds to wait')"
 [ ! "$TIME" ] && exit
 
 # Set flag if selected "Window"
-case "$TYPE" in
-	Window/Area) TYPE="-s -u";;
-	*)           TYPE="-u"
-esac
+[ "$TYPE" = 'Window/Area' ] &&
+	TYPE='-s -u' ||
+	TYPE='-u'
 
 # Prepere for screenshot
 command -v xdg-user-dir >/dev/null 2>&1 &&
 	DIR="$(xdg-user-dir PICTURES)"/ss ||
 	DIR="$HOME"/Pictures/ss
 
+echo "" | xclip -sel clip # clear clipboard
 mkdir -p "$DIR"
 sleep "$TIME"
 
-# Copy to clipboard or save to file
-case "$SAVE" in
-	Yes) maim $TYPE | tee "$DIR"/"$(date +%G-%m-%d_%s.png)" | xclip -selection clipboard -t image/png;;
-	*)   maim $TYPE "$DIR"/"$(date +%G-%m-%d_%s.png)"
-esac
+# Copy to clipboard and save to file
+maim $TYPE | tee "$DIR"/"$(date +%G-%m-%d_%s.png)" | xclip -selection clipboard -t image/png
 notify-send " Screenshot taken."
