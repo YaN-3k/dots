@@ -306,6 +306,7 @@ let g:deoplete#sources#rust#racer_binary = $CARGO_HOME.'/bin/racer'
 let g:deoplete#sources#rust#rust_source_path = $XDG_DATA_HOME.'/rust/rust/src'
 
 " if you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsSnippetDirectories=['config/snippets']
 let g:UltiSnipsEditSplit='vertical'
 
 " enable/disable deoplete

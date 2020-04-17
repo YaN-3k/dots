@@ -7,26 +7,6 @@ nnoremap <C-t> :!touch<space>
 nnoremap <C-d> :!mkdir -p<space>
 nnoremap <C-v> :!mv %<space>
 
-function! Compile()
-	set makeprg=make
-	" build && run program
-	if &filetype ==# 'c'
-		nnoremap <leader>m :make<cr>
-		nnoremap <leader>b :!gcc % -o %:r.out<cr>
-		nnoremap <leader>r :!./%:r.out<cr>
-	elseif &filetype ==# 'cpp'
-		nnoremap <leader>m :make<cr>
-		nnoremap <leader>b :!g++ % -o %:r.out<cr>
-		nnoremap <leader>r :!./%:r.out<cr>
-	elseif &filetype ==# 'rust'
-		nnoremap <leader>r :!cargo run<cr>
-	else
-		" make file executable && execute
-		nnoremap <leader>x :!chmod +x %<cr>
-		nnoremap <leader>e :!./%<cr>
-	endif
-endfunction
-
 " switch to normal mode
 inoremap jk <esc>
 
@@ -84,6 +64,7 @@ noremap <leader>s :sp \| terminal shellcheck %<cr>:resize 15<cr>
 noremap <leader>fw :%s/\s\+$//e<cr>
 
 augroup BufferWrite
+	au!
 	" automatically deletes all trailing whitespace on save.
 	"autocmd BufWritePre * %s/\s\+$//e
 	" when shortcut files are updated, renew bash and ranger configs with new material:
@@ -94,8 +75,22 @@ augroup BufferWrite
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 	" reload vim when configuration is updated
 	autocmd BufWritePost init.vim,general.vim,commands.vim,statusline.vim,plugins.vim source $MYVIMRC
-	" build and run program
-	autocmd Filetype * call Compile()
+augroup end
+
+augroup Compile
+	au!
+	autocmd Filetype c nnoremap <leader>m :make<cr>
+	autocmd Filetype c nnoremap <leader>b :!gcc % -o %:r.out<cr>
+	autocmd Filetype c nnoremap <leader>r :!./%:r.out<cr>
+
+	autocmd Filetype cpp nnoremap <leader>m :make<cr>
+	autocmd Filetype cpp nnoremap <leader>b :!g++ % -o %:r.out<cr>
+	autocmd Filetype cpp nnoremap <leader>r :!./%:r.out<cr>
+
+	autocmd Filetype rust nnoremap <leader>r :!cargo run<cr>
+
+	autocmd Filetype sh,zsh nnoremap <leader>x :!chmod +x %<cr>
+	autocmd Filetype sh,zsh nnoremap <leader>e :!./%<cr>
 augroup end
 
 " open terminal
