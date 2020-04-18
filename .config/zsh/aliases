@@ -80,9 +80,9 @@ v() {
 	if [ ! "$1" ]; then
 		$EDITOR
 	elif [ ! -e "$1" ] || [[ "$(stat -c '%U' "$1" 2>/dev/null)" = "$USER" ]]; then
-		$EDITOR "$1"
+		$EDITOR "$@"
 	else
-		sudo $EDITOR "$1"
+		sudo $EDITOR "$@"
 	fi
 }
 

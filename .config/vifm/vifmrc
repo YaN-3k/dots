@@ -59,7 +59,7 @@ map <C-s> <C-w>s
 map <C-v> <C-w>v
 
 " new file
-map V :!nvim
+map V :!nvim<space>
 
 " executable
 nnoremap x :!chmod +x %f<cr>

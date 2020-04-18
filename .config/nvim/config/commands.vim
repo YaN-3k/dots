@@ -5,7 +5,7 @@
 " basic file system commands
 nnoremap <C-t> :!touch<space>
 nnoremap <C-d> :!mkdir -p<space>
-nnoremap <C-v> :!mv %<space>
+nnoremap <C-m> :!mv %<space>
 
 " switch to normal mode
 inoremap jk <esc>
@@ -20,8 +20,22 @@ vnoremap k gk
 " tab managment
 nnoremap <C-o> :tabnew<cr>
 nnoremap <C-c> :tabclose<cr>
+
 nnoremap <Leader>k gT
 nnoremap <Leader>j gt
+nnoremap <silent><leader><S-k> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+nnoremap <silent><leader><S-j> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+
+nnoremap <M-1> 1gt
+nnoremap <M-2> 2gt
+nnoremap <M-3> 3gt
+nnoremap <M-4> 4gt
+nnoremap <M-5> 5gt
+nnoremap <M-6> 6gt
+nnoremap <M-7> 7gt
+nnoremap <M-8> 8gt
+nnoremap <M-9> 9gt
+nnoremap <M-0> 10gt
 
 " spell-check (English US and Polish)
 map <F6> :setlocal spell! spelllang=en_us<cr>
