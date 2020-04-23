@@ -202,6 +202,18 @@ unsetopt flowcontrol         # Disable Ctrl-S + Ctrl-Q
 source "$ZDOTDIR/aliases" 2>/dev/null
 source "$ZDOTDIR/shortcutrc" 2>/dev/null
 
+# command not found
+command_not_found_handler() { 
+	printf "command not found \033[31m(╯°□°)╯︵ ┻━┻\033[0m\n"
+	# recursion
+	command -v pkgfile &>/dev/null &&
+		packages=$(pkgfile -r "$@" | grep "$@" | awk -F '/' 'NR < 4 { printf "  \033[1;30m"$1"/\033[0m"$2"\n" }')
+	[ "$packages" ] && {
+		printf "\nyou should install this bloat:\n"
+		printf "%b\n" "$packages"
+	}
+}
+
 # bind `^n` to ls
 els() { clear; ls; zle redisplay; }
 zle -N els; bindkey "^n" els
