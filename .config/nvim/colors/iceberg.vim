@@ -7,127 +7,132 @@ syntax clear
 set background=dark
 let g:colors_name='iceberg'
 
-hi Normal       ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Cursor       ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Directory    ctermbg=NONE   ctermfg=4      cterm=NONE
-hi ErrorMsg     ctermbg=NONE   ctermfg=1      cterm=NONE
-hi VertSplit    ctermbg=NONE   ctermfg=0      cterm=NONE
-hi LineNr       ctermbg=NONE   ctermfg=8      cterm=NONE
-hi SignColumn   ctermbg=NONE   ctermfg=7      cterm=NONE
-hi NonText      ctermbg=NONE   ctermfg=0      cterm=NONE
-hi Pmenu        ctermbg=NONE   ctermfg=15     cterm=NONE
-hi PmenuSel     ctermbg=0      ctermfg=4      cterm=NONE
-hi PmenuSbar    ctermbg=NONE   ctermfg=NONE   cterm=NONE
-hi PmenuThumb   ctermbg=0      ctermfg=0      cterm=NONE
-hi Search       ctermbg=NONE   ctermfg=NONE   cterm=reverse
-hi SpellBad     ctermbg=NONE   ctermfg=1      cterm=underline
-hi SpellCap     ctermbg=NONE   ctermfg=2      cterm=underline
-hi SpellLocal   ctermbg=NONE   ctermfg=3      cterm=underline
-hi SpellRare    ctermbg=NONE   ctermfg=3      cterm=underline
-hi StatusLine   ctermbg=0      ctermfg=15     cterm=NONE
-hi StatusLineNC ctermbg=0      ctermfg=15     cterm=NONE
-hi TabLine      ctermbg=NONE   ctermfg=NONE   cterm=NONE
+hi Normal       ctermbg=none   ctermfg=15     cterm=none
+hi Cursor       ctermbg=none   ctermfg=15     cterm=none
+hi Directory    ctermbg=none   ctermfg=4      cterm=none
+hi ErrorMsg     ctermbg=none   ctermfg=1      cterm=none
+hi VertSplit    ctermbg=none   ctermfg=0      cterm=none
+hi LineNr       ctermbg=none   ctermfg=8      cterm=none
+hi SignColumn   ctermbg=none   ctermfg=7      cterm=none
+hi NonText      ctermbg=none   ctermfg=0      cterm=none
+hi Pmenu        ctermbg=none   ctermfg=15     cterm=none
+hi PmenuSel     ctermbg=0      ctermfg=4      cterm=none
+hi PmenuSbar    ctermbg=none   ctermfg=none   cterm=none
+hi PmenuThumb   ctermbg=0      ctermfg=0      cterm=none
+hi Search       ctermbg=none   ctermfg=none   cterm=reverse
+hi SpellBad     ctermbg=none   ctermfg=1      cterm=underline
+hi SpellCap     ctermbg=none   ctermfg=2      cterm=underline
+hi SpellLocal   ctermbg=none   ctermfg=3      cterm=underline
+hi SpellRare    ctermbg=none   ctermfg=3      cterm=underline
+hi StatusLine   ctermbg=0      ctermfg=15     cterm=none
+hi StatusLineNC ctermbg=0      ctermfg=15     cterm=none
+hi TabLine      ctermbg=none   ctermfg=none   cterm=none
 hi TabLineSel   ctermbg=0      ctermfg=4      cterm=bold
-hi TabLineFill  ctermbg=NONE   ctermfg=NONE   cterm=NONE
-hi Title        ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Visual       ctermbg=0      ctermfg=NONE   cterm=NONE
-hi WildMenu     ctermbg=NONE   ctermfg=4      cterm=NONE
-hi WarningMsg   ctermbg=NONE   ctermfg=11     cterm=NONE
-hi EndOfBuffer  ctermbg=NONE   ctermfg=0      cterm=NONE
-hi CursorLine   ctermbg=0      ctermfg=NONE   cterm=NONE
-hi CursorLineNr ctermbg=NONE   ctermfg=15     cterm=bold
-hi CursorColumn ctermbg=0      ctermfg=NONE   cterm=NONE
-hi MatchParen   ctermbg=NONE   ctermfg=4      cterm=underline
-hi ModeMsg      ctermbg=NONE   ctermfg=8      cterm=NONE
-hi NormalNC     ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Folded       ctermbg=0      ctermfg=4      cterm=NONE
-hi FoldColumn   ctermbg=0      ctermfg=4      cterm=NONE
-hi DiffAdd      ctermbg=NONE   ctermfg=2      cterm=NONE
-hi DiffDelete   ctermbg=NONE   ctermfg=1      cterm=NONE
-hi DiffChange   ctermbg=NONE   ctermfg=3      cterm=NONE
-hi DiffText     ctermbg=NONE   ctermfg=7      cterm=NONE
-hi diffAdded    ctermbg=NONE   ctermfg=2      cterm=NONE
-hi diffRemoved  ctermbg=NONE   ctermfg=1      cterm=NONE
-hi diffSubname  ctermbg=NONE   ctermfg=3      cterm=NONE
+hi TabLineFill  ctermbg=none   ctermfg=none   cterm=none
+hi Title        ctermbg=none   ctermfg=15     cterm=none
+hi Visual       ctermbg=0      ctermfg=none   cterm=none
+hi WildMenu     ctermbg=none   ctermfg=4      cterm=none
+hi WarningMsg   ctermbg=none   ctermfg=11     cterm=none
+hi EndOfBuffer  ctermbg=none   ctermfg=0      cterm=none
+hi CursorLine   ctermbg=0      ctermfg=none   cterm=none
+hi CursorLineNr ctermbg=none   ctermfg=15     cterm=bold
+hi CursorColumn ctermbg=0      ctermfg=none   cterm=none
+hi MatchParen   ctermbg=none   ctermfg=4      cterm=underline
+hi ModeMsg      ctermbg=none   ctermfg=8      cterm=none
+hi NormalNC     ctermbg=none   ctermfg=15     cterm=none
+hi Folded       ctermbg=0      ctermfg=4      cterm=none
+hi FoldColumn   ctermbg=0      ctermfg=4      cterm=none
+hi DiffAdd      ctermbg=none   ctermfg=2      cterm=none
+hi DiffDelete   ctermbg=none   ctermfg=1      cterm=none
+hi DiffChange   ctermbg=none   ctermfg=3      cterm=none
+hi DiffText     ctermbg=none   ctermfg=7      cterm=none
+hi diffAdded    ctermbg=none   ctermfg=2      cterm=none
+hi diffRemoved  ctermbg=none   ctermfg=1      cterm=none
+hi diffSubname  ctermbg=none   ctermfg=3      cterm=none
 
 " language syntax
-hi Comment      ctermbg=NONE   ctermfg=8      cterm=NONE
-hi Constant     ctermbg=NONE   ctermfg=5      cterm=NONE
-hi String       ctermbg=NONE   ctermfg=6      cterm=NONE
-hi Character    ctermbg=NONE   ctermfg=1      cterm=NONE
-hi Number       ctermbg=NONE   ctermfg=5      cterm=NONE
-hi Boolean      ctermbg=NONE   ctermfg=11     cterm=NONE
-hi Float        ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Identifier   ctermbg=NONE   ctermfg=15     cterm=NONE
-hi Function     ctermbg=NONE   ctermfg=3      cterm=NONE
-hi Conditional  ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Repeat       ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Label        ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Operator     ctermbg=NONE   ctermfg=NONE   cterm=NONE
-hi Keyword      ctermbg=NONE   ctermfg=4      cterm=NONE
-hi Exception    ctermbg=NONE   ctermfg=1      cterm=NONE
-hi Include      ctermbg=NONE   ctermfg=2      cterm=NONE
-hi Define       ctermbg=NONE   ctermfg=2      cterm=NONE
-hi Macro        ctermbg=NONE   ctermfg=3      cterm=NONE
-hi PreCondit    ctermbg=NONE   ctermfg=3      cterm=NONE
-hi Type         ctermbg=NONE   ctermfg=4      cterm=NONE
-hi StorageClass ctermbg=NONE   ctermfg=15     cterm=NONE
-hi PreProc      ctermbg=NONE   ctermfg=5      cterm=NONE
-hi Structure    ctermbg=NONE   ctermfg=5      cterm=NONE
-hi Special      ctermbg=NONE   ctermfg=5      cterm=NONE
-hi SpecialChar  ctermbg=NONE   ctermfg=5      cterm=NONE
-hi SpecialKey   ctermbg=NONE   ctermfg=5      cterm=NONE
-hi NonText      ctermbg=NONE   ctermfg=8      cterm=NONE
-hi Delimiter    ctermbg=NONE   ctermfg=NONE   cterm=NONE
-hi Underliend   ctermbg=NONE   ctermfg=1      cterm=underline
-hi Ignore       ctermbg=NONE   ctermfg=1      cterm=NONE
-hi Error        ctermbg=NONE   ctermfg=1      cterm=bold
-hi Todo         ctermbg=NONE   ctermfg=3      cterm=bold
-hi Statement    ctermbg=NONE   ctermfg=4      cterm=bold
-hi Include      ctermbg=NONE   ctermfg=5      cterm=NONE
+hi Comment      ctermbg=none   ctermfg=8      cterm=none
+hi Constant     ctermbg=none   ctermfg=5      cterm=none
+hi String       ctermbg=none   ctermfg=6      cterm=none
+hi Character    ctermbg=none   ctermfg=1      cterm=none
+hi Number       ctermbg=none   ctermfg=5      cterm=none
+hi Boolean      ctermbg=none   ctermfg=11     cterm=none
+hi Float        ctermbg=none   ctermfg=4      cterm=none
+hi Identifier   ctermbg=none   ctermfg=15     cterm=none
+hi Function     ctermbg=none   ctermfg=3      cterm=none
+hi Conditional  ctermbg=none   ctermfg=4      cterm=none
+hi Repeat       ctermbg=none   ctermfg=4      cterm=none
+hi Label        ctermbg=none   ctermfg=4      cterm=none
+hi Operator     ctermbg=none   ctermfg=none   cterm=none
+hi Keyword      ctermbg=none   ctermfg=4      cterm=none
+hi Exception    ctermbg=none   ctermfg=1      cterm=none
+hi Include      ctermbg=none   ctermfg=2      cterm=none
+hi Define       ctermbg=none   ctermfg=2      cterm=none
+hi Macro        ctermbg=none   ctermfg=3      cterm=none
+hi PreCondit    ctermbg=none   ctermfg=3      cterm=none
+hi Type         ctermbg=none   ctermfg=4      cterm=none
+hi StorageClass ctermbg=none   ctermfg=15     cterm=none
+hi PreProc      ctermbg=none   ctermfg=5      cterm=none
+hi Structure    ctermbg=none   ctermfg=5      cterm=none
+hi Special      ctermbg=none   ctermfg=5      cterm=none
+hi SpecialChar  ctermbg=none   ctermfg=5      cterm=none
+hi SpecialKey   ctermbg=none   ctermfg=5      cterm=none
+hi NonText      ctermbg=none   ctermfg=8      cterm=none
+hi Delimiter    ctermbg=none   ctermfg=none   cterm=none
+hi Underliend   ctermbg=none   ctermfg=1      cterm=underline
+hi Ignore       ctermbg=none   ctermfg=1      cterm=none
+hi Error        ctermbg=none   ctermfg=1      cterm=bold
+hi Todo         ctermbg=none   ctermfg=3      cterm=bold
+hi Statement    ctermbg=none   ctermfg=4      cterm=bold
+hi Include      ctermbg=none   ctermfg=5      cterm=none
 
 " c/cpp
-hi cBlock       ctermbg=NONE ctermfg=NONE cterm=NONE
+hi cBlock                 ctermbg=none   ctermfg=none   cterm=none
 
 " sh
-hi shStatement  ctermbg=NONE   ctermfg=4      cterm=NONE
-hi shFunction   ctermbg=NONE   ctermfg=7      cterm=NONE
-hi shOperator   ctermbg=NONE   ctermfg=7      cterm=NONE
-hi shQuote      ctermbg=NONE   ctermfg=6      cterm=NONE
-hi shFunctionKey ctermbg=NONE   ctermfg=3     cterm=NONE
-hi shOption     ctermbg=NONE   ctermfg=2
+hi shStatement            ctermbg=none   ctermfg=4      cterm=none
+hi shFunction             ctermbg=none   ctermfg=7      cterm=none
+hi shOperator             ctermbg=none   ctermfg=7      cterm=none
+hi shQuote                ctermbg=none   ctermfg=6      cterm=none
+hi shFunctionKey          ctermbg=none   ctermfg=3      cterm=none
+hi shOption               ctermbg=none   ctermfg=2      cterm=none
 
 " vim syntx
-hi vimHiGroup  ctermbg=NONE   ctermfg=6       cterm=NONE
+hi vimHiGroup             ctermbg=none   ctermfg=6      cterm=none
 
-" Markdown
-hi htmlItalic             ctermbg=NONE   ctermfg=NONE    cterm=italic
-hi htmlBold               ctermbg=NONE   ctermfg=7       cterm=bold
-hi markdownLinkText       ctermbg=NONE   ctermfg=7       cterm=underline
-hi Title                  ctermbg=NONE   ctermfg=4       cterm=NONE
-hi Delimiter              ctermbg=NONE   ctermfg=NONE    cterm=NONE
-hi markdownCode           ctermbg=NONE   ctermfg=5       cterm=NONE
-hi markdownBlockquote     ctermbg=NONE   ctermfg=3       cterm=NONE
-hi markdownCodeDelimiter  ctermbg=NONE   ctermfg=5       cterm=NONE
+" markdown
+hi htmlItalic             ctermbg=none   ctermfg=none   cterm=italic
+hi htmlBold               ctermbg=none   ctermfg=7      cterm=bold
+hi markdownLinkText       ctermbg=none   ctermfg=7      cterm=underline
+hi Title                  ctermbg=none   ctermfg=4      cterm=none
+hi Delimiter              ctermbg=none   ctermfg=none   cterm=none
+hi markdownCode           ctermbg=none   ctermfg=5      cterm=none
+hi markdownBlockquote     ctermbg=none   ctermfg=3      cterm=none
+hi markdownCodeDelimiter  ctermbg=none   ctermfg=5      cterm=none
 
 " ALE - Asynchronous Lint Engine
-hi ALEWarning       ctermbg=NONE  ctermfg=3   cterm=underline
-hi ALEError         ctermbg=NONE  ctermfg=1   cterm=underline
-hi ALEWarningSign   ctermbg=NONE  ctermfg=3   cterm=bold
-hi ALEErrorSign     ctermbg=NONE  ctermfg=1   cterm=bold
+hi ALEWarning             ctermbg=none   ctermfg=3      cterm=underline
+hi ALEError               ctermbg=none   ctermfg=1      cterm=underline
+hi ALEWarningSign         ctermbg=none   ctermfg=3      cterm=bold
+hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=bold
 
-" Git gutter
-hi GitGutterChange        ctermbg=NONE   ctermfg=3       cterm=bold
-hi GitGutterAdd           ctermbg=NONE   ctermfg=2       cterm=bold
-hi GitGutterDelete        ctermbg=NONE   ctermfg=1       cterm=bold
-hi GitGutterChangeDelete  ctermbg=NONE   ctermfg=5       cterm=bold
+" git gutter
+hi GitGutterChange        ctermbg=none   ctermfg=3      cterm=bold
+hi GitGutterAdd           ctermbg=none   ctermfg=2      cterm=bold
+hi GitGutterDelete        ctermbg=none   ctermfg=1      cterm=bold
+hi GitGutterChangeDelete  ctermbg=none   ctermfg=5      cterm=bold
 
+" vim wiki
 hi VimwikiHeader1         ctermfg=1
 hi VimwikiHeader2         ctermfg=2
 hi VimwikiHeader3         ctermfg=3
 hi VimwikiHeader4         ctermfg=4
 hi VimwikiHeader5         ctermfg=5
 hi VimwikiHeader6         ctermfg=6
+
+" line highlighting if it is longer than 80 characters
+hi OverLength             ctermbg=none   ctermfg=1      cterm=underline
+match OverLength /\%81v.\+/
 
 " Statusline
 source $HOME/.config/nvim/colors/statusline.vim

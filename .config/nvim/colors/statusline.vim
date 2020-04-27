@@ -9,22 +9,22 @@
 function! RedrawModeColors(mode)
 	" normal mode
 	if a:mode ==# 'n'
-		hi MyStatuslineMode ctermfg=4 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=4 cterm=none
 	" insert mode
 	elseif a:mode ==# 'i'
-		hi MyStatuslineMode ctermfg=3 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=3 cterm=none
 	" replace mode
 	elseif a:mode ==# 'R'
-		hi MyStatuslineMode ctermfg=1 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
 	" visual mode
 	elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V'
-		hi MyStatuslineMode ctermfg=5 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=5 cterm=none
 	" command mode
 	elseif a:mode ==# 'c'
-		hi MyStatuslineMode ctermfg=6 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=6 cterm=none
 	" terminal mode
 	elseif a:mode ==# 't'
-		hi MyStatuslineMode ctermfg=1 cterm=none ctermbg=0
+		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
 	endif
 	" Return empty string so as not to display anything in the statusline
 	return ''
@@ -44,9 +44,9 @@ function! ModeName(mode)
   elseif a:mode ==# 'v'
     return 'VISUAL'
   elseif a:mode ==# 'V'
-    return "V-LINE"
+    return 'V-LINE'
   elseif a:mode ==# ''
-    return "V-BLOCK"
+    return 'V-BLOCK'
   " Command mode
   elseif a:mode ==# 'c'
     return 'COMMAND'
@@ -57,7 +57,7 @@ function! ModeName(mode)
 endfunction " }}}
 
 " modification mark {{{
-function! SetModifiedSymbol(modified) 
+function! SetModifiedSymbol(modified)
 	if a:modified == 1
 		hi MyStatuslineModifiedBody ctermbg=NONE cterm=NONE ctermfg=7
 		return '+'
@@ -128,20 +128,20 @@ set statusline+=\ \%#MyStatuslineSeparator#▒
 " }}}
 
 " colors {{{
-hi StatusLine               ctermbg=NONE  ctermfg=5     cterm=NONE
-hi StatusLineNC             ctermbg=NONE  ctermfg=8     cterm=bold
+hi StatusLine               ctermbg=none   ctermfg=5      cterm=none
+hi StatusLineNC             ctermbg=none   ctermfg=8      cterm=bold
 
-hi MyStatuslineFilename     ctermbg=0     ctermfg=7     cterm=NONE
+hi MyStatuslineFilename     ctermbg=0      ctermfg=7      cterm=none
 
-hi MyStatuslineModified     ctermbg=NONE  ctermfg=0     cterm=NONE
+hi MyStatuslineModified     ctermbg=none   ctermfg=0      cterm=none
 
-hi MyStatuslineLineCol      ctermbg=0     ctermfg=3     cterm=none
-hi MyStatuslineLinePerc     ctermbg=0     ctermfg=2     cterm=none
+hi MyStatuslineLineCol      ctermbg=0      ctermfg=3      cterm=none
+hi MyStatuslineLinePerc     ctermbg=0      ctermfg=2      cterm=none
 
-hi MyStatuslineFiletype     ctermbg=0     ctermfg=5     cterm=italic
+hi MyStatuslineFiletype     ctermbg=0      ctermfg=5      cterm=italic
 
-hi Reset                    ctermbg=NONE  ctermfg=NONE  cterm=NONE
-hi MyStatuslineSeparator    ctermbg=NONE  ctermfg=0     cterm=reverse
+hi Reset                    ctermbg=none   ctermfg=none   cterm=none
+hi MyStatuslineSeparator    ctermbg=none   ctermfg=0      cterm=reverse
 " }}}
 
 " vim: fdm=marker:sw=2:sts=2:et
