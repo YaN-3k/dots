@@ -266,7 +266,7 @@ super + ctrl + o
 	dmenunewtab
 # Open the passmenu
 super + ctrl + p
-	passmenu
+	passmenu2
 # Opem the menu for edit configuration file
 super + ctrl + e
 	dmenuedit
