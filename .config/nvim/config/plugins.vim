@@ -62,7 +62,7 @@ let g:ale_linters = {
 \   'cpp': ['g++'],
 \   'javascript': ['eslint'],
 \   'php': ['php'],
-\   'python': ['pyls', 'flake8'],
+\   'python': ['pyflakes'],
 \   'sh': ['shellcheck'],
 \   'zsh': ['shell'],
 \   'rust': ['cargo'],
