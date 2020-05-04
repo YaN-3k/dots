@@ -1,20 +1,33 @@
 #!/bin/sh
 
-ping -q -c 1 1.1.1.1 > /dev/null || {
-	notify-send  "❌ Error, you are offline." "Check your internet connection."
+ping -q -c 1 1.1.1.1 >/dev/null 2>&1 || {
+	notify-send "❌ Error, you are offline." "Check your internet connection."
 	exit 1
 }
 
 package=$(pacman -Quq | wc -l)
 
-if [ ! "$package" -eq 0 ]; then
-	notify-send "🔽 Updating..."
-	if sudo pacman --noconfirm -Syu; then
-		notify-send "✅ Updating completed!" "$package packages have been updated."
-	else
-		notify-send -u critical "❌ Error downloading updates." "Check your internet connection, if pacman is already running, or run update manually to see errors."
-		exit 1
-	fi
-else
+[ "$package" -eq 0 ] && {
 	notify-send "There is nothing to update."
+	exit
+}
+
+m() { ${DMENU-:dmenu} "$@"; }
+
+while
+	choice="$(printf "Yes\nNo\nShow changes" | m -p "Update packages?")"
+	[ "$choice" = 'Show changes' ]
+do
+	pacman -Qu | m
+done
+
+[ ! "$choice" ] || [ "$choice" = 'No' ] && exit
+
+notify-send "🔽 Updating..."
+if sudo pacman --noconfirm -Syu; then
+	notify-send "✅ Updating completed!" "$package packages have been updated."
+else
+	notify-send -u critical "❌ Error downloading updates." \
+		"Check your internet connection or run update manually to see errors."
+	exit 1
 fi

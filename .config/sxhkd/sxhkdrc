@@ -266,7 +266,7 @@ super + ctrl + o
 	dmenunewtab
 # Open the passmenu
 super + ctrl + p
-	passmenu2
+	passmenu2 --type
 # Opem the menu for edit configuration file
 super + ctrl + e
 	dmenuedit
@@ -320,7 +320,7 @@ super + Escape
 	prompt 'Leave Xorg?' 'killall Xorg'
 # Update OS
 super + ctrl + u
-	prompt "Update packages?" "update"
+	update
 # Network menu
 super + ctrl + n
 	dmenuiwd
