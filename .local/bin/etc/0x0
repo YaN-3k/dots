@@ -1,4 +1,10 @@
 #!/bin/sh
-# Upload string or file to https://0x0.st
-[ -f "$1" ] && o="cat"
-"${o:-echo}" "${@:-$(cat -)}" | curl -F file='@-' 'http://0x0.st'
+# Upload string, file or shorten link using https://0x0.st
+if echo "$1" | grep -qoP "(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?"; then
+	url=$(curl -F shorten="$1" 'http://0x0.st')
+else
+	[ -f "$1" ] && op="cat"
+	url="$(${op:-echo} "${@:-$(cat -)}" | curl -F file='@-' 'http://0x0.st')"
+fi
+echo "$url"
+printf %s "$url" | xclip -sel clip

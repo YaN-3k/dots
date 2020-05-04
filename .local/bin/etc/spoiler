@@ -5,10 +5,10 @@
 # Good for trolling people on Discord.
 # Dependencies: rofi (you can change it to dmenu), xclip
 
-spoilerize() { echo "$@" | sed 's/./||&||/g'; }
+spoilerize() { printf %s "$@" | sed 's/./||&||/g'; }
 m() { $DMENU -i "$@" <&- && echo; }
 
-text="$(m -p "Enter text")"
+[ ! "$1" ] && text="$(m -p "Enter text")" || text="$*"
 [ "$text" ] && {
 	spoilerize "$text" | xclip -sel clip
 	notify-send "Text spoilerized and copied!"
