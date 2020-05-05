@@ -1,13 +1,15 @@
 #!/bin/sh
+# I actually use variable "word splitting" to my advantage
+#	shellcheck disable=SC2086
 
 ping -q -c 1 1.1.1.1 >/dev/null 2>&1 || {
 	notify-send "❌ Error, you are offline." "Check your internet connection."
 	exit 1
 }
 
-package=$(pacman -Quq | wc -l)
+c_packages=$(pacman -Quq | wc -l)
 
-[ "$package" -eq 0 ] && {
+[ "$c_packages" -lt 1 ] && {
 	notify-send "There is nothing to update."
 	exit
 }
@@ -16,16 +18,29 @@ m() { ${DMENU-:dmenu} "$@"; }
 
 while
 	choice="$(printf "Yes\nNo\nShow changes" | m -p "Update packages?")"
+	[ "$choice" = 'Yes' ] && {
+		msg='🔽 Updating...'
+		smsg="$c_packages packages have been updated."
+		opt='-Syu'
+	}
 	[ "$choice" = 'Show changes' ]
 do
-	pacman -Qu | m
+	package="$(pacman -Qu | m)"
+	package="${package%% *}"
+	[ "$package" ] && choice="$(printf "Yes\nNo" | m -p "Update $package?")"
+	[ "$choice" = 'Yes' ] && {
+		msg="🔽 Updating $package."
+		smsg="$package has been updated."
+		opt="-S $package"
+		break
+	}
 done
 
 [ ! "$choice" ] || [ "$choice" = 'No' ] && exit
 
-notify-send "🔽 Updating..."
-if sudo pacman --noconfirm -Syu; then
-	notify-send "✅ Updating completed!" "$package packages have been updated."
+notify-send "$msg"
+if sudo pacman --noconfirm $opt; then
+	notify-send "✅ Updating completed!" "$smsg"
 else
 	notify-send -u critical "❌ Error downloading updates." \
 		"Check your internet connection or run update manually to see errors."
