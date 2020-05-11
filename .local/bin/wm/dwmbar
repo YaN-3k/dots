@@ -52,7 +52,12 @@ mpd() {
 	printf " %s" "$(mpc current -f "%artist% - %title%")"
 }
 
+pkg() {
+	updates=$(pacman -Quq | wc -l)
+	printf " %s" "$updates"
+}
+
 while :; do
-	xsetroot -name " $(mpd) $SEP $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
+	xsetroot -name " $(mpd) $SEP $(pkg) $SEP $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
 	sleep 1
 done

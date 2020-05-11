@@ -15,5 +15,5 @@ mpd &
 #exec bspwm
 
 # dwm
-~/.config/dwm/dwmbar &
+dwmbar &
 exec dwm
