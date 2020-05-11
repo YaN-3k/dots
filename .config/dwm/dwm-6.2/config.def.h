@@ -24,12 +24,13 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class         instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",        NULL,       NULL,       1 << 2,            0,           -1 },
-	{ "Firefox",     NULL,       NULL,       1 << 2,            0,           -1 },
-	{ "qutebrowser", NULL,       NULL,       1 << 2,            0,           -1 },
-	{ "Telegram",    NULL,       NULL,       1 << 3,            0,           -1 },
-	{ "discord",     NULL,       NULL,       1 << 3,            0,           -1 },
+	/* class         instance    title       tags mask    iscentered    isfloating   monitor */
+	{ "Gimp",        NULL,       NULL,       1 << 2,      0,            0,           -1 },
+	{ "Firefox",     NULL,       NULL,       1 << 2,      0,            0,           -1 },
+	{ "qutebrowser", NULL,       NULL,       1 << 2,      0,            0,           -1 },
+	{ "Telegram",    NULL,       NULL,       1 << 3,      0,            0,           -1 },
+	{ "discord",     NULL,       NULL,       1 << 3,      0,            0,           -1 },
+	{ NULL,       "float",       NULL,            0,      1,            1,           -1 },
 };
 
 /* layout(s) */
@@ -37,11 +38,16 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
+#include "fibonacci.c"
+#include "movestack.c"
+
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+ 	{ "[@]",      spiral },
+ 	{ "[\\]",     dwindle },
 };
 
 /* key definitions */
@@ -67,15 +73,19 @@ static Key keys[] = {
 
 	/* layouts */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY|ShiftMask,             XK_p,      setlayout,      {0} },
-
+	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } },
 
@@ -96,20 +106,20 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
 	{ ALTKEY,                       XK_f,      spawn,          SHCMD("urxvt -e vifmrun") },
-	{ ALTKEY,                       XK_m,      spawn,          SHCMD("urxvt -e ncmpcpp") },
+	{ ALTKEY,                       XK_m,      spawn,          SHCMD("urxvt -name float -e ncmpcpp") },
 	{ ALTKEY,                       XK_v,      spawn,          SHCMD("urxvt -e nvim") },
 	{ ALTKEY,                       XK_a,      spawn,          SHCMD("urxvt -e alsamixer") },
 	{ ALTKEY,                       XK_e,      spawn,          SHCMD("urxvt -e neomutt") },
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
-	/* script */
+	/* scripts */
 	{ MODKEY,                       XK_Escape, spawn,          SHCMD("prompt 'Leave Xorg?' 'killall Xorg'") },
 	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("prompt 'Shutdown computer?' 'shutdown -h now'") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("prompt 'Lock screen' 'slock & mpc pause'") },
 	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       SHCMD("prompt 'Reboot computer?' 'reboot'") },
 	//{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
-	{ MODKEY|ControlMask,           XK_End,    spawn,          SHCMD("dmenuscreen") },
+	{ MODKEY,                       XK_End,    spawn,          SHCMD("dmenuscreen") },
 
 	/* media */
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("amixer sset Master toggle") },
@@ -127,7 +137,7 @@ static Key keys[] = {
 
 	/* volume */
 	{ MODKEY,                       XK_equal,  spawn,          SHCMD("volume alsa up")   },
-	{ MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("volume mpc down")  },
+	{ MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("volume mpc up")  },
 	{ MODKEY,                       XK_minus,  spawn,          SHCMD("volume alsa down") },
 	{ MODKEY|ShiftMask,             XK_minus,  spawn,          SHCMD("volume mpc down")  },
 
