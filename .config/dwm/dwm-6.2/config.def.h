@@ -5,7 +5,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Terminus:size=10" };
+static const char *fonts[]          = { "Terminus:size=10", "Font Awesome 5 Free Solid:size=8" };
 static const char dmenufont[]       = "Terminus:size=10";
 static const char col_bg[]          = "#161821";
 static const char col_fg[]          = "#bbbbbb";
@@ -13,7 +13,7 @@ static const char col_sel[]         = "#84a0c6";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_fg,    col_bg,    col_bg },
-	[SchemeSel]  = { col_bg,    col_sel,  col_sel  },
+	[SchemeSel]  = { col_bg,    col_sel,   col_sel  },
 };
 
 /* tagging */
@@ -95,6 +95,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 
+	/* monitors */
 	{ MODKEY,                       XK_Left,   focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_Right,  focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_Left,   tagmon,         {.i = -1 } },
@@ -117,9 +118,16 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("prompt 'Shutdown computer?' 'shutdown -h now'") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("prompt 'Lock screen' 'slock & mpc pause'") },
 	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       SHCMD("prompt 'Reboot computer?' 'reboot'") },
-	//{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
+	{ MODKEY|ControlMask,           XK_i,      spawn,          SHCMD("dmenukaomoji") },
+	{ MODKEY|ControlMask,           XK_t,      spawn,          SHCMD("dmenutmux") },
 	{ MODKEY,                       XK_End,    spawn,          SHCMD("dmenuscreen") },
+	{ MODKEY,                       XK_Insert, spawn,          SHCMD("showclip") },
+	{ MODKEY|ControlMask,           XK_Insert, spawn,          SHCMD("blaze") },
+	{ MODKEY|ControlMask,           XK_w,      spawn,          SHCMD("blaze -s") },
+	{ MODKEY|ControlMask,           XK_Delete, spawn,          SHCMD("dmenureload") },
+	{ MODKEY|ControlMask,           XK_u,      spawn,          SHCMD("update") },
+	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("passmenu2 --type") },
 
 	/* media */
 	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("amixer sset Master toggle") },
@@ -157,6 +165,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 };
 
 /* button definitions */
