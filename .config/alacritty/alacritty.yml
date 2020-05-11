@@ -27,22 +27,19 @@ window:
 
 scrolling:
   multiplier: 1
-  auto_scroll: false
-
-tabspaces: 2
 
 # Font configurations
 font:
   normal:
-    family: xos4 Terminus
+    family: Terminus
     style: Regular
 
   bold:
-    family: xos4 Terminus
+    family: Terminus
     style: Bold
 
   Italic:
-    family: xos4 Terminus
+    family: Terminus
     style: Italic
 
   size: 12.0
