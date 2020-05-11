@@ -19,7 +19,7 @@ $ pip install --user pynvim msgpack
 ## Install dotfiles
 Download dotfiles
 ```
-$ git clone --bare https://github.com/Cherrry9/dots.git $HOME/.config/dots-git
+$ git clone --bare https://github.com/cherrry9/dots.git ~/.config/dots-git
 $ alias dots='git --git-dir=$HOME/.config/dots-git/ --work-tree=$HOME'
 $ dots checkout
 ```
@@ -59,7 +59,7 @@ $ sudo make clean install
 To display colorful emoji in dmenu you need `libxft-bgra` (see [.config/dmenu/README](.config/dmenu/README) "Requirements")<br>
 Install dwm
 ```
-$ cd ~/.config/dwm/dwm-6.2
+$ cd ~/.config/dwm
 $ sudo make clean install
 ```
 Remove `LICENSE` and `README.md` from your `$HOME`
