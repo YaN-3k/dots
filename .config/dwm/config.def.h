@@ -42,9 +42,9 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "[M]",      monocle },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "|  T",      tile },    /* first entry is default */
+	{ "|  M",      monocle },
+	{ "|  F",      NULL },    /* no layout function means floating behavior */
 };
 
 /* key definitions */
@@ -118,6 +118,7 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_v,      spawn,          SHCMD("urxvt -e nvim") },
 	{ ALTKEY,                       XK_a,      spawn,          SHCMD("urxvt -e alsamixer") },
 	{ ALTKEY,                       XK_e,      spawn,          SHCMD("urxvt -e neomutt") },
+	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("urxvt -name newsboat -e sh -c 'newsboat && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread'") },
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
 	/* scripts */

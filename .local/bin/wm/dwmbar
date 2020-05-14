@@ -49,15 +49,49 @@ volume() {
 }
 
 mpd() {
-	printf " %s" "$(mpc current -f "%artist% - %title%")"
+	music="$(mpc current -f "%artist% - %title%")"
+	[ "$music" ] && printf " %s %s" "$music" "$SEP"
 }
 
 pkg() {
 	updates=$(pacman -Quq | wc -l)
-	printf " %s" "$updates"
+	[ "$updates" -gt 0 ] && printf "  %s %s" "$updates" "$SEP"
+}
+
+news() {
+	news="$(cat ~/.cache/news_unread)"
+	[ "$news" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
+}
+
+torrents() {
+	data=$(transmission-remote -l | grep %)
+	[ "$data" ] && {
+		while read -r line; do
+			# delete downloaded torrents from the queue
+			per="$(printf %s "$line" | awk '{ printf $2 }')"
+			[ "${per%?}" = 100 ] && {
+				num="$(printf %s "$line" | awk '{ printf $1 }')"
+				transmission-remote -t "$num" -r >/dev/null 2>&1
+				continue
+			}
+			printf " "
+			printf %s "$line" | sed "
+				s/.*Stopped.*//g;
+				s/.*Seeding.*//g;
+				s/.*Idle.*//g;
+				s/.*Uploading.*//g;
+				s/.*Downloading.*//g
+				"
+			printf " "
+			printf %s "$per"
+		done <<EOF
+$(printf "%b" "$data")
+EOF
+		printf " %s" "$SEP"
+	}
 }
 
 while :; do
-	xsetroot -name " $(mpd) $SEP $(pkg) $SEP $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
+	xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
 	sleep 1
 done
