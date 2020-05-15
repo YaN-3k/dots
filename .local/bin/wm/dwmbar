@@ -64,13 +64,15 @@ news() {
 }
 
 torrents() {
-	data=$(transmission-remote -l | grep %)
+	data=$(transmission-remote -l | grep -E "%|n/a")
 	[ "$data" ] && {
 		while read -r line; do
 			# delete downloaded torrents from the queue
 			per="$(printf %s "$line" | awk '{ printf $2 }')"
 			[ "${per%?}" = 100 ] && {
+				file="$(printf %s "$line" | awk '{ printf $10 }')"
 				num="$(printf %s "$line" | awk '{ printf $1 }')"
+				notify-send " Downloading completed." "$file"
 				transmission-remote -t "$num" -r >/dev/null 2>&1
 				continue
 			}
@@ -80,12 +82,13 @@ torrents() {
 				s/.*Seeding.*//g;
 				s/.*Idle.*//g;
 				s/.*Uploading.*//g;
-				s/.*Downloading.*//g
+				s/.*Downloading.*//g;
+				s/.*[A-Z][a-z].*//g;
 				"
 			printf " "
 			printf %s "$per"
 		done <<EOF
-$(printf "%b" "$data")
+$data
 EOF
 		printf " %s" "$SEP"
 	}
