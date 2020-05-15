@@ -65,33 +65,29 @@ news() {
 
 torrents() {
 	data=$(transmission-remote -l | grep -E "%|n/a")
-	[ "$data" ] && {
-		while read -r line; do
-			# delete downloaded torrents from the queue
-			per="$(printf %s "$line" | awk '{ printf $2 }')"
-			[ "${per%?}" = 100 ] && {
-				file="$(printf %s "$line" | awk '{ printf $10 }')"
-				num="$(printf %s "$line" | awk '{ printf $1 }')"
-				notify-send " Download completed." "$file"
-				transmission-remote -t "$num" -r >/dev/null 2>&1
-				continue
-			}
-			printf " "
-			printf %s "$line" | sed "
-				s/.*Stopped.*//g;
-				s/.*Seeding.*//g;
-				s/.*Idle.*//g;
-				s/.*Uploading.*//g;
-				s/.*Downloading.*//g;
-				s/.*[A-Z][a-z].*//g;
+	[ "$data" ] || return
+	while read -r line; do
+		per="$(printf %s "$line" | awk '{ printf $2 }')"
+		[ "${per%?}" = 100 ] && {
+			id="$(printf %s "$line" | awk '{ printf $1 }')"
+			name="$(printf %s "$line" | awk '{ printf $10 }')"
+			notify-send " Download completed." "$name"
+			transmission-remote -t "$id" -r >/dev/null 2>&1
+			continue
+		}
+		printf %s "$line" | sed "
+				s/.*Stopped.*/  /g;
+				s/.*Seeding.*/  /g;
+				s/.*Idle.*/  /g;
+				s/.*Uploading.*/  /g;
+				s/.*Downloading.*/  /g;
+				s/.*[A-Z][a-z].*/  / g;
 				"
-			printf " "
-			printf %s "$per"
-		done <<EOF
+		printf %s "$per"
+	done <<EOF
 $data
 EOF
-		printf " %s" "$SEP"
-	}
+	transmission-remote -l | grep -qE "%|n/a" && printf " %s" "$SEP"
 }
 
 while :; do

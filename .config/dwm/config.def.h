@@ -35,7 +35,6 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-#include "movestack.c"
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
@@ -55,6 +54,14 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_v,     ACTION##stack, {.i = 0 } }, \
+	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
+	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
+	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -62,7 +69,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-w", "245", "-x", "10", "-y", "30" };
-static const char *termcmd[]  = { "urxvt", NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -80,11 +87,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 
 	/* window managment */
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
+	STACKKEYS(MODKEY,                          focus)
+	STACKKEYS(MODKEY|ShiftMask,                push)
 
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } },
@@ -113,12 +117,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
-	{ ALTKEY,                       XK_f,      spawn,          SHCMD("urxvt -e vifmrun") },
-	{ ALTKEY,                       XK_m,      spawn,          SHCMD("urxvt -name float -e ncmpcpp") },
-	{ ALTKEY,                       XK_v,      spawn,          SHCMD("urxvt -e nvim") },
-	{ ALTKEY,                       XK_a,      spawn,          SHCMD("urxvt -e alsamixer") },
-	{ ALTKEY,                       XK_e,      spawn,          SHCMD("urxvt -e neomutt") },
-	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("urxvt -name newsboat -e newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread") },
+	{ ALTKEY,                       XK_f,      spawn,          SHCMD("st -e vifmrun") },
+	{ ALTKEY,                       XK_m,      spawn,          SHCMD("st -n float -e ncmpcpp") },
+	{ ALTKEY,                       XK_v,      spawn,          SHCMD("st -e nvim") },
+	{ ALTKEY,                       XK_a,      spawn,          SHCMD("st -e alsamixer") },
+	{ ALTKEY,                       XK_e,      spawn,          SHCMD("st -e neomutt") },
+	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("st -n newsboat -e newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread") },
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
 	/* scripts */
@@ -174,7 +178,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	/*{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },*/
 };
 
 /* button definitions */
