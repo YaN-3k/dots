@@ -118,7 +118,7 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_v,      spawn,          SHCMD("urxvt -e nvim") },
 	{ ALTKEY,                       XK_a,      spawn,          SHCMD("urxvt -e alsamixer") },
 	{ ALTKEY,                       XK_e,      spawn,          SHCMD("urxvt -e neomutt") },
-	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("urxvt -name newsboat -e sh -c 'newsboat && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread'") },
+	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("urxvt -name newsboat -e newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread") },
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
 	/* scripts */

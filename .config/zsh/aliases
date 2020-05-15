@@ -25,7 +25,7 @@ alias nm='neomutt'
 alias ab='abook -C "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_CONFIG_HOME"/abook/addressbook'
 alias ss="sudo systemctl"
 alias gdb='gdb -q -x "$XDG_CONFIG_HOME"/gdb/gdbinit'
-alias news="newsboat && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread"
+news() { newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread; }
 
 # dots
 alias d='dots'

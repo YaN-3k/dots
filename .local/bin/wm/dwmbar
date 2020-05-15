@@ -72,7 +72,7 @@ torrents() {
 			[ "${per%?}" = 100 ] && {
 				file="$(printf %s "$line" | awk '{ printf $10 }')"
 				num="$(printf %s "$line" | awk '{ printf $1 }')"
-				notify-send " Downloading completed." "$file"
+				notify-send " Download completed." "$file"
 				transmission-remote -t "$num" -r >/dev/null 2>&1
 				continue
 			}

@@ -24,8 +24,7 @@ bindkey '^[[Z' reverse-menu-complete
 
 # edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd '^v' edit-command-line
-bindkey '^v'          edit-command-line
+bindkey -M vicmd '^e' edit-command-line
 
 # fix backspace, C+h and DEL key
 bindkey -v '^?'          backward-delete-char
