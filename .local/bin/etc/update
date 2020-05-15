@@ -3,14 +3,14 @@
 #	shellcheck disable=SC2086
 
 ping -q -c 1 1.1.1.1 >/dev/null 2>&1 || {
-	notify-send "❌ Error, you are offline." "Check your internet connection."
+	notify-send " Error, you are offline." "Check your internet connection."
 	exit 1
 }
 
 c_packages=$(pacman -Quq | wc -l)
 
 [ "$c_packages" -lt 1 ] && {
-	notify-send "There is nothing to update."
+	notify-send " There is nothing to update."
 	exit
 }
 
@@ -19,7 +19,7 @@ m() { ${DMENU-:dmenu} "$@"; }
 while
 	choice="$(printf "Yes\nNo\nShow changes" | m -p "Update packages?")"
 	[ "$choice" = 'Yes' ] && {
-		msg='🔽 Updating...'
+		msg=' Updating...'
 		smsg="$c_packages packages have been updated."
 		opt='-Syu'
 	}
@@ -29,7 +29,7 @@ do
 	package="${package%% *}"
 	[ "$package" ] && choice="$(printf "Yes\nNo" | m -p "Update $package?")"
 	[ "$choice" = 'Yes' ] && {
-		msg="🔽 Updating $package."
+		msg=" Updating $package."
 		smsg="$package has been updated."
 		opt="-S $package"
 		break
@@ -40,9 +40,9 @@ done
 
 notify-send "$msg"
 if sudo pacman --noconfirm $opt; then
-	notify-send "✅ Updating completed!" "$smsg"
+	notify-send " Updating completed!" "$smsg"
 else
-	notify-send -u critical "❌ Error downloading updates." \
+	notify-send -u critical " Error downloading updates." \
 		"Check your internet connection or run update manually to see errors."
 	exit 1
 fi
