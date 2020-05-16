@@ -4,8 +4,12 @@
 
 ping -q -c 1 1.1.1.1 >/dev/null 2>&1 || exit
 
+notify-send " Updating RSS feeds..."
+
 pgrep newsboat$ >/dev/null 2>&1 &&
 	xdotool key --window "$(xdotool search --name newsboat)" R && exit
 
 newsboat -x reload
-newsboat -x print-unread | awk '{ print $1 }' > "$HOME/.cache/news_unread"
+newsboat -x print-unread | awk '{ print $1 }' >"$HOME/.cache/news_unread"
+
+notify-send " RSS feed update complete."

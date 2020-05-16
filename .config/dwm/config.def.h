@@ -122,7 +122,7 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_v,      spawn,          SHCMD("st -e nvim") },
 	{ ALTKEY,                       XK_a,      spawn,          SHCMD("st -e alsamixer") },
 	{ ALTKEY,                       XK_e,      spawn,          SHCMD("st -e neomutt") },
-	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("st -n newsboat -e newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread") },
+	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("st -n newsboat -e rss") },
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
 	/* scripts */
@@ -136,6 +136,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_t,      spawn,          SHCMD("dmenutmux") },
 	{ MODKEY,                       XK_End,    spawn,          SHCMD("dmenuscreen") },
 	{ MODKEY,                       XK_Insert, spawn,          SHCMD("showclip") },
+	{ MODKEY|ControlMask,           XK_m,      spawn,          SHCMD("dmenupower") },
 	{ MODKEY|ControlMask,           XK_Insert, spawn,          SHCMD("blaze") },
 	{ MODKEY|ControlMask,           XK_w,      spawn,          SHCMD("blaze -s") },
 	{ MODKEY|ControlMask,           XK_Delete, spawn,          SHCMD("dmenureload") },

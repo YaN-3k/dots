@@ -132,7 +132,7 @@ hi VimwikiHeader6         ctermfg=6
 
 " line highlighting if it is longer than 80 characters
 hi OverLength             ctermbg=none   ctermfg=1      cterm=underline
-match OverLength /\%81v.\+/
+"match OverLength /\%81v.\+/
 
 " Statusline
 source $HOME/.config/nvim/colors/statusline.vim

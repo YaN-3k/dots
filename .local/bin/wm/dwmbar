@@ -45,7 +45,7 @@ volume() {
 		ico=""
 	fi
 	amixer get Master | grep -q '\[off\]' && vol="muted"
-	printf "%s %s" "$ico" "$vol"
+	printf "%s %s%%" "$ico" "$vol"
 }
 
 mpd() {

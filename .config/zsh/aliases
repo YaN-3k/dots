@@ -25,7 +25,7 @@ alias nm='neomutt'
 alias ab='abook -C "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_CONFIG_HOME"/abook/addressbook'
 alias ss="sudo systemctl"
 alias gdb='gdb -q -x "$XDG_CONFIG_HOME"/gdb/gdbinit'
-news() { newsboat -q && newsboat -x print-unread | awk '{ print $1 }' > ~/.cache/news_unread; }
+alias setw='sxiv ~/pix/wall/* -tb'
 
 # dots
 alias d='dots'
@@ -55,6 +55,7 @@ alias tr-show='transmission-show'
 alias tr-cli='transmission-cli'
 alias tr-edit='transmission-edit'
 alias tr-create='transmission-create'
+torradd() { transmission-remote -a "$@" && notify-send " Torrent added."; }
 
 # tmux
 alias tm='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
