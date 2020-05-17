@@ -1,4 +1,8 @@
 /* See LICENSE file for copyright and license details. */
+#ifndef CONFIG_H_
+#define CONFIG_H_
+
+#include "dwm.h"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -111,6 +115,9 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_0,      setgaps,        {.i = 0  } },
+
+	{ MODKEY|ControlMask,              XK_j,      shiftview,      {.i = +1 } },
+  { MODKEY|ControlMask,              XK_k,      shiftview,      {.i = -1 } },
 
 	/* programs */
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -272,3 +279,5 @@ static Signal signals[] = {
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
 };
+
+#endif
