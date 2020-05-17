@@ -8,7 +8,7 @@ interface='wlan0'
 m() { ${DMENU:-dmenu} "$@"; }
 
 add() {
-	list_all=$(iwctl station wlan0 get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
+	list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
 	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
 	list=$(comm -23 <(sort -u <<<"$list_all") <(sort -u <<<"$list_known"))
 	ssid=$(printf "%s" "$list" | m -i -p "add") || return
@@ -25,7 +25,7 @@ add() {
 
 switch() {
 	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-	connected=$(iwctl station wlan0 show | awk 'NR>4 && /Connected/ { print $3 }')
+	connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print $3 }')
 	list=$(comm -23 <(sort -u <<<"$list_known") <(sort -u <<<"$connected"))
 
 	[ -z "$list" ] && { notify-send "There is no network to switch."; return; }
@@ -54,14 +54,14 @@ scan() {
 
 if ! pgrep -x iwd; then
 	if ! (sudo -A systemctl start iwd && sudo -A systemctl enable iwd); then
-		notify-send -u critical "❌ Error." "Unable to start iwd."
+		notify-send -u critical " Unable to start iwd."
 		exit
 	fi
 fi
 
 if ! pgrep -x dhcpcd; then
 	if ! (sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd);then
-		notify-send -u critical "❌ Error." "Unable to start dhcpcd."
+		notify-send -u critical " Unable to start dhcpcd."
 		exit
 	fi
 fi
