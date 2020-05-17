@@ -1,42 +1,14 @@
 #!/bin/sh
 
 # A dmenu prompt to unmount drives.
-# Provides you with mounted partitions, select one to unmount.
-# Drives mounted at /, /boot and /home will not be options to unmount.
 
-unmountusb() {
-	[ -z "$drives" ] && exit
-	chosen=$(echo "$drives" | $DMENU -i -p "Unmount which drive?" | awk '{print $1}')
-	[ -z "$chosen" ] && exit
-	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
-	}
+m() { ${DMENU:-dmenu} "$@"; }
 
-unmountandroid() { \
-	chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | $DMENU -i -p "Unmount which device?")
-	[ -z "$chosen" ] && exit
-	sudo -A umount -l "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted."
-	}
+drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+[ "$drives" ] || { notify-send "No drives to unmount."; exit 1; }
 
-asktype() { \
-	case "$(printf "USB\\nAndroid" | $DMENU -i -p "Unmount a USB drive or Android device?")" in
-		USB) unmountusb ;;
-		Android) unmountandroid ;;
-	esac
-	}
+chosen="$(echo "$drives" | m -p "Umount" | cut -d ' ' -f 1)"
+[ "$chosen" ] || exit 1
 
-drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$2=="part"&&$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
-
-if ! grep simple-mtpfs /etc/mtab; then
-	[ -z "$drives" ] && notify-send "No drives to unmount." &&  exit
-	echo "Unmountable USB drive detected."
-	unmountusb
-else
-	if [ -z "$drives" ]
-	then
-		echo "Unmountable Android device detected."
-	       	unmountandroid
-	else
-		echo "Unmountable USB drive(s) and Android device(s) detected."
-		asktype
-	fi
-fi
+sudo -A umount -l "$chosen" &&
+	notify-send " USB unmounting." "$chosen unmounted."

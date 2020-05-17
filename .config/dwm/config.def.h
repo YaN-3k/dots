@@ -126,21 +126,24 @@ static Key keys[] = {
 	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
 
 	/* scripts */
-	{ MODKEY,                       XK_Escape, spawn,          SHCMD("prompt 'Leave Xorg?' 'killall Xorg'") },
+	{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("prompt 'Leave Xorg?' 'killall Xorg'") },
 	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("prompt 'Shutdown computer?' 'shutdown -h now'") },
 	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("prompt 'Lock screen' 'slock & mpc pause'") },
 	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       SHCMD("prompt 'Reboot computer?' 'reboot'") },
 
 	{ MODKEY|ControlMask,           XK_i,      spawn,          SHCMD("dmenuunicode") },
 	{ MODKEY|ControlMask,           XK_o,      spawn,          SHCMD("dmenunewtab") },
+	{ MODKEY|ControlMask,           XK_n,      spawn,          SHCMD("dmenuiwd") },
+	{ MODKEY|ControlMask,           XK_m,      spawn,          SHCMD("dmenumount") },
+	{ MODKEY|ControlMask,           XK_u,      spawn,          SHCMD("dmenuumount") },
 	{ MODKEY|ControlMask,           XK_t,      spawn,          SHCMD("dmenutmux") },
 	{ MODKEY,                       XK_End,    spawn,          SHCMD("dmenuscreen") },
 	{ MODKEY,                       XK_Insert, spawn,          SHCMD("showclip") },
-	{ MODKEY|ControlMask,           XK_m,      spawn,          SHCMD("dmenupower") },
+	{ MODKEY,                       XK_Escape, spawn,          SHCMD("dmenupower") },
 	{ MODKEY|ControlMask,           XK_Insert, spawn,          SHCMD("blaze") },
 	{ MODKEY|ControlMask,           XK_w,      spawn,          SHCMD("blaze -s") },
 	{ MODKEY|ControlMask,           XK_Delete, spawn,          SHCMD("dmenureload") },
-	{ MODKEY|ControlMask,           XK_u,      spawn,          SHCMD("update") },
+	{ MODKEY|ControlMask|ShiftMask, XK_u,      spawn,          SHCMD("update") },
 	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("passmenu2 --type") },
 
 	/* media */
