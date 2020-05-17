@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Fuzzy Git commits browser by https://github.com/samedamci.
+
+git log --no-decorate --format=short |
+	awk '/^commit|^    /' | sed 's/    //g; s/commit //g' | paste -d " " - - |
+	fzf --preview 'git log -n 1 {1}; printf "\n" && git diff --color=always {1}~ {1}'

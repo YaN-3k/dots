@@ -1,0 +1,3 @@
+#!/bin/sh
+# Set wallpaper.
+find ~/pix/wall/ -type f,l | shuf | sxiv - -tb

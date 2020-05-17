@@ -25,7 +25,6 @@ alias nm='neomutt'
 alias ab='abook -C "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_CONFIG_HOME"/abook/addressbook'
 alias ss="sudo systemctl"
 alias gdb='gdb -q -x "$XDG_CONFIG_HOME"/gdb/gdbinit'
-alias setw='sxiv ~/pix/wall/* -tb'
 
 # dots
 alias d='dots'
@@ -55,7 +54,6 @@ alias tr-show='transmission-show'
 alias tr-cli='transmission-cli'
 alias tr-edit='transmission-edit'
 alias tr-create='transmission-create'
-torradd() { transmission-remote -a "$@" && notify-send " Torrent added."; }
 
 # tmux
 alias tm='tmux -f "$XDG_CONFIG_HOME"/tmux/tmux.conf'
@@ -84,22 +82,6 @@ alias Ff='find . -type f,l -name'
 
 mc() { mkdir -p "$1" && cd "$1"; }
 calc() { echo "scale=5; $*" | bc; }
-
-# vim
-v() {
-	if [ ! "$1" ]; then
-		$EDITOR
-	elif [ ! -e "$1" ] || [[ "$(stat -c '%U' "$1" 2>/dev/null)" = "$USER" ]]; then
-		$EDITOR "$@"
-	else
-		sudo $EDITOR "$@"
-	fi
-}
-
-vb() {
-	local file="$(find "$HOME/.local/bin/" -type f,l | fzf)" &&
-		[ "$file" ] && v "$file"
-}
 
 # convert colors
 hextorgb() { printf "%d %d %d\n" "0x${1:0:2}" "0x${1:2:2}" "0x${1:4:2}"; }

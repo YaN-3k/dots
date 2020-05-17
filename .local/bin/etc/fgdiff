@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Fuzzy Git uncommited files changes browser.
+
+status="$(git status --short | awk '/M/ { print $2 }')"
+[ "$status" ] && echo "$status" | fzf --preview 'git diff --color=always {}'

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Find files and open in v.
+
+files=$(find "${@:-.}" -type f,l | fzf -m)
+[ "$files" ] && v $files

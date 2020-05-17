@@ -1,12 +1,15 @@
 #!/bin/sh
 #
-#  pacman/makepkg/git wrapper for the aur
+# pacman/makepkg/git wrapper for the aur
 #
 # deps
 # - sudo
 # - makepkg
 # - an arch-based distro
 # - git
+#
+# I actually use variable "word splitting" to my advantage
+#	shellcheck disable=SC2086
 
 [ -z "$1" ] && printf "\033[31merror:\033[0m no packages specified.\n" && exit
 
@@ -18,7 +21,7 @@ mkdir -p "$location"
 
 official() {
 	printf "\033[34m%s\033[0m found in official repos; installing normally.\n" "$officialhr"
-	sudo pacman $flags -S $1
+	sudo pacman $flags -S "$@"
 }
 
 aur() {
@@ -49,9 +52,9 @@ add() {
 while [ "$1" ]; do
 	# check if the package exists in the official repos
 	case $1 in
-	--needed)
-		needed='true'
-		flags='--needed'
+	-*)
+		[ "$1" = "--needed" ] && needed=0
+		[ "$flags" ] && flags="$flags $1" || flags="$1"
 		;;
 	*)
 		if pacman -Si "$1" >/dev/null 2>&1; then
@@ -71,7 +74,7 @@ done
 [ "$not_foundhr" ] && printf "\033[31merror:\033[0m package \033[34m%s\033[0m was not found\n" "$not_foundhr"
 
 # install packages from official repositories
-[ "$official" ] && official "$official"
+[ "$official" ] && official $official
 
 # install packages from AUR
 if [ "$aurhr" ]; then

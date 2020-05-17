@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Add RSS feed.
+
+! echo "$1" | grep -q "https*://\S\+\.[A-Za-z]\+\S*" &&
+	notify-send " That doesn't look like a full URL." && exit
+
+RSSFILE="${XDG_CONFIG_HOME:-$HOME/.config}/newsboat/urls"
+
+if awk '{print $1}' "$RSSFILE" | grep -q "^$1$"; then
+	notify-send " You already have this RSS feed."
+else
+	echo "$1" >> "$RSSFILE" && notify-send " RSS feed added."
+fi

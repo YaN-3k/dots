@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Find file and open using v.
+
+file="$(find "$HOME/.local/bin/" -type f,l | fzf)"
+[ "$file" ] && v "$file"

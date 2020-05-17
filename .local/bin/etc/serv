@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Simple http python3 server for files or pages.
+# Usage: serv [-s] | [-h] | ([-p PORT] [-d DIRECTORY] [-b])
+
+port="8080"
+dir="."
+ip="$(ip addr show wlan0 | grep -oP "\d*\.\d*\.\d*\.\d*" | head -1)"
+
+run_browser() {
+	[ ! "$BROWSER" ] && {
+		echo "\$BROWSER variable is not specified"
+		exit 1
+	}
+	"$BROWSER" "http://${ip}:${port}"
+}
+
+help() {
+	echo "Usage: serv [-s] | [-h] | ([-p PORT] [-d DIRECTORY] [-b])"
+	exit 0
+}
+
+stop() {
+	pidfile="/tmp/serv.pid"
+	if [ -e "$pidfile" ]; then
+		while read -r recpid; do
+			# kill with SIGTERM, allowing finishing touches.
+			kill -15 "$recpid"
+			# even after SIGTERM, ffmpeg may still run, so SIGKILL it.
+			(sleep 3; kill -9 "$recpid") >/dev/null 2>&1 &
+		done <"$pidfile"
+		rm -f "$pidfile"
+		echo "All servers terminated."
+	else
+		echo "Server not started."
+	fi
+	exit
+}
+
+while getopts ':p:d:shb' opt; do
+	case $opt in
+	p) port="$OPTARG" ;;
+	d) dir="$OPTARG" ;;
+	b) run_browser=0 ;;
+	s) stop ;;
+	h) help;;
+	\?) echo "Invalid Option: -$OPTARG" 1>&2; help ;;
+	:)  echo "Invalid Option: -$OPTARG requires an argument" 1>&2; help;;
+	esac
+done
+
+if command -v python3 >/dev/null 2>&1; then
+	nohup python3 -u -m http.server --bind "$ip" --directory "$dir" "$port" >/tmp/serv.log 2>&1 &
+	echo $! >>/tmp/serv.pid
+	[ "$run_browser" ] && run_browser
+else
+	echo "Required python3 is not installed."
+	exit 1
+fi
