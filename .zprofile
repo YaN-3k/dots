@@ -50,7 +50,7 @@ export LESS_TERMCAP_us="$(printf '\033[0;32m')"
 export FZF_DEFAULT_OPTS='
 --color fg:7,hl:4,fg+:15,bg+:0,hl+:3
 --color pointer:1,info:8,spinner:3,header:8,prompt:8,marker:8
---height 50%
+--height 100%
 --reverse
 --preview "preview {}"
 '
