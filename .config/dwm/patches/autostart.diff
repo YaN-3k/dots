@@ -12,7 +12,7 @@ index d27cb67..066ed71 100644
  static void resizemouse(const Arg *arg);
  static void restack(Monitor *m);
  static void run(void);
-+static void runAutostart(void);
++static void run_autostart(void);
  static void scan(void);
  static int sendevent(Client *c, Atom proto);
  static void sendmon(Client *c, Monitor *m);
@@ -20,9 +20,9 @@ index d27cb67..066ed71 100644
  }
  
  void
-+runAutostart(void) {
-+	system("cd ~/.dwm; ./autostart_blocking.sh");
-+	system("cd ~/.dwm; ./autostart.sh &");
++run_autostart(void) {
++	system("cd ~/.config/dwm; ./autostart_blocking.sh");
++	system("cd ~/.config/dwm; ./autostart.sh &");
 +}
 +
 +void
@@ -33,7 +33,7 @@ index d27cb67..066ed71 100644
  	checkotherwm();
  	setup();
  	scan();
-+	runAutostart();
++	run_autostart();
  	run();
  	cleanup();
  	XCloseDisplay(dpy);

@@ -1,0 +1,47 @@
+--- dwm.c	2019-02-02 13:55:28.000000000 +0100
++++ dwm.c.patch	2020-05-22 17:51:13.432133521 +0200
+@@ -227,6 +227,7 @@
+ static void updatewindowtype(Client *c);
+ static void updatewmhints(Client *c);
+ static void view(const Arg *arg);
++static void shiftview(const Arg *arg);
+ static Client *wintoclient(Window w);
+ static Monitor *wintomon(Window w);
+ static int xerror(Display *dpy, XErrorEvent *ee);
+@@ -2044,6 +2045,36 @@
+ 	arrange(selmon);
+ }
+ 
++void
++shiftview(const Arg *arg) {
++	Arg a;
++	Monitor *m;
++	Client *c;
++	unsigned visible = 0;
++	int i = arg->i;
++	int nextseltags, curseltags = selmon->tagset[selmon->seltags];
++
++	do {
++		if(i > 0) // left circular shift
++			nextseltags = (curseltags << i) | (curseltags >> (LENGTH(tags) - i));
++
++		else // right circular shift
++			nextseltags = curseltags >> (- i) | (curseltags << (LENGTH(tags) + i));
++
++		// Check if tag is visible
++		for (m = mons; m && !visible; m = m->next)
++			for (c = m->clients; c; c = c->next)
++				if (nextseltags & c->tags) {
++						visible = 1;
++						break;
++				}
++		i += arg->i;
++	} while (!visible);
++
++	a.i = nextseltags;
++	view(&a);
++}
++
+ Client *
+ wintoclient(Window w)
+ {

@@ -1,35 +1,38 @@
 #!/usr/bin/env sh
-while read file
+while read -r file
 do
-    case "$1" in
-    "w") setbg "$file" & ;;
+	case "$1" in
+	"w") setbg "$file" & ;;
     "c")
-		[ -z "$destdir" ] && destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/directories | awk '{print $2}' | dmenu -l 20 -i -p "Copy file(s) to where?" | sed "s|~|$HOME|g")"
-		[ -z "$destdir" ] && exit
+		destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/zsh/directories |
+			awk '{print $2}' | dmenu -l 20 -i -p "Copy file(s) to where?" | sed "s|~|$HOME|g")"
+		[ ! "$destdir" ] && exit
 		cp "$file" "$destdir" && notify-send -i "$(readlink -f "$file")" "$file copied to $destdir." &
 		;;
     "m")
-		[ -z "$destdir" ] && destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/directories | awk '{print $2}' | dmenu -l 20 -i -p "Move file(s) to where?" | sed "s|~|$HOME|g")"
-		[ -z "$destdir" ] && exit
+		destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/zsh/directories |
+			awk '{print $2}' | dmenu -l 20 -i -p "Move file(s) to where?" | sed "s|~|$HOME|g")"
+		[ ! "$destdir" ] && exit
 		mv "$file" "$destdir" && notify-send -i "$(readlink -f "$file")" "$file moved to $destdir." &
 		;;
+	"y")
+		printf %s "$file" | xclip -selection clipboard &&
+		notify-send "$file copied to clipboard" & ;;
+	"Y")
+		readlink -f "$file" | xclip -selection clipboard &&
+		notify-send "$(readlink -f "$file") copied to clipboard" & ;;
+	"C")
+		xclip -selection clipboard -t image/png -i "$(readlink -f "$file")" &&
+		notify-send -i "$(readlink -f "$file")" "Image copied to clipboard" & ;;
+	"d")
+		[ "$(printf "No\\nYes" | dmenu -i -p "Really delete $file?")" = "Yes" ] &&
+			rm "$file" && notify-send "$file deleted." ;;
 	"r")
 		convert -rotate 90 "$file" "$file" ;;
 	"R")
 		convert -rotate -90 "$file" "$file" ;;
 	"f")
 		convert -flop "$file" "$file" ;;
-	"y")
-		echo -n "$file" | xclip -selection clipboard &&
-		notify-send "$file copied to clipboard" & ;;
-	"Y")
-		readlink -f "$file" | xclip -selection clipboard &&
-		notify-send "$(readlink -f "$file") copied to clipboard" & ;;
-	# "C")
-	# 	xclip -selection clipboard -t image/png -i $(readlink -f "$file") &&
-	# 	notify-send -i $(readlink -f "$file") "Image copied to clipboard" & ;;
-	"d")
-		[ "$(printf "No\\nYes" | dmenu -i -p "Really delete $file?")" = "Yes" ] && rm "$file" && notify-send "$file deleted." ;;
 	"g") gimp "$file" & ;;
-        esac
+	esac
 done

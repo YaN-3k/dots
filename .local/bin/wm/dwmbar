@@ -44,8 +44,8 @@ volume() {
 	else
 		ico=""
 	fi
-	amixer get Master | grep -q '\[off\]' && vol="muted"
-	printf "%s %s%%" "$ico" "$vol"
+	amixer get Master | grep -q '\[off\]' && vol="muted" || vol="$vol%"
+	printf "%s %s" "$ico" "$vol"
 }
 
 mpd() {
@@ -64,7 +64,7 @@ news() {
 }
 
 torrents() {
-	data=$(transmission-remote -l | grep -E "%|n/a")
+	data=$(transmission-remote -l 2>/dev/null | grep -E "%|n/a")
 	[ "$data" ] || return
 	while read -r line; do
 		per="$(printf %s "$line" | awk '{ printf $2 }')"

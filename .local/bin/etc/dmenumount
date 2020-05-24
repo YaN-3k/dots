@@ -11,10 +11,10 @@ chosen="$(echo "$drives" | m -p "Mount" | cut -d ' ' -f 1)"
 [ "$chosen" ] || exit 1
 
 # /etc/fstab
-sudo -A mount "$chosen" 2>/dev/null && notify-send " USB mounting." "$chosen mounted." && exit 0
+sudo -A mount "$chosen" 2>/dev/null && notify-send " USB mounting." "$chosen mounted." && exit 0
 
 # select mount point
-mp="$(find /mnt -type d 2>/dev/null | m -p "Mount point")"
+mp="$(find /mnt -type d 2>/dev/null | m -p "Mount point" | sed "s|~|$HOME|g")"
 [ "$mp" ] || exit 1
 if [ ! -d "$mp" ]; then
 	create=$(printf "No\\nYes" | m -p "$mp does not exist. Create it?") || exit 1
@@ -24,6 +24,8 @@ fi
 type="$(lsblk -no "fstype" "$chosen")"
 case "$type" in
 	"vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;
-	*) sudo -A mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
+	*) sudo -A mount "$chosen" "$mp"
+	   user="$(whoami)"; ug="$(groups | awk '{print $1}')"
+	   sudo -A chown "$user":"$ug" "$mp";;
 esac
 notify-send " USB mounting" "$chosen mounted to $mp."

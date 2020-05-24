@@ -1,0 +1,27 @@
+diff --git a/slock.c b/slock.c
+index c9cdee2..03e191d 100644
+--- a/slock.c
++++ b/slock.c
+@@ -149,6 +149,22 @@ readpw(Display *dpy, const char *pws)
+ 			    IsPFKey(ksym) ||
+ 			    IsPrivateKeypadKey(ksym))
+ 				continue;
++			if (ev.xkey.state & ControlMask) {
++				switch (ksym) {
++				case XK_u:
++					ksym = XK_Escape;
++					break;
++				case XK_m:
++					ksym = XK_Return;
++					break;
++				case XK_j:
++					ksym = XK_Return;
++					break;
++				case XK_h:
++					ksym = XK_BackSpace;
++					break;
++				}
++			}
+ 			switch (ksym) {
+ 			case XK_Return:
+ 				passwd[len] = 0;

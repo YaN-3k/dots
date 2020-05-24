@@ -1,0 +1,260 @@
+From 97bdda00d211f989ee42c02a08e96b41800544f4 Mon Sep 17 00:00:00 2001
+From: "Avi Halachmi (:avih)" <avihpit@yahoo.com>
+Date: Sat, 18 Apr 2020 13:56:11 +0300
+Subject: [PATCH] application-sync: support Synchronized-Updates
+
+See https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec
+
+In a nutshell: allow an application to suspend drawing until it has
+completed some output - so that the terminal will not flicker/tear by
+rendering partial content. If the end-of-suspension sequence doesn't
+arrive, the terminal bails out after a timeout (default: 200 ms).
+
+The feature is supported and pioneered by iTerm2. There are probably
+very few other terminals or applications which support this feature
+currently.
+
+One notable application which does support it is tmux (master as of
+2020-04-18) - where cursor flicker is completely avoided when a pane
+has new content. E.g. run in one pane: `while :; do cat x.c; done'
+while the cursor is at another pane.
+
+The terminfo string `Sync' added to `st.info' is also a tmux extension
+which tmux detects automatically when `st.info` is installed.
+
+Notes:
+
+- Draw-suspension begins on BSU sequence (Begin-Synchronized-Update),
+  and ends on ESU sequence (End-Synchronized-Update).
+
+- BSU, ESU are "\033P=1s\033\\", "\033P=2s\033\\" respectively (DCS).
+
+- SU doesn't support nesting - BSU begins or extends, ESU always ends.
+
+- ESU without BSU is ignored.
+
+- BSU after BSU extends (resets the timeout), so an application could
+  send BSU in a loop and keep drawing suspended - exactly like it can
+  not-draw anything in a loop. But as soon as it exits/aborted then
+  drawing is resumed according to the timeout even without ESU.
+
+- This implementation focuses on ESU and doesn't really care about BSU
+  in the sense that it tries hard to draw exactly once ESU arrives (if
+  it's not too soon after the last draw - according to minlatency),
+  and doesn't try to draw the content just up-to BSU. These two sides
+  complement eachother - not-drawing on BSU increases the chance that
+  ESU is not too soon after the last draw. This approach was chosen
+  because the application's main focus is that ESU indicates to the
+  terminal that the content is now ready - and that's when we try to
+  draw.
+---
+ config.def.h |  6 ++++++
+ st.c         | 48 ++++++++++++++++++++++++++++++++++++++++++++++--
+ st.info      |  1 +
+ x.c          | 22 +++++++++++++++++++---
+ 4 files changed, 72 insertions(+), 5 deletions(-)
+
+diff --git a/config.def.h b/config.def.h
+index fdbacfd..d44c28e 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -52,6 +52,12 @@ int allowaltscreen = 1;
+ static double minlatency = 8;
+ static double maxlatency = 33;
+ 
++/*
++ * Synchronized-Update timeout in ms
++ * https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec
++ */
++static uint su_timeout = 200;
++
+ /*
+  * blinking timeout (set to 0 to disable blinking) for the terminal blinking
+  * attribute.
+diff --git a/st.c b/st.c
+index 0ce6ac2..d53b882 100644
+--- a/st.c
++++ b/st.c
+@@ -232,6 +232,33 @@ static uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
+ static Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
+ static Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
+ 
++#include <time.h>
++static int su = 0;
++struct timespec sutv;
++
++static void
++tsync_begin()
++{
++	clock_gettime(CLOCK_MONOTONIC, &sutv);
++	su = 1;
++}
++
++static void
++tsync_end()
++{
++	su = 0;
++}
++
++int
++tinsync(uint timeout)
++{
++	struct timespec now;
++	if (su && !clock_gettime(CLOCK_MONOTONIC, &now)
++	       && TIMEDIFF(now, sutv) >= timeout)
++		su = 0;
++	return su;
++}
++
+ ssize_t
+ xwrite(int fd, const char *s, size_t len)
+ {
+@@ -818,6 +845,9 @@ ttynew(char *line, char *cmd, char *out, char **args)
+ 	return cmdfd;
+ }
+ 
++static int twrite_aborted = 0;
++int ttyread_pending() { return twrite_aborted; }
++
+ size_t
+ ttyread(void)
+ {
+@@ -826,7 +856,7 @@ ttyread(void)
+ 	int ret, written;
+ 
+ 	/* append read bytes to unprocessed bytes */
+-	ret = read(cmdfd, buf+buflen, LEN(buf)-buflen);
++	ret = twrite_aborted ? 1 : read(cmdfd, buf+buflen, LEN(buf)-buflen);
+ 
+ 	switch (ret) {
+ 	case 0:
+@@ -834,7 +864,7 @@ ttyread(void)
+ 	case -1:
+ 		die("couldn't read from shell: %s\n", strerror(errno));
+ 	default:
+-		buflen += ret;
++		buflen += twrite_aborted ? 0 : ret;
+ 		written = twrite(buf, buflen, 0);
+ 		buflen -= written;
+ 		/* keep any incomplete UTF-8 byte sequence for the next call */
+@@ -995,6 +1025,7 @@ tsetdirtattr(int attr)
+ void
+ tfulldirt(void)
+ {
++	tsync_end();
+ 	tsetdirt(0, term.row-1);
+ }
+ 
+@@ -1901,6 +1932,12 @@ strhandle(void)
+ 		return;
+ 	case 'P': /* DCS -- Device Control String */
+ 		term.mode |= ESC_DCS;
++		/* https://gitlab.com/gnachman/iterm2/-/wikis/synchronized-updates-spec */
++		if (strstr(strescseq.buf, "=1s") == strescseq.buf)
++			tsync_begin(), term.mode &= ~ESC_DCS;  /* BSU */
++		else if (strstr(strescseq.buf, "=2s") == strescseq.buf)
++			tsync_end(), term.mode &= ~ESC_DCS;  /* ESU */
++		return;
+ 	case '_': /* APC -- Application Program Command */
+ 	case '^': /* PM -- Privacy Message */
+ 		return;
+@@ -2454,6 +2491,9 @@ twrite(const char *buf, int buflen, int show_ctrl)
+ 	Rune u;
+ 	int n;
+ 
++	int su0 = su;
++	twrite_aborted = 0;
++
+ 	for (n = 0; n < buflen; n += charsize) {
+ 		if (IS_SET(MODE_UTF8) && !IS_SET(MODE_SIXEL)) {
+ 			/* process a complete utf8 char */
+@@ -2464,6 +2504,10 @@ twrite(const char *buf, int buflen, int show_ctrl)
+ 			u = buf[n] & 0xFF;
+ 			charsize = 1;
+ 		}
++		if (su0 && !su) {
++			twrite_aborted = 1;
++			break;  // ESU - allow rendering before a new BSU
++		}
+ 		if (show_ctrl && ISCONTROL(u)) {
+ 			if (u & 0x80) {
+ 				u &= 0x7f;
+diff --git a/st.info b/st.info
+index e2abc98..0a781db 100644
+--- a/st.info
++++ b/st.info
+@@ -188,6 +188,7 @@ st-mono| simpleterm monocolor,
+ 	Ms=\E]52;%p1%s;%p2%s\007,
+ 	Se=\E[2 q,
+ 	Ss=\E[%p1%d q,
++	Sync=\EP=%p1%ds\E\\,
+ 
+ st| simpleterm,
+ 	use=st-mono,
+diff --git a/x.c b/x.c
+index cbbd11f..38b08a8 100644
+--- a/x.c
++++ b/x.c
+@@ -1861,6 +1861,9 @@ resize(XEvent *e)
+ 	cresize(e->xconfigure.width, e->xconfigure.height);
+ }
+ 
++int tinsync(uint);
++int ttyread_pending();
++
+ void
+ run(void)
+ {
+@@ -1895,7 +1898,7 @@ run(void)
+ 		FD_SET(ttyfd, &rfd);
+ 		FD_SET(xfd, &rfd);
+ 
+-		if (XPending(xw.dpy))
++		if (XPending(xw.dpy) || ttyread_pending())
+ 			timeout = 0;  /* existing events might not set xfd */
+ 
+ 		seltv.tv_sec = timeout / 1E3;
+@@ -1909,7 +1912,8 @@ run(void)
+ 		}
+ 		clock_gettime(CLOCK_MONOTONIC, &now);
+ 
+-		if (FD_ISSET(ttyfd, &rfd))
++		int ttyin = FD_ISSET(ttyfd, &rfd) || ttyread_pending();
++		if (ttyin)
+ 			ttyread();
+ 
+ 		xev = 0;
+@@ -1933,7 +1937,7 @@ run(void)
+ 		 * maximum latency intervals during `cat huge.txt`, and perfect
+ 		 * sync with periodic updates from animations/key-repeats/etc.
+ 		 */
+-		if (FD_ISSET(ttyfd, &rfd) || xev) {
++		if (ttyin || xev) {
+ 			if (!drawing) {
+ 				trigger = now;
+ 				drawing = 1;
+@@ -1944,6 +1948,18 @@ run(void)
+ 				continue;  /* we have time, try to find idle */
+ 		}
+ 
++		if (tinsync(su_timeout)) {
++			/*
++			 * on synchronized-update draw-suspension: don't reset
++			 * drawing so that we draw ASAP once we can (just after
++			 * ESU). it won't be too soon because we already can
++			 * draw now but we skip. we set timeout > 0 to draw on
++			 * SU-timeout even without new content.
++			 */
++			timeout = minlatency;
++			continue;
++		}
++
+ 		/* idle detected or maxlatency exhausted -> draw */
+ 		timeout = -1;
+ 		if (blinktimeout && tattrset(ATTR_BLINK)) {
+
+base-commit: 43a395ae91f7d67ce694e65edeaa7bbc720dd027
+prerequisite-patch-id: d7d5e516bc74afe094ffbfc3edb19c11d49df4e7
+-- 
+2.17.1
+

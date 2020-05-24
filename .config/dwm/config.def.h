@@ -1,8 +1,4 @@
 /* See LICENSE file for copyright and license details. */
-#ifndef CONFIG_H_
-#define CONFIG_H_
-
-#include "dwm.h"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -12,13 +8,16 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Terminus:size=10", "Font Awesome 5 Free Solid:size=8" };
 static const char dmenufont[]       = "Terminus:size=10";
-static const char col_bg[]          = "#161821";
-static const char col_fg[]          = "#bbbbbb";
-static const char col_sel[]         = "#84a0c6";
-static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_fg,    col_bg,    col_bg },
-	[SchemeSel]  = { col_bg,    col_sel,   col_sel  },
+static char normbgcolor[]           = "#222222";
+static char normbordercolor[]       = "#444444";
+static char normfgcolor[]           = "#bbbbbb";
+static char selfgcolor[]            = "#eeeeee";
+static char selbordercolor[]        = "#005577";
+static char selbgcolor[]            = "#005577";
+static char *colors[][3] = {
+       /*               fg           bg           border   */
+       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -62,10 +61,8 @@ static const Layout layouts[] = {
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
-	{ MOD, XK_v,     ACTION##stack, {.i = 0 } }, \
-	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
-	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
-	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
+	/*{ MOD, XK_f,     ACTION##stack, {.i = 0 } },*/
+	/*{ MOD, XK_x,     ACTION##stack, {.i = -1 } },*/
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -79,20 +76,23 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 
+  /* realod colorscheme */
+	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
+
 	/* layouts */
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[2]} },
-
-	/* toggle* */
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
-	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_space,  zoom,           {0} },
 
 	/* window managment */
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
+
+	{ MODKEY|ControlMask,           XK_j,      shiftview,      {.i = +1 } },
+  { MODKEY|ControlMask,           XK_k,      shiftview,      {.i = -1 } },
 
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,      incnmaster,     {.i = -1 } },
@@ -115,9 +115,6 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_minus,  setgaps,        {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_0,      setgaps,        {.i = 0  } },
-
-	{ MODKEY|ControlMask,              XK_j,      shiftview,      {.i = +1 } },
-  { MODKEY|ControlMask,              XK_k,      shiftview,      {.i = -1 } },
 
 	/* programs */
 	{ MODKEY,                       XK_q,      killclient,     {0} },
@@ -279,5 +276,3 @@ static Signal signals[] = {
 	{ "setlayout",      setlayout },
 	{ "setlayoutex",    setlayoutex },
 };
-
-#endif

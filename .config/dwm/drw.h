@@ -1,12 +1,4 @@
 /* See LICENSE file for copyright and license details. */
-#ifndef DRW_H_
-#define DRW_H_
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <X11/Xlib.h>
-#include <X11/Xft/Xft.h>
 
 typedef struct {
 	Cursor cursor;
@@ -47,7 +39,7 @@ void drw_font_getexts(Fnt *font, const char *text, unsigned int len, unsigned in
 
 /* Colorscheme abstraction */
 void drw_clr_create(Drw *drw, Clr *dest, const char *clrname);
-Clr *drw_scm_create(Drw *drw, const char *clrnames[], size_t clrcount);
+Clr *drw_scm_create(Drw *drw, char *clrnames[], size_t clrcount);
 
 /* Cursor abstraction */
 Cur *drw_cur_create(Drw *drw, int shape);
@@ -63,5 +55,3 @@ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned in
 
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
-
-#endif

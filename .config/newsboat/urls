@@ -1,4 +1,6 @@
-http://lukesmith.xyz/rss.xml
-https://notrelated.libsyn.com/rss
-https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "~Luke Smith (YouTube)"
-https://www.archlinux.org/feeds/news/
+http://lukesmith.xyz/rss.xml "luke smith"
+https://notrelated.libsyn.com/rss "luke smith"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA "luke smith" "~Luke Smith (YouTube)"
+https://suckless.org/atom.xml "linux"
+https://www.archlinux.org/feeds/news/ "linux"
+https://gynvael.coldwind.pl/rss_pl.php "tech" "~Gynvael Coldwind"
