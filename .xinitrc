@@ -11,7 +11,7 @@ mpd &
 
 # bspwm
 #sxhkd &
-#~/.config/polybar/launch.sh ice &
+#launch_polybar &
 #exec bspwm
 
 # dwm

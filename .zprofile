@@ -12,7 +12,7 @@ export PATH="$PATH:$HOME/.config/fzf/fzf/bin/:$(du "$HOME/.local/bin/" | cut -f2
 
 # Default programs:
 export EDITOR="nvim -p"
-export TERMINAL="urxvt"
+export TERMINAL="st"
 export READER="zathura"
 export FILE="vifm"
 export BROWSER="qutebrowser"
