@@ -17,3 +17,5 @@ application/rss+xml=rss.desktop
 video/x-matroska=video.desktop
 x-scheme-handler/lbry=lbry.desktop
 inode/directory=file.desktop
+x-scheme-handler/http=linkhandler.desktop
+x-scheme-handler/https=linkhandler.desktop

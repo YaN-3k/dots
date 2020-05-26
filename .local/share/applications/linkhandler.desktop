@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Link handler
+Exec=/usr/bin/env linkhandler %u
