@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Feed this script a link and it will give dmenu
+# some choice programs to use to open it.
+
+opt="copy url
+mpv
+mpv (loop) 
+mpv (float)
+download
+youtube-dl
+sxiv
+browser
+w3m"
+
+program="$(printf %b "$opt" | ${DMENU:-dmenu} -i -p "Open with")"
+
+case $program in
+	"copy url") printf %s "$1" | xclip -selection clipboard ;;
+	mpv) setsid mpv -quiet "$1" >/dev/null 2>&1 & ;;
+	"mpv (loop)") setsid mpv -quiet --loop "$1" >/dev/null 2>&1 & ;;
+	"mpv (float)") setsid mpv --geometry=+0-0 --autofit=30%  --title="float" "$1" >/dev/null 2>&1 & ;;
+	download) (cd ~/.local/dl && curl -LO "$1" >/dev/null 2>&1) & ;;
+	youtube-dl) (cd ~/.local/dl && youtube-dl --add-metadata -ic "$1" >/dev/null 2>&1) ;;
+	browser) setsid "$BROWSER" "$1" >/dev/null 2>&1 & ;;
+	sxiv) curl -sL "$1" > "/tmp/$(echo "$1" | sed "s/.*\///")" && sxiv -a "/tmp/$(echo "$1" | sed "s/.*\///")"  >/dev/null 2>&1 &;;
+	w3m) w3m "$1" >/dev/null 2>&1 ;;
+esac

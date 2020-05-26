@@ -1,6 +1,5 @@
 #show-read-feeds no
 auto-reload yes
-
 external-url-viewer "urlscan -dc -r 'linkhandler {}'"
 
 bind-key j down
@@ -32,9 +31,9 @@ color article             white   default
 
 browser linkhandler
 macro , open-in-browser
-macro t set browser "tsp youtube-dl --add-metadata -ic"; open-in-browser ; set browser linkhandler
-macro a set browser "tsp youtube-dl --add-metadata -xic -f bestaudio/best"; open-in-browser ; set browser linkhandler
-macro v set browser "setsid nohup mpv"; open-in-browser ; set browser linkhandler
+macro t set browser "setsid youtube-dl --add-metadata -ic"; open-in-browser ; set browser linkhandler
+macro a set browser "setsid youtube-dl --add-metadata -xic -f bestaudio/best"; open-in-browser ; set browser linkhandler
+macro v set browser "setsid mpv"; open-in-browser ; set browser linkhandler
 macro w set browser "w3m"; open-in-browser ; set browser linkhandler
 macro p set browser "dmenuhandler"; open-in-browser ; set browser linkhandler
 macro c set browser "xclip -sel clip <<<" ; open-in-browser ; set browser linkhandler
