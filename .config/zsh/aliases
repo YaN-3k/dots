@@ -20,7 +20,6 @@ alias ir='irssi --home "$XDG_CONFIG_HOME"/irssi'
 alias irssi='irssi --home "$XDG_CONFIG_HOME"/irssi'
 alias nc='ncmpcpp 2>/dev/null'
 alias ra='ranger'
-alias vf='vifmrun'
 alias nm='neomutt'
 alias ab='abook -C "$XDG_CONFIG_HOME"/abook/abookrc --datafile "$XDG_CONFIG_HOME"/abook/addressbook'
 alias ss="sudo systemctl"

@@ -30,16 +30,6 @@ set nohlsearch      " Don't highlight search results automatically
 set incsearch       " Use increment searching (search while typing)
 set scrolloff=4     " Try to leave some space from cursor to upper/lower border in lists
 
-" don't do too many requests to slow file systems
-if !has('win')
-    set slowfs=curlftpfs
-endif
-
-" what should be saved automatically between vifm runs
-" like in previous versions of vifm
-set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
-    \phistory,fhistory,dirstack,registers,bookmarks,bmarks
-
 " :com[mand][!] command_name action
 " rhe following macros can be used in a command
 " %a is replaced with the user arguments.
@@ -54,6 +44,10 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 
 " sample mappings
 " split
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
 map <C-o> <C-w>o
 map <C-s> <C-w>s
 map <C-v> <C-w>v
@@ -84,10 +78,10 @@ nnoremap w :view<cr>
 nnoremap go :!xdg-open %c&<cr>
 
 " yank current directory path into the clipboard
-nnoremap yd :!echo %d | xclip -selection clipboard<cr>
+nnoremap yd :!printf %%s %d | xclip -selection clipboard<cr>
 
 " yank current file path into the clipboard
-nnoremap yf :!echo %c:p | xclip -selection clipboard<cr>
+nnoremap yf :!printf %%s %c:p | xclip -selection clipboard<cr>
 
 " set wallpaper
 map bg :!setbg %f &<CR>
@@ -106,20 +100,10 @@ nnoremap ,c :edit $MYVIFMRC | restart<cr>
 " toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
 
-" example of standard two-panel file managers mappings
-nnoremap <f3> :!less %f<cr>
-nnoremap <f4> :edit<cr>
-nnoremap <f5> :copy<cr>
-nnoremap <f6> :move<cr>
-nnoremap <f7> :mkdir<space>
-nnoremap <f8> :delete<cr>
-
 command! df df -h %m 2> /dev/null
-command! diff nvim -d %f %F
+command! diff nvim -d %f
 command! zip zip -r %f.zip %f
-command! run !! ./%f
 command! make !!make %a
-command! vgrep vim "+grep %a"
 command! reload :write | restart
 
 " fuzzy finding
