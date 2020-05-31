@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# If transmission-daemon is running, will ask to kill, else will ask to start.
+
+if pidof transmission-daemon >/dev/null 2>&1; then
+	prompt "Turn of transmission?" && killall transmission-da && notify-send "transmission-daemon disabled."
+else
+	command -v transmission-cli >/dev/null 2>&1 || exit
+	prompt "Turn on transmission?" && transmission-daemon && notify-send "tranmission-daemon enabled."
+fi
