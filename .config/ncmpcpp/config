@@ -19,7 +19,7 @@ message_delay_time = 2
 autocenter_mode = "yes"
 centered_cursor = "yes"
 ignore_leading_the = "yes"
-allow_for_physical_item_deletion = "no"
+allow_for_physical_item_deletion = "yes"
 external_editor = "nvim"
 default_place_to_search_in = "database"
 
