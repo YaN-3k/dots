@@ -13,7 +13,7 @@ hi clear
 syntax clear
 set background=dark
 let g:colors_name='iceberg'
-"}}}
+" }}}
 
 " basic {{{
 hi Normal       ctermbg=none   ctermfg=15     cterm=none
@@ -58,7 +58,7 @@ hi DiffText     ctermbg=none   ctermfg=7      cterm=none
 hi diffAdded    ctermbg=none   ctermfg=2      cterm=none
 hi diffRemoved  ctermbg=none   ctermfg=1      cterm=none
 hi diffSubname  ctermbg=none   ctermfg=3      cterm=none
-"}}}
+" }}}
 
 " language syntax {{{
 hi Comment      ctermbg=none   ctermfg=8      cterm=none
@@ -95,11 +95,11 @@ hi Error        ctermbg=none   ctermfg=1      cterm=bold
 hi Todo         ctermbg=none   ctermfg=3      cterm=bold
 hi Statement    ctermbg=none   ctermfg=4      cterm=bold
 hi Include      ctermbg=none   ctermfg=5      cterm=none
-"}}}
+" }}}
 
 " c/cpp {{{
 hi cBlock                 ctermbg=none   ctermfg=none   cterm=none
-"}}}
+" }}}
 
 " sh {{{
 hi shStatement            ctermbg=none   ctermfg=4      cterm=none
@@ -108,11 +108,11 @@ hi shOperator             ctermbg=none   ctermfg=7      cterm=none
 hi shQuote                ctermbg=none   ctermfg=6      cterm=none
 hi shFunctionKey          ctermbg=none   ctermfg=3      cterm=none
 hi shOption               ctermbg=none   ctermfg=2      cterm=none
-"}}}
+" }}}
 
 " vim syntx {{{
 hi vimHiGroup             ctermbg=none   ctermfg=6      cterm=none
-"}}}
+" }}}
 
 " markdown {{{
 hi htmlItalic             ctermbg=none   ctermfg=none   cterm=italic
@@ -123,21 +123,21 @@ hi Delimiter              ctermbg=none   ctermfg=none   cterm=none
 hi markdownCode           ctermbg=none   ctermfg=5      cterm=none
 hi markdownBlockquote     ctermbg=none   ctermfg=3      cterm=none
 hi markdownCodeDelimiter  ctermbg=none   ctermfg=5      cterm=none
-"}}}
+" }}}
 
 " linting {{{
 hi ALEWarning             ctermbg=none   ctermfg=3      cterm=underline
 hi ALEError               ctermbg=none   ctermfg=1      cterm=underline
 hi ALEWarningSign         ctermbg=none   ctermfg=3      cterm=bold
 hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=bold
-"}}}
+" }}}
 
 " git {{{
 hi GitGutterChange        ctermbg=none   ctermfg=3      cterm=bold
 hi GitGutterAdd           ctermbg=none   ctermfg=2      cterm=bold
 hi GitGutterDelete        ctermbg=none   ctermfg=1      cterm=bold
 hi GitGutterChangeDelete  ctermbg=none   ctermfg=5      cterm=bold
-"}}}
+" }}}
 
 " vim wiki {{{
 hi VimwikiHeader1         ctermfg=1
@@ -146,8 +146,8 @@ hi VimwikiHeader3         ctermfg=3
 hi VimwikiHeader4         ctermfg=4
 hi VimwikiHeader5         ctermfg=5
 hi VimwikiHeader6         ctermfg=6
-"}}}
-"}}}
+" }}}
+" }}}
 
 " statusline {{{
 "
@@ -296,6 +296,6 @@ hi MyStatuslineFiletype     ctermbg=0      ctermfg=5      cterm=italic
 hi Reset                    ctermbg=none   ctermfg=none   cterm=none
 hi MyStatuslineSeparator    ctermbg=none   ctermfg=0      cterm=reverse
 " }}}
-"}}}
+" }}}
 
 " vim: fdm=marker

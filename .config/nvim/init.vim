@@ -30,7 +30,7 @@ set updatetime=100
 
 " encoding
 scriptencoding utf-8
-"}}}
+" }}}
 
 " looks {{{
 color iceberg
@@ -95,8 +95,8 @@ hi OverLength             ctermbg=none   ctermfg=1      cterm=underline
 "set foldlevel=99
 "set foldminlines=99
 "set foldlevelstart=99
-"}}}
-"}}}
+" }}}
+" }}}
 
 " indentation {{{
 filetype plugin indent on
@@ -116,7 +116,7 @@ augroup langindentation
 	autocmd Filetype scss       setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 	autocmd Filetype yaml       setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 augroup END
-"}}}
+" }}}
 
 " searching {{{
 set hlsearch
@@ -128,7 +128,7 @@ set smartcase
 
 " disable hlsearch
 nnoremap <silent><C-s> :noh<cr>:echo<cr>
-"}}}
+" }}}
 
 " buffers {{{
 set hidden
@@ -164,7 +164,7 @@ nnoremap <C-h> <C-w><C-h>
 
 nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-"}}}
+" }}}
 
 " wildmenu {{{
 " find
@@ -186,7 +186,7 @@ set wildignore+=*.eot,*.otf,*.ttf,*.woff
 set wildignore+=*.doc,*.pdf,*.cbr,*.cbz
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.kgb
 set wildignore+=*.swp,.lock,.DS_Store,._*
-"}}}
+" }}}
 
 " netrw {{{
 " netrw settings
@@ -242,8 +242,8 @@ augroup netrw_mappings
 	autocmd!
 	autocmd filetype netrw call NetrwMappings()
 augroup END
-"}}}
-"}}}
+" }}}
+" }}}
 
 " mapping {{{
 " switch to normal mode
@@ -305,7 +305,7 @@ augroup BufferWrite
 	" reload vim when configuration is updated
 	autocmd BufWritePost init.vim,iceberg.vim source $MYVIMRC
 augroup end
-"}}}
+" }}}
 
 " plugins {{{
 " setup {{{
@@ -320,37 +320,37 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
 		autocmd VimEnter * PlugInstall
 	augroup end
 endif
-"}}}
+" }}}
 
 " load {{{
 call plug#begin('~/.config/nvim/bundle')
 
 " syntax hl {{{
 Plug 'sheerun/vim-polyglot'
-"}}}
+" }}}
 
 " autocompletion {{{
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/deoplete-clangx'
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'deoplete-plugins/deoplete-zsh'
-"}}}
+" }}}
 
 " linting {{{
 Plug 'dense-analysis/ale'
-"}}}
+" }}}
 
 " snippets {{{
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-"}}}
+" }}}
 
 " git integration {{{
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'mattn/emmet-vim'
-"}}}
+" }}}
 
 " features {{{
 " show colors preview
@@ -375,10 +375,10 @@ Plug 'vimwiki/vimwiki'
 Plug 'wikitopian/hardmode'
 "Plug '~/.config/fzf/fzf'
 "Plug 'junegunn/fzf.vim'
-""}}}
+"" }}}
 
 call plug#end()
-"}}}
+" }}}
 
 " linting {{{
 let g:ale_linters = {
@@ -422,14 +422,14 @@ nnoremap <Leader>aN :ALEPrevious<cr>
 nnoremap <Leader>ad :ALEDetail<cr>
 nnoremap <Leader>ag :ALEGoToDefinitionInSplit<cr>
 nnoremap <Leader>aG :ALEGoToDefinition<cr>
-"}}}
+" }}}
 
 " autocompletion {{{
 " tab completion {{{
 inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 inoremap <A-tab> <tab>
-"}}}
+" }}}
 
 " deoplete {{{
 let g:deoplete#enable_at_startup = 1
@@ -455,8 +455,8 @@ nnoremap <Leader>d :call deoplete#toggle()<cr>
 " python paths, needed for virtualenvs
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
-"}}}
-"}}}
+" }}}
+" }}}
 
 " git {{{
 let g:gitgutter_max_signs = 1500
@@ -476,7 +476,7 @@ nnoremap gN :GitGutterPrevHunk<cr>
 nnoremap gs :GitGutterStageHunk<cr>
 nnoremap gu :GitGutterUndoHunk<cr>
 nnoremap gp :GitGutterPreviewHunk<cr>
-"}}}
+" }}}
 
 " snippets {{{
 " UltiSnips
@@ -484,7 +484,7 @@ let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsExpandTrigger='<C-e>'
 let g:UltiSnipsJumpForwardTrigger='<C-f>'
 let g:UltiSnipsJumpBackwardTrigger='<C-b>'
-"}}}
+" }}}
 
 " fuzzy searching {{{
 " fzf colors
@@ -519,7 +519,7 @@ let g:ctrlp_follow_symlinks = 1
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_map = '<c-p>'
 nnoremap <Tab> :CtrlPBuffer<cr>
-"}}}
+" }}}
 
 " vimwiki {{{
 let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
@@ -528,8 +528,8 @@ augroup vimwiki
 	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 	autocmd BufRead,BufNewFile *.tex set filetype=tex
 augroup end
-"}}}
-"}}}
+" }}}
+" }}}
 
 " feature {{{
 " restore cursor position {{{
@@ -567,7 +567,7 @@ augroup resCur
     autocmd BufWinEnter * call ResCur()
   endif
 augroup END
-"}}}
+" }}}
 
 " zoom {{{
 map <leader>z :call Zoom()<cr>
@@ -586,7 +586,7 @@ function! Zoom() abort
 		execute 'silent !tmux resize-pane -Z'
 	endif
 endfunction
-"}}}
+" }}}
 
 " toggle statusbar {{{
 nnoremap <silent><S-T> :call ToggleHiddenAll()<cr>
@@ -606,7 +606,7 @@ function! ToggleHiddenAll()
 		set noshowmode
 	endif
 endfunction
-"}}}
+" }}}
 
 " show syntax highlighting groups {{{
 nmap <silent><F10> :call <SID>SynStack()<CR>
@@ -616,7 +616,7 @@ function! <SID>SynStack()
 	endif
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-"}}}
-"}}}
+" }}}
+" }}}
 
 " vim: fdm=marker

@@ -36,7 +36,6 @@ super + {_,shift +} u
 # Un/Hide the currently active node
 super + {_,shift +} w
 	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
-
 # }}}
 
 # MOVE/RESIZE {{{
@@ -104,7 +103,6 @@ alt + ctrl + s
 # Resize gaps
 ctrl + alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
-
 # }}}
 
 # DESKTOP {{{
@@ -127,7 +125,6 @@ super + {_,shift + }{1-9,0}
 # Move node to the left, rigt desktop
 #ctrl + shift + {h,l}
 #    bspc node --to-desktop {prev,next} --focus
-
 # }}}
 
 # LAYOUTS {{{
@@ -150,7 +147,6 @@ super + {_,shift + }space
 # Make the split ratios equal/balanced
 super + shift + {e,b}
 	bspc node @/ {--equalize,--balance}
-
 # }}}
 
 # PRESELECTION {{{
@@ -175,7 +171,6 @@ super + y
 # Send the newest marked node to the newest preselected node
 super + shift + y
 	bspc node newest.marked -n newest.!automatic.local
-
 # }}}
 
 # APPLICATION {{{{
@@ -215,7 +210,6 @@ alt + e
 # Show help
 super + F2
 	$TERMINAL -n float -e show_help
-
 # }}}
 
 # BACKLIGHT/AUDIO {{{
@@ -254,7 +248,6 @@ alt  + {_,shift +} equal
 	{brightness up, sudo -A keybacklight -inc}
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
 	{brightness down,brightness up}
-
 # }}}
 
 # SCRIPTS {{{
@@ -327,7 +320,6 @@ super + ctrl + n
 # Open terminal if desktop is empty
 ~button1
 	click_desktop
-
 # }}}
 
 # MEDIA KEYS {{{
@@ -344,7 +336,6 @@ XF86Audio{Rewind,Forward}
 	mpc seek {-,+}10
 XF86AudioMedia
 	$TERMINAL -e ncmpcpp
-
 # }}}
 
 # vim: fdm=marker
