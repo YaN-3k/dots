@@ -7,7 +7,7 @@
 #  ██████  ██ ░░██░██  ░██░██░░██░░██████
 # ░░░░░░  ░░   ░░ ░░   ░░ ░░  ░░  ░░░░░░
 
-# STATE/FLAGS {{
+# STATE/FLAGS {{{
 # Switch the node state on tiled - floating
 super + t
 	bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
@@ -37,9 +37,9 @@ super + {_,shift +} u
 super + {_,shift +} w
 	{dmenuhidden,bspc node -g sticky; bspc node -g hidden}
 
-# }}
+# }}}
 
-# MOVE/RESIZE {{
+# MOVE/RESIZE {{{
 # focus/swap the node in the given direction
 #super + {_,shift + }{h,j,k,l}
 #	bspc node -{f,s} {west,south,north,east}
@@ -105,9 +105,9 @@ alt + ctrl + s
 ctrl + alt + g: {k,j}
       bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
-# }}
+# }}}
 
-# DESKTOP {{
+# DESKTOP {{{
 # Focus the next/previous desktop
 super + {_,shift + }Tab
 	bspc desktop --focus {next,prev}.occupied
@@ -128,9 +128,9 @@ super + {_,shift + }{1-9,0}
 #ctrl + shift + {h,l}
 #    bspc node --to-desktop {prev,next} --focus
 
-# }}
+# }}}
 
-# LAYOUTS {{
+# LAYOUTS {{{
 # Flip the layout vertically/horizontally
 super + {v,b}
 	bspc node @/ --flip {vertical,horizontal}
@@ -151,9 +151,9 @@ super + {_,shift + }space
 super + shift + {e,b}
 	bspc node @/ {--equalize,--balance}
 
-# }}
+# }}}
 
-# PRESELECTION {{
+# PRESELECTION {{{
 # Make a new split
 alt + shift + {h,j,k,l}
 	bspc node -p {west,south,north,east}
@@ -176,9 +176,9 @@ super + y
 super + shift + y
 	bspc node newest.marked -n newest.!automatic.local
 
-# }}
+# }}}
 
-# APPLICATION {{
+# APPLICATION {{{{
 # Close/Kill the node
 super + {_,shift + }q
 	bspc node -{c,k}
@@ -216,9 +216,9 @@ alt + e
 super + F2
 	$TERMINAL -n float -e show_help
 
-# }}
+# }}}
 
-# BACKLIGHT/AUDIO {{
+# BACKLIGHT/AUDIO {{{
 # increase the volume (mpd or alsa)
 super + {equal,shift + plus}
 	{volume alsa up,volume mpc up}
@@ -255,9 +255,9 @@ alt  + {_,shift +} equal
 {XF86MonBrightnessDown,XF86MonBrightnessUp}
 	{brightness down,brightness up}
 
-# }}
+# }}}
 
-# SCRIPTS {{
+# SCRIPTS {{{
 # Open the menu for mpd
 super + ctrl + slash
 	dmenumpd
@@ -328,9 +328,9 @@ super + ctrl + n
 ~button1
 	click_desktop
 
-# }}
+# }}}
 
-# MEDIA KEYS {{
+# MEDIA KEYS {{{
 # Audiokeys
 XF86AudioMute
 	amixer sset Master toggle
@@ -345,6 +345,6 @@ XF86Audio{Rewind,Forward}
 XF86AudioMedia
 	$TERMINAL -e ncmpcpp
 
-# }}
+# }}}
 
-# vim: set foldmarker={{,}} foldlevel=0 foldmethod=marker nospell:
+# vim: fdm=marker

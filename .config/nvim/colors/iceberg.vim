@@ -2,11 +2,20 @@
 " ┃┃  ┣━ ┃━┃┣━ ┃┳┛┃ ┳
 " ┇┗━┛┻━┛┇━┛┻━┛┇┗┛┇━┛
 
+" syntax {{{
+"
+" ┓━┓┓ ┳┏┓┓┏┓┓┳━┓┓ ┃
+" ┗━┓┗┏┛┃┃┃ ┃ ┃━┫┏╋┛
+" ━━┛ ┇ ┇┗┛ ┇ ┛ ┇┇ ┗
+"
+" setup {{{
 hi clear
 syntax clear
 set background=dark
 let g:colors_name='iceberg'
+"}}}
 
+" basic {{{
 hi Normal       ctermbg=none   ctermfg=15     cterm=none
 hi Cursor       ctermbg=none   ctermfg=15     cterm=none
 hi Directory    ctermbg=none   ctermfg=4      cterm=none
@@ -31,7 +40,7 @@ hi TabLineSel   ctermbg=0      ctermfg=4      cterm=bold
 hi TabLineFill  ctermbg=none   ctermfg=none   cterm=none
 hi Title        ctermbg=none   ctermfg=15     cterm=none
 hi Visual       ctermbg=0      ctermfg=none   cterm=none
-hi WildMenu     ctermbg=none   ctermfg=4      cterm=none
+hi WildMenu     ctermbg=8      ctermfg=0      cterm=none
 hi WarningMsg   ctermbg=none   ctermfg=11     cterm=none
 hi EndOfBuffer  ctermbg=none   ctermfg=0      cterm=none
 hi CursorLine   ctermbg=0      ctermfg=none   cterm=none
@@ -49,8 +58,9 @@ hi DiffText     ctermbg=none   ctermfg=7      cterm=none
 hi diffAdded    ctermbg=none   ctermfg=2      cterm=none
 hi diffRemoved  ctermbg=none   ctermfg=1      cterm=none
 hi diffSubname  ctermbg=none   ctermfg=3      cterm=none
+"}}}
 
-" language syntax
+" language syntax {{{
 hi Comment      ctermbg=none   ctermfg=8      cterm=none
 hi Constant     ctermbg=none   ctermfg=5      cterm=none
 hi String       ctermbg=none   ctermfg=6      cterm=none
@@ -85,22 +95,26 @@ hi Error        ctermbg=none   ctermfg=1      cterm=bold
 hi Todo         ctermbg=none   ctermfg=3      cterm=bold
 hi Statement    ctermbg=none   ctermfg=4      cterm=bold
 hi Include      ctermbg=none   ctermfg=5      cterm=none
+"}}}
 
-" c/cpp
+" c/cpp {{{
 hi cBlock                 ctermbg=none   ctermfg=none   cterm=none
+"}}}
 
-" sh
+" sh {{{
 hi shStatement            ctermbg=none   ctermfg=4      cterm=none
 hi shFunction             ctermbg=none   ctermfg=7      cterm=none
 hi shOperator             ctermbg=none   ctermfg=7      cterm=none
 hi shQuote                ctermbg=none   ctermfg=6      cterm=none
 hi shFunctionKey          ctermbg=none   ctermfg=3      cterm=none
 hi shOption               ctermbg=none   ctermfg=2      cterm=none
+"}}}
 
-" vim syntx
+" vim syntx {{{
 hi vimHiGroup             ctermbg=none   ctermfg=6      cterm=none
+"}}}
 
-" markdown
+" markdown {{{
 hi htmlItalic             ctermbg=none   ctermfg=none   cterm=italic
 hi htmlBold               ctermbg=none   ctermfg=7      cterm=bold
 hi markdownLinkText       ctermbg=none   ctermfg=7      cterm=underline
@@ -109,30 +123,179 @@ hi Delimiter              ctermbg=none   ctermfg=none   cterm=none
 hi markdownCode           ctermbg=none   ctermfg=5      cterm=none
 hi markdownBlockquote     ctermbg=none   ctermfg=3      cterm=none
 hi markdownCodeDelimiter  ctermbg=none   ctermfg=5      cterm=none
+"}}}
 
-" ALE - Asynchronous Lint Engine
+" linting {{{
 hi ALEWarning             ctermbg=none   ctermfg=3      cterm=underline
 hi ALEError               ctermbg=none   ctermfg=1      cterm=underline
 hi ALEWarningSign         ctermbg=none   ctermfg=3      cterm=bold
 hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=bold
+"}}}
 
-" git gutter
+" git {{{
 hi GitGutterChange        ctermbg=none   ctermfg=3      cterm=bold
 hi GitGutterAdd           ctermbg=none   ctermfg=2      cterm=bold
 hi GitGutterDelete        ctermbg=none   ctermfg=1      cterm=bold
 hi GitGutterChangeDelete  ctermbg=none   ctermfg=5      cterm=bold
+"}}}
 
-" vim wiki
+" vim wiki {{{
 hi VimwikiHeader1         ctermfg=1
 hi VimwikiHeader2         ctermfg=2
 hi VimwikiHeader3         ctermfg=3
 hi VimwikiHeader4         ctermfg=4
 hi VimwikiHeader5         ctermfg=5
 hi VimwikiHeader6         ctermfg=6
+"}}}
+"}}}
 
-" line highlighting if it is longer than 80 characters
-hi OverLength             ctermbg=none   ctermfg=1      cterm=underline
-"match OverLength /\%81v.\+/
+" statusline {{{
+"
+" ┓━┓┏┓┓┳━┓┏┓┓┳ ┓┓━┓┳  o┏┓┓┳━┓
+" ┗━┓ ┃ ┃━┫ ┃ ┃ ┃┗━┓┃  ┃┃┃┃┣━
+" ━━┛ ┇ ┛ ┇ ┇ ┇━┛━━┛┇━┛┇┇┗┛┻━┛
+"
+" ~~ Statusline configuration ~~
+" ':help statusline' is your friend!
 
-" Statusline
-source $HOME/.config/nvim/colors/statusline.vim
+" color depending on mode {{{
+function! RedrawModeColors(mode)
+	" normal mode
+	if a:mode ==# 'n'
+		hi MyStatuslineMode ctermbg=0 ctermfg=4 cterm=none
+	" insert mode
+	elseif a:mode ==# 'i'
+		hi MyStatuslineMode ctermbg=0 ctermfg=3 cterm=none
+	" replace mode
+	elseif a:mode ==# 'R'
+		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
+	" visual mode
+	elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V'
+		hi MyStatuslineMode ctermbg=0 ctermfg=5 cterm=none
+	" command mode
+	elseif a:mode ==# 'c'
+		hi MyStatuslineMode ctermbg=0 ctermfg=6 cterm=none
+	" terminal mode
+	elseif a:mode ==# 't'
+		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
+	endif
+	" Return empty string so as not to display anything in the statusline
+	return ''
+endfunction " }}}
+
+" nice mode name {{{
+function! ModeName(mode)
+  if a:mode ==# 'n'
+    return 'NORMAL'
+  " Insert mode
+  elseif a:mode ==# 'i'
+    return 'INSERT'
+  " Replace mode
+  elseif a:mode ==# 'R'
+    return 'REPLACE'
+  " Visual mode
+  elseif a:mode ==# 'v'
+    return 'VISUAL'
+  elseif a:mode ==# 'V'
+    return 'V-LINE'
+  elseif a:mode ==# ''
+    return 'V-BLOCK'
+  " Command mode
+  elseif a:mode ==# 'c'
+    return 'COMMAND'
+  " Terminal mode
+  elseif a:mode ==# 't'
+    return 'TERMINAL'
+  endif
+endfunction " }}}
+
+" modification mark {{{
+function! SetModifiedSymbol(modified)
+	if a:modified == 1
+		hi MyStatuslineModifiedBody ctermbg=NONE cterm=NONE ctermfg=7
+		return '+'
+	else
+		hi MyStatuslineModifiedBody ctermbg=NONE cterm=bold ctermfg=7
+		return ''
+	endif
+endfunction
+" }}}
+
+" filetype {{{
+function! SetFiletype(filetype)
+	if a:filetype ==# ''
+		return '-'
+	else
+		return a:filetype
+	endif
+endfunction
+" }}}
+
+" statusbar {{{
+"=================
+" statusbar items
+"=================
+" this will not be displayed, but the function RedrawModeColors will be
+" called every time the mode changes, thus updating the colors used for the
+" components.
+set statusline=%{RedrawModeColors(mode())}
+
+"=================
+" left side items
+"=================
+" Mode
+"set statusline+=%#MyStatuslineSeparator#▒░
+"set statusline+=%#MyStatuslineMode#%{ModeName(mode())}
+"set statusline+=%#MyStatuslineSeparator#░▒
+
+" filename
+set statusline+=%#MyStatuslineSeparator#▒
+set statusline+=%#MyStatuslineMode#%t
+set statusline+=%#MyStatuslineSeparator#░▒▓█
+
+" Modified status
+set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
+
+"==================
+" right side items
+"==================
+" current scroll percentage
+set statusline+=%=
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=\%#MyStatuslineLinePerc#%2p%%
+set statusline+=%#MyStatuslineSeparator#░▒▓
+
+" line and column
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=%#MyStatuslineLineCol#%2l
+set statusline+=\/%#MyStatuslineLineCol#%2c
+set statusline+=%#MyStatuslineSeparator#░▒▓
+
+" padding
+"set statusline+=\ \
+
+" filetype
+set statusline+=%#MyStatuslineSeparator#▓▒░
+set statusline+=\%#MyStatuslineFiletype#%{SetFiletype(&filetype)}
+set statusline+=\ \%#MyStatuslineSeparator#▒
+" }}}
+
+" colors {{{
+hi StatusLine               ctermbg=none   ctermfg=5      cterm=none
+hi StatusLineNC             ctermbg=none   ctermfg=8      cterm=bold
+
+hi MyStatuslineFilename     ctermbg=0      ctermfg=7      cterm=none
+
+hi MyStatuslineModified     ctermbg=none   ctermfg=0      cterm=none
+
+hi MyStatuslineLineCol      ctermbg=0      ctermfg=3      cterm=none
+hi MyStatuslineLinePerc     ctermbg=0      ctermfg=2      cterm=none
+
+hi MyStatuslineFiletype     ctermbg=0      ctermfg=5      cterm=italic
+
+hi Reset                    ctermbg=none   ctermfg=none   cterm=none
+hi MyStatuslineSeparator    ctermbg=none   ctermfg=0      cterm=reverse
+" }}}
+"}}}
+
+" vim: fdm=marker

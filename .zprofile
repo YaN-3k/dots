@@ -11,7 +11,7 @@
 export PATH="$PATH:$HOME/.config/fzf/fzf/bin/:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 
 # Default programs:
-export EDITOR="nvim -p"
+export EDITOR="nvim"
 export TERMINAL="st"
 export READER="zathura"
 export FILE="vifm"

@@ -8,6 +8,6 @@ d() { git --git-dir="$HOME/.config/dots-git/" --work-tree="$HOME" "$@"; }
 case $1 in
 up) d pull && d update-index --assume-unchanged ~/LICENSE ~/README.md && rm -rf ~/LICENSE ~/README.md ;;
 push) d push "${2:--u}" "${3:-origin}" master ;;
-restore) d checkout HEAD -- "$2" ;;
+res) d checkout HEAD -- "$2" ;;
 *) d "$@" ;;
 esac
