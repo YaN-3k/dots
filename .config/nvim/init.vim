@@ -194,59 +194,26 @@ set wildignore+=*.swp,.lock,.DS_Store,._*
 " }}}
 
 " netrw {{{
-" netrw settings
+" this hides the netrw banner
 let g:netrw_banner = 0
+
+" netrw listing style
 let g:netrw_liststyle = 4
+
+" how to open new files
 let g:netrw_browse_split = 0
-let g:netrw_winsize = 20
+
+" this makes the netrw window size only a quarter of the screen's width
+let g:netrw_winsize = 25
 
 " open netrw
-nnoremap <silent><C-n> :Lexplore<cr>
+nnoremap <silent><leader>E :E<cr>
 
-" ignore
+" close buffer
+nnoremap <silent><leader>d :bw<cr>
+
+" ignore files that vim doesn't use
 let g:netrw_list_hide= '.*\.swp$,*/tmp/*,*.so,*.swp,*.zip,*.git,^\.\=/\=$'
-
-" open netrw if no files were specified
-augroup OpenNetrw
-	au!
-	autocmd StdinReadPre * let s:std_in=1
-	autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | Lexplore | endif
-augroup end
-
-" close netrw/nerdtree if it's the only buffer open
-augroup finalcountdown
-	au!
-	autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
-	autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) || &buftype == 'quickfix' |q|endif
-augroup END
-
-function! OpenToRight()
-	normal v
-	let g:path=expand('%:p')
-	q!
-	execute 'belowright vnew' g:path
-	normal <C-l>
-endfunction
-
-function! OpenBelow()
-	normal v
-	let g:path=expand('%:p')
-	q!
-	execute 'belowright new' g:path
-	normal <C-l>
-endfunction
-
-function! NetrwMappings()
-	" Hack fix to make ctrl-l work properly
-	nnoremap <buffer> <C-l> <C-w>l
-	nnoremap <buffer><c-v> :call OpenToRight()<cr>
-	nnoremap <buffer><C-o> :call OpenBelow()<cr>
-endfunction
-
-augroup netrw_mappings
-	autocmd!
-	autocmd filetype netrw call NetrwMappings()
-augroup END
 " }}}
 " }}}
 
@@ -344,6 +311,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
 " default snippets
 Plug 'honza/vim-snippets'
+" coc integration with ultisnips
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 " }}}
 
 " git integration {{{
@@ -378,7 +347,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vimwiki/vimwiki'
 
 " vanilla vim is to easy
-Plug 'wikitopian/hardmode'
+Plug 'takac/vim-hardtime'
+let g:hardtime_default_on = 1
 "" }}}
 
 call plug#end()
@@ -393,15 +363,22 @@ nmap <leader>ca  <Plug>(coc-codeaction)
 nmap <silent><leader>cl  :CocList<cr>
 
 " autocompletion {{{
-" completion with tab or s-tab
+" completion with tab or shift-tab
 inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 
 " refresh
 inoremap <silent><expr> <c-space> coc#refresh()
 
+" trigger snippets
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 " real tab
 inoremap <A-tab> <tab>
+
+" real enter
+inoremap <M-cr> <cr>
 " }}}
 
 " linting {{{
@@ -478,6 +455,12 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+" }}}
+
+" mulltiple cursor {{{
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+" use normal command like `<leader>xi(`
+nmap <leader>x  <Plug>(coc-cursors-operator)
 " }}}
 " }}}
 

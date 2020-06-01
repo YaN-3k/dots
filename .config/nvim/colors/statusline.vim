@@ -57,29 +57,6 @@ function! ModeName(mode)
   endif
 endfunction " }}}
 
-" coc {{{
-function! CocWarning()
-	let info = get(b:, 'coc_diagnostic_info', {})
-	if empty(info) | return '' | endif
-	let msgs
-	if get(info, 'warning', 0)
-		call add(msgs, 'W' . info['warning'])
-		msgs = info[]
-	endif
-	return string(msgs)
-endfunction
-
-function! CocError()
-	let info = get(b:, 'coc_diagnostic_info', {})
-	if empty(info) | return '' | endif
-	let msgs
-	if get(info, 'error', 0)
-		call add(msgs, 'E' . info['error'])
-	endif
-	return string(msgs)
-endfunction
-" }}}
-
 " git {{{
 function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
@@ -139,10 +116,6 @@ if !empty(branch)
 else
 	set statusline+=%#MyStatuslineSeparator#░▒▓█
 endif
-
-" CoC vim
-"set statusline+=%#MyStatuslineWarning#%{CocWarning()}
-"set statusline+=%#MyStatuslineError#%{CocError()}
 
 " Modified status
 set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
