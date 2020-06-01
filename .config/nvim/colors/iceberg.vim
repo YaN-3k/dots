@@ -126,10 +126,10 @@ hi markdownCodeDelimiter  ctermbg=none   ctermfg=5      cterm=none
 " }}}
 
 " linting {{{
-hi ALEWarning             ctermbg=none   ctermfg=3      cterm=underline
-hi ALEError               ctermbg=none   ctermfg=1      cterm=underline
-hi ALEWarningSign         ctermbg=none   ctermfg=3      cterm=bold
-hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=bold
+hi CocWarningSign         ctermbg=none   ctermfg=3      cterm=none
+hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=none
+hi CocErrorHighlight      ctermbg=none   ctermfg=1      cterm=underline
+hi CocWarningHighlight    ctermbg=none   ctermfg=3      cterm=underline
 " }}}
 
 " git {{{
@@ -209,6 +209,28 @@ function! ModeName(mode)
   endif
 endfunction " }}}
 
+" coc {{{
+function! CocWarning()
+	let info = get(b:, 'coc_diagnostic_info', {})
+	if empty(info) | return '' | endif
+		let msgs = []
+	if get(info, 'warning', 0)
+		call add(msgs, 'W' . info['warning'])
+	endif
+	return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
+
+function! CocError()
+	let info = get(b:, 'coc_diagnostic_info', {})
+	if empty(info) | return '' | endif
+	let msgs = []
+	if get(info, 'error', 0)
+		call add(msgs, 'E' . info['error'])
+	endif
+	return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
+" }}}
+
 " modification mark {{{
 function! SetModifiedSymbol(modified)
 	if a:modified == 1
@@ -251,7 +273,32 @@ set statusline=%{RedrawModeColors(mode())}
 " filename
 set statusline+=%#MyStatuslineSeparator#▒
 set statusline+=%#MyStatuslineMode#%t
-set statusline+=%#MyStatuslineSeparator#░▒▓█
+set statusline+=%#MyStatuslineSeparator#░▒▓█%#Reset#
+
+" git branch
+" https://github.com/tpope/vim-fugitive - help fugitive: statusline:
+" Use FugitiveHead() to return the name of the current branch. If the current
+" HEAD is detached, FugitiveHead() will return the empty string
+if exists('*FugitiveHead')
+    let branch = FugitiveHead()
+    if !empty(branch)
+		set statusline+=%#MyStatuslineSeparator#▒░
+		set statusline+=%{FugitiveHead()}
+		set statusline+=%#MyStatuslineSeparator#░▒▓
+    endif
+endif
+" output:
+" error detected while processing /home/jan/.config/nvim/colors/iceberg.vim:
+" line  281:
+" E117: Unknown function: FugitiveHead
+" E15: Invalid expression: FugitiveHead() != ''
+" E117: Unknown function: FugitiveHead
+" E15: Invalid expression: FugitiveHead() != ''
+
+
+" CoC vim
+set statusline+=%#MyStatuslineWarning#%{CocWarning()}
+set statusline+=%#MyStatuslineError#%{CocError()}
 
 " Modified status
 set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
@@ -285,6 +332,9 @@ hi StatusLine               ctermbg=none   ctermfg=5      cterm=none
 hi StatusLineNC             ctermbg=none   ctermfg=8      cterm=bold
 
 hi MyStatuslineFilename     ctermbg=0      ctermfg=7      cterm=none
+
+hi MyStatuslineError        ctermbg=none   ctermfg=1      cterm=none
+hi MyStatuslineWarning      ctermbg=none   ctermfg=3      cterm=none
 
 hi MyStatuslineModified     ctermbg=none   ctermfg=0      cterm=none
 

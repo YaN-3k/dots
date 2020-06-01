@@ -33,7 +33,6 @@ scriptencoding utf-8
 " }}}
 
 " looks {{{
-color iceberg
 
 " show matching brackets/parenthesis
 set showmatch
@@ -329,27 +328,14 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'sheerun/vim-polyglot'
 " }}}
 
-" autocompletion {{{
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/deoplete-clangx'
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'deoplete-plugins/deoplete-zsh'
-" }}}
-
-" linting {{{
-Plug 'dense-analysis/ale'
-" }}}
-
-" snippets {{{
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" autocompletion && linting {{{
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " }}}
 
 " git integration {{{
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-Plug 'mattn/emmet-vim'
 " }}}
 
 " features {{{
@@ -380,82 +366,128 @@ Plug 'wikitopian/hardmode'
 call plug#end()
 " }}}
 
-" linting {{{
-let g:ale_linters = {
-\   'c': ['gcc'],
-\   'cpp': ['g++'],
-\   'javascript': ['eslint'],
-\   'php': ['php'],
-\   'python': ['pyflakes'],
-\   'sh': ['shellcheck'],
-\   'zsh': ['shell'],
-\   'rust': ['cargo'],
-\}
+" autocompletion && linting {{{
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-let g:ale_fixers = {
-\   '*': ['trim_whitespace', 'remove_trailing_lines'],
-\   'c': ['clang-format'],
-\   'cpp': ['clang-format'],
-\   'rust': ['rustfmt'],
-\   'css': ['prettier'],
-\   'go': ['gofmt'],
-\   'html': ['prettier'],
-\   'javascript': ['prettier'],
-\   'json': ['prettier'],
-\   'php': ['prettier'],
-\   'python': ['black'],
-\   'sh': ['shfmt'],
-\   'zsh': ['shfmt'],
-\   'scss': ['prettier'],
-\   'yaml': ['prettier'],
-\}
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-let g:ale_completion_enabled = 0
-let g:ale_sign_column_always = 1
-let g:ale_fix_on_save = 0
-let g:ale_open_list = 0
-let g:ale_lint_on_text_changed = 'never'
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
-nnoremap <Leader>af :ALEFix<cr>
-nnoremap <Leader>an :ALENext<cr>
-nnoremap <Leader>aN :ALEPrevious<cr>
-nnoremap <Leader>ad :ALEDetail<cr>
-nnoremap <Leader>ag :ALEGoToDefinitionInSplit<cr>
-nnoremap <Leader>aG :ALEGoToDefinition<cr>
-" }}}
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
-" autocompletion {{{
-" tab completion {{{
-inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-inoremap <A-tab> <tab>
-" }}}
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" deoplete {{{
-let g:deoplete#enable_at_startup = 1
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
-" ignore case
-let g:deoplete#enable_ignore_case = 1
+" Use K to show documentation in preview window.
+nnoremap <silent><leader>K :call <SID>show_documentation()<CR>
 
-" disable preview
-set completeopt-=preview
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-" enable zsh autocompletion in sh buffers
-call deoplete#custom#source('zsh', 'filetypes', ['sh', 'zsh'])
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" ultisnips integration
-call deoplete#custom#source('ultisnips', 'rank', 1000)
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-" the delay for completion after input, measured in milliseconds
-call deoplete#custom#option('auto_complete_delay', 100)
+" Formatting code.
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format)
 
-" enable/disable deoplete
-nnoremap <Leader>d :call deoplete#toggle()<cr>
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
-" python paths, needed for virtualenvs
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python_host_prog = '/usr/bin/python2'
-" }}}
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+"nmap <silent> <C-s> <Plug>(coc-range-select)
+"xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " }}}
 
 " git {{{
@@ -478,41 +510,7 @@ nnoremap gu :GitGutterUndoHunk<cr>
 nnoremap gp :GitGutterPreviewHunk<cr>
 " }}}
 
-" snippets {{{
-" UltiSnips
-let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsExpandTrigger='<C-e>'
-let g:UltiSnipsJumpForwardTrigger='<C-f>'
-let g:UltiSnipsJumpBackwardTrigger='<C-b>'
-" }}}
-
 " fuzzy searching {{{
-" fzf colors
-let g:fzf_colors = {
-\   'fg':      ['fg', 'Normal'],
-\   'bg':      ['bg', 'Normal'],
-\   'hl':      ['fg', 'Statement'],
-\   'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-\   'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-\   'hl+':     ['fg', 'Function'],
-\   'info':    ['fg', 'PreProc'],
-\   'border':  ['fg', 'Visual'],
-\   'prompt':  ['fg', 'Conditional'],
-\   'pointer': ['fg', 'ErrorMsg'],
-\   'marker':  ['fg', 'Keyword'],
-\   'spinner': ['fg', 'Label'],
-\   'header':  ['fg', 'Comment'] 
-\}
-
-" fzf, fuzzy finder
-"let g:fzf_preview_window = 'right:60%'
-"nnoremap <C-p> :Files<cr>
-"nnoremap <C-g> :GFiles<cr>
-"let g:fzf_action = {
-	""\ 'ctrl-t': 'tab split',
-	""\ 'ctrl-x': 'split',
-	""\ 'ctrl-v': 'vsplit' }
-
 " CtrlP
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_follow_symlinks = 1
@@ -619,4 +617,5 @@ endfunc
 " }}}
 " }}}
 
+color iceberg
 " vim: fdm=marker
