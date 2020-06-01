@@ -11,6 +11,9 @@
 # Set custom User Agent
 # config.set('content.headers.user_agent', 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0')
 
+# Scripts
+config.bind("pv", "spawn --userscript ~/.config/qutebrowser/scripts/view_in_mpv")
+
 # Enable Javascript
 config.set("content.javascript.enabled", True, "file://*")
 config.set("content.javascript.enabled", True, "chrome://*/*")
@@ -28,8 +31,6 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 config.set("url.start_pages", "https://cherrry9.github.io/startpage/")
 config.set("url.default_page", "https://cherrry9.github.io/startpage/")
 config.set("url.searchengines", {"DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
-
-config.bind("pv", "spawn --userscript ~/.config/qutebrowser/script/view_in_mpv")
 
 # Tab settings
 config.set("tabs.padding", {"top": 1, "bottom": 2, "left": 5, "right": 5})
