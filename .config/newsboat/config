@@ -37,3 +37,18 @@ macro v set browser "setsid mpv"; open-in-browser ; set browser linkhandler
 macro w set browser "w3m"; open-in-browser ; set browser linkhandler
 macro p set browser "dmenuhandler"; open-in-browser ; set browser linkhandler
 macro c set browser "xclip -sel clip <<<" ; open-in-browser ; set browser linkhandler
+
+highlight all "---.*---" yellow
+highlight feedlist ".*(0/0))" black
+highlight article "^Feed:.*" black default bold
+highlight article "^Title:.*" blue default bold
+highlight article "^Author:.*" cyan default bold
+highlight article "^Date:.*" magenta default
+highlight article "^Link:.*" blue default bold
+highlight article "\\[[0-9][0-9]*\\]" green default bold
+highlight article "\\[image\\ [0-9]+\\]" yellow default bold
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" yellow default bold
+highlight article ":.*\\(link\\)$" blue default underline
+highlight article ":.*\\(image\\)$" blue default
+highlight article ":.*\\(embedded flash\\)$" magenta default
+highlight article "https?://[^ ]+" blue default underline
