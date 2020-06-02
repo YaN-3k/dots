@@ -142,7 +142,7 @@ set statusline+=\ \%#Separator#▒
 " }}}
 
 " colors {{{
-call g:C("Reset",    g:none,         g:none,           "none")
+call g:C("Reset",    g:none,         g:dark.black,     "none")
 call g:C("Separator",g:none,         g:dark.black,     "reverse")
 call g:C("Git",      g:dark.black,   g:dark.white,     "none")
 call g:C("Modified", g:dark.black,   g:dark.black,     "none")
