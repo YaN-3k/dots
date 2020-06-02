@@ -25,7 +25,12 @@ set clipboard=unnamedplus
 " plebs mode
 set mouse=a
 
+" time betwen updates
 set updatetime=100
+
+" python host prog
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " encoding
 scriptencoding utf-8
@@ -48,14 +53,17 @@ set laststatus=2
 set noruler
 set noshowcmd
 set noshowmode
-source $HOME/.config/nvim/colors/statusline.vim
+source $HOME/.config/nvim/statusline.vim
+
+" split style
+set fillchars=vert:▒
 
 " show matching brackets/parenthesis
 set showmatch
 set matchtime=3
 
-" disable startup message
-set shortmess+=I
+" avoid message and prompts
+set shortmess+=icw
 
 " autocompletion menu
 set pumheight=10
@@ -149,9 +157,6 @@ nnoremap <M-0> 10gt
 " split
 set splitright
 set splitbelow
-
-" split style
-set fillchars=vert:▒
 
 " split management
 nnoremap <C-j> <C-w><C-j>
@@ -312,6 +317,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " }}}
 
+" fuzzy searching {{{
+Plug '~/.config/fzf/fzf'
+Plug 'junegunn/fzf.vim'
+" }}}
+
 " features {{{
 " extend %
 Plug 'isa/vim-matchit'
@@ -319,16 +329,13 @@ Plug 'isa/vim-matchit'
 " quoting/parenthesizing made simple
 Plug 'tpope/vim-surround'
 
-" fuzzy searching
-Plug 'kien/ctrlp.vim'
-
 " move lines
 Plug 'matze/vim-move'
 
 " split management between vim and tmux
 Plug 'christoomey/vim-tmux-navigator'
 
-" notes
+" notes and diaries
 Plug 'vimwiki/vimwiki'
 
 " vanilla vim is to easy
@@ -344,6 +351,7 @@ call plug#end()
 let g:coc_global_extensions = [
 \	'coc-lists',
 \	'coc-snippets',
+\	'coc-pairs',
 \	'coc-yank',
 \	'coc-git',
 \	'coc-highlight',
@@ -496,12 +504,66 @@ nmap <leader>ca  <Plug>(coc-codeaction)
 " }}}
 
 " fuzzy searching {{{
-" CtrlP
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_follow_symlinks = 1
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_map = '<c-p>'
-nnoremap <Tab> :CtrlPBuffer<cr>
+" mapping
+nnoremap <silent><tab> :Buffers<cr>
+nnoremap <silent><C-p> :Files<cr>
+nnoremap <silent><C-g> :GFiles<cr>
+nnoremap <silent><leader>r :Rg<cr>
+nnoremap <silent><leader>t :Tags<cr>
+nnoremap <silent><leader>m :Marks<cr>
+
+" fzf colorscheme
+let g:fzf_colors = {
+\	'fg':      ['fg', 'Normal'],
+\	'bg':      ['bg', 'Normal'],
+\	'hl':      ['fg', 'Statement'],
+\	'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+\	'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+\	'hl+':     ['fg', 'Todo'],
+\	'info':    ['fg', 'PreProc'],
+\	'border':  ['fg', 'LineNr'],
+\	'prompt':  ['fg', 'Conditional'],
+\	'pointer': ['fg', 'Exception'],
+\	'marker':  ['fg', 'Keyword'],
+\	'spinner': ['fg', 'Label'],
+\	'header':  ['fg', 'Comment'],
+\}
+
+" center fzf
+"let g:fzf_layout = {
+"\	'up':'~90%',
+"\	'window':
+"\	{
+"\		'width': 0.8,
+"\		'height': 0.8,
+"\		'yoffset':0.5,
+"\		'xoffset': 0.5,
+"\		'highlight': 'Type',
+"\		'border': 'sharp'
+"\	}
+"\}
+
+" option
+let g:fzf_tags_command = 'ctags -R'
+let g:fzf_history_dir = '~/.cache/fzf-history'
+let g:fzf_preview_window = ''
+let g:fzf_action = {
+	\ 'ctrl-t': 'tab split',
+	\ 'ctrl-s': 'split',
+	\ 'ctrl-v': 'vsplit' }
+
+" statusline
+function! s:fzf_statusline()
+	call g:C("Fzf", g:dark.black, g:dark.white, "none")
+	setlocal statusline=%#Separator#▒
+	setlocal statusline+=%#Fzf#FZF
+	setlocal statusline+=%#Separator#░▒▓█%#Reset#
+endfunction
+
+augroup Fzf
+	au!
+	autocmd! User FzfStatusLine call <SID>fzf_statusline()
+augroup end
 " }}}
 
 " vimwiki {{{

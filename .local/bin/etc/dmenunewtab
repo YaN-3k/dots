@@ -1,15 +1,19 @@
 #!/bin/sh
-options="youtube riot.im arch-linux facebook disroot github"
-choice=$(echo "$options" | sed 's/ /\n/g' | $DMENU -i -p "Open")
-[ ! "$choice" ] && exit
-case "$choice" in
-	disroot) url='https://cloud.disroot.org/login';;
-	arch-linux) url='https://www.archlinux.org/';;
-	facebook) url='https://www.facebook.com/';;
-	youtube) url='https://www.youtube.com/';;
-	github) url='https://github.com/';;
-	riot.im) url='https://about.riot.im/';;
-	*) url="https://duckduckgo.com/?q=$choice&t=h_";;
-esac
-$BROWSER "$url" &
-bspc desktop -f 3
+
+# Search in $BROWSER or use bookmarks from file.
+
+bmfile="$HOME/.config/bookmarks"
+
+m() { ${DMENU:-dmenu} "$@"; }
+
+chosen="$(sed 's/http.*\/\///g' "$bmfile" | m)"
+[ ! "$chosen" ] && exit
+
+url="$(grep -m 1 "$chosen" "$bmfile" | awk '{ print $1 }')"
+[ ! "$url" ] && {
+	echo "$chosen" | grep -q "[a-z|0-9]\.[a-z|0-9]" ||
+	url="$chosen" ||
+	url="https://duckduckgo.com/?q=$chosen"
+}
+
+"$BROWSER" "$url"

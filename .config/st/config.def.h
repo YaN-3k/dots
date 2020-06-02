@@ -191,7 +191,7 @@ static Shortcut shortcuts[] = {
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
-	{ MODKEY,               XK_u,           copyurl,        {.i =  0} },
+	{ TERMMOD,              XK_L,           copyurl,        {.i =  0} },
 
 	/* ^C ^V */
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
