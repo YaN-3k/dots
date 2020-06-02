@@ -341,7 +341,17 @@ call plug#end()
 
 " coc {{{
 " extensions
-let g:coc_global_extensions = ['coc-lists', 'coc-snippets', 'coc-yank', 'coc-git', 'coc-highlight']
+let g:coc_global_extensions = [
+\	'coc-lists',
+\	'coc-snippets',
+\	'coc-yank',
+\	'coc-git',
+\	'coc-highlight',
+\	'coc-tabnine',
+\	'coc-dictionary',
+\	'coc-tag',
+\	'coc-word',
+\]
 
 " autocompletion {{{
 " completion with tab or shift-tab

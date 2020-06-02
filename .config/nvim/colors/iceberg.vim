@@ -69,7 +69,7 @@ call g:C("HighlightedyankRegion",  g:none,  g:none,           "none")
 " }}}
 
 " prompt / status {{{
-call g:C("StatusLine",   g:none,            g:light.black,    "none")
+call g:C("StatusLine",   g:none,            g:none,           "none")
 call g:C("StatusLineNC", g:none,            g:light.black,    "none")
 call g:C("WildMenu",     g:light.black,     g:dark.black,     "none")
 call g:C("Title",        g:none,            g:dark.yellow,    "bold")
