@@ -142,6 +142,9 @@ call g:C("DiffAdd",      g:none,            g:dark.green,     "none")
 call g:C("DiffDelete",   g:none,            g:dark.red,       "none")
 call g:C("DiffChange",   g:none,            g:dark.yellow,    "none")
 call g:C("DiffText",     g:none,            g:dark.white,     "none")
+hi! link diffSubname     DiffChange
+hi! link diffAdded       DiffAdd
+hi! link diffRemoved     DiffDelete
 " }}}
 
 " completion menu {{{
