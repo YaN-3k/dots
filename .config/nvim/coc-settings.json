@@ -1,19 +1,34 @@
 {
-    "languageserver": {
+  "suggest.noselect": true,
+  "suggest.enablePreselect": true,
+  "codeLens.enable": true,
+  "diagnostic.errorSign": ">>",
+  "diagnostic.warningSign": "--",
+  "diagnostic.infoSign": "?",
+  "languageserver": {
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
       "initializationOptions": {
-         "cache": {
-           "directory": "/tmp/ccls"
-         }
-       }
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
     },
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh"]
     }
-  }
+  },
+  "list.insertMappings": {
+    "<C-x>": "action:split",
+    "<C-v>": "action:vsplit"
+  },
+  "list.normalMappings": {
+    "s": "action:split",
+    "v": "action:vsplit"
+  },
+  "list.source.files.args": ["--hiden", "--files"],
 }

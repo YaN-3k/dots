@@ -8,7 +8,6 @@
 " ░██    ░░███░░██████░░██████   ░░██   ░██ ███ ░██ ░██
 " ░░      ░░░  ░░░░░░  ░░░░░░     ░░    ░░ ░░░  ░░  ░░
 "
-
 " general {{{
 " basic {{{
 " leader key
@@ -40,8 +39,9 @@ scriptencoding utf-8
 
 " syntax highlighting
 color iceberg
-syntax on
+set termguicolors
 set synmaxcol=512
+syntax on
 
 " statusline
 set laststatus=2
@@ -82,14 +82,6 @@ set listchars+=trail:·
 set listchars+=extends:»
 set listchars+=precedes:«
 set listchars+=nbsp:░
-
-" vim diff highlighting
-if &diff
-	hi DiffAdd      ctermbg=NONE   ctermfg=2      cterm=NONE
-	hi DiffChange   ctermbg=NONE   ctermfg=3      cterm=NONE
-	hi DiffDelete   ctermbg=NONE   ctermfg=1      cterm=NONE
-	hi DiffText     ctermbg=NONE   ctermfg=7      cterm=NONE
-endif
 
 " line highlighting if it is longer than 80 characters
 hi OverLength             ctermbg=none   ctermfg=1      cterm=underline
@@ -250,7 +242,7 @@ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 noremap <leader>s :sp \| terminal shellcheck %<cr>:resize 15<cr>
 
 " deletes all trailing whitespace
-noremap <leader>fw :%s/\s\+$//e<cr>
+noremap <leader>w :%s/\s\+$//e<cr>
 
 " exit/open terminal
 noremap <C-A-t> :split term://zsh<cr>:resize 15<cr>
@@ -311,23 +303,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'SirVer/ultisnips'
 " default snippets
 Plug 'honza/vim-snippets'
-" coc integration with ultisnips
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 " }}}
 
 " git integration {{{
 " it should be illegal
 Plug 'tpope/vim-fugitive'
-" shows diff markers
-Plug 'airblade/vim-gitgutter'
 " commit browser
 Plug 'junegunn/gv.vim'
 " }}}
 
 " features {{{
-" show colors preview
-Plug 'lilydjwg/colorizer'
-
 " extend %
 Plug 'isa/vim-matchit'
 
@@ -348,19 +333,15 @@ Plug 'vimwiki/vimwiki'
 
 " vanilla vim is to easy
 Plug 'takac/vim-hardtime'
-let g:hardtime_default_on = 1
+let g:hardtime_default_on = 0
 "" }}}
 
 call plug#end()
 " }}}
 
 " coc {{{
-" run code actions
-vmap <leader>ca  <Plug>(coc-codeaction-selected)
-nmap <leader>ca  <Plug>(coc-codeaction)
-
-" coc list
-nmap <silent><leader>cl  :CocList<cr>
+" extensions
+let g:coc_global_extensions = ['coc-lists', 'coc-snippets', 'coc-yank', 'coc-git', 'coc-highlight']
 
 " autocompletion {{{
 " completion with tab or shift-tab
@@ -418,9 +399,8 @@ nmap <silent> gr <Plug>(coc-references)
 
 " rn - symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
 " highlight symbol under cursor 
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " <leader>K - get hint on whatever's under the cursor
 nnoremap <silent><leader>K :call <SID>show_documentation()<CR>
@@ -434,7 +414,7 @@ function! s:show_documentation()
 endfunction
 " }}}
 
-"snippets {{{
+" snippets {{{
 " trigger snippet expand
 imap <C-j> <Plug>(coc-snippets-expand)
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -457,30 +437,52 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:UltiSnipsEditSplit="vertical"
 " }}}
 
-" mulltiple cursor {{{
-nmap <silent> <C-c> <Plug>(coc-cursors-position)
-" use normal command like `<leader>xi(`
-nmap <leader>x  <Plug>(coc-cursors-operator)
-" }}}
-" }}}
-
 " git {{{
-let g:gitgutter_max_signs = 1500
-let g:gitgutter_diff_args = '-w'
+" navigate chunks of current buffer
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
 
-" custom symbols
-let g:gitgutter_sign_added = '+'
-let g:gitgutter_sign_modified = '~'
-let g:gitgutter_sign_removed = '-'
-let g:gitgutter_sign_removed_first_line = '^'
-let g:gitgutter_sign_modified_removed = ':'
+" show chunk diff at current position
+nmap <silent><leader>gi :CocCommand git.chunkInfo<cr>
 
-" maping
-nnoremap <silent>ghp :GitGutterPreviewHunk<cr>
-nnoremap <silent>ghs :GitGutterStageHunk<cr>
-nnoremap <silent>ghu :GitGutterUndoHunk<cr>
-nnoremap <silent>[h  :GitGutterPrevHunk<cr>
-nnoremap <silent>]h  :GitGutterNextHunk<cr>
+" undo chunk
+nmap <silent><leader>gu :CocCommand git.chunkUndo<cr>
+
+" stage chunk
+nmap <silent><leader>gs :CocCommand git.chunkStage<cr>
+
+" show commit contains current position
+nmap gc <Plug>(coc-git-commit)
+
+" create text object for git chunks
+omap ig <Plug>(coc-git-chunk-inner)
+xmap ig <Plug>(coc-git-chunk-inner)
+omap ag <Plug>(coc-git-chunk-outer)
+xmap ag <Plug>(coc-git-chunk-outer)
+" }}}
+
+" other mapping {{{
+" coc list
+nmap <silent><leader>l  :CocList<cr>
+
+" mulltiple cursor
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <leader>x  <Plug>(coc-cursors-operator)
+
+" map function and class text objects
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" run code actions
+vmap <leader>ca  <Plug>(coc-codeaction-selected)
+nmap <leader>ca  <Plug>(coc-codeaction)
+" }}}
 " }}}
 
 " fuzzy searching {{{
@@ -587,6 +589,10 @@ function! <SID>SynStack()
 	endif
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " }}}
 " }}}
 

@@ -10,140 +10,178 @@ set background=dark
 let g:colors_name='iceberg'
 " }}}
 
-" basic {{{
-hi Normal       ctermbg=none   ctermfg=15     cterm=none
-hi Cursor       ctermbg=none   ctermfg=15     cterm=none
-hi Directory    ctermbg=none   ctermfg=4      cterm=none
-hi ErrorMsg     ctermbg=none   ctermfg=1      cterm=none
-hi VertSplit    ctermbg=none   ctermfg=0      cterm=none
-hi LineNr       ctermbg=none   ctermfg=8      cterm=none
-hi SignColumn   ctermbg=none   ctermfg=7      cterm=none
-hi NonText      ctermbg=none   ctermfg=0      cterm=none
-hi Pmenu        ctermbg=none   ctermfg=15     cterm=none
-hi PmenuSel     ctermbg=0      ctermfg=4      cterm=none
-hi PmenuSbar    ctermbg=none   ctermfg=none   cterm=none
-hi PmenuThumb   ctermbg=0      ctermfg=0      cterm=none
-hi Search       ctermbg=none   ctermfg=none   cterm=reverse
-hi SpellBad     ctermbg=none   ctermfg=1      cterm=underline
-hi SpellCap     ctermbg=none   ctermfg=2      cterm=underline
-hi SpellLocal   ctermbg=none   ctermfg=3      cterm=underline
-hi SpellRare    ctermbg=none   ctermfg=3      cterm=underline
-hi StatusLine   ctermbg=0      ctermfg=15     cterm=none
-hi StatusLineNC ctermbg=0      ctermfg=15     cterm=none
-hi TabLine      ctermbg=none   ctermfg=none   cterm=none
-hi TabLineSel   ctermbg=0      ctermfg=4      cterm=bold
-hi TabLineFill  ctermbg=none   ctermfg=none   cterm=none
-hi Title        ctermbg=none   ctermfg=15     cterm=none
-hi Visual       ctermbg=0      ctermfg=none   cterm=none
-hi WildMenu     ctermbg=8      ctermfg=0      cterm=none
-hi WarningMsg   ctermbg=none   ctermfg=11     cterm=none
-hi EndOfBuffer  ctermbg=none   ctermfg=0      cterm=none
-hi CursorLine   ctermbg=0      ctermfg=none   cterm=none
-hi CursorLineNr ctermbg=none   ctermfg=15     cterm=bold
-hi CursorColumn ctermbg=0      ctermfg=none   cterm=none
-hi MatchParen   ctermbg=none   ctermfg=4      cterm=underline
-hi ModeMsg      ctermbg=none   ctermfg=8      cterm=none
-hi NormalNC     ctermbg=none   ctermfg=15     cterm=none
-hi Folded       ctermbg=0      ctermfg=4      cterm=none
-hi FoldColumn   ctermbg=0      ctermfg=4      cterm=none
-hi DiffAdd      ctermbg=none   ctermfg=2      cterm=none
-hi DiffDelete   ctermbg=none   ctermfg=1      cterm=none
-hi DiffChange   ctermbg=none   ctermfg=3      cterm=none
-hi DiffText     ctermbg=none   ctermfg=7      cterm=none
-hi diffAdded    ctermbg=none   ctermfg=2      cterm=none
-hi diffRemoved  ctermbg=none   ctermfg=1      cterm=none
-hi diffSubname  ctermbg=none   ctermfg=3      cterm=none
+" palette {{{
+let g:dark = {}
+let g:dark.black    =  [0,  '#22262e']
+let g:dark.red      =  [1,  '#e27878']
+let g:dark.green    =  [2,  '#b4be82']
+let g:dark.yellow   =  [3,  '#e2a478']
+let g:dark.blue     =  [4,  '#84a0c6']
+let g:dark.magenta  =  [5,  '#a093c7']
+let g:dark.cyan     =  [6,  '#89b8c2']
+let g:dark.white    =  [7,  '#c6c8d1']
+
+let g:light = {}
+let g:light.black   =  [8,  '#6b7089']
+let g:light.red     =  [9,  '#e98989']
+let g:light.green   =  [10, '#c0ca8e']
+let g:light.yellow  =  [11, '#e9b189']
+let g:light.blue    =  [12, '#91acd1']
+let g:light.magenta =  [13, '#ada0d3']
+let g:light.cyan    =  [14, '#95c4ce']
+let g:light.white   =  [15, '#d2d4de']
+
+let g:none          = ["none", "none"]
+
+function! g:C(scope, bg, fg, attr)
+	exec "hi ".a:scope "ctermbg=".a:bg[0] "ctermfg=".a:fg[0] "cterm=".a:attr "guibg=".a:bg[1] "guifg=".a:fg[1] "gui=".a:attr
+endfunction
 " }}}
 
-" language syntax {{{
-hi Comment      ctermbg=none   ctermfg=8      cterm=none
-hi Constant     ctermbg=none   ctermfg=5      cterm=none
-hi String       ctermbg=none   ctermfg=6      cterm=none
-hi Character    ctermbg=none   ctermfg=1      cterm=none
-hi Number       ctermbg=none   ctermfg=5      cterm=none
-hi Boolean      ctermbg=none   ctermfg=11     cterm=none
-hi Float        ctermbg=none   ctermfg=4      cterm=none
-hi Identifier   ctermbg=none   ctermfg=15     cterm=none
-hi Function     ctermbg=none   ctermfg=3      cterm=none
-hi Conditional  ctermbg=none   ctermfg=4      cterm=none
-hi Repeat       ctermbg=none   ctermfg=4      cterm=none
-hi Label        ctermbg=none   ctermfg=4      cterm=none
-hi Operator     ctermbg=none   ctermfg=none   cterm=none
-hi Keyword      ctermbg=none   ctermfg=4      cterm=none
-hi Exception    ctermbg=none   ctermfg=1      cterm=none
-hi Include      ctermbg=none   ctermfg=2      cterm=none
-hi Define       ctermbg=none   ctermfg=2      cterm=none
-hi Macro        ctermbg=none   ctermfg=3      cterm=none
-hi PreCondit    ctermbg=none   ctermfg=3      cterm=none
-hi Type         ctermbg=none   ctermfg=4      cterm=none
-hi StorageClass ctermbg=none   ctermfg=15     cterm=none
-hi PreProc      ctermbg=none   ctermfg=5      cterm=none
-hi Structure    ctermbg=none   ctermfg=5      cterm=none
-hi Special      ctermbg=none   ctermfg=5      cterm=none
-hi SpecialChar  ctermbg=none   ctermfg=5      cterm=none
-hi SpecialKey   ctermbg=none   ctermfg=5      cterm=none
-hi NonText      ctermbg=none   ctermfg=8      cterm=none
-hi Delimiter    ctermbg=none   ctermfg=none   cterm=none
-hi Underliend   ctermbg=none   ctermfg=1      cterm=underline
-hi Ignore       ctermbg=none   ctermfg=1      cterm=none
-hi Error        ctermbg=none   ctermfg=1      cterm=bold
-hi Todo         ctermbg=none   ctermfg=3      cterm=bold
-hi Statement    ctermbg=none   ctermfg=4      cterm=bold
-hi Include      ctermbg=none   ctermfg=5      cterm=none
+" editor settings {{{
+call g:C("Normal",       g:none,            g:dark.white,     "none")
+call g:C("Cursor",       g:none,            g:dark.white,     "none")
+call g:C("CursorLine",   g:dark.black,      g:none,           "none")
+call g:C("LineNr",       g:none,            g:light.black,    "none")
+call g:C("CursorLineNr", g:none,            g:light.white,    "bold")
+"}}}
+
+" number collumn {{{
+call g:C("CursorColumn", g:dark.black,      g:none,           "none")
+call g:C("FoldedColumn", g:dark.black,      g:dark.blue,      "none")
+call g:C("SignColumn",   g:none,            g:dark.white,     "none")
+call g:C("Folded",       g:dark.black,      g:dark.blue,      "none")
 " }}}
 
-" c/cpp {{{
-hi cBlock                 ctermbg=none   ctermfg=none   cterm=none
+" window / tab delimeters {{{
+call g:C("VertSplit",    g:none,            g:dark.black,     "none")
+call g:C("ColorColumn",  g:none,            g:dark.black,     "none")
+call g:C("TabLine",      g:none,            g:none,           "none")
+call g:C("TabLineFill",  g:none,            g:none,           "none")
+call g:C("TabLineSel",   g:dark.black,      g:dark.blue,      "bold")
 " }}}
 
-" sh {{{
-hi shStatement            ctermbg=none   ctermfg=4      cterm=none
-hi shFunction             ctermbg=none   ctermfg=7      cterm=none
-hi shOperator             ctermbg=none   ctermfg=7      cterm=none
-hi shQuote                ctermbg=none   ctermfg=6      cterm=none
-hi shFunctionKey          ctermbg=none   ctermfg=3      cterm=none
-hi shOption               ctermbg=none   ctermfg=2      cterm=none
+" file navigation / searching {{{
+call g:C("Directory",    g:none,            g:dark.blue,      "none")
+call g:C("Search",       g:none,            g:none,           "reverse")
+call g:C("IncSearch",    g:none,            g:none,           "reverse")
+call g:C("HighlightedyankRegion",  g:none,  g:none,           "none")
 " }}}
 
-" vim syntx {{{
-hi vimHiGroup             ctermbg=none   ctermfg=6      cterm=none
+" prompt / status {{{
+call g:C("StatusLine",   g:none,            g:light.black,    "none")
+call g:C("StatusLineNC", g:none,            g:light.black,    "none")
+call g:C("WildMenu",     g:light.black,     g:dark.black,     "none")
+call g:C("Title",        g:none,            g:dark.yellow,    "bold")
+call g:C("Question",     g:none,            g:light.blue,     "none")
+call g:C("MoreMsg",      g:none,            g:dark.blue,      "none")
+call g:C("ModeMsg",      g:none,            g:light.black,    "none")
 " }}}
 
-" markdown {{{
-hi htmlItalic             ctermbg=none   ctermfg=none   cterm=italic
-hi htmlBold               ctermbg=none   ctermfg=7      cterm=bold
-hi markdownLinkText       ctermbg=none   ctermfg=7      cterm=underline
-hi Title                  ctermbg=none   ctermfg=4      cterm=none
-hi Delimiter              ctermbg=none   ctermfg=none   cterm=none
-hi markdownCode           ctermbg=none   ctermfg=5      cterm=none
-hi markdownBlockquote     ctermbg=none   ctermfg=3      cterm=none
-hi markdownCodeDelimiter  ctermbg=none   ctermfg=5      cterm=none
+" visual aid {{{
+call g:C("MatchParen",   g:none,            g:dark.blue,      "underline")
+call g:C("Visual",       g:dark.black,      g:none,           "none")
+call g:C("VisualNOS",    g:dark.black,      g:none,           "none")
+call g:C("NonText",      g:none,            g:dark.black,     "none")
+
+call g:C("Todo",         g:none,            g:dark.yellow,    "bold")
+call g:C("Underlined",   g:none,            g:light.blue,     "underline")
+call g:C("Error",        g:none ,           g:dark.red,       "none")
+call g:C("ErrorMsg",     g:none,            g:dark.red,       "none")
+call g:C("WarningMsg",   g:none,            g:light.yellow,   "none")
+call g:C("Ignore",       g:none,            g:dark.red,       "none")
+call g:C("SpecialKey",   g:none,            g:dark.magenta,   "none")
+call g:C("Whitespace",   g:none,            g:light.black,    "none")
+" }}}
+
+" variable types {{{
+call g:C("Constant",     g:none,            g:dark.magenta,   "none")
+call g:C("String",       g:none,            g:dark.cyan,      "none")
+call g:C("Character",    g:none,            g:dark.red,       "none")
+call g:C("Number",       g:none,            g:dark.magenta,   "none")
+call g:C("Boolean",      g:none,            g:light.yellow,   "none")
+call g:C("Float",        g:none,            g:dark.magenta,   "none")
+
+call g:C("Identifier",   g:none,            g:dark.magenta,   "none")
+call g:C("Function",     g:none,            g:dark.yellow,    "none")
+" }}}
+
+" language constructs {{{
+call g:C("Comment",      g:none,            g:light.black,    "none")
+call g:C("Statement",    g:none,            g:dark.blue,      "bold")
+call g:C("Conditional",  g:none,            g:dark.blue,      "none")
+call g:C("Repeat",       g:none,            g:dark.blue,      "none")
+call g:C("Label",        g:none,            g:dark.blue,      "none")
+call g:C("Operator",     g:none,            g:none,           "none")
+call g:C("Keyword",      g:none,            g:dark.blue,      "none")
+call g:C("Exception",    g:none,            g:dark.red,       "none")
+
+call g:C("Special",      g:none,            g:dark.magenta,   "none")
+call g:C("SpecialChar",  g:none,            g:dark.magenta,   "none")
+call g:C("Tag",          g:none,            g:dark.blue,      "none")
+call g:C("Delimiter",    g:none,            g:none,           "none")
+call g:C("SpecialComment", g:none,          g:dark.magenta,   "none")
+call g:C("Debug",        g:none,            g:dark.magenta,   "none")
+" }}}
+
+" c like {{{
+call g:C("PreProc",      g:none,            g:dark.magenta,   "none")
+call g:C("Include",      g:none,            g:dark.magenta,   "none")
+call g:C("Define",       g:none,            g:dark.yellow,    "none")
+call g:C("Macro",        g:none,            g:dark.yellow,    "none")
+call g:C("PreCondit",    g:none,            g:dark.yellow,    "none")
+
+call g:C("Type",         g:none,            g:dark.blue,      "none")
+call g:C("StorageClass", g:none,            g:light.white,    "none")
+call g:C("Structure",    g:none,            g:dark.magenta,   "none")
+call g:C("Typedef",      g:none,            g:dark.magenta,   "none")
+" }}}
+
+" diff {{{
+call g:C("DiffAdd",      g:none,            g:dark.green,     "none")
+call g:C("DiffDelete",   g:none,            g:dark.red,       "none")
+call g:C("DiffChange",   g:none,            g:dark.yellow,    "none")
+call g:C("DiffText",     g:none,            g:dark.white,     "none")
+" }}}
+
+" completion menu {{{
+call g:C("Pmenu",        g:none,            g:light.white,    "none")
+call g:C("PmenuSel",     g:dark.black,      g:light.blue,     "none")
+call g:C("PmenuSbar",    g:none,            g:none,           "none")
+call g:C("PmenuThumb",   g:dark.black,      g:dark.black,     "none")
+" }}}
+
+" spelling {{{
+call g:C("SpellBad",     g:none,            g:dark.red,       "underline")
+call g:C("SpellCap",     g:none,            g:dark.green,     "underline")
+call g:C("SpellLocal",   g:none,            g:dark.yellow,    "underline")
+call g:C("SpellRare",    g:none,            g:dark.yellow,    "underline")
 " }}}
 
 " linting {{{
-hi CocWarningSign         ctermbg=none   ctermfg=3      cterm=none
-hi ALEErrorSign           ctermbg=none   ctermfg=1      cterm=none
-hi CocErrorHighlight      ctermbg=none   ctermfg=1      cterm=underline
-hi CocWarningHighlight    ctermbg=none   ctermfg=3      cterm=underline
-" }}}
-
-" git {{{
-hi GitGutterChange        ctermbg=none   ctermfg=3      cterm=bold
-hi GitGutterAdd           ctermbg=none   ctermfg=2      cterm=bold
-hi GitGutterDelete        ctermbg=none   ctermfg=1      cterm=bold
-hi GitGutterChangeDelete  ctermbg=none   ctermfg=5      cterm=bold
+call g:C("CocErrorSign",        g:none,   g:dark.red,      "none")
+call g:C("CocErrorHighlight",   g:none,   g:none,          "underline")
+call g:C("CocWarningSign",      g:none,   g:dark.yellow,   "none")
+call g:C("CocWarningHighlight", g:none,   g:none,          "underline")
 " }}}
 
 " vim wiki {{{
-hi VimwikiHeader1    ctermbg=none   ctermfg=4   cterm=none
-hi VimwikiHeader2    ctermbg=none   ctermfg=5   cterm=none
-hi VimwikiHeader3    ctermbg=none   ctermfg=6   cterm=none
-hi VimwikiHeader4    ctermbg=none   ctermfg=4   cterm=none
-hi VimwikiHeader5    ctermbg=none   ctermfg=2   cterm=none
-hi VimwikiHeader6    ctermbg=none   ctermfg=3   cterm=none
-hi VimwikiPre        ctermbg=none   ctermfg=8   cterm=none
-hi VimwikiWeblink1   ctermbg=none   ctermfg=4   cterm=underline
-hi VimwikiImage      ctermbg=none   ctermfg=4   cterm=underline
+call g:C("VimwikiHeader1",  g:none,   g:dark.blue,     "bold")
+call g:C("VimwikiHeader2",  g:none,   g:dark.magenta,  "bold")
+call g:C("VimwikiHeader3",  g:none,   g:dark.cyan,     "bold")
+call g:C("VimwikiHeader4",  g:none,   g:light.green,   "bold")
+call g:C("VimwikiHeader5",  g:none,   g:dark.yellow,   "bold")
+call g:C("VimwikiHeader6",  g:none,   g:dark.red,      "bold")
+call g:C("VimwikiPre",      g:none,   g:light.black,   "italic")
+" }}}
+
+" sh {{{
+call g:C("shStatement",   g:none,            g:dark.blue,      "none")
+call g:C("shFunction",    g:none,            g:none,           "none")
+call g:C("shOption",      g:none,            g:dark.green,     "none")
+call g:C("shQuote",       g:none,            g:dark.cyan,      "none")
+call g:C("shFunctionKey", g:none,            g:dark.yellow,    "none")
+call g:C("shVariable",    g:none,            g:none,           "none")
 " }}}
 
 " vim: fdm=marker

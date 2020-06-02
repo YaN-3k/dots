@@ -10,22 +10,22 @@
 function! RedrawModeColors(mode)
 	" normal mode
 	if a:mode ==# 'n'
-		hi MyStatuslineMode ctermbg=0 ctermfg=4 cterm=none
+		call g:C("Mode", g:dark.black,    g:dark.blue,      "none")
 	" insert mode
 	elseif a:mode ==# 'i'
-		hi MyStatuslineMode ctermbg=0 ctermfg=3 cterm=none
+		call g:C("Mode", g:dark.black,    g:dark.yellow,    "none")
 	" replace mode
 	elseif a:mode ==# 'R'
-		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
+		call g:C("Mode", g:dark.black,    g:dark.red,       "none")
 	" visual mode
-	elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V'
-		hi MyStatuslineMode ctermbg=0 ctermfg=5 cterm=none
+	elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# ''
+		call g:C("Mode", g:dark.black,    g:dark.magenta,   "none")
 	" command mode
 	elseif a:mode ==# 'c'
-		hi MyStatuslineMode ctermbg=0 ctermfg=6 cterm=none
+		call g:C("Mode", g:dark.black,    g:dark.green,     "none")
 	" terminal mode
 	elseif a:mode ==# 't'
-		hi MyStatuslineMode ctermbg=0 ctermfg=1 cterm=none
+		call g:C("Mode", g:dark.black,    g:dark.red,       "none")
 	endif
 	" Return empty string so as not to display anything in the statusline
 	return ''
@@ -66,10 +66,10 @@ endfunction
 " modification mark {{{
 function! SetModifiedSymbol(modified)
 	if a:modified == 1
-		hi MyStatuslineModifiedBody ctermbg=NONE cterm=NONE ctermfg=7
+		hi ModifiedBody ctermbg=NONE cterm=NONE ctermfg=7
 		return '+'
 	else
-		hi MyStatuslineModifiedBody ctermbg=NONE cterm=bold ctermfg=7
+		hi ModifiedBody ctermbg=NONE cterm=bold ctermfg=7
 		return ''
 	endif
 endfunction
@@ -98,72 +98,58 @@ set statusline=%{RedrawModeColors(mode())}
 " left side items
 "=================
 " Mode
-"set statusline+=%#MyStatuslineSeparator#▒░
-"set statusline+=%#MyStatuslineMode#%{ModeName(mode())}
-"set statusline+=%#MyStatuslineSeparator#░▒
+"set statusline+=%#Separator#▒░
+"set statusline+=%#Mode#%{ModeName(mode())}
+"set statusline+=%#Separator#░▒
 
 " filename
-set statusline+=%#MyStatuslineSeparator#▒
-set statusline+=%#MyStatuslineMode#%t
+set statusline+=%#Separator#▒
+set statusline+=%#Mode#%t
 
 " git branch
 let branch = GitBranch()
 if !empty(branch)
-	set statusline+=%#MyStatuslineSeparator#░▒▓
-	set statusline+=%#MyStatuslineSeparator#▓▒░
-	set statusline+=%#MyStatuslineGit#%{FugitiveHead()}
-	set statusline+=%#MyStatuslineSeparator#░▒▓█
+	set statusline+=%#Separator#░▒▓
+	set statusline+=%#Separator#▓▒░
+	set statusline+=%#Git#%{FugitiveHead()}
+	set statusline+=%#Separator#░▒▓█
 else
-	set statusline+=%#MyStatuslineSeparator#░▒▓█
+	set statusline+=%#Separator#░▒▓█
 endif
 
 " Modified status
-set statusline+=%#MyStatuslineModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
+set statusline+=%#ModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
 
 "==================
 " right side items
 "==================
 " current scroll percentage
 set statusline+=%=
-set statusline+=%#MyStatuslineSeparator#▓▒░
-set statusline+=\%#MyStatuslineLinePerc#%2p%%
-set statusline+=%#MyStatuslineSeparator#░▒▓
+set statusline+=%#Separator#█▓▒░
+set statusline+=\%#LinePerc#%2p%%
+set statusline+=%#Separator#░▒▓
 
 " line and column
-set statusline+=%#MyStatuslineSeparator#▓▒░
-set statusline+=%#MyStatuslineLineCol#%2l
-set statusline+=\/%#MyStatuslineLineCol#%2c
-set statusline+=%#MyStatuslineSeparator#░▒▓
-
-" padding
-"set statusline+=\ \
+set statusline+=%#Separator#▓▒░
+set statusline+=%#LineCol#%2l
+set statusline+=\/%#LineCol#%2c
+set statusline+=%#Separator#░▒▓
 
 " filetype
-set statusline+=%#MyStatuslineSeparator#▓▒░
-set statusline+=\%#MyStatuslineFiletype#%{SetFiletype(&filetype)}
-set statusline+=\ \%#MyStatuslineSeparator#▒
+set statusline+=%#Separator#▓▒░
+set statusline+=\%#Filetype#%{SetFiletype(&filetype)}
+set statusline+=\ \%#Separator#▒
 " }}}
 
 " colors {{{
-hi StatusLine               ctermbg=none   ctermfg=5      cterm=none
-hi StatusLineNC             ctermbg=none   ctermfg=8      cterm=bold
+call g:C("Reset",    g:none,         g:none,           "none")
+call g:C("Separator",g:none,         g:dark.black,     "reverse")
+call g:C("Git",      g:dark.black,   g:dark.white,     "none")
+call g:C("Modified", g:dark.black,   g:dark.black,     "none")
+call g:C("LineCol",  g:dark.black,   g:dark.yellow,    "none")
+call g:C("LinePerc", g:dark.black,   g:dark.green,     "none")
+call g:C("Filetype", g:dark.black,   g:dark.magenta,   "italic")
 
-hi MyStatuslineFilename     ctermbg=0      ctermfg=7      cterm=none
-
-hi MyStatuslineGit          ctermbg=0      ctermfg=7      cterm=none
-
-hi MyStatuslineError        ctermbg=none   ctermfg=1      cterm=none
-hi MyStatuslineWarning      ctermbg=none   ctermfg=3      cterm=none
-
-hi MyStatuslineModified     ctermbg=none   ctermfg=0      cterm=none
-
-hi MyStatuslineLineCol      ctermbg=0      ctermfg=3      cterm=none
-hi MyStatuslineLinePerc     ctermbg=0      ctermfg=2      cterm=none
-
-hi MyStatuslineFiletype     ctermbg=0      ctermfg=5      cterm=italic
-
-hi Reset                    ctermbg=none   ctermfg=none   cterm=none
-hi MyStatuslineSeparator    ctermbg=none   ctermfg=0      cterm=reverse
 " }}}
 
 " vim: fdm=marker
