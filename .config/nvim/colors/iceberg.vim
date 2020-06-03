@@ -65,7 +65,7 @@ call g:C("TabLineSel",   g:dark.black,      g:dark.blue,      "bold")
 call g:C("Directory",    g:none,            g:dark.blue,      "none")
 call g:C("Search",       g:none,            g:none,           "reverse")
 call g:C("IncSearch",    g:none,            g:none,           "reverse")
-call g:C("HighlightedyankRegion",  g:none,  g:none,           "none")
+call g:C("HighlightedyankRegion",  g:dark.black,  g:none,           "none")
 " }}}
 
 " prompt / status {{{
@@ -95,28 +95,28 @@ call g:C("Whitespace",   g:none,            g:light.black,    "none")
 " }}}
 
 " variable types {{{
-call g:C("Constant",     g:none,            g:dark.magenta,   "none")
+call g:C("Constant",     g:none,            g:none,           "none")
 call g:C("String",       g:none,            g:dark.cyan,      "none")
 call g:C("Character",    g:none,            g:dark.red,       "none")
 call g:C("Number",       g:none,            g:dark.magenta,   "none")
 call g:C("Boolean",      g:none,            g:light.yellow,   "none")
 call g:C("Float",        g:none,            g:dark.magenta,   "none")
 
-call g:C("Identifier",   g:none,            g:dark.magenta,   "none")
+call g:C("Identifier",   g:none,            g:dark.cyan,      "none")
 call g:C("Function",     g:none,            g:dark.yellow,    "none")
 " }}}
 
 " language constructs {{{
 call g:C("Comment",      g:none,            g:light.black,    "none")
-call g:C("Statement",    g:none,            g:dark.blue,      "bold")
+call g:C("Statement",    g:none,            g:dark.blue,      "none")
 call g:C("Conditional",  g:none,            g:dark.blue,      "none")
 call g:C("Repeat",       g:none,            g:dark.blue,      "none")
 call g:C("Label",        g:none,            g:dark.blue,      "none")
-call g:C("Operator",     g:none,            g:none,           "none")
+call g:C("Operator",     g:none,            g:dark.blue,      "none")
 call g:C("Keyword",      g:none,            g:dark.blue,      "none")
 call g:C("Exception",    g:none,            g:dark.red,       "none")
 
-call g:C("Special",      g:none,            g:dark.magenta,   "none")
+call g:C("Special",      g:none,            g:dark.green,     "none")
 call g:C("SpecialChar",  g:none,            g:dark.magenta,   "none")
 call g:C("Tag",          g:none,            g:dark.blue,      "none")
 call g:C("Delimiter",    g:none,            g:none,           "none")
@@ -154,6 +154,11 @@ call g:C("PmenuSbar",    g:none,            g:none,           "none")
 call g:C("PmenuThumb",   g:dark.black,      g:dark.black,     "none")
 " }}}
 
+" quick scope {{{
+call g:C("QuickScopePrimary",  g:none,       g:dark.yellow,   "underline")
+call g:C("QuickScopeSecondary",g:none,       g:dark.blue,     "underline")
+" }}}
+
 " spelling {{{
 call g:C("SpellBad",     g:none,            g:dark.red,       "underline")
 call g:C("SpellCap",     g:none,            g:dark.green,     "underline")
@@ -168,23 +173,54 @@ call g:C("CocWarningSign",      g:none,   g:dark.yellow,   "none")
 call g:C("CocWarningHighlight", g:none,   g:none,          "underline")
 " }}}
 
+" startify {{{
+hi! link StartifyBracket Comment
+hi! link StartifyFile    Identifier
+hi! link StartifyFooter  Title
+hi! link StartifyHeader  Title
+hi! link StartifyNumber  Special
+hi! link StartifyPath    Comment
+hi! link StartifySection Statement
+hi! link StartifySlash   Comment
+hi! link StartifySpecial Normal
+" }}}
+
+" which key {{{
+highlight default link WhichKey          Statement
+highlight default link WhichKeySeperator Comment
+highlight default link WhichKeyGroup     Comment
+highlight default link WhichKeyDesc      Function
+" }}}
+
 " vim wiki {{{
-call g:C("VimwikiHeader1",  g:none,   g:dark.blue,     "bold")
-call g:C("VimwikiHeader2",  g:none,   g:dark.magenta,  "bold")
-call g:C("VimwikiHeader3",  g:none,   g:dark.cyan,     "bold")
-call g:C("VimwikiHeader4",  g:none,   g:light.green,   "bold")
-call g:C("VimwikiHeader5",  g:none,   g:dark.yellow,   "bold")
-call g:C("VimwikiHeader6",  g:none,   g:dark.red,      "bold")
+call g:C("VimwikiHeader1",  g:none,   g:dark.yellow,    "bold")
+call g:C("VimwikiHeader2",  g:none,   g:dark.green,     "bold")
+call g:C("VimwikiHeader3",  g:none,   g:dark.magenta,   "bold")
+call g:C("VimwikiHeader4",  g:none,   g:light.cyan,     "bold")
+call g:C("VimwikiHeader5",  g:none,   g:dark.blue,      "bold")
+call g:C("VimwikiHeader6",  g:none,   g:light.black,    "bold")
 call g:C("VimwikiPre",      g:none,   g:light.black,   "italic")
 " }}}
 
 " sh {{{
-call g:C("shStatement",   g:none,            g:dark.blue,      "none")
+call g:C("shStatement",   g:none,            g:none,           "none")
 call g:C("shFunction",    g:none,            g:none,           "none")
 call g:C("shOption",      g:none,            g:dark.green,     "none")
-call g:C("shQuote",       g:none,            g:dark.cyan,      "none")
+call g:C("shQuote",       g:none,            g:dark.blue,      "none")
+call g:C("shDerefSimple", g:none,            g:dark.green,     "none")
 call g:C("shFunctionKey", g:none,            g:dark.yellow,    "none")
 call g:C("shVariable",    g:none,            g:none,           "none")
+" }}}
+
+" html {{{
+call g:C("htmlTag",     g:none,            g:light.black,    "none")
+call g:C("htmlEndTag",  g:none,            g:light.black,    "none")
+call g:C("htmlArg",     g:none,            g:light.magenta,    "none")
+" }}}
+
+" python {{{
+call g:C("pythonFunctionCall", g:none,      g:none,           "none")
+call g:C("pythonImport",       g:none,      g:dark.blue,      "none")
 " }}}
 
 " vim: fdm=marker

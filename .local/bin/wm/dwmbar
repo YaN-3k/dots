@@ -32,7 +32,7 @@ _date() {
 }
 
 backlight() {
-	printf " %0.f%%" "$(xbacklight -get)"
+	printf " %0.f%%" "$(xbacklight -get)"
 }
 
 volume() {
@@ -44,8 +44,8 @@ volume() {
 	else
 		ico=""
 	fi
-	amixer get Master | grep -q '\[off\]' && vol="muted" || vol="$vol%"
-	printf "%s %s" "$ico" "$vol"
+	amixer get Master | grep -q '\[off\]' && ico="婢"
+	printf "%s %s%%" "$ico" "$vol"
 }
 
 mpd() {
@@ -79,13 +79,13 @@ torrents() {
 				s/.*Stopped.*/  /g;
 				s/.*Seeding.*/  /g;
 				s/.*Idle.*/  /g;
-				s/.*Uploading.*/  /g;
-				s/.*Downloading.*/  /g;
+				s/.*Uploading.*/  /g;
+				s/.*Downloading.*/  /g;
 				s/.*[A-Z][a-z].*/  / g;
 				"
 		printf %s "$per"
 	done <<EOF
-$data
+	$data
 EOF
 	transmission-remote -l | grep -qE "%|n/a" && printf " %s" "$SEP"
 }

@@ -34,7 +34,7 @@
 	sort = yes
 
 	idle_threshold = 120
-	font = DejaVu Sans Mono 10
+	font = Hack Nerd Font 10
 	line_height = 0
 	markup = full
 

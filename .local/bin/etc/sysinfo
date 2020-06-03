@@ -53,7 +53,7 @@ draw() {
 printf "\n"
 i=0
 while [ $i -le 6 ]; do
-	printf "\033[$((i + 41))m\033[$((i + 30))m█▓▒░"
+	printf "\033[$((i + 41));$((i + 30))m█▓▒░"
 	i=$((i + 1))
 done
 printf "\033[37m█\033[0m▒░\n\n"

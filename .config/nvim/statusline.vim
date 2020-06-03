@@ -109,12 +109,12 @@ set statusline+=%#Mode#%t
 " git branch
 let branch = GitBranch()
 if !empty(branch)
-	set statusline+=%#Separator#░▒▓
 	set statusline+=%#Separator#▓▒░
+	set statusline+=%#Separator#░▒▓
 	set statusline+=%#Git#%{FugitiveHead()}
-	set statusline+=%#Separator#░▒▓█
+	set statusline+=%#Separator#█▓▒░
 else
-	set statusline+=%#Separator#░▒▓█
+	set statusline+=%#Separator#█▓▒░
 endif
 
 " Modified status
@@ -125,25 +125,25 @@ set statusline+=%#ModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
 "==================
 " current scroll percentage
 set statusline+=%=
-set statusline+=%#Separator#█▓▒░
+set statusline+=%#Separator#░▒▓█
 set statusline+=\%#LinePerc#%2p%%
-set statusline+=%#Separator#░▒▓
+set statusline+=%#Separator#▓▒░
 
 " line and column
-set statusline+=%#Separator#▓▒░
+set statusline+=%#Separator#░▒▓
 set statusline+=%#LineCol#%2l
 set statusline+=\/%#LineCol#%2c
-set statusline+=%#Separator#░▒▓
+set statusline+=%#Separator#▓▒░
 
 " filetype
-set statusline+=%#Separator#▓▒░
+set statusline+=%#Separator#░▒▓
 set statusline+=\%#Filetype#%{SetFiletype(&filetype)}
 set statusline+=\ \%#Separator#▒
 " }}}
 
 " colors {{{
 call g:C("Reset",    g:none,         g:dark.black,     "none")
-call g:C("Separator",g:none,         g:dark.black,     "reverse")
+call g:C("Separator",g:none,         g:dark.black,     "none")
 call g:C("Git",      g:dark.black,   g:dark.white,     "none")
 call g:C("Modified", g:dark.black,   g:dark.black,     "none")
 call g:C("LineCol",  g:dark.black,   g:dark.yellow,    "none")

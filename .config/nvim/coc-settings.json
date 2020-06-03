@@ -20,6 +20,17 @@
       "command": "bash-language-server",
       "args": ["start"],
       "filetypes": ["sh"]
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      }
     }
   },
   "list.insertMappings": {
@@ -31,4 +42,9 @@
     "v": "action:vsplit"
   },
   "list.source.files.args": ["--hiden", "--files"],
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+  "html.autoClosingTags": true,
+  "html.validate.scripts": true,
+  "html.validate.styles": true,
+  "html.format.enable": true
 }
