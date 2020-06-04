@@ -27,4 +27,4 @@ sleep "$TIME"
 
 # Copy to clipboard and save to file
 maim $TYPE | tee "$DIR"/"$(date +%G-%m-%d_%s.png)" | xclip -selection clipboard -t image/png
-notify-send " Screenshot taken."
+notify-send "  Screenshot taken."

@@ -19,7 +19,7 @@ m() { ${DMENU-:dmenu} "$@"; }
 while
 	choice="$(printf "Yes\nNo\nShow changes" | m -p "Update packages?")"
 	[ "$choice" = 'Yes' ] && {
-		msg=' Updating...'
+		msg='  Updating...'
 		smsg="$c_packages packages have been updated."
 		opt='-Syu'
 	}
@@ -29,7 +29,7 @@ do
 	package="${package%% *}"
 	[ "$package" ] && choice="$(printf "Yes\nNo" | m -p "Update $package?")"
 	[ "$choice" = 'Yes' ] && {
-		msg=" Updating $package."
+		msg="  Updating $package."
 		smsg="$package has been updated."
 		opt="-S $package"
 		break

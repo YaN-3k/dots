@@ -55,7 +55,7 @@ mpd() {
 
 pkg() {
 	updates=$(pacman -Quq | wc -l)
-	[ "$updates" -gt 0 ] && printf "  %s %s" "$updates" "$SEP"
+	[ "$updates" -gt 0 ] && printf "   %s %s" "$updates" "$SEP"
 }
 
 news() {
@@ -77,7 +77,7 @@ torrents() {
 		}
 		printf %s "$line" | sed "
 				s/.*Stopped.*/  /g;
-				s/.*Seeding.*/  /g;
+				s/.*Seeding.*/  /g;
 				s/.*Idle.*/  /g;
 				s/.*Uploading.*/  /g;
 				s/.*Downloading.*/  /g;

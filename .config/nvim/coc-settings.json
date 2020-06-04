@@ -1,10 +1,43 @@
 {
-  "suggest.noselect": true,
-  "suggest.enablePreselect": true,
-  "codeLens.enable": true,
-  "diagnostic.errorSign": ">>",
-  "diagnostic.warningSign": "--",
-  "diagnostic.infoSign": "?",
+  // diagnostics
+  "diagnostic.errorSign": " ",
+  "diagnostic.warningSign": " ",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": " ",
+  // "diagnostic.virtualText": true, // this won't work with codelens when error on same line
+  // "codeLens.enable": true,
+
+  // list
+  "list.indicator": ">",
+  "list.selectedSignText": " ",
+
+  // autoformat
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "javascript",
+    "graphql",
+    "html",
+    "yaml",
+    "json",
+    "python"
+  ],
+  "coc.preferences.hoverTarget": "float",
+
+  // snippets
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
+
+  // explorer
+  "explorer.width": 30,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.previewAction.onHover": false,
+  "explorer.icon.enableVimDevicons": false,
+  "explorer.keyMappings": {
+    "<cr>": ["expandable?", ["expanded?", "collapse", "expand"], "open"],
+    "v": "open:vsplit"
+  },
+
+  // lsp
   "languageserver": {
     "ccls": {
       "command": "ccls",
@@ -19,32 +52,12 @@
     "bash": {
       "command": "bash-language-server",
       "args": ["start"],
-      "filetypes": ["sh"]
-    },
-    "haskell": {
-      "command": "hie-wrapper",
-      "args": ["--lsp"],
-      "rootPatterns": ["stack.yaml", "cabal.config", "package.yaml"],
-      "filetypes": ["hs", "lhs", "haskell"],
-      "initializationOptions": {
-        "languageServerHaskell": {
-          "hlintOn": true
-        }
-      }
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     }
   },
-  "list.insertMappings": {
-    "<C-x>": "action:split",
-    "<C-v>": "action:vsplit"
-  },
-  "list.normalMappings": {
-    "s": "action:split",
-    "v": "action:vsplit"
-  },
-  "list.source.files.args": ["--hiden", "--files"],
-  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
-  "html.autoClosingTags": true,
-  "html.validate.scripts": true,
-  "html.validate.styles": true,
-  "html.format.enable": true
+
+  // python config
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true
 }
