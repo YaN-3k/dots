@@ -1,6 +1,7 @@
 # Preview
 ![ice](pix/prev/ice.png)
 ![ice](pix/prev/dwm.png)
+![nvim](pix/prev/nvim.png)
 ![sea](pix/prev/sea.png)
 # Installation guide
 ## Install dependencies
@@ -88,3 +89,4 @@ $ dots add
 $ dots commit
 $ dots push
 ```
+
