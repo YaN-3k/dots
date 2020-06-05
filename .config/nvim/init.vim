@@ -24,7 +24,6 @@ set hidden                              " allow to switch unsaved buffers
 scriptencoding utf-8                    " the encoding displayed 
 set fileencoding=utf-8                  " the encoding written to file
 filetype plugin indent on               " detect filetypes
-
 set t_Co=256                            " support 256 colors
 colorscheme iceberg                     " set colorscheme
 set notermguicolors                       " use ansi color cod3 escape
@@ -33,6 +32,7 @@ set laststatus=2                        " enable statusline
 source ~/.config/nvim/statusline.vim    " patch to statusline config
 set ruler              			            " show the cursor position all the time
 set noshowmode                          " we don't need to see things like -- INSERT -- anymore
+set noshowcmd                           " we don't need to see things like line / column number
 set fillchars=vert:▒                    " vertical split style
 set showmatch                           " show matching brackets/parenthesis
 set shortmess+=icw                      " avoid message and prompts
@@ -49,18 +49,15 @@ set noexpandtab                         " tabs are tabs
 set splitbelow                          " horizontal splits will automatically be below
 set splitright                          " vertical splits will automatically be to the right
 set foldmethod=marker                   " fold stuff using {}
-
 set hlsearch                            " search highlight
 set ignorecase                          " ignore search case
 set smartcase                           " override ignorecase if typed text contain upper case characters
 set inccommand=nosplit                  " show pattern when typing (for :s/)
-set incsearch                           " while typing a search command, show where the pattern
-
+set incsearch                           " while typing a search command, show where the pattern is
 set wildmenu                            " enable wildmenu
 set wildmode=longest:full,full          " wildmenu style
 set wildignorecase                      " ignore case by wildmenu
 set path+=**                            " find recursive subdirectory
-
 let g:netrw_banner = 0                  " hide the netrw banner
 let g:netrw_liststyle = 4               " netrw listing style
 let g:netrw_browse_split = 0            " how to open new files
@@ -80,7 +77,7 @@ let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 " }}}
 
-" functions {{{
+" autocmd {{{
 augroup BufferWrite
 	au!
 	" automatically deletes all trailing whitespace on save.
@@ -97,8 +94,10 @@ augroup end
 
 " Turn spellcheck on for markdown files
 augroup auto_spellcheck
+	au!
 	autocmd BufNewFile,BufRead *.md setlocal spell
 augroup END
+" }}}
 
 " restore cursor position {{{
 function! ResCur()
@@ -150,15 +149,14 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " }}}
-" }}}}
 " }}}
 
 " plugins {{{
 " setup {{{
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
 	echo 'Downloading junegunn/vim-plug to manage plugins...'
-	silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache/{cache,undo,backups,swaps}}')
-	silent call system('pip3 install --user pynvim msgpack')
+	silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache/{undo,sessions}}')
+	silent call system('pip3 install --user pynvim')
 	silent call system('curl -flo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 	execute 'source  ~/.config/nvim/autoload/plug.vim'
 	augroup plugsetup
@@ -171,57 +169,25 @@ endif
 " load {{{
 call plug#begin('~/.config/nvim/bundle')
 
-" syntax hl
-Plug 'sheerun/vim-polyglot'
-
-" Conquer Of Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" project management
-Plug 'mhinz/vim-startify'
-
-" default snippets
-Plug 'honza/vim-snippets'
-
-" latex suppoer
-Plug 'lervag/vimtex'
-" autodetect latex files correctly
-let g:tex_flavor = 'latex'
-
-" shows keybindings in popup
-Plug 'liuchengxu/vim-which-key'
-
-" git integration
-Plug 'tpope/vim-fugitive'
-" commit browser
-Plug 'junegunn/gv.vim'
-
-" comment stuff out
-Plug 'tpope/vim-commentary'
-
-" changes Vim working directory to project root
-Plug 'airblade/vim-rooter'
-
-" extend %
-Plug 'isa/vim-matchit'
-
-" lightning fast left-right movement
-Plug 'unblevable/quick-scope'
-
-" quoting/parenthesizing made simple
-Plug 'tpope/vim-surround'
-
-" move lines
-"Plug 'matze/vim-move'
-
-" split management between vim and tmux
-Plug 'christoomey/vim-tmux-navigator'
-
-" notes and diaries
-Plug 'vimwiki/vimwiki'
-
-" vanilla vim is to easy
-Plug 'takac/vim-hardtime'
+Plug 'sheerun/vim-polyglot'                          " syntax hl
+Plug 'neoclide/coc.nvim', {'branch': 'release'}      " Conquer Of Completion
+Plug 'mhinz/vim-startify'                            " project management
+Plug 'honza/vim-snippets'                            " default snippets
+Plug 'lervag/vimtex'                                 " latex support
+let g:tex_flavor = 'latex'                           " autodetect latex files correctly
+Plug 'liuchengxu/vim-which-key'                      " shows keybindings in popup
+Plug 'tpope/vim-fugitive'                            " git integration
+Plug 'junegunn/gv.vim'                               " commit browser
+Plug 'tpope/vim-commentary'                          " comment stuff out
+Plug 'airblade/vim-rooter'                           " changes Vim working directory to project root
+Plug 'isa/vim-matchit'                               " extend %
+Plug 'unblevable/quick-scope'                        " lightning fast left-right movement
+Plug 'tpope/vim-surround'                            " quoting/parenthesizing made simple
+Plug 'christoomey/vim-tmux-navigator'                " split management between vim and tmux
+Plug 'vimwiki/vimwiki'                               " notes and diaries
+Plug 'ThePrimeagen/vim-be-good'                      " practice movements
+Plug 'voldikss/vim-floaterm'                         " better terms
+Plug 'takac/vim-hardtime'                            " vanilla vim is to easy
 let g:hardtime_default_on = 0
 
 call plug#end()
@@ -230,41 +196,42 @@ call plug#end()
 " coc {{{
 " global extensions
 let g:coc_global_extensions = [
-			\	'coc-explorer',
-			\	'coc-lists',
-			\	'coc-snippets',
-			\	'coc-pairs',
-			\	'coc-yank',
-			\	'coc-git',
-			\	'coc-highlight',
-			\	'coc-tabnine',
-			\	'coc-dictionary',
-			\	'coc-tag',
-			\	'coc-word',
+			\ 'coc-explorer',
+			\ 'coc-lists',
+			\ 'coc-snippets',
+			\ 'coc-pairs',
+			\ 'coc-yank',
+			\ 'coc-git',
+			\ 'coc-highlight',
+			\ 'coc-tabnine',
+			\ 'coc-dictionary',
+			\ 'coc-tag',
+			\ 'coc-word',
 			\ 'coc-floaterm',
 			\]
 
 " language extensions
 let g:coc_global_extensions += [
-			\	'coc-vimtex',
-			\	'coc-html',
-			\	'coc-css',
-			\	'coc-emmet',
-			\	'coc-python',
-			\	'coc-tsserver',
-			\	'coc-json',
-			\	'coc-prettier',
-			\	'coc-rls',
+			\ 'coc-clangd',
+			\ 'coc-vimtex',
+			\ 'coc-html',
+			\ 'coc-css',
+			\ 'coc-emmet',
+			\ 'coc-python',
+			\ 'coc-tsserver',
+			\ 'coc-json',
+			\ 'coc-prettier',
+			\ 'coc-rls',
 			\]
 
-" Add `:Format` command to format current buffer.
+" format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" fold current buffer
+command! -nargs=? Fold   :call CocAction('fold', <f-args>)
 
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" organize imports
+command! -nargs=0 OR     :call CocAction('runCommand', 'editor.action.organizeImport')
 
 " Highlight the symbol and its references when holding the cursor.
 "autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -353,10 +320,64 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
 			\| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 " }}}
 
-" not leader mapping {{{
+" autocompletion && snippet && diagnostic {{{
+" completion with tab or shift-tab
+inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+
+" refresh
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" trigger snippets
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+			\"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" real tab
+inoremap <A-tab> <tab>
+
+" real enter
+inoremap <M-cr> <cr>
+
+" trigger snippet expand
+imap <C-j> <Plug>(coc-snippets-expand)
+
+" select text for visual placeholder of snippet
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" expand and jump (make expand higher priority)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" jump to next placeholder
+let g:coc_snippet_next = '<c-j>'
+
+" jump to previous placeholder
+let g:coc_snippet_prev = '<c-k>'
+
+" diagnostics next / prev
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
+" }}}
+
+" j / k mapping {{{
+" I hate escape more than anything else
+inoremap jk <Esc>
+inoremap kj <Esc>
+
+" when line overflows, it will go
+" one _visual_ line and not actual
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+" move line(s) up / down / right /left
+vnoremap <silent>J :m '>+1<CR>gv=gv
+vnoremap <silent>K :m '<-2<CR>gv=gv
+" }}}
+
 " buffers {{{
 " TAB in general mode will move to text buffer
-nnoremap <silent> <TAB> :bnext<CR>
+"nnoremap <silent> <TAB> :bnext<CR>
 " SHIFT-TAB will go back
 nnoremap <silent> <S-TAB> :bprevious<CR>
 
@@ -386,82 +407,21 @@ nnoremap <silent> <M-h>    :vertical resize -2<CR>
 nnoremap <silent> <M-l>    :vertical resize +2<CR>
 " }}}
 
-" autocompletion {{{
-" completion with tab or shift-tab
-inoremap <expr><silent><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <expr><silent><S-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-
-" refresh
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" trigger snippets
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
-			\"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" real tab
-inoremap <A-tab> <tab>
-
-" real enter
-inoremap <M-cr> <cr>
+" leader mappings {{{
+" single leader mappings {{{
+let g:which_key_map['/'] = [ ':Commentary'  ,             'comment' ]
+let g:which_key_map['.'] = [ ':e $MYVIMRC',               'open init' ]
+let g:which_key_map[','] = [ 'Startify',                  'start screen' ]
+let g:which_key_map['T'] = [ ':CocList grep',             'search text' ]
+let g:which_key_map['L'] = [ ':CocList',                  'CocList' ]
+let g:which_key_map['e'] = [ ':CocCommand explorer',      'explorer' ]
+let g:which_key_map['f'] = [ ':CocList files',            'search files' ]
+let g:which_key_map['S'] = [ ':SSave',                    'save session' ]
+let g:which_key_map['d'] = [ ':bd!',                      'delete buffer']
+let g:which_key_map[';'] = [ 'q:',                        'commands history' ]
 " }}}
 
-" snippets {{{
-" trigger snippet expand
-imap <C-j> <Plug>(coc-snippets-expand)
-
-" select text for visual placeholder of snippet
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" expand and jump (make expand higher priority)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" jump to next placeholder
-let g:coc_snippet_next = '<c-j>'
-
-" jump to previous placeholder
-let g:coc_snippet_prev = '<c-k>'
-" }}}
-
-" text obj {{{
-" functions
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-
-" class
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" chunk 
-omap ig <Plug>(coc-git-chunk-inner)
-xmap ig <Plug>(coc-git-chunk-inner)
-omap ag <Plug>(coc-git-chunk-outer)
-xmap ag <Plug>(coc-git-chunk-outer)
-
-" range select
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-" }}}
-
-" I hate escape more than anything else
-inoremap jk <Esc>
-inoremap kj <Esc>
-
-" when line overflows, it will go
-" one _visual_ line and not actual
-nnoremap j gj
-nnoremap k gk
-vnoremap j gj
-vnoremap k gk
-
-iab @@ Cherrry9@disroot.org
-
-" exit from terminal
-tnoremap <C-e> <C-\><C-n>
-
+" a is for actions {{{
 " zoom {{{
 nnoremap <leader>az :call Zoom()<cr>
 function! Zoom() abort
@@ -480,28 +440,7 @@ function! Zoom() abort
 	endif
 endfunction
 " }}}
-" }}}
-
-" single mappings {{{
-nnoremap <leader>W :execute 'silent! write !sudo tee % >/dev/null' <bar> edit!<cr>
-let g:which_key_map['/'] = [ ':Commentary'  ,             'comment' ]
-let g:which_key_map['.'] = [ ':e $MYVIMRC',               'open init' ]
-let g:which_key_map[';'] = [ ':Commands',                 'commands' ]
-let g:which_key_map['='] = [ '<C-W>=',                    'balance windows' ]
-let g:which_key_map[','] = [ 'Startify',                  'start screen' ]
-let g:which_key_map['d'] = [ ':bd!',                      'delete buffer']
-let g:which_key_map['e'] = [ ':CocCommand explorer',      'explorer' ]
-let g:which_key_map['f'] = [ ':CocList files',            'search files' ]
-let g:which_key_map['h'] = [ '<C-W>s',                    'split below']
-let g:which_key_map['q'] = [ 'q',                         'quit' ]
-let g:which_key_map['T'] = [ ':Rg',                       'search text' ]
-let g:which_key_map['v'] = [ '<C-W>v',                    'split right']
-let g:which_key_map['S'] = [ ':SSave',                    'save session' ]
-let g:which_key_map['W'] = 'write!'
-" }}}
-
-" group mappings {{{
-" a is for actions {{{
+nnoremap <leader>aw :execute 'silent! write !sudo tee % >/dev/null' <bar> edit!<cr>
 nnoremap <leader>aS :sp term://shellcheck %<cr>:resize 15<cr>
 nnoremap <leader>ar :%s//g<Left><Left>
 nnoremap <Leader>a; m`A;<ESC>``
@@ -510,14 +449,14 @@ let g:which_key_map.a = {
 			\ ';' : 'add semicolon',
 			\ 'r' : 'replace',
 			\ 'S' : 'shellcheck',
+			\ 'w' : 'write!',
 			\ '=' : ['m`gg=G``',                                'indent'],
 			\ 'X' : [':!chmod -x %',                            'make not executable'],
 			\ 'e' : [':!./%',                                   'execute'],
 			\ 'p' : [':setlocal spell! spelllang=pl',           'polish spell-check'],
 			\ 'u' : [':setlocal spell! spelllang=en_us',        'us spell-check'],
 			\ 's' : [':let @/ = ""',                            'remove search highlight'],
-			\ 't' : [':terminal',                               'terminal'],
-			\ 'w' : [':%s/\s\+$//e',                            'fix-whitespace'],
+			\ 'f' : [':%s/\s\+$//e',                            'fix-whitespace'],
 			\ 'x' : [':!chmod +x %',                            'make executable'],
 			\ 'z' : [':call Zoom()',                            'zoom window'],
 			\ }
@@ -557,7 +496,7 @@ let g:which_key_map.s = {
 			\ 'P' : [':CocList tags',           'project tags'],
 			\ 's' : [':CocList snippets',       'snippets'],
 			\ 'S' : [':CocList colors',         'color schemes'],
-			\ 't' : [':CocList greep',          'text Rg'],
+			\ 't' : [':CocList grep',           'text'],
 			\ 'w' : [':CocList windows',        'search windows'],
 			\ 'y' : [':CocList filetypes',      'file types'],
 			\ }
@@ -590,11 +529,11 @@ let g:which_key_map.g = {
 " l is for language server protocol {{{
 nnoremap <silent><leader>lK :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 let g:which_key_map.l = {
 			\ 'name' : '+lsp' ,
@@ -635,6 +574,20 @@ let g:which_key_map.l = {
 			\ }
 " }}}
 
+" t is for terminal {{{
+let g:which_key_map.t = {
+			\ 'name' : '+terminal' ,
+			\ 'o' : [':FloatermNew',             'open'],
+			\ 'n' : [':FloatermNext',            'next'],
+			\ 'k' : [':FloatermKill',            'kill'],
+			\ 'N' : [':FloatermPrev',            'prev'],
+			\ 't' : [':FloatermToggle',          'toggle'],
+			\ 'p' : [':FloatermNew python',      'python'],
+			\ 'v' : [':FloatermNew vifm',        'vifm'],
+			\ 'h' : [':FloatermNew htop',        'ytop'],
+			\ }
+" }}}
+
 " w is for wiki {{{
 nnoremap <leader>wS ::VimwikiSearchTags<space>
 let g:which_key_map.w = {
@@ -660,6 +613,30 @@ let g:which_key_map.w = {
 			\ },
 			\ }
 " }}}
+" }}}
+
+" text obj {{{
+" functions
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+
+" class
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" chunk 
+omap ig <Plug>(coc-git-chunk-inner)
+xmap ig <Plug>(coc-git-chunk-inner)
+omap ag <Plug>(coc-git-chunk-outer)
+xmap ag <Plug>(coc-git-chunk-outer)
+
+" range select
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 " }}}
 
 " register dictionary
