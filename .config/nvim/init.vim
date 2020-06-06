@@ -26,11 +26,11 @@ set fileencoding=utf-8                  " the encoding written to file
 filetype plugin indent on               " detect filetypes
 set t_Co=256                            " support 256 colors
 colorscheme iceberg                     " set colorscheme
-set notermguicolors                       " use ansi color cod3 escape
+set notermguicolors                     " use ansi color code escape
 syntax on                               " enable syntax
 set laststatus=2                        " enable statusline
 source ~/.config/nvim/statusline.vim    " patch to statusline config
-set ruler              			            " show the cursor position all the time
+set ruler                               " show the cursor position all the time
 set noshowmode                          " we don't need to see things like -- INSERT -- anymore
 set noshowcmd                           " we don't need to see things like line / column number
 set fillchars=vert:▒                    " vertical split style
@@ -48,6 +48,7 @@ set autoindent                          " good auto indent
 set noexpandtab                         " tabs are tabs
 set splitbelow                          " horizontal splits will automatically be below
 set splitright                          " vertical splits will automatically be to the right
+set foldcolumn=0                        " indicate folds and their nesting levels
 set foldmethod=marker                   " fold stuff using {}
 set hlsearch                            " search highlight
 set ignorecase                          " ignore search case
@@ -82,14 +83,16 @@ augroup BufferWrite
 	au!
 	" automatically deletes all trailing whitespace on save.
 	"autocmd BufWritePre * %s/\s\+$//e
-	" when shortcut files are updated, renew bash and ranger configs with new material:
+	" restore session
+	"autocmd BufWinLeave *.* mkview!
+	"autocmd BufWinEnter *.* silent loadview
+	autocmd BufWinEnter *.* normal! g`"
+	" reload programs when configuration is updated
 	autocmd BufWritePost files,directories !shortcuts
-	" run xrdb whenever Xdefaults or Xresources are updated.
 	autocmd BufWritePost *Xdefaults !xrdb %
-	" update binds when sxhkdrc is updated.
+	autocmd BufWritePost dunstrc !pkill dunst; dunst &
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
-	" reload vim when configuration is updated
-	autocmd BufWritePost init.vim,iceberg.vim source $MYVIMRC
+	autocmd BufWritePost init.vim,iceberg.vim,statusline.vim source $MYVIMRC
 augroup end
 
 " Turn spellcheck on for markdown files
@@ -97,57 +100,6 @@ augroup auto_spellcheck
 	au!
 	autocmd BufNewFile,BufRead *.md setlocal spell
 augroup END
-" }}}
-
-" restore cursor position {{{
-function! ResCur()
-	if line("'\"") <= line('$')
-		normal! g`"
-		return 1
-	endif
-endfunction
-
-if has("folding")
-	function! UnfoldCur()
-		if !&foldenable
-			return
-		endif
-		let cl = line(".")
-		if cl <= 1
-			return
-		endif
-		let cf  = foldlevel(cl)
-		let uf  = foldlevel(cl - 1)
-		let min = (cf > uf ? uf : cf)
-		if min
-			execute "normal!" min . "zo"
-			return 1
-		endif
-	endfunction
-endif
-
-augroup resCur
-	autocmd!
-	if has("folding")
-		autocmd BufWinEnter * if ResCur() | call UnfoldCur() | endif
-	else
-		autocmd BufWinEnter * call ResCur()
-	endif
-augroup END
-" }}}
-
-" identify syntax hl group {{{
-nmap <silent><F10> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-	if !exists('*synstack')
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " }}}
 " }}}
 
@@ -550,10 +502,10 @@ let g:which_key_map.l = {
 			\ 'e' : [':CocList extensions',                  'extensions'],
 			\ 'f' : ['<Plug>(coc-format-selected)',          'format selected'],
 			\ 'F' : ['<Plug>(coc-format)',                   'format'],
-			\ 'h' : ['<Plug>(coc-float-hide)',               'hide'],
 			\ 'i' : ['<Plug>(coc-implementation)',           'implementation'],
 			\ 'I' : [':CocList diagnostics',                 'diagnostics'],
 			\ 'j' : ['<Plug>(coc-float-jump)',               'float jump'],
+			\ 'h' : ['<Plug>(coc-float-hide)',               'hide'],
 			\ 'l' : ['<Plug>(coc-codelens-action)',          'code lens'],
 			\ 'n' : ['<Plug>(coc-diagnostic-next)',          'next diagnostic'],
 			\ 'N' : ['<Plug>(coc-diagnostic-next-error)',    'next error'],

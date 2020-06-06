@@ -48,7 +48,8 @@ call g:C("CursorLineNr", g:none,            g:light.white,    "bold")
 
 " number collumn {{{
 call g:C("CursorColumn", g:dark.black,      g:none,           "none")
-call g:C("FoldedColumn", g:dark.black,      g:dark.blue,      "none")
+call g:C("FoldedColumn", g:none,            g:none,           "none")
+call g:C("FoldColumn",   g:none,            g:light.black,    "none")
 call g:C("SignColumn",   g:none,            g:dark.white,     "none")
 call g:C("Folded",       g:dark.black,      g:dark.blue,      "none")
 " }}}
