@@ -20,6 +20,8 @@ set undofile                            " save undo files
 set clipboard=unnamedplus               " coffee pasta
 set mouse=a                             " plebs mode
 set updatetime=100                      " faster completion
+set timeoutlen=500                      " time to wait for a key code sequence.
+set ttimeoutlen=500                     " ^ but for CTRL-\ CTRL-N etc.
 set hidden                              " allow to switch unsaved buffers
 scriptencoding utf-8                    " the encoding displayed 
 set fileencoding=utf-8                  " the encoding written to file
@@ -74,32 +76,33 @@ set listchars+=precedes:«
 set listchars+=nbsp:░
 
 " python host prog
-let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog = '/usr/bin/python2'
+
 " }}}
 
 " autocmd {{{
 augroup BufferWrite
 	au!
-	" automatically deletes all trailing whitespace on save.
-	"autocmd BufWritePre * %s/\s\+$//e
-	" restore session
-	"autocmd BufWinLeave *.* mkview!
-	"autocmd BufWinEnter *.* silent loadview
-	autocmd BufWinEnter *.* normal! g`"
 	" reload programs when configuration is updated
 	autocmd BufWritePost files,directories !shortcuts
 	autocmd BufWritePost *Xdefaults !xrdb %
 	autocmd BufWritePost dunstrc !pkill dunst; dunst &
 	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
 	autocmd BufWritePost init.vim,iceberg.vim,statusline.vim source $MYVIMRC
+	" automatically deletes all trailing whitespace on save.
+	"autocmd BufWritePre * %s/\s\+$//e
 augroup end
 
-" Turn spellcheck on for markdown files
-augroup auto_spellcheck
+augroup BufferEnter
 	au!
+	" restore session
+	"autocmd BufWinLeave * mkview!
+	"autocmd BufWinEnter * silent loadview
+	autocmd BufWinEnter * normal! g`"
+	" Turn spellcheck on for markdown files
 	autocmd BufNewFile,BufRead *.md setlocal spell
-augroup END
+augroup end
 " }}}
 " }}}
 
@@ -137,7 +140,7 @@ Plug 'unblevable/quick-scope'                        " lightning fast left-right
 Plug 'tpope/vim-surround'                            " quoting/parenthesizing made simple
 Plug 'christoomey/vim-tmux-navigator'                " split management between vim and tmux
 Plug 'vimwiki/vimwiki'                               " notes and diaries
-Plug 'ThePrimeagen/vim-be-good'                      " practice movements
+Plug 'ThePrimeagen/vim-be-good', {'do': ':Up'}       " practice movements
 Plug 'voldikss/vim-floaterm'                         " better terms
 Plug 'takac/vim-hardtime'                            " vanilla vim is to easy
 let g:hardtime_default_on = 0
@@ -260,8 +263,6 @@ vnoremap <silent> <leader> :silent <c-u> :silent WhichKeyVisual '<Space>'<CR>
 let g:which_key_map =  {}
 " define a separator
 let g:which_key_sep = '-'
-" fast up
-set timeoutlen=500
 
 " not a fan of floating windows for this
 let g:which_key_use_floating_win = 0
@@ -321,6 +322,10 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+" next / prev command
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
 
 " move line(s) up / down / right /left
 vnoremap <silent>J :m '>+1<CR>gv=gv

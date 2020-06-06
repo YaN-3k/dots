@@ -18,11 +18,9 @@ fg-alt = ${xrdb:color15}
 secondary = ${xrdb:color4}
 
 [fonts]
-font-0 = "Terminus:pixelsize=12;2"
-font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=9;2"
-font-2 = "Font Awesome 5 Brands:pixelsize=6;2"
+font-0 = "Hack Nerd Font:pixelsize=9;2"
 ; For separator
-font-3 = "Terminus:pixelsize=25;2"
+font-1 = "Hack Nerd Font:pixelsize=16;2"
 
 ;==============;
 ; Bar Settings ;
@@ -69,13 +67,13 @@ enable-ipc = true
 type = custom/text
 content-background = ${colors.bg}
 content-foreground = ${colors.bg-alt}
-content = "%{T4}█▓▒░%{T-}"
+content = "%{T2}█▓▒░%{T-}"
 
 [module/right]
 type = custom/text
 content-background = ${colors.bg
 content-foreground = ${colors.bg-alt}
-content = "%{T4}░▒▓█%{T-}"
+content = "%{T2}░▒▓█%{T-}"
 
 ;==================;
 ; BSPWM Workspaces ;
@@ -144,7 +142,7 @@ exec = ~/.config/polybar/mpd
 [module/xbacklight]
 type = internal/xbacklight
 format = <label>
-label = %{F#84A0C6}%{F-} %percentage%%
+label = %{F#84A0C6}%{F-} %percentage%%
 
 format-background = ${colors.bg-alt}
 format-padding = 1
@@ -166,8 +164,8 @@ format-disconnected = <label-disconnected>
 format-connected-background = ${colors.bg-alt}
 format-disconnected-background = ${colors.bg-alt}
 
-label-connected = %{F#84A0C6} %{F-}%essid%
-label-disconnected = %{F#84A0C6} %{F-}disconnected
+label-connected = %{F#84A0C6}直  %{F-}%essid%
+label-disconnected = %{F#84A0C6}睊 %{F-}disconnected
 
 ;==========================;
 ; Wired Network / Ethernet ;
@@ -177,7 +175,7 @@ type = internal/network
 interface = ${env:WIRED}
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
-label-connected = %{F#84A0C6} %{F-}%local_ip%
+label-connected = %{F#84A0C6} %{F-}%local_ip%
 ; label-disconnected = %{F#84A0C6} %{F-}disconnected
 format-connected-foreground = ${colors.fg}
 
@@ -189,8 +187,8 @@ type = internal/date
 interval = 1
 label =  %time%
 
-time = %{F#84A0C6}%{F-} %I:%M %p
-time-alt = %{F#84A0C6}%{F-} %Y-%m-%d
+time = %{F#84A0C6} %{F-} %I:%M %p
+time-alt = %{F#84A0C6} %{F-} %Y-%m-%d
 
 format-padding = 1
 format-background = ${colors.bg-alt}
@@ -208,11 +206,10 @@ format-muted-padding = 1
 format-volume-background = ${colors.bg-alt}
 format-muted-background = ${colors.bg-alt}
 
-format-muted-prefix = "%{F#84A0C6}%{F-} "
-label-muted = muted
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+format-muted-prefix = "%{F#84A0C6}婢 %{F-} "
+ramp-volume-0 = " "
+ramp-volume-1 = "墳 "
+ramp-volume-2 = " "
 
 ;=========;
 ; Battery ;
@@ -240,21 +237,24 @@ format-charging-background = ${colors.bg-alt}
 format-full-background = ${colors.bg-alt}
 format-discharging-background = ${colors.bg-alt}
 
-ramp-capacity-0 = "%{F#de373d} "
-ramp-capacity-1 = "%{F#de373d} "
-ramp-capacity-2 = ""
-ramp-capacity-3 = ""
-ramp-capacity-4 = ""
-ramp-capacity-5 = ""
-ramp-capacity-6 = ""
-ramp-capacity-7 = ""
-ramp-capacity-8 = ""
-ramp-capacity-9 = ""
+ramp-capacity-0 = "%{F#de373d}"
+ramp-capacity-1 = "%{F#de373d}"
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+ramp-capacity-5 = ""
+ramp-capacity-6 = ""
+ramp-capacity-7 = ""
+ramp-capacity-8 = ""
+ramp-capacity-9 = ""
 
-animation-charging-0 = ""
-animation-charging-1 = ""
-animation-charging-2 = ""
-animation-charging-3 = ""
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
+animation-charging-5 = " "
+animation-charging-6 = " "
 animation-charging-framerate = 750
 
 
