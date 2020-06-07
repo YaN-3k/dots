@@ -21,7 +21,7 @@ set clipboard=unnamedplus               " coffee pasta
 set mouse=a                             " plebs mode
 set updatetime=100                      " faster completion
 set timeoutlen=500                      " time to wait for a key code sequence.
-set ttimeoutlen=500                     " ^ but for CTRL-\ CTRL-N etc.
+set ttimeoutlen=0                       " ^ but for CTRL-\ CTRL-N, Escape etc.
 set hidden                              " allow to switch unsaved buffers
 scriptencoding utf-8                    " the encoding displayed 
 set fileencoding=utf-8                  " the encoding written to file

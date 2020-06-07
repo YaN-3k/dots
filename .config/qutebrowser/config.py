@@ -30,7 +30,8 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 # config.set("url.default_page", "https://start.duckduckgo.com/?kae=d")
 config.set("url.start_pages", "https://cherrry9.github.io/startpage/")
 config.set("url.default_page", "https://cherrry9.github.io/startpage/")
-config.set("url.searchengines", {"DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
+config.set("url.searchengines", {
+           "DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
 
 # Tab settings
 config.set("tabs.padding", {"top": 1, "bottom": 2, "left": 5, "right": 5})
@@ -44,14 +45,14 @@ config.set("search.ignore_case", "always")
 c.confirm_quit = ["downloads"]
 
 # Fonts
-c.fonts.default_family ="DejaVu Sans Mono"
-c.fonts.completion.category = "10pt DejaVu Sans Mono"
-c.fonts.completion.entry = "10pt DejaVu Sans Mono"
-c.fonts.tabs = "10pt DejaVu Sans Mono"
-c.fonts.statusbar = "10pt DejaVu Sans Mono"
-c.fonts.downloads = "10pt DejaVu Sans Mono"
-c.fonts.hints = "bold 10pt DejaVu Sans Mono"
-c.fonts.debug_console = "10pt DejaVu Sans Mono"
+c.fonts.default_family = "Hack Nerd Font Mono"
+c.fonts.completion.category = "10pt Hack Nerd Font Mono"
+c.fonts.completion.entry = "10pt Hack Nerd Font Mono"
+c.fonts.tabs = "10pt Hack Nerd Font Mono"
+c.fonts.statusbar = "10pt Hack Nerd Font Mono"
+c.fonts.downloads = "10pt Hack Nerd Font Mono"
+c.fonts.hints = "bold 10pt Hack Nerd Font Mono"
+c.fonts.debug_console = "10pt Hack Nerd Font Mono"
 
 # Color Scheme
 black = "#161821"

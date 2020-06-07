@@ -1,8 +1,8 @@
 #!/bin/sh
-ANS="$(printf " Lock\n Exit\n Shutdown\n Reboot" | $DMENU -i -p ' System')"
+ANS="$(printf " Lock\n Exit\n Shutdown\n Reboot" | $DMENU -i -p ' System')"
 case "$ANS" in
 	' Lock') slock & mpc pause;;
-	' Exit') killall Xorg;;
+	' Exit') killall Xorg;;
 	' Shutdown') shutdown now;;
 	' Reboot') reboot;;
 esac
