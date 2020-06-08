@@ -34,7 +34,7 @@ let g:light.white   =  [15, '#d2d4de']
 let g:none          = ["none", "none"]
 
 function! g:C(scope, bg, fg, attr)
-	exec "hi ".a:scope "ctermbg=".a:bg[0] "ctermfg=".a:fg[0] "cterm=".a:attr "guibg=".a:bg[1] "guifg=".a:fg[1] "gui=".a:attr
+  exec "hi ".a:scope "ctermbg=".a:bg[0] "ctermfg=".a:fg[0] "cterm=".a:attr "guibg=".a:bg[1] "guifg=".a:fg[1] "gui=".a:attr
 endfunction
 " }}}
 
@@ -66,7 +66,7 @@ call g:C("TabLineSel",   g:dark.black,      g:dark.blue,      "bold")
 call g:C("Directory",    g:none,            g:dark.blue,      "none")
 call g:C("Search",       g:none,            g:none,           "reverse")
 call g:C("IncSearch",    g:none,            g:none,           "reverse")
-call g:C("HighlightedyankRegion",  g:dark.black,  g:none,           "none")
+call g:C("HighlightedyankRegion",  g:dark.black,  g:none,     "none")
 " }}}
 
 " prompt / status {{{
@@ -200,7 +200,7 @@ call g:C("VimwikiHeader3",  g:none,   g:dark.magenta,   "bold")
 call g:C("VimwikiHeader4",  g:none,   g:light.cyan,     "bold")
 call g:C("VimwikiHeader5",  g:none,   g:dark.blue,      "bold")
 call g:C("VimwikiHeader6",  g:none,   g:light.black,    "bold")
-call g:C("VimwikiPre",      g:none,   g:light.black,   "italic")
+call g:C("VimwikiPre",      g:none,   g:light.black,    "italic")
 " }}}
 
 " sh {{{
@@ -208,20 +208,20 @@ call g:C("shStatement",   g:none,            g:none,           "none")
 call g:C("shFunction",    g:none,            g:none,           "none")
 call g:C("shOption",      g:none,            g:dark.green,     "none")
 call g:C("shQuote",       g:none,            g:dark.blue,      "none")
-call g:C("shDerefSimple", g:none,            g:dark.green,     "none")
+call g:C("shDerefSimple", g:none,            g:dark.magenta,   "none")
 call g:C("shFunctionKey", g:none,            g:dark.yellow,    "none")
 call g:C("shVariable",    g:none,            g:none,           "none")
 " }}}
 
 " html {{{
-call g:C("htmlTag",     g:none,            g:light.black,    "none")
-call g:C("htmlEndTag",  g:none,            g:light.black,    "none")
+call g:C("htmlTag",     g:none,            g:light.black,      "none")
+call g:C("htmlEndTag",  g:none,            g:light.black,      "none")
 call g:C("htmlArg",     g:none,            g:light.magenta,    "none")
 " }}}
 
 " python {{{
-call g:C("pythonFunctionCall", g:none,      g:none,           "none")
-call g:C("pythonImport",       g:none,      g:dark.blue,      "none")
+call g:C("pythonFunctionCall", g:none,      g:none,            "none")
+call g:C("pythonImport",       g:none,      g:dark.blue,       "none")
 " }}}
 
 " vim: fdm=marker

@@ -46,6 +46,9 @@
     }
   },
 
+  // html
+  "html.autoClosingTags": true,
+
   // python config
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true

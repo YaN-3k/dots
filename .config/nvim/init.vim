@@ -12,10 +12,10 @@
 " settings {{{
 let mapleader = ' '                     " map <space> as leader key
 "set autochdir                          " working dir the same as file
-set nobackup                            " This is recommended by coc
-set nowritebackup                       " This is recommended by coc
+set nobackup                            " this is recommended by coc
+set nowritebackup                       " this is recommended by coc
 set noswapfile                          " disable swaps
-set undodir=~/.config/nvim/cache/undo   " undo files directory"
+set undodir=~/.config/nvim/cache/undo   " undo files directory
 set undofile                            " save undo files
 set clipboard=unnamedplus               " coffee pasta
 set mouse=a                             " plebs mode
@@ -100,9 +100,17 @@ augroup BufferEnter
 	"autocmd BufWinLeave * mkview!
 	"autocmd BufWinEnter * silent loadview
 	autocmd BufWinEnter * normal! g`"
-	" Turn spellcheck on for markdown files
-	autocmd BufNewFile,BufRead *.md setlocal spell
 augroup end
+
+augroup FileTypes
+	au!
+	" the same settings like clang-format
+	autocmd Filetype c,cpp setlocal expandtab
+	" turn spellcheck on for markdown files
+	autocmd FileType markdown setlocal spell
+	" for properly auto closing tags
+	autocmd FileType html let b:coc_pairs_disabled = ['<']
+augroup END
 " }}}
 " }}}
 

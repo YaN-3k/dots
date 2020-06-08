@@ -41,7 +41,7 @@ macro c set browser "xclip -sel clip <<<" ; open-in-browser ; set browser linkha
 highlight all "---.*---" yellow
 highlight feedlist ".*(0/0))" black
 highlight article "^Feed:.*" black default bold
-highlight article "^Title:.*" blue default bold
+highlight article "^Title:.*" yellow default bold
 highlight article "^Author:.*" cyan default bold
 highlight article "^Date:.*" magenta default
 highlight article "^Link:.*" blue default bold
