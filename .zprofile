@@ -54,8 +54,8 @@ export FZF_DEFAULT_OPTS='
 --reverse
 '
 
-export FZF_DEFAULT_COMMAND="find . -mindepth 1"
-export FZF_ALT_C_COMMAND='find . -mindepth 1 -type d'
+export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
+export FZF_ALT_C_COMMAND='find . -mindepth 1 -type d 2>/dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Other program settings

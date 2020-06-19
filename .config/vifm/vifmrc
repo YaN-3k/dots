@@ -7,28 +7,20 @@
 "   ░░██   ░██  ░██   ███ ░██ ░██
 "    ░░    ░░   ░░   ░░░  ░░  ░░
 
+colorscheme iceberg
 source ~/.config/vifm/vifmshortcuts
-
-colorscheme Default
-set vicmd=nvim     " This is the actual command used to start vi.  The default is vim.
+set vicmd=nvim
 set syscalls
-set trash          " Trash Directory
-set history=100    " This is how many directories to store in the directory history.
-set nofollowlinks  " Automatically resolve symbolic links on l or Enter.
-set fastrun
-set sortnumbers    " Natural sort of (version) numbers within text.
-set undolevels=100 " Maximum number of changes that can be undone.
-set novimhelp
-set norunexec
-set timefmt=%m/%d\ %H:%M
-set wildmenu        " Show list of matches on tab completion in command-line mode
-set wildstyle=popup " Display completions in a form of popup with descriptions of the matches
-set suggestoptions=normal,visual,view,otherpane,keys,marks,registers " Display suggestions in normal, visual and view modes for keys, marks and
-set ignorecase      " Ignore case in search patterns unless it contains at least one uppercase letter
+set nofollowlinks
+set undolevels=100
+set wildmenu
+set wildstyle=popup
+set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
+set ignorecase
 set smartcase
-set nohlsearch      " Don't highlight search results automatically
-set incsearch       " Use increment searching (search while typing)
-set scrolloff=4     " Try to leave some space from cursor to upper/lower border in lists
+set nohlsearch
+set incsearch
+set scrolloff=5
 
 " :com[mand][!] command_name action
 " rhe following macros can be used in a command
@@ -42,18 +34,14 @@ set scrolloff=4     " Try to leave some space from cursor to upper/lower border 
 " %D the other window directory name.
 " %m run the command in a menu window
 
-" sample mappings
 " split
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-map <C-o> <C-w>o
-map <C-s> <C-w>s
-map <C-v> <C-w>v
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " new file
-map V :!nvim<space>
+nnoremap V :!nvim<space>
 
 " executable
 nnoremap x :!chmod +x %f<cr>
@@ -63,7 +51,7 @@ nnoremap X :!chmod -x %f<cr>
 nnoremap r :!%f<CR>
 
 " select
-nmap <space> tj
+nnoremap <space> tj
 
 " start shell in current directory
 nnoremap s :shell<cr>
@@ -75,13 +63,15 @@ nnoremap S :sort<cr>
 nnoremap w :view<cr>
 
 " open file in the background using its default program
-nnoremap go :!xdg-open %c&<cr>
+nnoremap o :!xdg-open %c&<cr>
 
 " yank current directory path into the clipboard
-nnoremap yd :!printf %%s %d | xclip -selection clipboard<cr>
+nnoremap yd :!printf %%s %d | sed "s|$HOME|~|" | xclip -selection clipboard<cr>
+nnoremap yD :!printf %%s %d | xclip -selection clipboard<cr>
 
 " yank current file path into the clipboard
-nnoremap yf :!printf %%s %c:p | xclip -selection clipboard<cr>
+nnoremap yf :!printf %%s %c:p | sed "s|$HOME|~|" | xclip -selection clipboard<cr>
+nnoremap yF :!printf %%s %c:p | xclip -selection clipboard<cr>
 
 " set wallpaper
 map bg :!setbg %f &<CR>
@@ -91,7 +81,7 @@ nnoremap I cw<c-a>
 nnoremap cc cw<c-u>
 nnoremap A cw
 
-" open console in current directory
+" open terminal in current directory
 nnoremap ,t :!$TERMINAL &<cr>
 
 " open editor to edit vifmrc and apply settings after returning to vifm
@@ -108,17 +98,16 @@ command! reload :write | restart
 
 " fuzzy finding
 command! fzflocate :set noquickview | :execute 'goto "'.system('locate $HOME | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
-command! fzffind :set noquickview | :execute 'goto "'.system('find | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
+command! fzffind :set noquickview | :execute 'goto "'.system('find . -mindepth 1 2>/dev/null | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
 
 nnoremap <c-g> :fzflocate<cr>
 nnoremap <c-f> :fzffind<cr>
 
 map mkd :mkdir<space>
-map R :restart<CR>
-nmap q :write<CR>ZQ
+nmap q ZQ
 
 " open all images in current directory in sxiv thumbnail mode
-" nnoremap x :!sxiv -t %d & <cr>
+nnoremap i :!sxiv -tb %d & <cr>
 
 fileview */,.*/,../ tree %c -L 1 --dirsfirst
 
@@ -132,32 +121,34 @@ filextype *.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx libreoffice %f &
 fileviewer *.doc catdoc %c
 fileviewer *.docx docx2txt.pl %f -
 
-filetype *.csv,*.xlsx sc-im %c
 fileviewer *.csv sed "s/,,,,/,,-,,/g;s/,,/ /g" %c | column -t | sed "s/ - /  /g" | cut -c -%pw
+filetype *.csv,*.xlsx sc-im %c
 
 " music
-filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus mpv --no-audio-display --input-ipc-server=/tmp/mpvsoc$(date +%%s) %c
+filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus mpv --no-audio-display 2>/dev/null %c
 
 " PDF
 filextype *.pdf,*.ps,*.eps,*.ps.gz,*.djvu,*.epub zathura %f 2>/dev/null &,
-fileviewer *.pdf vifmimg pdfpreview %px %py %pw %ph %c %pc vifmimg clear
-" fileviewer *.pdf pdftotext -l 1 -nopgbrk %c -
+fileviewer *.pdf pdftotext -l 1 -nopgbrk %c -
 
 " video
 fileviewer *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.qt,*.divx,*.as[fx],*mp3,*.flac file
-filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,*.as[fx] mpv --input-ipc-server=/tmp/mpvsoc$(date +%%s) %f 2>/dev/null &,
+filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,*.as[fx] mpv %f 2>/dev/null &,
 
 " archives
-fileview *.zip,*.rar,*.tar.gz atool -l %f
-filetype *.zip,*.rar,*.tar.gz ext %f
+fileview *.tar.gz atool -l --format=tar %f 2>/dev/null | awk '{$1=$2=$3=$4=$5=""; print $0}'
+fileview *.zip,*.cbz atool -l --format=zip %f 2>/dev/null | tail +4 | awk '{$1=$2=$3=""; print $0}'
+fileview *.rar,*.cbr atool -l --format=rar %f 2>/dev/null | tail +9 | awk '{$1=$2=$3=$4=""; print $0}'
+fileview *.7z,*.cb7 atool -l --format=7z %f 2>/dev/null | tail +20 | awk '{$1=$2=$3=$4=$5=""; print $0}'
+filetype *.zip,*.7z,*.rar,*.tar.gz,*.tar.xz ext %f
 
 " man page
-filetype *.[1-8] man ./%c
 fileviewer *.[1-8] man ./%c | col -b
+filetype *.[1-8] man ./%c
 
 " images
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm vifmimg draw %px %py %pw %ph %c %pc vifmimg clear
-filextype *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm sxiv -ia 2>/dev/null &
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm sxiv -iab 2>/dev/null &
 
 filextype *.svg inkscape %f 2>/dev/null &
 filextype *.xcf gimp %f 2>/dev/null &

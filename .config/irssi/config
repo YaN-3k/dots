@@ -32,6 +32,11 @@ channels = (
   { name = "#vim"; chatnet = "freenode"; autojoin = "Yes"; },
 );
 
+chatnets = {
+  freenode = { type = "IRC"; };
+  otfc = { type = "IRC"; };
+};
+
 aliases = {
   ns = "msg nickserv";
   cs = "msg chanserv";
@@ -69,8 +74,6 @@ settings = {
     max_ctcp_queue = "0";
   };
 };
-chatnets = { freenode = { type = "IRC"; }; otfc = { type = "IRC"; }; };
-logs = { };
 
 statusbar = {
   default = {

@@ -123,7 +123,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 
-	{ ALTKEY,                       XK_f,      spawn,          SHCMD("st -e vifmrun") },
+	{ ALTKEY,                       XK_f,      spawn,          SHCMD("st -e vf") },
 	{ ALTKEY,                       XK_m,      spawn,          SHCMD("st -n float -e ncmpcpp") },
 	{ ALTKEY,                       XK_v,      spawn,          SHCMD("st -e nvim") },
 	{ ALTKEY,                       XK_a,      spawn,          SHCMD("st -e alsamixer") },

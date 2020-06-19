@@ -2,5 +2,4 @@
 
 # Find files and open in v.
 
-files=$(find "${@:-.}" -type f,l | fzf -m --preview "preview {}")
-[ "$files" ] && v $files
+find "${@:-.}" -type f,l | fzf -m --preview "preview {}" | xargs -r v
