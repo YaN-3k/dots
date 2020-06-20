@@ -150,6 +150,7 @@ Plug 'christoomey/vim-tmux-navigator'                " split management between 
 Plug 'vimwiki/vimwiki'                               " notes and diaries
 Plug 'ThePrimeagen/vim-be-good', {'do': ':Up'}       " practice movements
 Plug 'voldikss/vim-floaterm'                         " better terms
+Plug 'tpope/vim-repeat'                              " repeating plugin maps with .
 Plug 'takac/vim-hardtime'                            " vanilla vim is to easy
 let g:hardtime_default_on = 0
 
