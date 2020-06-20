@@ -57,6 +57,8 @@ set ignorecase                          " ignore search case
 set smartcase                           " override ignorecase if typed text contain upper case characters
 set inccommand=nosplit                  " show pattern when typing (for :s/)
 set incsearch                           " while typing a search command, show where the pattern is
+set nrformats+=alpha                    " increase / decrease letters with CTRL-a / CTRL-x
+"set scrolljump=-50                      " emacs like scrolling
 set wildmenu                            " enable wildmenu
 set wildmode=longest:full,full          " wildmenu style
 set wildignorecase                      " ignore case by wildmenu
@@ -96,10 +98,9 @@ augroup end
 
 augroup BufferEnter
 	au!
-	" restore session
-	"autocmd BufWinLeave * mkview!
-	"autocmd BufWinEnter * silent loadview
-	autocmd BufWinEnter * normal! g`"
+	" make views automatic
+	autocmd BufWinLeave * silent! mkview!
+	autocmd BufWinEnter * silent! loadview
 augroup end
 
 augroup FileTypes
