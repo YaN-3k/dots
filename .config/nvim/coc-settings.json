@@ -12,6 +12,7 @@
   // list
   "list.indicator": ">",
   "list.selectedSignText": " ",
+  "session.directory": "~/.config/nvim/cache/session2",
 
   // diagnostics
   "diagnostic.errorSign": " ",
