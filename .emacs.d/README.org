@@ -1,0 +1,185 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: cherrry9
+#+EMAIL: cherrry9@disroot.org
+* Introduction
+
+My emacs configuration written in org mode. When Emacs is booted, all the
+source blocks from this file are used to generate the configuration file.
+
+* Packages
+** Archvies
+
+Melpa is the big package repo that nearly /everything/ can be
+found. It's a must for emacs configs. I'm also using =use-package= to
+easly manage my packages.
+
+#+BEGIN_SRC emacs-lisp
+;; package to install
+(setq package-list '(use-package))
+
+; list the repositories containing them
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+
+; fetch the list of packages available
+(unless package-archive-contents
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+(package-initialize)
+#+END_SRC
+
+** Configure packages
+*** =smartparens=
+
+Auto-close parenthesis and other characters. Useful as it seems. Also, I add a
+new custom pair that makes it indent and pass the closing pair when a newline is
+inserted right after a curly bracket. This is specially useful in C and Go.
+
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode t)
+(use-package smartparens
+  :ensure t
+  :config
+  (sp-use-paredit-bindings)
+  (add-hook 'prog-mode-hook #'smartparens-mode)
+  (sp-pair "{" nil :post-handlers '(("||\n[i]" "RET"))))
+#+END_SRC
+
+*** =flycheck=
+
+On-the-fly syntax checking.
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode))
+#+END_SRC
+
+* General settings
+** GUI setting
+*** Disable GUI elements
+
+Plebs mode off.
+
+#+BEGIN_SRC emacs-lisp
+(scroll-bar-mode 0)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
+#+END_SRC
+
+*** Disable cursor blinking
+
+It is incredibly annoying.
+
+#+BEGIN_SRC emacs-lisp
+(blink-cursor-mode 0)
+#+END_SRC
+
+*** Show line numbers
+
+Faster relative jumps with C-u n C-n/p.
+
+#+BEGIN_SRC emacs-lisp
+(global-display-line-numbers-mode t)
+(setq display-line-numbers-type (quote relative))
+#+END_SRC
+
+*** Splash screen
+
+I simply prefer to have a scratch buffer ready when I boot up, with =org-mode=
+running. Not a great Lisp developer myself (yet).
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-splash-screen t
+      initial-scratch-message nil
+      initial-major-mode 'org-mode)
+#+END_SRC
+
+** Disable the warning when killing a buffer with process
+
+When a buffer (i.e =something.py=) has an associated process (in that case,
+=Python= for completion), Emacs will prompt you when trying to kill it, asking
+for confirmation. I think it just interferes in my way, so I disable it as well.
+
+#+BEGIN_SRC emacs-lisp
+(setq kill-buffer-query-functions
+  (remq 'process-kill-buffer-query-function
+         kill-buffer-query-functions))
+#+END_SRC
+
+** Identation
+
+Disable tabs and sets <TAB> to 2 spaces.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+#+END_SRC
+
+** Set the backups folder
+
+This feature is super useful sometimes, but it kills me to swarm my projects
+with =foo== files. That's why I set them to a backup directory and stop them
+from polluting everywhere.
+
+#+BEGIN_SRC emacs-lisp
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+      backup-by-copying t
+      version-control t
+      delete-old-versions t
+      kept-new-versions 20
+      kept-old-versions 5)
+#+END_SRC
+
+** Disable =yes-or-no= message.
+
+For some reason, there are different types of confirmation prompts in
+Emacs. One of them forces you to write “yes” and the other one only to
+press “y”, so I disable the first type.
+
+#+BEGIN_SRC emacs-lisp
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Interactively DO things
+
+#+BEGIN_SRC emacs-lisp
+(ido-mode 1)
+(setq ido-everywhere t)
+(setq ido-enable-flex-matching t)
+(setq ido-create-new-buffer 'always)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-create-new-buffer 'always)
+(setq ido-file-extensions-order '(".org"))
+#+END_SRC
+
+** Enable =auto-fill-mode=
+
+I truly believe that code and other text files have to respect a 80 characters
+per line bound. No, 120 is not enough. Of course, for me =org-mode= should also
+be, so we enable this behaviour to be automatic. Also, keep in mind that Emacs
+auto fills to 70 characters, so we have to manually set the 80 limit.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'auto-fill-mode)
+(setq-default fill-column 80)
+#+END_SRC
+
+** Auto-fill comments
+
+For our comments (only comments, not code) to be automatically filled in
+programming modes, we can use this function:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun comment-auto-fill ()
+  (setq-local comment-auto-fill-only-comments t)
+  (auto-fill-mode 1))
+
+(add-hook 'prog-mode-hook 'comment-auto-fill)
+#+END_SRC
