@@ -40,14 +40,14 @@ set showmatch                           " show matching brackets/parenthesis
 set shortmess+=icw                      " avoid message and prompts
 set pumheight=10                        " makes popup menu smaller
 set number relativenumber               " show line numbers
-set nowrap                              " display long lines as just one line
+set wrap                                " wrap long lines
 set cursorline                          " highlight current line
 set scrolloff=5                         " minimal number to keep above/below the cursor
 set tabstop=2                           " insert 2 spaces for a tab
 set shiftwidth=2                        " change the number of space characters inserted for indentation
 set smartindent                         " makes indenting smart
 set autoindent                          " good auto indent
-set noexpandtab                         " tabs are tabs
+set expandtab                           " tabs are spaces
 set splitbelow                          " horizontal splits will automatically be below
 set splitright                          " vertical splits will automatically be to the right
 set foldcolumn=0                        " indicate folds and their nesting levels
@@ -67,6 +67,7 @@ let g:netrw_banner = 0                  " hide the netrw banner
 let g:netrw_liststyle = 4               " netrw listing style
 let g:netrw_browse_split = 0            " how to open new files
 let g:netrw_winsize = 25                " netrw split size
+set colorcolumn=80                      " highlight 80 column
 
 " show invisibles
 set list
@@ -85,32 +86,32 @@ let g:python_host_prog = '/usr/bin/python2'
 
 " autocmd {{{
 augroup BufferWrite
-	au!
-	" reload programs when configuration is updated
-	autocmd BufWritePost files,directories !shortcuts
-	autocmd BufWritePost *Xdefaults !xrdb %
-	autocmd BufWritePost dunstrc !pkill dunst; dunst &
-	autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
-	autocmd BufWritePost init.vim,iceberg.vim,statusline.vim source $MYVIMRC
-	" automatically deletes all trailing whitespace on save.
-	"autocmd BufWritePre * %s/\s\+$//e
+  au!
+  " reload programs when configuration is updated
+  autocmd BufWritePost files,directories !shortcuts
+  autocmd BufWritePost *Xdefaults !xrdb %
+  autocmd BufWritePost dunstrc !pkill dunst; dunst &
+  autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+  autocmd BufWritePost init.vim,iceberg.vim,statusline.vim source $MYVIMRC
+  " automatically deletes all trailing whitespace on save.
+  "autocmd BufWritePre * %s/\s\+$//e
 augroup end
 
 augroup BufferEnter
-	au!
-	" make views automatic
-	autocmd BufWinLeave * silent! mkview!
-	autocmd BufWinEnter * silent! loadview
+  au!
+  " make views automatic
+  autocmd BufWinLeave * silent! mkview!
+  "autocmd BufWinEnter * silent! loadview
 augroup end
 
 augroup FileTypes
-	au!
-	" the same settings like clang-format
-	autocmd Filetype c,cpp setlocal expandtab
-	" turn spellcheck on for markdown files
-	autocmd FileType markdown setlocal spell
-	" for properly auto closing tags
-	autocmd FileType html let b:coc_pairs_disabled = ['<']
+  au!
+  " the same settings like clang-format
+  "autocmd Filetype c,cpp setlocal expandtab
+  " turn spellcheck on for markdown files
+  autocmd FileType markdown setlocal spell
+  " for properly auto closing tags
+  autocmd FileType html let b:coc_pairs_disabled = ['<']
 augroup END
 " }}}
 " }}}
@@ -118,15 +119,15 @@ augroup END
 " plugins {{{
 " setup {{{
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
-	echo 'Downloading junegunn/vim-plug to manage plugins...'
-	silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache/{undo,sessions}}')
-	silent call system('pip3 install --user pynvim')
-	silent call system('curl -flo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
-	execute 'source  ~/.config/nvim/autoload/plug.vim'
-	augroup plugsetup
-		au!
-		autocmd VimEnter * PlugInstall
-	augroup end
+  echo 'Downloading junegunn/vim-plug to manage plugins...'
+  silent call system('mkdir -p ~/.config/nvim/{autoload,bundle,cache/{undo,sessions}}')
+  silent call system('pip3 install --user pynvim')
+  silent call system('curl -flo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+  execute 'source  ~/.config/nvim/autoload/plug.vim'
+  augroup plugsetup
+    au!
+    autocmd VimEnter * PlugInstall
+  augroup end
 endif
 " }}}
 
@@ -161,32 +162,34 @@ call plug#end()
 " coc {{{
 " global extensions
 let g:coc_global_extensions = [
-			\ 'coc-explorer',
-			\ 'coc-lists',
-			\ 'coc-snippets',
-			\ 'coc-pairs',
-			\ 'coc-yank',
-			\ 'coc-git',
-			\ 'coc-highlight',
-			\ 'coc-tabnine',
-			\ 'coc-dictionary',
-			\ 'coc-tag',
-			\ 'coc-floaterm',
-			\]
+  \ 'coc-explorer',
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-yank',
+  \ 'coc-git',
+  \ 'coc-highlight',
+  \ 'coc-tabnine',
+  \ 'coc-dictionary',
+  \ 'coc-tag',
+  \ 'coc-floaterm',
+  \]
 
 " language extensions
 let g:coc_global_extensions += [
-			\ 'coc-clangd',
-			\ 'coc-vimtex',
-			\ 'coc-html',
-			\ 'coc-css',
-			\ 'coc-emmet',
-			\ 'coc-python',
-			\ 'coc-tsserver',
-			\ 'coc-json',
-			\ 'coc-prettier',
-			\ 'coc-rls',
-			\]
+  \ 'coc-vimlsp',
+  \ 'coc-clangd',
+  \ 'coc-vimtex',
+  \ 'coc-html',
+  \ 'coc-css',
+  \ 'coc-emmet',
+  \ 'coc-python',
+  \ 'coc-tsserver',
+  \ 'coc-json',
+  \ 'coc-prettier',
+  \ 'coc-rls',
+  \ 'coc-java',
+  \ 'coc-cmake',
+  \]
 
 " format current buffer
 command! -nargs=0 Format :call CocAction('format')
@@ -201,32 +204,32 @@ command! -nargs=0 OR     :call CocAction('runCommand', 'editor.action.organizeIm
 "autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " if coc-explorer is last buffer - exit
-autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+"autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 " }}}
 
 " startify {{{
 let g:startify_custom_header = [
-			\ '   _____   __                 _____            ',
-			\ '   ___  | / /_____________   ____(_)______ ___ ',
-			\ '   __   |/ /_  _ \  __ \_ | / /_  /__  __ `__ \',
-			\ '   _  /|  / /  __/ /_/ /_ |/ /_  / _  / / / / /',
-			\ '   /_/ |_/  \___/\____/_____/ /_/  /_/ /_/ /_/ ',
-			\]
+  \ '   _____   __                 _____            ',
+  \ '   ___  | / /_____________   ____(_)______ ___ ',
+  \ '   __   |/ /_  _ \  __ \_ | / /_  /__  __ `__ \',
+  \ '   _  /|  / /  __/ /_/ /_ |/ /_  / _  / / / / /',
+  \ '   /_/ |_/  \___/\____/_____/ /_/  /_/ /_/ /_/ ',
+  \]
 
 let g:startify_lists = [
-			\ { 'type': 'files',     'header': ['   Files']            },
-			\ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-			\ { 'type': 'sessions',  'header': ['   Sessions']       },
-			\ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-			\ ]
+  \ { 'type': 'files',     'header': ['   Files']            },
+  \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
+  \ { 'type': 'sessions',  'header': ['   Sessions']       },
+  \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+  \ ]
 
 let g:startify_bookmarks = [
-			\ { 'i': '~/.config/nvim/init.vim' },
-			\ { 'c': '~/.config' },
-			\ { 'b': '~/.local/bin' },
-			\ { 'd': '~/.local/dl' },
-			\ { 'D': '~/dox' },
-			\ ]
+  \ { 'i': '~/.config/nvim/init.vim' },
+  \ { 'c': '~/.config' },
+  \ { 'b': '~/.local/bin' },
+  \ { 'd': '~/.local/dl' },
+  \ { 'D': '~/dox' },
+  \ ]
 
 " session dir
 let g:startify_session_dir = '~/.config/nvim/cache/session'
@@ -256,8 +259,8 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 let g:vimwiki_list = [{'path': '~/dox/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 augroup vimwiki
-	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-	autocmd BufRead,BufNewFile *.tex set filetype=tex
+  autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+  autocmd BufRead,BufNewFile *.tex set filetype=tex
 augroup end
 " }}}
 " }}}
@@ -279,7 +282,7 @@ let g:which_key_use_floating_win = 0
 " hide status line
 autocmd! FileType which_key
 autocmd  FileType which_key set laststatus=0 noshowmode noruler
-			\| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
+  \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
 " }}}
 
 " autocompletion && snippet && diagnostic {{{
@@ -292,7 +295,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " trigger snippets
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
-			\"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " real tab
 inoremap <A-tab> <tab>
@@ -336,6 +339,9 @@ vnoremap k gk
 cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 
+cnoremap <M-k> <Up>
+cnoremap <M-j> <Down>
+
 " move line(s) up / down / right /left
 vnoremap <silent>J :m '>+1<CR>gv=gv
 vnoremap <silent>K :m '<-2<CR>gv=gv
@@ -375,35 +381,35 @@ nnoremap <silent> <M-l> :vertical resize +2<CR>
 
 " leader mappings {{{
 " single leader mappings {{{
-let g:which_key_map['/'] = [ ':Commentary'  ,             'comment' ]
-let g:which_key_map['.'] = [ ':e $MYVIMRC',               'open init' ]
-let g:which_key_map[','] = [ 'Startify',                  'start screen' ]
-let g:which_key_map['T'] = [ ':CocList grep',             'search text' ]
-let g:which_key_map['L'] = [ ':CocList',                  'CocList' ]
-let g:which_key_map['e'] = [ ':CocCommand explorer',      'explorer' ]
-let g:which_key_map['f'] = [ ':CocList files',            'search files' ]
-let g:which_key_map['S'] = [ ':SSave',                    'save session' ]
-let g:which_key_map['d'] = [ ':bd!',                      'delete buffer']
-let g:which_key_map[';'] = [ 'q:',                        'commands history' ]
+let g:which_key_map['/'] = [ ':Commentary'  ,        'comment' ]
+let g:which_key_map['.'] = [ ':e $MYVIMRC',          'open init' ]
+let g:which_key_map[','] = [ 'Startify',             'start screen' ]
+let g:which_key_map['T'] = [ ':CocList grep',        'search text' ]
+let g:which_key_map['L'] = [ ':CocList',             'CocList' ]
+let g:which_key_map['e'] = [ ':CocCommand explorer', 'explorer' ]
+let g:which_key_map['f'] = [ ':CocList files',       'search files' ]
+let g:which_key_map['S'] = [ ':SSave',               'save session' ]
+let g:which_key_map['d'] = [ ':bd!',                 'delete buffer']
+let g:which_key_map[';'] = [ 'q:',                   'commands history' ]
 " }}}
 
 " a is for actions {{{
 " zoom {{{
 nnoremap <leader>az :call Zoom()<cr>
 function! Zoom() abort
-	if winnr('$') > 1
-		if exists('t:zoomed') && t:zoomed
-			execute t:zoom_winrestcmd
-			let t:zoomed = 0
-		else
-			let t:zoom_winrestcmd = winrestcmd()
-			resize
-			vertical resize
-			let t:zoomed = 1
-		endif
-	else
-		execute 'silent !tmux resize-pane -Z'
-	endif
+  if winnr('$') > 1
+    if exists('t:zoomed') && t:zoomed
+      execute t:zoom_winrestcmd
+      let t:zoomed = 0
+    else
+      let t:zoom_winrestcmd = winrestcmd()
+      resize
+      vertical resize
+      let t:zoomed = 1
+    endif
+  else
+    execute 'silent !tmux resize-pane -Z'
+  endif
 endfunction
 " }}}
 nnoremap <leader>aw :execute 'silent! write !sudo tee % >/dev/null' <bar> edit!<cr>
@@ -411,173 +417,175 @@ nnoremap <leader>aS :sp term://shellcheck %<cr>:resize 15<cr>
 nnoremap <leader>ar :%s//g<Left><Left>
 nnoremap <Leader>a; m`A;<ESC>``
 let g:which_key_map.a = {
-			\ 'name' : '+actions' ,
-			\ ';' : 'add semicolon',
-			\ 'r' : 'replace',
-			\ 'S' : 'shellcheck',
-			\ 'w' : 'write!',
-			\ '=' : ['m`gg=G``',                                'indent'],
-			\ 'X' : [':!chmod -x %',                            'make not executable'],
-			\ 'e' : [':!./%',                                   'execute'],
-			\ 'p' : [':setlocal spell! spelllang=pl',           'polish spell-check'],
-			\ 'u' : [':setlocal spell! spelllang=en_us',        'us spell-check'],
-			\ 's' : [':let @/ = ""',                            'remove search highlight'],
-			\ 'f' : [':%s/\s\+$//e',                            'fix-whitespace'],
-			\ 'x' : [':!chmod +x %',                            'make executable'],
-			\ 'z' : [':call Zoom()',                            'zoom window'],
-			\ }
+  \ 'name' : '+actions' ,
+  \ ';' : 'add semicolon',
+  \ 'r' : 'replace',
+  \ 'S' : 'shellcheck',
+  \ 'w' : 'write!',
+  \ 'm' : [':set colorcolumn=80',              'highlight 80 column'],
+  \ 'M' : [':set colorcolumn=0',               'disable 80 column highlight'],
+  \ '=' : ['m`gg=G``',                         'indent'],
+  \ 'X' : [':!chmod -x %',                     'make not executable'],
+  \ 'e' : [':!./%',                            'execute'],
+  \ 'p' : [':setlocal spell! spelllang=pl',    'polish spell-check'],
+  \ 'u' : [':setlocal spell! spelllang=en_us', 'us spell-check'],
+  \ 's' : [':let @/ = ""',                     'remove search highlight'],
+  \ 'f' : [':%s/\s\+$//e',                     'fix-whitespace'],
+  \ 'x' : [':!chmod +x %',                     'make executable'],
+  \ 'z' : [':call Zoom()',                     'zoom window'],
+  \ }
 " }}}
 
 " b is for buffer {{{
 let g:which_key_map.b = {
-			\ 'name' : '+buffer' ,
-			\ '1' : ['b1',               'buffer 1'],
-			\ '2' : ['b2',               'buffer 2'],
-			\ 'd' : ['bd',               'delete-buffer'],
-			\ 'f' : ['bfirst',           'first-buffer'],
-			\ 'h' : ['Startify',         'home-buffer'],
-			\ 'l' : ['blast',            'last-buffer'],
-			\ 'n' : ['bnext',            'next-buffer'],
-			\ 'p' : ['bprevious',        'previous-buffer'],
-			\ '?' : [':CocList buffers', 'buffers list'],
-			\ }
+  \ 'name' : '+buffer' ,
+  \ '1' : ['b1',               'buffer 1'],
+  \ '2' : ['b2',               'buffer 2'],
+  \ 'd' : ['bd',               'delete-buffer'],
+  \ 'f' : ['bfirst',           'first-buffer'],
+  \ 'h' : ['Startify',         'home-buffer'],
+  \ 'l' : ['blast',            'last-buffer'],
+  \ 'n' : ['bnext',            'next-buffer'],
+  \ 'p' : ['bprevious',        'previous-buffer'],
+  \ '?' : [':CocList buffers', 'buffers list'],
+  \ }
 " }}}
 
 " s is for search {{{
 let g:which_key_map.s = {
-			\ 'name' : '+search' ,
-			\ '/' : [':CocList searchhistory',  'history'],
-			\ ';' : [':CocList vimcommands',    'commands'],
-			\ 'b' : [':CocList buffers',        'open buffers'],
-			\ 'c' : [':CocList commits',        'commits'],
-			\ 'C' : [':CocList bCommits',       'buffer commits'],
-			\ 'f' : [':CocList files',          'files'],
-			\ 'g' : [':CocList gfiles',         'git files'],
-			\ 'h' : [':CocList mru',            'most recent use files'],
-			\ 'H' : [':CocList cmdhistory',     'command history'],
-			\ 'l' : [':CocList lines',          'lines'] ,
-			\ 'm' : [':CocList marks',          'marks'] ,
-			\ 'M' : [':CocList maps',           'normal maps'] ,
-			\ 'p' : [':CocList helptags',       'help tags'] ,
-			\ 'P' : [':CocList tags',           'project tags'],
-			\ 's' : [':CocList snippets',       'snippets'],
-			\ 'S' : [':CocList colors',         'color schemes'],
-			\ 't' : [':CocList grep',           'text'],
-			\ 'w' : [':CocList windows',        'search windows'],
-			\ 'y' : [':CocList filetypes',      'file types'],
-			\ }
+  \ 'name' : '+search' ,
+  \ '/' : [':CocList searchhistory', 'history'],
+  \ ';' : [':CocList vimcommands',   'commands'],
+  \ 'b' : [':CocList buffers',       'open buffers'],
+  \ 'c' : [':CocList commits',       'commits'],
+  \ 'C' : [':CocList bCommits',      'buffer commits'],
+  \ 'f' : [':CocList files',         'files'],
+  \ 'g' : [':CocList gfiles',        'git files'],
+  \ 'h' : [':CocList mru',           'most recent use files'],
+  \ 'H' : [':CocList cmdhistory',    'command history'],
+  \ 'l' : [':CocList lines',         'lines'] ,
+  \ 'm' : [':CocList marks',         'marks'] ,
+  \ 'M' : [':CocList maps',          'normal maps'] ,
+  \ 'p' : [':CocList helptags',      'help tags'] ,
+  \ 'P' : [':CocList tags',          'project tags'],
+  \ 's' : [':CocList snippets',      'snippets'],
+  \ 'S' : [':CocList colors',        'color schemes'],
+  \ 't' : [':CocList grep',          'text'],
+  \ 'w' : [':CocList windows',       'search windows'],
+  \ 'y' : [':CocList filetypes',     'file types'],
+  \ }
 " }}}
 
 " g is for git {{{
 let g:which_key_map.g = {
-			\ 'name' : '+git' ,
-			\ 'b' : ['Gblame',                             'blame'],
-			\ 'c' : ['BCommits',                           'commits-for-current-buffer'] ,
-			\ 'C' : ['Gcommit',                            'commit'],
-			\ 'd' : ['Gdiff',                              'diff'],
-			\ 'e' : ['Gedit',                              'edit'],
-			\ 'l' : ['Glog',                               'log'],
-			\ 'r' : ['Gread',                              'read'],
-			\ 'G' : ['Gstatus',                            'status'],
-			\ 'w' : ['Gwrite',                             'write'],
-			\ 'p' : ['Git push',                           'push'],
-			\ 'v' : [':GV',                                'view commits'],
-			\ 'V' : [':GV!',                               'view buffer commits'],
-			\ 'i' : ['<Plug>(coc-git-chunkinfo)',          'preview hunk'],
-			\ 'j' : ['<Plug>(coc-git-nextchunk)',          'next hunk'],
-			\ 'k' : ['<Plug>(coc-git-prevchunk)',          'prev hunk'],
-			\ 's' : [':CocCommand git.chunkStage',         'stage hunk'],
-			\ 't' : [':CocCommand git.toggleGutters',      'toggle signs'],
-			\ 'u' : [':CocCommand git.chunkUndo',          'undo hunk'],
-			\ }
+  \ 'name' : '+git' ,
+  \ 'b' : ['Gblame',                        'blame'],
+  \ 'c' : ['BCommits',                      'commits-for-current-buffer'],
+  \ 'C' : ['Gcommit',                       'commit'],
+  \ 'd' : ['Gdiff',                         'diff'],
+  \ 'e' : ['Gedit',                         'edit'],
+  \ 'l' : ['Glog',                          'log'],
+  \ 'r' : ['Gread',                         'read'],
+  \ 'G' : ['Gstatus',                       'status'],
+  \ 'w' : ['Gwrite',                        'write'],
+  \ 'p' : ['Git push',                      'push'],
+  \ 'v' : [':GV',                           'view commits'],
+  \ 'V' : [':GV!',                          'view buffer commits'],
+  \ 'i' : ['<Plug>(coc-git-chunkinfo)',     'preview hunk'],
+  \ 'j' : ['<Plug>(coc-git-nextchunk)',     'next hunk'],
+  \ 'k' : ['<Plug>(coc-git-prevchunk)',     'prev hunk'],
+  \ 's' : [':CocCommand git.chunkStage',    'stage hunk'],
+  \ 't' : [':CocCommand git.toggleGutters', 'toggle signs'],
+  \ 'u' : [':CocCommand git.chunkUndo',     'undo hunk'],
+  \ }
 " }}}
 
 " l is for language server protocol {{{
 nnoremap <silent><leader>lK :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
 let g:which_key_map.l = {
-			\ 'name' : '+lsp' ,
-			\ 'K' : 'show documentation',
-			\ '.' : [':CocConfig',                           'config'],
-			\ ';' : ['<Plug>(coc-refactor)',                 'refactor'],
-			\ 'a' : ['<Plug>(coc-codeaction-line)',          'line action'],
-			\ 'A' : ['<Plug>(coc-codeaction-selected)',      'selected action'],
-			\ 'b' : [':CocNext',                             'next action'],
-			\ 'B' : [':CocPrev',                             'prev action'],
-			\ 'c' : [':CocList commands',                    'commands'],
-			\ 'd' : ['<Plug>(coc-definition)',               'definition'],
-			\ 'D' : ['<Plug>(coc-declaration)',              'declaration'],
-			\ 'e' : [':CocList extensions',                  'extensions'],
-			\ 'f' : ['<Plug>(coc-format-selected)',          'format selected'],
-			\ 'F' : ['<Plug>(coc-format)',                   'format'],
-			\ 'i' : ['<Plug>(coc-implementation)',           'implementation'],
-			\ 'I' : [':CocList diagnostics',                 'diagnostics'],
-			\ 'j' : ['<Plug>(coc-float-jump)',               'float jump'],
-			\ 'h' : ['<Plug>(coc-float-hide)',               'hide'],
-			\ 'l' : ['<Plug>(coc-codelens-action)',          'code lens'],
-			\ 'n' : ['<Plug>(coc-diagnostic-next)',          'next diagnostic'],
-			\ 'N' : ['<Plug>(coc-diagnostic-next-error)',    'next error'],
-			\ 'o' : ['<Plug>(coc-openlink)',                 'open link'],
-			\ 'O' : [':CocList outline',                     'outline'],
-			\ 'p' : ['<Plug>(coc-diagnostic-prev)',          'prev diagnostic'],
-			\ 'P' : ['<Plug>(coc-diagnostic-prev-error)',    'prev error'],
-			\ 'q' : ['<Plug>(coc-fix-current)',              'quickfix'],
-			\ 'r' : ['<Plug>(coc-rename)',                   'rename'],
-			\ 'R' : ['<Plug>(coc-references)',               'references'],
-			\ 's' : [':CocList -I symbols',                  'symbols'],
-			\ 'S' : [':CocList snippets',                    'snippets'],
-			\ 't' : ['<Plug>(coc-type-definition)',          'type definition'],
-			\ 'u' : [':CocListResume',                       'resume list'],
-			\ 'U' : [':CocUpdate',                           'update CoC'],
-			\ 'z' : [':CocDisable',                          'disable CoC'],
-			\ 'Z' : [':CocEnable',                           'enable CoC'],
-			\ }
+  \ 'name' : '+lsp' ,
+  \ 'K' : 'show documentation',
+  \ '.' : [':CocConfig',                           'config'],
+  \ ';' : ['<Plug>(coc-refactor)',                 'refactor'],
+  \ 'a' : ['<Plug>(coc-codeaction-line)',          'line action'],
+  \ 'A' : ['<Plug>(coc-codeaction-selected)',      'selected action'],
+  \ 'b' : [':CocNext',                             'next action'],
+  \ 'B' : [':CocPrev',                             'prev action'],
+  \ 'c' : [':CocList commands',                    'commands'],
+  \ 'd' : ['<Plug>(coc-definition)',               'definition'],
+  \ 'D' : ['<Plug>(coc-declaration)',              'declaration'],
+  \ 'e' : [':CocList extensions',                  'extensions'],
+  \ 'f' : ['<Plug>(coc-format-selected)',          'format selected'],
+  \ 'F' : ['<Plug>(coc-format)',                   'format'],
+  \ 'i' : ['<Plug>(coc-implementation)',           'implementation'],
+  \ 'I' : [':CocList diagnostics',                 'diagnostics'],
+  \ 'j' : ['<Plug>(coc-float-jump)',               'float jump'],
+  \ 'h' : ['<Plug>(coc-float-hide)',               'hide'],
+  \ 'l' : ['<Plug>(coc-codelens-action)',          'code lens'],
+  \ 'n' : ['<Plug>(coc-diagnostic-next)',          'next diagnostic'],
+  \ 'N' : ['<Plug>(coc-diagnostic-next-error)',    'next error'],
+  \ 'o' : ['<Plug>(coc-openlink)',                 'open link'],
+  \ 'O' : [':CocList outline',                     'outline'],
+  \ 'p' : ['<Plug>(coc-diagnostic-prev)',          'prev diagnostic'],
+  \ 'P' : ['<Plug>(coc-diagnostic-prev-error)',    'prev error'],
+  \ 'q' : ['<Plug>(coc-fix-current)',              'quickfix'],
+  \ 'r' : ['<Plug>(coc-rename)',                   'rename'],
+  \ 'R' : ['<Plug>(coc-references)',               'references'],
+  \ 's' : [':CocList -I symbols',                  'symbols'],
+  \ 'S' : [':CocList snippets',                    'snippets'],
+  \ 't' : ['<Plug>(coc-type-definition)',          'type definition'],
+  \ 'u' : [':CocListResume',                       'resume list'],
+  \ 'U' : [':CocUpdate',                           'update CoC'],
+  \ 'z' : [':CocDisable',                          'disable CoC'],
+  \ 'Z' : [':CocEnable',                           'enable CoC'],
+  \ }
 " }}}
 
 " t is for terminal {{{
 let g:which_key_map.t = {
-			\ 'name' : '+terminal' ,
-			\ 'o' : [':FloatermNew',             'open'],
-			\ 'n' : [':FloatermNext',            'next'],
-			\ 'k' : [':FloatermKill',            'kill'],
-			\ 'N' : [':FloatermPrev',            'prev'],
-			\ 't' : [':FloatermToggle',          'toggle'],
-			\ 'p' : [':FloatermNew python',      'python'],
-			\ 'v' : [':FloatermNew vifm',        'vifm'],
-			\ 'h' : [':FloatermNew htop',        'ytop'],
-			\ }
+  \ 'name' : '+terminal' ,
+  \ 'o' : [':FloatermNew',             'open'],
+  \ 'n' : [':FloatermNext',            'next'],
+  \ 'k' : [':FloatermKill',            'kill'],
+  \ 'N' : [':FloatermPrev',            'prev'],
+  \ 't' : [':FloatermToggle',          'toggle'],
+  \ 'p' : [':FloatermNew python',      'python'],
+  \ 'v' : [':FloatermNew vifm',        'vifm'],
+  \ 'h' : [':FloatermNew htop',        'ytop'],
+  \ }
 " }}}
 
 " w is for wiki {{{
 nnoremap <leader>wS ::VimwikiSearchTags<space>
 let g:which_key_map.w = {
-			\ 'name' : '+wiki' ,
-			\ 'w' : 'wiki index',
-			\ 'i' : 'diary index',
-			\ 't' : 'index in new tab',
-			\ 's' : 'list wikis',
-			\ 'S' : 'search tags',
-			\ 'r' : 'rename wiki page',
-			\ 'n' : 'create wiki page',
-			\ 'd' : 'delete',
-			\ 'h' : 'convert page to html',
-			\ 'hh': 'convert page to html and open in browser',
-			\ ' ': {
-			\ 'name': '+diary',
-			\ 'y' : 'yesterday diary',
-			\ 'm' : 'tomorrow diary',
-			\ 'w' : 'today diary',
-			\ 't' : 'today diary in new tab',
-			\ 'i' : 'generate diary links',
-			\ 'g' : [':VimwikiGenerateLinks', 'generate wiki links'],
-			\ },
-			\ }
+  \ 'name' : '+wiki' ,
+  \ 'w' : 'wiki index',
+  \ 'i' : 'diary index',
+  \ 't' : 'index in new tab',
+  \ 's' : 'list wikis',
+  \ 'S' : 'search tags',
+  \ 'r' : 'rename wiki page',
+  \ 'n' : 'create wiki page',
+  \ 'd' : 'delete',
+  \ 'h' : 'convert page to html',
+  \ 'hh': 'convert page to html and open in browser',
+  \ ' ': {
+  \ 'name': '+diary',
+  \ 'y' : 'yesterday diary',
+  \ 'm' : 'tomorrow diary',
+  \ 'w' : 'today diary',
+  \ 't' : 'today diary in new tab',
+  \ 'i' : 'generate diary links',
+  \ 'g' : [':VimwikiGenerateLinks', 'generate wiki links'],
+  \ },
+  \ }
 " }}}
 " }}}
 

@@ -56,7 +56,7 @@ call g:C("Folded",       g:dark.black,      g:dark.blue,      "none")
 
 " window / tab delimeters {{{
 call g:C("VertSplit",    g:none,            g:dark.black,     "none")
-call g:C("ColorColumn",  g:none,            g:dark.black,     "none")
+call g:C("ColorColumn",  g:dark.black,      g:none,           "none")
 call g:C("TabLine",      g:none,            g:none,           "none")
 call g:C("TabLineFill",  g:none,            g:none,           "none")
 call g:C("TabLineSel",   g:dark.black,      g:dark.blue,      "bold")
