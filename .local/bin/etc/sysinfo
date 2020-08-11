@@ -33,28 +33,28 @@ colors="$xdef"
 
 #█▓▒░ progress bar
 draw() {
-	perc=$1
-	size=$2
-	inc=$((perc * size / 100))
-	color="${3-36}"
-	v=0
-	while [ "$v" -le 10 ]; do
-		if [ $v -le $inc ]; then
-			out="${out}\033[1;${color}m${FULL}"
-		else
-			out="${out}\033[0;${color}m${EMPTY}"
-		fi
-		v=$((v + 1))
-	done
-	printf "%b\n" "$out"
+  perc=$1
+  size=$2
+  inc=$((perc * size / 100))
+  color="${3-36}"
+  v=0
+  while [ "$v" -le 10 ]; do
+    if [ $v -le $inc ]; then
+      out="${out}\033[1;${color}m${FULL}"
+    else
+      out="${out}\033[0;${color}m${EMPTY}"
+    fi
+    v=$((v + 1))
+  done
+  printf "%b\n" "$out"
 }
 
 #█▓▒░ colors
 printf "\n"
 i=0
 while [ $i -le 6 ]; do
-	printf "\033[$((i + 41));$((i + 30))m█▓▒░"
-	i=$((i + 1))
+  printf "\033[$((i + 41));$((i + 30))m█▓▒░"
+  i=$((i + 1))
 done
 printf "\033[37m█\033[0m▒░\n\n"
 
@@ -93,9 +93,9 @@ printf "   \033[0;${color}m%-4s \033[1;${color}m%-5s %-25s \n" " bat" "$charge%"
 #█▓▒░ volume
 vol=$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')
 if amixer get Master | grep -q '\[off\]'; then
-	color='31'
+  color='31'
 else
-	color='36'
+  color='36'
 fi
 printf "   \033[0;${color}m%-4s \033[1;${color}m%-5s %-25s \n" " vol" "$vol%" "$(draw "$vol" 10 "$color")"
 

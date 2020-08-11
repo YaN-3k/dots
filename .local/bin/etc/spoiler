@@ -10,6 +10,6 @@ m() { $DMENU -i "$@" <&- && echo; }
 
 [ ! "$1" ] && text="$(m -p "Enter text")" || text="$*"
 [ "$text" ] && {
-	spoilerize "$text" | xclip -sel clip
-	notify-send "Text spoilerized and copied!"
+  spoilerize "$text" | xclip -sel clip
+  notify-send "Text spoilerized and copied!"
 }

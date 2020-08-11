@@ -8,8 +8,8 @@ c=0
 j=0
 k=30
 for value in $colors; do
-	printf "%b" "\033[$j;$((k + c))m██ $value \033[0m"
-	c=$((c+1))
-	[ "$c" -eq 8 ] && { echo; j=1;k=22; }
+  printf "%b" "\033[$j;$((k + c))m██ $value \033[0m"
+  c=$((c+1))
+  [ "$c" -eq 8 ] && { echo; j=1;k=22; }
 done
 echo

@@ -8,11 +8,11 @@ value="${2:-10}"
 
 case $1 in
 up)
-	xbacklight -inc "$value"
-	;;
+  xbacklight -inc "$value"
+  ;;
 down)
-	xbacklight -dec "$value"
-	;;
+  xbacklight -dec "$value"
+  ;;
 esac
 
 brightness="$(xbacklight -get)"

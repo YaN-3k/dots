@@ -8,71 +8,71 @@ interface='wlan0'
 m() { ${DMENU:-dmenu} "$@"; }
 
 add() {
-	list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
-	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-	list=$(comm -23 <(sort -u <<<"$list_all") <(sort -u <<<"$list_known"))
-	ssid=$(printf "%s" "$list" | m -i -p "add") || return
-	pass=$(m -P) || return
+  list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
+  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
+  list=$(comm -23 <(sort -u <<<"$list_all") <(sort -u <<<"$list_known"))
+  ssid=$(printf "%s" "$list" | m -i -p "add") || return
+  pass=$(m -P) || return
 
-	if iwctl --passphrase "$pass" station $interface connect "$ssid"; then
-		notify-send "Successfully added $ssid"
-		exit
-	else
-		notify-send "Wrong password $ssid"
-		return
-	fi
+  if iwctl --passphrase "$pass" station $interface connect "$ssid"; then
+    notify-send "Successfully added $ssid"
+    exit
+  else
+    notify-send "Wrong password $ssid"
+    return
+  fi
 }
 
 switch() {
-	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-	connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print $3 }')
-	list=$(comm -23 <(sort -u <<<"$list_known") <(sort -u <<<"$connected"))
+  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
+  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print $3 }')
+  list=$(comm -23 <(sort -u <<<"$list_known") <(sort -u <<<"$connected"))
 
-	[ -z "$list" ] && { notify-send "There is no network to switch."; return; }
+  [ -z "$list" ] && { notify-send "There is no network to switch."; return; }
 
-	ssid=$(printf "%s" "$list" | m -p "switch") || return
-	if iwctl station $interface connect "$ssid"; then
-		notify-send "Successfully connected with $ssid"
-		exit
-	else
-		notify-send "Failed to connect with $ssid"
-		return
-	fi
+  ssid=$(printf "%s" "$list" | m -p "switch") || return
+  if iwctl station $interface connect "$ssid"; then
+    notify-send "Successfully connected with $ssid"
+    exit
+  else
+    notify-send "Failed to connect with $ssid"
+    return
+  fi
 }
 
 forget() {
-	list=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-	[ -z "$list" ] && { notify-send "There is no network to forget."; return; }
-	ssid=$(printf "%s" "$list" | m -p "forget") || return
-	iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
+  list=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
+  [ -z "$list" ] && { notify-send "There is no network to forget."; return; }
+  ssid=$(printf "%s" "$list" | m -p "forget") || return
+  iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
 }
 
 scan() {
-	iwctl station $interface scan
-	notify-send "Network scanning..."
+  iwctl station $interface scan
+  notify-send "Network scanning..."
 }
 
 if ! pgrep -x iwd; then
-	if ! (sudo -A systemctl start iwd && sudo -A systemctl enable iwd); then
-		notify-send -u critical " Unable to start iwd."
-		exit
-	fi
+  if ! (sudo -A systemctl start iwd && sudo -A systemctl enable iwd); then
+    notify-send -u critical " Unable to start iwd."
+    exit
+  fi
 fi
 
 if ! pgrep -x dhcpcd; then
-	if ! (sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd);then
-		notify-send -u critical " Unable to start dhcpcd."
-		exit
-	fi
+  if ! (sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd);then
+    notify-send -u critical " Unable to start dhcpcd."
+    exit
+  fi
 fi
 
 while true; do
-	options="switch\nadd\nscan\nforget"
-	choice=$(printf "%b" "$options" | m -p "Network") || exit
-	case $choice in
-	"add") add ;;
-	"switch") switch ;;
-	"forget") forget ;;
-	"scan") scan ;;
-	esac
+  options="switch\nadd\nscan\nforget"
+  choice=$(printf "%b" "$options" | m -p "Network") || exit
+  case $choice in
+  "add") add ;;
+  "switch") switch ;;
+  "forget") forget ;;
+  "scan") scan ;;
+  esac
 done

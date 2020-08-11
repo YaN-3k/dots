@@ -10,23 +10,23 @@ type="$(printf "Font Awesome\nEmoji\nKaomoji" | m)"
 [ ! "$type" ] && exit
 
 if [ "$type" = 'Font Awesome' ] || [ "$type" = 'Emoji' ]; then
-	[ "$type" = 'Font Awesome' ] && file='fa' || file='emoji'
-	chosen=$(grep -v "#" ~/.local/share/dots/$file | m -i -l 10 -fn Monospace-15)
+  [ "$type" = 'Font Awesome' ] && file='fa' || file='emoji'
+  chosen=$(grep -v "#" ~/.local/share/dots/$file | m -i -l 10 -fn Monospace-15)
 
-	[ ! "$chosen" ] && exit
+  [ ! "$chosen" ] && exit
 
-	c=$(echo "$chosen" | sed "s/ .*//")
-	printf %s "$c" | xclip -selection clipboard
-	notify-send "$c copied to clipboard." &
+  c=$(echo "$chosen" | sed "s/ .*//")
+  printf %s "$c" | xclip -selection clipboard
+  notify-send "$c copied to clipboard." &
 
-	s=$(echo "$chosen" | sed "s/.*; //" | awk '{print $1}')
-	printf %s "$s" | xclip
-	notify-send "$s copied to primary." &
+  s=$(echo "$chosen" | sed "s/.*; //" | awk '{print $1}')
+  printf %s "$s" | xclip
+  notify-send "$s copied to primary." &
 else
-	chosen=$(grep -v "^#" ~/.local/share/dots/kaomoji | ${DMENU:-dmenu})
-	[ ! "$chosen" ] && exit
+  chosen=$(grep -v "^#" ~/.local/share/dots/kaomoji | ${DMENU:-dmenu})
+  [ ! "$chosen" ] && exit
 
-	c="${chosen%% [A-Z]*}"
-	printf %s "$c" | xclip -sel clip
-	notify-send "$chosen" "copied to clipboard."
+  c="${chosen%% [A-Z]*}"
+  printf %s "$c" | xclip -sel clip
+  notify-send "$chosen" "copied to clipboard."
 fi

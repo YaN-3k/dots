@@ -13,13 +13,13 @@ TIME="$(printf "0.5\n5\n10" | m -i -p 'Seconds to wait')"
 
 # Set flag if selected "Window"
 [ "$TYPE" = 'Window/Area' ] &&
-	TYPE='-s -u' ||
-	TYPE='-u'
+  TYPE='-s -u' ||
+  TYPE='-u'
 
 # Prepere for screenshot
 command -v xdg-user-dir >/dev/null 2>&1 &&
-	DIR="$(xdg-user-dir PICTURES)"/ss ||
-	DIR="$HOME"/Pictures/ss
+  DIR="$(xdg-user-dir PICTURES)"/ss ||
+  DIR="$HOME"/Pictures/ss
 
 xclip -sel clip /dev/null # clear clipboard
 mkdir -p "$DIR"

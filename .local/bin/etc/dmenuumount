@@ -11,4 +11,4 @@ chosen="$(echo "$drives" | m -p "Umount" | cut -d ' ' -f 1)"
 [ "$chosen" ] || exit 1
 
 sudo -A umount -l "$chosen" &&
-	notify-send " USB unmounting." "$chosen unmounted."
+  notify-send " USB unmounting." "$chosen unmounted."

@@ -11,9 +11,9 @@ chosen="$(sed 's/http.*\/\///g' "$bmfile" | m)"
 
 url="$(grep -m 1 "$chosen" "$bmfile" | awk '{ print $1 }')"
 [ ! "$url" ] && {
-	echo "$chosen" | grep -q "[a-z|0-9]\.[a-z|0-9]" ||
-	url="$chosen" ||
-	url="https://duckduckgo.com/?q=$chosen"
+  echo "$chosen" | grep -q "[a-z|0-9]\.[a-z|0-9]" ||
+  url="$chosen" ||
+  url="https://duckduckgo.com/?q=$chosen"
 }
 
 "$BROWSER" "$url"

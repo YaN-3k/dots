@@ -3,94 +3,94 @@
 SEP='|'
 
 battery() {
-	bat="$(cat /sys/class/power_supply/BAT?/capacity)"
-	status="$(cat /sys/class/power_supply/BAT?/status)"
-	if [ "$status" = "Charging" ]; then
-		ico=""
-	else
-		if [ "$bat" -lt 15 ]; then
-			ico="   "
-		elif [ "$bat" -lt 30 ]; then
-			ico="   "
-		elif [ "$bat" -lt 45 ]; then
-			ico=" "
-		elif [ "$bat" -lt 60 ]; then
-			ico=" "
-		elif [ "$bat" -lt 75 ]; then
-			ico=" "
-		elif [ "$bat" -lt 90 ]; then
-			ico=" "
-		elif [ "$bat" -le 100 ]; then
-			ico=" "
-		fi
-	fi
-	printf "%s %s%%" "$ico" "$bat"
+  bat="$(cat /sys/class/power_supply/BAT?/capacity)"
+  status="$(cat /sys/class/power_supply/BAT?/status)"
+  if [ "$status" = "Charging" ]; then
+    ico=""
+  else
+    if [ "$bat" -lt 15 ]; then
+      ico="   "
+    elif [ "$bat" -lt 30 ]; then
+      ico="   "
+    elif [ "$bat" -lt 45 ]; then
+      ico=" "
+    elif [ "$bat" -lt 60 ]; then
+      ico=" "
+    elif [ "$bat" -lt 75 ]; then
+      ico=" "
+    elif [ "$bat" -lt 90 ]; then
+      ico=" "
+    elif [ "$bat" -le 100 ]; then
+      ico=" "
+    fi
+  fi
+  printf "%s %s%%" "$ico" "$bat"
 }
 
 _date() {
-	printf " %s $SEP  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
+  printf " %s $SEP  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
 }
 
 backlight() {
-	printf " %0.f%%" "$(xbacklight -get)"
+  printf " %0.f%%" "$(xbacklight -get)"
 }
 
 volume() {
-	vol="$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')"
-	if [ "$vol" -lt 30 ]; then
-		ico=""
-	elif [ "$vol" -lt 60 ]; then
-		ico=""
-	else
-		ico=""
-	fi
-	amixer get Master | grep -q '\[off\]' && ico="婢"
-	printf "%s %s%%" "$ico" "$vol"
+  vol="$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')"
+  if [ "$vol" -lt 30 ]; then
+    ico=""
+  elif [ "$vol" -lt 60 ]; then
+    ico=""
+  else
+    ico=""
+  fi
+  amixer get Master | grep -q '\[off\]' && ico="婢"
+  printf "%s %s%%" "$ico" "$vol"
 }
 
 mpd() {
-	music="$(mpc current -f "%artist% - %title%")"
-	[ "$music" ] && printf " %s %s" "$music" "$SEP"
+  music="$(mpc current -f "%artist% - %title%")"
+  [ "$music" ] && printf " %s %s" "$music" "$SEP"
 }
 
 pkg() {
-	updates=$(pacman -Quq | wc -l)
-	[ "$updates" -gt 0 ] && printf "   %s %s" "$updates" "$SEP"
+  updates=$(pacman -Quq | wc -l)
+  [ "$updates" -gt 0 ] && printf "   %s %s" "$updates" "$SEP"
 }
 
 news() {
-	news="$(cat ~/.cache/news_unread)"
-	[ "$news" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
+  news="$(cat ~/.cache/news_unread)"
+  [ "$news" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
 }
 
 torrents() {
-	data=$(transmission-remote -l 2>/dev/null | grep -E "%|n/a")
-	[ "$data" ] || return
-	while read -r line; do
-		per="$(printf %s "$line" | awk '{ printf $2 }')"
-		[ "${per%?}" = 100 ] && {
-			id="$(printf %s "$line" | awk '{ printf $1 }')"
-			name="$(printf %s "$line" | awk '{ printf $10 }')"
-			notify-send " Download completed." "$name"
-			transmission-remote -t "$id" -r >/dev/null 2>&1
-			continue
-		}
-		printf %s "$line" | sed "
-				s/.*Stopped.*/  /g;
-				s/.*Seeding.*/  /g;
-				s/.*Idle.*/  /g;
-				s/.*Uploading.*/  /g;
-				s/.*Downloading.*/  /g;
-				s/.*[A-Z][a-z].*/  / g;
-				"
-		printf %s "$per"
-	done <<EOF
-	$data
+  data=$(transmission-remote -l 2>/dev/null | grep -E "%|n/a")
+  [ "$data" ] || return
+  while read -r line; do
+    per="$(printf %s "$line" | awk '{ printf $2 }')"
+    [ "${per%?}" = 100 ] && {
+      id="$(printf %s "$line" | awk '{ printf $1 }')"
+      name="$(printf %s "$line" | awk '{ printf $10 }')"
+      notify-send " Download completed." "$name"
+      transmission-remote -t "$id" -r >/dev/null 2>&1
+      continue
+    }
+    printf %s "$line" | sed "
+        s/.*Stopped.*/  /g;
+        s/.*Seeding.*/  /g;
+        s/.*Idle.*/  /g;
+        s/.*Uploading.*/  /g;
+        s/.*Downloading.*/  /g;
+        s/.*[A-Z][a-z].*/  / g;
+        "
+    printf %s "$per"
+  done <<EOF
+  $data
 EOF
-	transmission-remote -l | grep -qE "%|n/a" && printf " %s" "$SEP"
+  transmission-remote -l | grep -qE "%|n/a" && printf " %s" "$SEP"
 }
 
 while :; do
-	xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
-	sleep 1
+  xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
+  sleep 1
 done

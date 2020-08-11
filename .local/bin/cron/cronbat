@@ -3,7 +3,7 @@
 # You can set this to run via cron.
 
 if [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ]; then
-	rm /tmp/notify.lck; exit
+  rm /tmp/notify.lck; exit
 elif [ "$(cat /sys/class/power_supply/BAT0/capacity)" -lt 25 ] && [ ! -f /tmp/notify.lck  ]; then
-	touch /tmp/notify.lck; notify-send -u critical "Battery critically low."
+  touch /tmp/notify.lck; notify-send -u critical "Battery critically low."
 fi

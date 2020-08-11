@@ -8,7 +8,7 @@ sessions="$(tmux ls 2> /dev/null | awk '! /attached/ { sub(":", "", $1); print $
 choice=$(printf "%b" "$sessions" | $DMENU -i -p "attach")
 [ ! "$choice" ] && exit
 if [ "$choice" = "new" ]; then
-	$TERMINAL -e tmux -f "$HOME"/.config/tmux/tmux.conf
+  $TERMINAL -e tmux -f "$HOME"/.config/tmux/tmux.conf
 else
-	$TERMINAL -e tmux a -t "$choice"
+  $TERMINAL -e tmux a -t "$choice"
 fi
