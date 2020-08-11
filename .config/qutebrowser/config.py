@@ -48,7 +48,6 @@ c.confirm_quit = ["downloads"]
 c.fonts.default_family = "Hack Nerd Font Mono"
 c.fonts.completion.category = "10pt Hack Nerd Font Mono"
 c.fonts.completion.entry = "10pt Hack Nerd Font Mono"
-c.fonts.tabs = "10pt Hack Nerd Font Mono"
 c.fonts.statusbar = "10pt Hack Nerd Font Mono"
 c.fonts.downloads = "10pt Hack Nerd Font Mono"
 c.fonts.hints = "bold 10pt Hack Nerd Font Mono"
