@@ -11,12 +11,13 @@
 #   KEYBINDINGS
 #
 # emacs like
-bindkey "^a"  beginning-of-line
-bindkey "^e"  end-of-line
-bindkey "^k"  kill-line
-bindkey "^l"  clear-screen
-bindkey "^u"  kill-whole-line
-bindkey "^w"  backward-kill-word
+bindkey "^a" beginning-of-line
+bindkey "^e" end-of-line
+bindkey "^k" kill-line
+bindkey "^l" clear-screen
+bindkey "^u" kill-whole-line
+bindkey "^w" backward-kill-word
+bindkey "^y" yank
 
 bindkey '^x'   clear-screen
 bindkey '^[^M' self-insert-unmeta
@@ -57,8 +58,8 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' ignored-patterns '.' # ignore .
 zstyle ':completion:*' matcher-list \
-	'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*' # case-insensitive completion
-_comp_options+=(globdots) # Include hidden files.
+  'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*' # case-insensitive completion
+  _comp_options+=(globdots) # Include hidden files.
 
 # use vim keys in tab complete menu:
 zmodload zsh/complist
@@ -72,11 +73,11 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 #
 FZF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/fzf"
 [ ! -d "$FZF_DIR/fzf" ] && {
-	pwd=$PWD
-	mkdir -p "$FZF_DIR" && cd "$FZF_DIR"
-	git clone --depth 1 https://github.com/junegunn/fzf
-	"$FZF_DIR/fzf/install" --no-bash --no-fish --xdg --all
-	cd "$pwd"
+  pwd=$PWD
+  mkdir -p "$FZF_DIR" && cd "$FZF_DIR"
+  git clone --depth 1 https://github.com/junegunn/fzf
+  "$FZF_DIR/fzf/install" --no-bash --no-fish --xdg --all
+  cd "$pwd"
 }
 source "$FZF_DIR/fzf.zsh" 2>/dev/null
 
@@ -139,31 +140,31 @@ autoload -Uz colors && colors
 
 # colors for permissions
 [ "$EUID" -ne "0" ] &&
-	USER_LEVEL="${COLOR_USER}" ||
-	USER_LEVEL="${COLOR_ROOT}"
+  USER_LEVEL="${COLOR_USER}" ||
+  USER_LEVEL="${COLOR_ROOT}"
 
 # git prompt
 GIT_PROMPT() {
-	ref=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null) || exit
+  ref=$(git symbolic-ref --quiet --short HEAD 2>/dev/null || git rev-parse --short HEAD 2>/dev/null) || exit
 
-	[ "$(git rev-parse --is-bare-repository 2>&1)" = "false" ] && {
-		[[ $(git status --short | wc -l) -ne 0 ]] && dirty=$ICO_DIRTY || dirty=""
+  [ "$(git rev-parse --is-bare-repository 2>&1)" = "false" ] && {
+    [[ $(git status --short | wc -l) -ne 0 ]] && dirty=$ICO_DIRTY || dirty=""
 
-		stat=$(git status | sed -n 2p)
+  stat=$(git status | sed -n 2p)
 
-		case "$stat" in
-		*ahead*) stat=$ICO_AHEAD ;;
-		*behind*) stat=$ICO_BEHIND ;;
-		*diverged*) stat=$ICO_DIVERGED ;;
-		*) stat="" ;;
-		esac
-	}
-	echo "${USER_LEVEL}─[${COLOR_NORMAL}${ref}${dirty}${stat}${USER_LEVEL}]"
+  case "$stat" in
+    *ahead*) stat=$ICO_AHEAD ;;
+    *behind*) stat=$ICO_BEHIND ;;
+    *diverged*) stat=$ICO_DIVERGED ;;
+    *) stat="" ;;
+  esac
+}
+echo "${USER_LEVEL}─[${COLOR_NORMAL}${ref}${dirty}${stat}${USER_LEVEL}]"
 }
 
 [ "$PROMPT_STYLE" = "dual" ] &&
-	PROMPT='${USER_LEVEL}┌[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)'$'\n''${USER_LEVEL}└─ ─ %f' ||
-	PROMPT='${USER_LEVEL}[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)── ─ %f'
+  PROMPT='${USER_LEVEL}┌[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)'$'\n''${USER_LEVEL}└─ ─ %f' ||
+  PROMPT='${USER_LEVEL}[${COLOR_NORMAL}%~${USER_LEVEL}]$(GIT_PROMPT)── ─ %f'
 
 #
 #   VI MODE
@@ -174,19 +175,19 @@ export KEYTIMEOUT=1
 # change cursor shape for different vi modes.
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
-     [[ $1 = 'block' ]]; then
-    echo -ne '\e[2 q'
-  elif [[ ${KEYMAP} == main ]] ||
-       [[ ${KEYMAP} == viins ]] ||
-       [[ ${KEYMAP} = '' ]] ||
-       [[ $1 = 'beam' ]]; then
-    echo -ne '\e[6 q'
+    [[ $1 = 'block' ]]; then
+      echo -ne '\e[2 q'
+    elif [[ ${KEYMAP} == main ]] ||
+      [[ ${KEYMAP} == viins ]] ||
+      [[ ${KEYMAP} = '' ]] ||
+      [[ $1 = 'beam' ]]; then
+          echo -ne '\e[6 q'
   fi
 }
 zle -N zle-keymap-select
 zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[6 q"
+zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+echo -ne "\e[6 q"
 }
 zle -N zle-line-init
 echo -ne '\e[6 q' # Use beam shape cursor on startup.
@@ -203,13 +204,13 @@ source "$ZDOTDIR/shortcutrc" 2>/dev/null
 
 # command not found
 command_not_found_handler() { 
-	printf "command not found \033[31m(╯°□°)╯︵ ┻━┻\033[0m\n"
-	#command -v pkgfile &>/dev/null &&
-	#	packages=$(pkgfile -r "$@" | awk -F '/' 'NR < 4 { printf "  \033[1;30m"$1"/\033[0m"$2"\n" }')
-	#[ "$packages" ] && {
-	#	printf "\nyou should install this bloat:\n"
-	#	printf "%b\n" "$packages"
-	#}
+  printf "command not found \033[31m(╯°□°)╯︵ ┻━┻\033[0m\n"
+  #command -v pkgfile &>/dev/null &&
+  #	packages=$(pkgfile -r "$@" | awk -F '/' 'NR < 4 { printf "  \033[1;30m"$1"/\033[0m"$2"\n" }')
+  #[ "$packages" ] && {
+  #	printf "\nyou should install this bloat:\n"
+  #	printf "%b\n" "$packages"
+  #}
 }
 
 # bind `^n` to ls
@@ -220,4 +221,8 @@ zle -N els; bindkey "^n" els
 egs() { clear; git status; zle redisplay; }
 zle -N egs; bindkey "^g" egs
 
-# vim: ft=zsh
+# bind `^f` to find and edit file
+ef() { f; zle redisplay; }
+zle -N ef; bindkey "^f" ef
+
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
