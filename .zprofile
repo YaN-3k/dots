@@ -8,7 +8,8 @@
 # ░░      ░░░     ░░░░░░    ░░   ░░ ░░░  ░░░░░░
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:$HOME/.config/fzf/fzf/bin/:$(du "$HOME/.local/bin/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+export PATH="$PATH:$HOME/.config/fzf/fzf/bin/:$(du "$HOME/.local/bin/" |
+  cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 
 # Default programs:
 export EDITOR="nvim"
@@ -48,10 +49,11 @@ export LESS_TERMCAP_us="$(printf '\033[0;32m')"
 # Fzf
 export FZF_DEFAULT_OPTS='
 --color fg:7,hl:4,fg+:15,bg+:0,hl+:3
---color pointer:1,info:8,spinner:3,header:8,prompt:8,marker:8
+--color pointer:1,info:8,spinner:3,header:8,prompt:3,marker:8
 --info=inline
 --height 60%
 --reverse
+--preview "preview {}"
 '
 
 export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
