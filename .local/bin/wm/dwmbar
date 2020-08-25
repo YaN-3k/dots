@@ -59,8 +59,8 @@ pkg() {
 }
 
 news() {
-  news="$(cat ~/.cache/news_unread)"
-  [ "$news" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
+  news="$(cat ~/.cache/news_unread 2>/dev/null)"
+  [ "${news:-0}" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
 }
 
 torrents() {

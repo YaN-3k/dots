@@ -79,8 +79,8 @@ set listchars+=precedes:«
 set listchars+=nbsp:░
 
 " python host prog
-let g:python3_host_prog = '/usr/bin/python3'
-let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/bin/python3'
+let g:python_host_prog = '/bin/python2'
 
 " }}}
 
@@ -150,7 +150,6 @@ Plug 'unblevable/quick-scope'                        " lightning fast left-right
 Plug 'tpope/vim-surround'                            " quoting/parenthesizing made simple
 Plug 'christoomey/vim-tmux-navigator'                " split management between vim and tmux
 Plug 'vimwiki/vimwiki'                               " notes and diaries
-Plug 'ThePrimeagen/vim-be-good', {'do': ':Up'}       " practice movements
 Plug 'voldikss/vim-floaterm'                         " better terms
 Plug 'tpope/vim-repeat'                              " repeating plugin maps with .
 Plug 'takac/vim-hardtime'                            " vanilla vim is to easy
@@ -162,6 +161,7 @@ call plug#end()
 " coc {{{
 " global extensions
 let g:coc_global_extensions = [
+  \ 'coc-lists',
   \ 'coc-explorer',
   \ 'coc-snippets',
   \ 'coc-pairs',
@@ -178,6 +178,8 @@ let g:coc_global_extensions = [
 let g:coc_global_extensions += [
   \ 'coc-vimlsp',
   \ 'coc-clangd',
+  \ 'coc-rls',
+  \ 'coc-rust-analyzer',
   \ 'coc-vimtex',
   \ 'coc-html',
   \ 'coc-css',
@@ -186,7 +188,6 @@ let g:coc_global_extensions += [
   \ 'coc-tsserver',
   \ 'coc-json',
   \ 'coc-prettier',
-  \ 'coc-rls',
   \ 'coc-java',
   \ 'coc-cmake',
   \]
@@ -479,16 +480,13 @@ let g:which_key_map.s = {
 " g is for git {{{
 let g:which_key_map.g = {
   \ 'name' : '+git' ,
-  \ 'b' : ['Gblame',                        'blame'],
-  \ 'c' : ['BCommits',                      'commits-for-current-buffer'],
-  \ 'C' : ['Gcommit',                       'commit'],
-  \ 'd' : ['Gdiff',                         'diff'],
-  \ 'e' : ['Gedit',                         'edit'],
-  \ 'l' : ['Glog',                          'log'],
-  \ 'r' : ['Gread',                         'read'],
-  \ 'G' : ['Gstatus',                       'status'],
-  \ 'w' : ['Gwrite',                        'write'],
-  \ 'p' : ['Git push',                      'push'],
+  \ 'b' : [':Gblame',                       'blame'],
+  \ 'd' : [':Gdiff',                        'diff'],
+  \ 'l' : [':Glog',                         'log'],
+  \ 'r' : [':Gread',                        'read'],
+  \ 'g' : [':Git',                          'status'],
+  \ 'w' : [':Gwrite',                       'write'],
+  \ 'p' : [':Gpush',                        'push'],
   \ 'v' : [':GV',                           'view commits'],
   \ 'V' : [':GV!',                          'view buffer commits'],
   \ 'i' : ['<Plug>(coc-git-chunkinfo)',     'preview hunk'],

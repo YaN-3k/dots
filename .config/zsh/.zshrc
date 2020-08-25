@@ -10,7 +10,6 @@
 #
 #   KEYBINDINGS
 #
-# emacs like
 bindkey "^a" beginning-of-line
 bindkey "^e" end-of-line
 bindkey "^k" kill-line
@@ -28,29 +27,29 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey -M vicmd '^e' edit-command-line
 
 # fix backspace, C+h and DEL key
-bindkey -v '^?'          backward-delete-char
+bindkey '^?'             backward-delete-char
 bindkey '^H'             backward-delete-char
 bindkey -M vicmd "^[[3~" delete-char
 bindkey "^[[3~"          delete-char
 
-# Vim keys search history
+# search history
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
-zle -N      up-line-or-beginning-search
-zle -N      down-line-or-beginning-search
-
-bindkey -v '^[[J'    up-line-or-beginning-search
-bindkey -v '^[[K'    down-line-or-beginning-search
-
-bindkey -M vicmd 'L' history-incremental-search-backward
-bindkey -M vicmd 'H' history-incremental-search-forward
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey -M vicmd 'k' up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
+bindkey '^k' up-line-or-beginning-search
+bindkey '^j' down-line-or-beginning-search
+bindkey '^[k' up-line-or-beginning-search
+bindkey '^[j' down-line-or-beginning-search
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
+bindkey -M vicmd '^r' fzf-history-widget
 
 #
 #   Autocompletion
 #
-setopt NO_NOMATCH        # disable globbing
 setopt complete_in_word
 autoload -U compinit && compinit -u
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -71,20 +70,18 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 #
 #   FZF
 #
-FZF_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/fzf"
-[ ! -d "$FZF_DIR/fzf" ] && {
-  pwd=$PWD
-  mkdir -p "$FZF_DIR" && cd "$FZF_DIR"
-  git clone --depth 1 https://github.com/junegunn/fzf
-  "$FZF_DIR/fzf/install" --no-bash --no-fish --xdg --all
-  cd "$pwd"
+[ ! -d ~/.config/fzf ] && {
+  git clone --depth 1 https://github.com/junegunn/fzf ~/.config/fzf
+  ~/.config/fzf/install --no-bash --no-fish --xdg --all
 }
-source "$FZF_DIR/fzf.zsh" 2>/dev/null
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 #
 #   SYNTAX HIGHLIGHTING
 #
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+[ ! -d ~/.config/zsh-syntax-highlighting ] &&
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh-syntax-highlighting
+source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ZSH_HIGHLIGHT_STYLES[default]='none'
 ZSH_HIGHLIGHT_STYLES[links]='none'
@@ -199,8 +196,8 @@ preexec() { echo -ne '\e[6 q' ;} # Use beam shape cursor for each new prompt.
 set -k                       # Allow comments in shell
 setopt auto_cd               # cd by just typing the directory name
 unsetopt flowcontrol         # Disable Ctrl-S + Ctrl-Q
-source "$ZDOTDIR/aliases" 2>/dev/null
-source "$ZDOTDIR/shortcutrc" 2>/dev/null
+source "$ZDOTDIR/aliases"
+source "$ZDOTDIR/shortcutrc"
 
 # command not found
 command_not_found_handler() { 
@@ -224,5 +221,3 @@ zle -N egs; bindkey "^g" egs
 # bind `^f` to find and edit file
 ef() { f; zle redisplay; }
 zle -N ef; bindkey "^f" ef
-
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh

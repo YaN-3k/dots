@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Fuzzy cloner of GitHub repos.
+
+# Usage: fgh <user>
+# When you don't specify user then user=$USER.
+
+# Bindings:
+#   enter - clone via ssh
+#   ctrl+h - clone via https
+#   ctrl+b - open in browser
+#
+# author: https://github.com/samedamci
+
+[ "$1" ] && user="$1" || user="$USER"
+
+data() {
+  curl -s -n "https://api.github.com/users/$user/repos?per_page=100&page=1"
+}
+
+if data | grep -q "Not Found"; then
+  echo "[E] Incorrect user."
+  exit 1
+fi
+
+repos() {
+  data | jq --stream -r 'select(.[0][1] == "full_name") | .[1]'
+}
+
+[ ! "$(repos)" ] && {
+  echo "This user don't have any public repo!"
+  exit 1
+}
+
+repos | fzf --reverse --height=40% \
+  --bind "enter:execute(git clone git@github.com:{})" \
+  --bind "ctrl-h:execute(git clone https://github.com/{})" \
+  --bind "ctrl-b:execute($BROWSER https://github.com/{})"

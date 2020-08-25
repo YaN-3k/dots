@@ -1,5 +1,5 @@
 #!/bin/sh
 case $1 in
 -O) sudo pacman -Rns $(pacman -Qtdq);;
-*)  yay -Slq | fzf -m --preview 'yay -Si {1}' --height 10% | yay "${@:-S}" -;;
+*)  yay -Slq | fzf -m --preview 'yay -Si {1}' | xargs -r yay "${@:-S}" -;;
 esac

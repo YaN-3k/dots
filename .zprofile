@@ -53,12 +53,13 @@ export FZF_DEFAULT_OPTS='
 --info=inline
 --height 60%
 --reverse
---preview "preview {}"
 '
 
 export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
-export FZF_ALT_C_COMMAND='find . -mindepth 1 -type d 2>/dev/null'
+export FZF_ALT_C_COMMAND="find . -mindepth 1 -type d 2>/dev/null"
+export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 
 # Other program settings
 export SXHKD_SHELL="/bin/sh"

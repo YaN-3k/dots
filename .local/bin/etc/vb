@@ -2,5 +2,5 @@
 
 # Find file and open using v.
 
-file="$(find "$HOME/.local/bin/" -type f,l | fzf)"
+file="$(find "$HOME/.local/bin/" -type f,l | fzf --preview 'preview {}')"
 [ "$file" ] && v "$file"
