@@ -7,7 +7,7 @@
 ## Install dependencies
 Packages from official arch repositories:
 ```
-$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg maim transmission-cli
+$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg maim transmission-cli xorg-server xorg-xinit xorg-xsetroot
 ```
 Packages from AUR:
 ```
@@ -42,7 +42,7 @@ $ dots config --local status.showUntrackedFiles no
 ```
 Install fonts
 ```
-$ sudo fc-cache -f -v
+$ fc-cache -f -v
 ```
 Create user directories like ~/music and ~/pix
 ```
