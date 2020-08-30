@@ -120,63 +120,8 @@ static Key keys[] = {
 
 	/* programs */
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-
-	{ ALTKEY,                       XK_f,      spawn,          SHCMD("st -e vf") },
-	{ ALTKEY,                       XK_m,      spawn,          SHCMD("st -n float -e ncmpcpp") },
-	{ ALTKEY,                       XK_v,      spawn,          SHCMD("st -e nvim") },
-	{ ALTKEY,                       XK_a,      spawn,          SHCMD("st -e alsamixer") },
-	{ ALTKEY,                       XK_e,      spawn,          SHCMD("st -e neomutt") },
-	{ ALTKEY|ShiftMask,             XK_e,      spawn,          SHCMD("st -n newsboat -e rss") },
-	{ ALTKEY,                       XK_w,      spawn,          SHCMD("qutebrowser") },
-
-	/* scripts */
-	{ MODKEY|ControlMask,           XK_e,      spawn,          SHCMD("prompt 'Leave Xorg?' 'killall Xorg'") },
-	{ MODKEY|ControlMask,           XK_q,      spawn,          SHCMD("prompt 'Shutdown computer?' 'shutdown -h now'") },
-	{ MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("prompt 'Lock screen' 'slock & mpc pause'") },
-	{ MODKEY|ControlMask,           XK_BackSpace, spawn,       SHCMD("prompt 'Reboot computer?' 'reboot'") },
-
-	{ MODKEY|ControlMask,           XK_i,      spawn,          SHCMD("dmenuunicode") },
-	{ MODKEY|ControlMask,           XK_o,      spawn,          SHCMD("dmenunewtab") },
-	{ MODKEY|ControlMask,           XK_n,      spawn,          SHCMD("dmenuiwd") },
-	{ MODKEY|ControlMask,           XK_m,      spawn,          SHCMD("dmenumount") },
-	{ MODKEY|ControlMask,           XK_u,      spawn,          SHCMD("dmenuumount") },
-	{ MODKEY|ControlMask,           XK_t,      spawn,          SHCMD("dmenutmux") },
-	{ MODKEY,                       XK_End,    spawn,          SHCMD("dmenuscreen") },
-	{ MODKEY,                       XK_Insert, spawn,          SHCMD("showclip") },
-	{ MODKEY,                       XK_Escape, spawn,          SHCMD("dmenupower") },
-	{ MODKEY|ControlMask,           XK_Insert, spawn,          SHCMD("blaze") },
-	{ MODKEY|ControlMask,           XK_w,      spawn,          SHCMD("blaze -s") },
-	{ MODKEY|ControlMask,           XK_Delete, spawn,          SHCMD("dmenureload") },
-	{ MODKEY|ControlMask|ShiftMask, XK_u,      spawn,          SHCMD("update") },
-	{ MODKEY|ControlMask,           XK_p,      spawn,          SHCMD("passmenu2 --type") },
-
-	/* media */
-	{ MODKEY|ShiftMask,             XK_m,      spawn,          SHCMD("amixer sset Master toggle") },
-	{ MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("mpc toggle") },
-
-	{ MODKEY,                       XK_comma,  spawn,          SHCMD("mpc prev; dunstify \"$(mpc current)\"") },
-	{ MODKEY|ShiftMask,             XK_comma,  spawn,          SHCMD("mpc seek 0%") },
-	{ MODKEY,                       XK_period, spawn,          SHCMD("mpc next; dunstify \"$(mpc current)\"") },
-	{ MODKEY|ShiftMask,             XK_period, spawn,          SHCMD("mpc repeat")  },
-
-	{ MODKEY,                       XK_bracketleft,    spawn,  SHCMD("mpc seek -10") },
-	{ MODKEY|ShiftMask,             XK_bracketleft,    spawn,  SHCMD("mpc seek -60") },
-	{ MODKEY,                       XK_bracketright,   spawn,  SHCMD("mpc seek +10") },
-	{ MODKEY|ShiftMask,             XK_bracketright,   spawn,  SHCMD("mpc seek +60") },
-
-	/* volume */
-	{ MODKEY,                       XK_equal,  spawn,          SHCMD("volume alsa up")   },
-	{ MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("volume mpc up")  },
-	{ MODKEY,                       XK_minus,  spawn,          SHCMD("volume alsa down") },
-	{ MODKEY|ShiftMask,             XK_minus,  spawn,          SHCMD("volume mpc down")  },
-
-	/* backlight */
-	{ ALTKEY,                       XK_equal,  spawn,          SHCMD("brightness up")   },
-	{ ALTKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("keybacklight -inc")  },
-	{ ALTKEY,                       XK_minus,  spawn,          SHCMD("brightness down") },
-	{ ALTKEY|ShiftMask,             XK_minus,  spawn,          SHCMD("keybacklight -dec")  },
+	/*{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },*/
+	/*{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },*/
 
 	/* workspaces */
 	TAGKEYS(                        XK_1,                      0)

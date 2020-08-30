@@ -223,5 +223,3 @@ call g:C("htmlArg",     g:none,            g:light.magenta,    "none")
 call g:C("pythonFunctionCall", g:none,      g:none,            "none")
 call g:C("pythonImport",       g:none,      g:dark.blue,       "none")
 " }}}
-
-" vim: fdm=marker

@@ -151,5 +151,3 @@ call g:C("LinePerc", g:dark.black,   g:dark.green,     "none")
 call g:C("Filetype", g:dark.black,   g:dark.magenta,   "italic")
 
 " }}}
-
-" vim: fdm=marker

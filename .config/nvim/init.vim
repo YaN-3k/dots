@@ -88,10 +88,10 @@ let g:python_host_prog = '/bin/python2'
 augroup BufferWrite
   au!
   " reload programs when configuration is updated
-  autocmd BufWritePost files,directories !shortcuts
-  autocmd BufWritePost *Xdefaults !xrdb %
+  autocmd BufWritePost files,directories !autoload shortcuts && shortcuts
+  autocmd BufWritePost Xdefaults !xrdb %
   autocmd BufWritePost dunstrc !pkill dunst; dunst &
-  autocmd BufWritePost *sxhkdrc !pkill -USR1 sxhkd
+  autocmd BufWritePost sxhkdrc !pkill -USR1 sxhkd
   autocmd BufWritePost init.vim,iceberg.vim,statusline.vim source $MYVIMRC
   " automatically deletes all trailing whitespace on save.
   "autocmd BufWritePre * %s/\s\+$//e
@@ -148,7 +148,6 @@ Plug 'airblade/vim-rooter'                           " changes Vim working direc
 Plug 'isa/vim-matchit'                               " extend %
 Plug 'unblevable/quick-scope'                        " lightning fast left-right movement
 Plug 'tpope/vim-surround'                            " quoting/parenthesizing made simple
-Plug 'christoomey/vim-tmux-navigator'                " split management between vim and tmux
 Plug 'vimwiki/vimwiki'                               " notes and diaries
 Plug 'voldikss/vim-floaterm'                         " better terms
 Plug 'tpope/vim-repeat'                              " repeating plugin maps with .
