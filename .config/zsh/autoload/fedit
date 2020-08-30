@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+# Find and open files.
+files=("${(@f)$(find $@ -type f | fzf -m)}")
+[[ -n $files ]] && edit $files

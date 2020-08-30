@@ -1,5 +1,3 @@
-! cherrry9 colorscheme
-
 *.background:  #161821
 *.foreground:  #c6c8d1
 *.cursorColor: #c6c8d1
@@ -28,13 +26,11 @@
 *.color7:      #c6c8d1
 *.color15:     #d2d4de
 
-! dmenu
 dmenu.background:    #161821
 dmenu.foreground:    #c6c8d1
 dmenu.selbackground: #84a0c6
 dmenu.selforeground: #161821
 
-! dwm
 dwm.normbordercolor: #161821
 dwm.normbgcolor:     #161821
 dwm.normfgcolor:     #c6c8d1
@@ -42,10 +38,6 @@ dwm.selbordercolor:  #84a0c6
 dwm.selbgcolor:      #84a0c6
 dwm.selfgcolor:      #161821
 
-! slock
 slock.init:         #161821
 slock.input:        #91acd1
 slock.failed:       #e98989
-
-! wallpaper
-wallpaper: iceberg.jpg

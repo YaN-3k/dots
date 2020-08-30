@@ -1,0 +1,30 @@
+#!/bin/sh
+color='#F7E599'
+full='•'
+empty='○'
+value="${3:-10}"
+
+case $1 in
+  alsa)
+    case $2 in
+      up)   amixer sset Master "$value"%+;;
+      down) amixer sset Master "$value"%-;;
+    esac
+    vol=$(amixer get Master | awk '/Left:/{gsub(/[[:punct:]]/,"",$5);left=$5}
+    /Right:/{gsub(/[[:punct:]]/,"",$5);right=$5}
+  END {print left}')
+  label="ALSA"
+  ;;
+  mpc)
+    case $2 in
+      up)   mpc volume +"$value";;
+      down) mpc volume -"$value";;
+    esac
+  vol=$(mpc volume | awk -F "\t|%|:" '{ print $2 }' | tr -d " ")
+  label="MPD"
+  ;;
+esac
+
+barfull=$(seq -s "$full" $((vol / 5)) | sed 's/[0-9]//g')
+barempty=$(seq -s "$empty" $((20 - vol / 5)) | sed 's/[0-9]//g')
+dunstify -t 1000 -r 1000 -u normal "$label Volume $vol%" "<span color=\'$color\'>$barfull</span>$barempty"

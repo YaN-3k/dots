@@ -1,0 +1,2 @@
+#!/usr/bin/env zsh
+awk '/^[a-z]/ && last { gsub("#", "--", last); print $0"\t"last; last=0} /^#/ {last=$0}' ~/.config/sxhkd/sxhkdrc  | column -t -s $'\t' | fzf --height 100%

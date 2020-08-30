@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Attach to tmux session.
+local sessions=("${(@f)$(tmux ls -F '#S' 2>/dev/null)}")
+if [[ -n $sessions ]]; then
+  local session=$(fzf \
+    --reverse \
+    --prompt='attach to: ' \
+    --bind 'ctrl-d:execute(tmux kill-session -t {})+reload(tmux ls -F "#S")' \
+    <<<${(F)sessions})
+  [[ -n $session ]] && tmux attach -t $session
+else
+  local name
+  vared -p "Session name: " name
+  [[ -n $name ]] && tmux new-session -s $name || tmux
+fi

@@ -1,0 +1,16 @@
+#!/bin/sh
+color='#F7E599'
+full='•'
+empty='○'
+value="${2:-10}"
+
+case $1 in
+up)   xbacklight -inc "$value";;
+down) xbacklight -dec "$value";;
+esac
+
+brightness=$(xbacklight -get)
+brightness=${brightness%.*}
+barfull=$(seq -s "$full" $((brightness / 5)) | sed 's/[0-9]//g')
+barempty=$(seq -s "$empty" $((20 - brightness / 5)) | sed 's/[0-9]//g')
+dunstify -t 1000 -r 1000 -u normal "Brightness $brightness%" "<span color=\'$color\'>$barfull</span>$barempty"

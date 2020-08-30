@@ -1,0 +1,6 @@
+bf   ~/.config/zsh/files
+bd   ~/.config/zsh/directories
+bw   ~/.config/bookmarks
+cfa  ~/.config/zsh/aliases
+cfx  ~/.config/sxhkd/sxhkdrc
+cfz  $ZDOTDIR/.zshrc

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Find files and open in v.
-
-find "${@:-.}" -type f,l 2>/dev/null | fzf -m --preview "preview {}" | xargs -r v

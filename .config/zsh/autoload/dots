@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Wraper for dotfiles.
+function dotfiles() { git --git-dir=$HOME/.config/dots-git/ --work-tree=$HOME $* }
+if [[ $1 == 'up' ]]; then
+  dotfiles pull && dotfiles update-index --assume-unchanged ~/LICENSE ~/README.md && rm -rf ~/LICENSE ~/README.md
+else
+  dotfiles $*
+fi
+unfunction dotfiles

@@ -1,0 +1,13 @@
+#!/bin/sh
+# A dmenu prompt to unmount drives.
+
+m() { ${DMENU:-dmenu} "$@"; }
+
+drives=$(lsblk -nrpo "name,type,size,mountpoint" | awk '$4!~/\/boot|\/home$|SWAP/&&length($4)>1{printf "%s (%s)\n",$4,$3}')
+[ "$drives" ] || { notify-send "No drives to unmount."; exit 1; }
+
+chosen="$(echo "$drives" | m -p "Umount" | cut -d ' ' -f 1)"
+[ "$chosen" ] || exit 1
+
+sudo -A umount -l "$chosen" &&
+  notify-send " USB unmounting." "$chosen unmounted."
