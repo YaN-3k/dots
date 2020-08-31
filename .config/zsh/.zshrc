@@ -40,7 +40,7 @@ function +virtual-env() {
 }
 precmd_functions+=(+virtual-env)
 
-export PS1="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
+#export PS1="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
 export PS1="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
 export PS2="%F{blue}[%F{white}%_%F{blue}]%f "
 export RPS1="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
@@ -85,7 +85,7 @@ function zle-keymap-select() {
 zle -N zle-keymap-select
 
 function zle-line-init() {
-  zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+  zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -v` has been set elsewhere)
   print -n "\e[6 q"
 }
 zle -N zle-line-init
@@ -131,7 +131,7 @@ ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[assign]='none'
 
 # miscellaneous
-unalias run-help
+(( $+aliases[run-help] )) && unalias run-help
 autoload -Uz run-help
 alias help='run-help'
 autoload -Uz zcalc
@@ -171,7 +171,7 @@ mc() { mkdir -p "$1" && cd "$1"; }
 
 alias ls='exa --group-directories-first'
 alias la='exa -a --group-directories-first'
-alias ll='exa -l --group-directories-first'
+alias ll='exa -al --group-directories-first'
 alias lt='exa -aT --group-directories-first'
 
 alias ir='irssi --home ~/.config/irssi'

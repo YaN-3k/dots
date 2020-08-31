@@ -49,7 +49,7 @@ volume() {
 }
 
 mpd() {
-  music="$(mpc current -f "%artist% - %title%")"
+  music="$(mpc current)"
   [ "$music" ] && printf " %s %s" "$music" "$SEP"
 }
 

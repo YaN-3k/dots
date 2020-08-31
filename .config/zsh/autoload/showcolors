@@ -2,7 +2,7 @@
 # Show colors from X server resource database.
 local -a colors
 local hex_val hue col
-colors=($(xrdb -query | grep "color[0-9]" | sed 's/*.color//g' | sort -n | cut -d '#' -f2))
+colors=($(xrdb -query | grep 'color[0-9]' | sed 's/*.color//g' | sort -n | cut -d '#' -f2))
 for hex_val in $colors; do
   print -n "\e[$hue;$((30 + col))m██ $hex_val \e[0m"
   (( col+=1 ))

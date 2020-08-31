@@ -6,8 +6,8 @@
 export PATH="$PATH:$HOME/.config/fzf/bin/:$(du $HOME/.local/bin | cut -f2 | paste -sd ':')"
 fpath+=(~/.config/zsh/autoload/**/)
 
-export HISTSIZE=100
-export SAVEHIST=100
+export HISTSIZE=1000
+export SAVEHIST=1000
 export HISTFILE=~/.config/zsh/.zsh_history
 
 export EDITOR="nvim"

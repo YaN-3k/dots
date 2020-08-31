@@ -1,93 +1,27 @@
-#!/usr/bin/env sh
-#        ██
-#       ░██
-#      ██████ ██████████  ██   ██ ██   ██
-#     ░░░██░ ░░██░░██░░██░██  ░██░░██ ██
-#       ░██   ░██ ░██ ░██░██  ░██ ░░███
-#       ░██   ░██ ░██ ░██░██  ░██  ██░██
-#       ░░██  ███ ░██ ░██░░██████ ██ ░░██
-#        ░░  ░░░  ░░  ░░  ░░░░░░ ░░   ░░
-#           ██               ██
-#          ░██              ░██
-#  ██████ ██████  ██████   ██████ ██   ██  ██████
-# ██░░░░ ░░░██░  ░░░░░░██ ░░░██░ ░██  ░██ ██░░░░
-#░░█████   ░██    ███████   ░██  ░██  ░██░░█████
-# ░░░░░██  ░██   ██░░░░██   ░██  ░██  ░██ ░░░░░██
-# ██████   ░░██ ░░████████  ░░██ ░░██████ ██████
-#░░░░░░     ░░   ░░░░░░░░    ░░   ░░░░░░ ░░░░░░
+#!/usr/bin/env zsh
+# Tmux statusline script.
+temp=$(sensors | awk '/Core 0/ {gsub(/\+/,"",$3); gsub(/\..+/,"",$3); print $3}')
+temp_col=colour3
+if (( temp <= 50 )); then
+  temp_col=colour4
+elif (( temp >= 75 )); then
+  temp_col=colour1
+fi
+temp="#[bg=colour0,fg=$temp_col]$temp°C"
 
-FULL=▓
-EMPTY=░
-EOL=▒
-C0="colour0"
-C1="colour9"
-C2="colour10"
-C3="colour11"
-C4="colour12"
-C5="colour13"
-C6="colour14"
-C7="colour15"
+bat_path=(/sys/class/power_supply/BAT?)
+case $(<$bat_path/status) in
+  Full)        bat_status='=';;
+  Discharging) bat_status='-';;
+  Charging)    bat_status='+';;
+esac
+capacity=$(<$bat_path/capacity)
+(( capacity < 10 )) && fg=colour1 || fg=colour4
+bat="#[fg=$fg,bg=colour0]$bat_status$capacity%"
 
-draw() {
-	perc=$1
-	SIZE=$2
-	inc=$((perc * SIZE / 100))
-	out=
-	v=0
-	while [ "$v" -le $((SIZE - 1)) ]; do
-		if [ "$v" -le "$inc" ]; then
-			out="$out#[default]#[fg=$C0]${EMPTY}"
-		else
-			out="$out#[default]#[fg=$C0]${FULL}"
-		fi
-		v=$((v + 1))
-	done
-	echo "$out"
-}
-temp() {
-	t=$(sensors | awk '/Core\ 0/ {gsub(/\+/,"",$3); gsub(/\..+/,"",$3)    ; print $3}')
-	tc=$C3
-	[ "$t" -le 50 ] && tc=$C4
-	[ "$t" -ge 75 ] && tc=$C1
-	echo "#[bg=$C0,fg=$tc]$t°c"
-}
-bat() {
-	BATPATH=/sys/class/power_supply/BAT0
-	capacity=$(cat $BATPATH/capacity)
-	status=$(cat $BATPATH/status)
-	case $status in
-	Full)
-		st="="
-		;;
-	Discharging)
-		st="-"
-		;;
-	Charging)
-		st="+"
-		;;
-	esac
-	[ "$capacity" -lt 10 ] && fg=$C1 || fg=$C4
-	echo "#[fg=$fg,bg=$C0]$st$capacity%"
-}
-cpu() {
-	CPU_USE=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}')
-	printf "%.0f" "$CPU_USE"
-}
-ram() {
-	free | awk '/Mem:/ {print int($3/$2 * 100.0)}'
-}
-vpn() {
-	pgrep openconnect >/dev/null 2>&1 && echo "#[fg=3]VPN"
-}
-clock() {
-	mtime=$(date +'%H:%M')
-	myear=$(date +'%Y-%m-')
-	mday=$(date +'%d')
-	echo "#[bg=$C0,fg=$C7] $mtime #[fg=$C5]$myear#[fg=$C7]$mday #[default]#[fg=$C0]$EOL"
-}
-front() {
-	echo "#[fg=$C0]░▒▓█"
-}
-CPU_INFO=$(cpu)
-RAM_INFO=$(ram)
-echo "$(front)$(bat) $(draw "$RAM_INFO" 5)$(temp) $(draw "$CPU_INFO" 7)$(vpn)$(clock)"
+mtime=$(date +'%H:%M')
+myear=$(date +'%Y-%m-')
+mday=$(date +'%d')
+clock="#[bg=colour0,fg=colour7]$mtime #[fg=colour5]$myear#[fg=colour7]$mday#[default]#[fg=colour0]"
+
+echo "░▒▓█${bat}#[default]#[fg=colour0]█▓▒░░▒▓█${temp}#[default]#[fg=colour0]█▓▒░░▒▓█${clock}█▓▒░░▒▓█#[bg=colour0,fg=colour7]#S#[default]#[fg=colour0]█▒"

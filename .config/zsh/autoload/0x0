@@ -3,7 +3,7 @@
 local url
 if (( $# == 0 )) then
   local text
-  vared -p "%F{blue}Enter the text to be uploaded:%f"$'\n' -c text
+  vared -p "Enter the text to be uploaded:"$'\n' -c text
   url=$(curl -F file='@-' 'http://0x0.st' <<< $text)
 elif [[ -f $1 ]]; then
   url=$(curl -F file=@$1 'http://0x0.st')
@@ -13,4 +13,4 @@ else
   url=$(curl -F file='@-' 'http://0x0.st' <<<$*)
 fi
 xclip -sel clip <<<$url
-print -P %F{blue}link:%f $url
+print -P link: $url
