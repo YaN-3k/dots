@@ -13,4 +13,4 @@ else
   url=$(curl -F file='@-' 'http://0x0.st' <<<$*)
 fi
 xclip -sel clip <<<$url
-print -P link: $url
+print "link: $url"

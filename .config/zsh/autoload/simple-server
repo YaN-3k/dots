@@ -11,10 +11,8 @@ local logfile=/tmp/simple-server.log
 function stop() {
   if [[ -e $pidfile ]]; then
     while read -r recpid; do
-      # kill with SIGTERM, allowing finishing touches.
       kill -15 $recpid
-      # even after SIGTERM, ffmpeg may still run, so SIGKILL it.
-      (sleep 3; kill -9 $recpid) >/dev/null 2>&1 &
+      (sleep 3; kill -9 $recpid) &>/dev/null &
     done <$pidfile
     rm -f $pidfile
     echo "server terminated"
@@ -47,4 +45,3 @@ else
 fi
 
 unfunction stop
-return

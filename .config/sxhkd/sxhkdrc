@@ -177,7 +177,7 @@ alt + w
   $BROWSER
 # open the mpd client
 alt + m
-  $TERMINAL -e ncmpcpp
+  $TERMINAL -n float -e ncmpcpp
 # open the neovim
 alt + v
   $TERMINAL -e nvim

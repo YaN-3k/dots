@@ -1,7 +1,6 @@
 #       ---
 #   zsh settings
 #       ---
-
 setopt PROMPT_SUBST # allow functions in the prompt
 autoload -Uz vcs_info
 precmd_functions+=(vcs_info)
@@ -42,25 +41,26 @@ precmd_functions+=(+virtual-env)
 
 #export PS1="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
 export PS1="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
-export PS2="%F{blue}[%F{white}%_%F{blue}]%f "
+export PS2="%F{blue}[%f%_%F{blue}]%f "
 export RPS1="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
 
-# load functions
-autoload ~/.config/zsh/autoload/**/*
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
 
-# history
-setopt extended_history
-setopt hist_ignore_dups
-setopt share_history
-
-# autocompletion
-setopt complete_in_word
+setopt auto_menu        # automatically use menu completion
+setopt correct_all      # autocorrect commands
+setopt always_to_end    # move cursor to end if word had one match
+setopt complete_in_word # completion from both ends
 autoload -U compinit && compinit -u
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' ignored-patterns '.'
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*' # case-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case-insensitive completion
 _comp_options+=(globdots) # include hidden files.
 
 # use vim keys in tab complete menu:
@@ -105,121 +105,63 @@ function preexec() { print -n '\e[6 q'; } # use beam shape cursor for each new p
   git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh-syntax-highlighting
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-ZSH_HIGHLIGHT_STYLES[default]='none'
-ZSH_HIGHLIGHT_STYLES[links]='none'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
-ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=blue'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[precommand]='none'
-ZSH_HIGHLIGHT_STYLES[commandseparator]='none'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[path]='none'
-ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
-ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=magenta'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=green'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=green'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=green'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[assign]='none'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='none'
+ZSH_HIGHLIGHT_STYLES[default]='none'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=green'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=green'
+ZSH_HIGHLIGHT_STYLES[links]='none'
+ZSH_HIGHLIGHT_STYLES[path]='none'
+ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
+ZSH_HIGHLIGHT_STYLES[precommand]='none'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=green'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
 
 # miscellaneous
-(( $+aliases[run-help] )) && unalias run-help
-autoload -Uz run-help
-alias help='run-help'
-autoload -Uz zcalc
-set -k                       # allows comments in interactive shell
-setopt auto_cd               # cd by just typing the directory name
-unsetopt flowcontrol         # disable ctrl-s and ctrl-q
+set -k               # allows comments in interactive shell
+setopt auto_cd       # cd by just typing the directory name
+unsetopt flowcontrol # disable ctrl-s and ctrl-q
 [ ! -f $ZDOTDIR/shortcutrc ] && shortcuts
 source $ZDOTDIR/shortcutrc
 
+# load functions
+autoload ~/.config/zsh/autoload/**/*
+source ~/.config/zsh/autoload/trash
+
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+autoload -Uz zed # text editor that is better than nano
+autoload -Uz sticky-note # notes
+zstyle :sticky-note notefile $ZDOTDIR/.zsticky
+zstyle :sticky-note theme bg ''
+autoload -Uz ztodo # todo list
+zstyle ':ztodo:*' cache-file $ZDOTDIR/.ztodo
+autoload -Uz zmv # replacement for cp, mv and ln
+autoload -Uz run-help # search for help / manual pages
+(( $+aliases[run-help] )) && unalias run-help
+
+# automaticly escape urls special characters
+#autoload -Uz url-quote-magic bracketed-paste-magic
+#zle -N self-insert url-quote-magic
+#zle -N bracketed-paste bracketed-paste-magic
+
 function command_not_found_handler() {
-  print -P "command not found %F{red}(╯°□°)╯︵ ┻━┻%f"
+  print -P "%F{blue}[%fzsh%F{blue}]%f command not found: %F{red}$1%f"
   return 127
 }
-
-#     ---
-#   aliases
-#     ---
-alias sudo='sudo '
-
-alias v='edit'
-alias f='fedit'
-alias ext='extract'
-alias pkg='package'
-alias serv='simple-server'
-
-alias grep='grep --color=auto'
-alias cp='cp -riv'
-alias mv='mv -iv'
-alias rm='rm -iv'
-alias mkd='mkdir -pv'
-mc() { mkdir -p "$1" && cd "$1"; }
-
-#alias ls='ls -CF --group-directories-first  --color=auto'
-#alias la='ls -ACF -h --group-directories-first --color=auto'
-#alias ll='ls -lA -h --group-directories-first --color=auto'
-#alias lt='tree'
-
-alias ls='exa --group-directories-first'
-alias la='exa -a --group-directories-first'
-alias ll='exa -al --group-directories-first'
-alias lt='exa -aT --group-directories-first'
-
-alias ir='irssi --home ~/.config/irssi'
-alias nc='ncmpcpp -q'
-alias ra='ranger'
-alias nm='neomutt'
-alias ab='abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook'
-alias ss="sudo systemctl"
-alias gdb='gdb -q -x ~/.config/gdb/gdbinit'
-
-alias g='git'
-alias ga='git add'
-alias gd='git diff'
-alias gp='git push'
-alias gs='git status'
-alias gc='git commit'
-alias gl='git log --all --decorate --graph'
-
-alias trl='transmission-remote -l'
-alias tr-remote='transmission-remote'
-alias tr-daemon='transmission-daemon'
-alias tr-show='transmission-show'
-alias tr-cli='transmission-cli'
-alias tr-edit='transmission-edit'
-alias tr-create='transmission-create'
-
-alias tmux='tmux -f ~/.config/tmux/tmux.conf'
-alias tm='tmux -f ~/.config/tmux/tmux.conf'
-alias tma='tmux-attach'
-
-alias yt-dl='youtube-dl -o "%(title)s.%(ext)s"'
-alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s"'
-alias yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s"'
-alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s"'
-alias yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s"'
-alias yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s"'
-
-alias unlock="sudo rm /var/lib/pacman/db.lck"
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
-
-alias mirror="sudo reflector -l 30 -n 10 -f 30 --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrors="sudo reflector -l 50 -n 20 --sort score --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrord="sudo reflector -l 50 -n 20 --sort delay --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrora="sudo reflector -l 50 -n 20 --sort age   --verbose --save /etc/pacman.d/mirrorlist"
-
-alias out='pkill -kill -u $(whoami)'
-alias fuck='pkill -9'
-alias installfont='sudo fc-cache -f -v'
 
 #       ---
 #   keybindings
@@ -249,8 +191,6 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey -M viins '^k' up-line-or-beginning-search
 bindkey -M viins '^j' down-line-or-beginning-search
-bindkey -M viins '^[k' up-line-or-beginning-search
-bindkey -M viins '^[j' down-line-or-beginning-search
 bindkey -M vicmd 'k' up-line-or-beginning-search
 bindkey -M vicmd 'j' down-line-or-beginning-search
 bindkey -M vicmd '?' history-incremental-search-backward
@@ -260,3 +200,88 @@ bindkey -M vicmd '^r' fzf-history-widget
 function widget-edit-file() { fedit; zle redisplay }
 zle -N widget-edit-file
 bindkey "^f" widget-edit-file
+
+#     ---
+#   aliases
+#     ---
+alias sudo='sudo '
+
+alias v='edit'
+alias f='fedit'
+alias ext='extract'
+alias pkg='package'
+alias serv='simple-server'
+
+alias grep='grep --color=auto'
+alias cp='cp -vri'
+alias mv='mv -vi'
+alias zcp='zmv -C -o -rvi'
+alias zmv='zmv -M -o -vi'
+alias zln='zmv -L -o -vi'
+
+alias mkd='mkdir -pv'
+mc() { mkdir -p $1 && cd $1 }
+
+#alias rm='rm -vi'
+alias rm='trash-put'
+alias trp='trash-put'
+alias trl='trash-list'
+alias tre='trash-restore-interactive'
+alias trm='trash-remove-interactive'
+alias cleanup='trash-find -mtime +7 -exec rm -vrf {} \;'
+
+#alias ls='ls -CF --group-directories-first  --color=auto'
+#alias la='ls -ACF -h --group-directories-first --color=auto'
+#alias ll='ls -lA -h --group-directories-first --color=auto'
+#alias lt='tree'
+
+alias ls='exa --group-directories-first'
+alias la='exa -a --group-directories-first'
+alias ll='exa -al --group-directories-first'
+alias lt='exa -aT --group-directories-first'
+
+alias ir='irssi --home ~/.config/irssi'
+alias nc='ncmpcpp -q'
+alias ra='ranger'
+alias nm='neomutt'
+alias ab='abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook'
+alias ss="sudo systemctl"
+alias gdb='gdb -q -x ~/.config/gdb/gdbinit'
+
+alias g='git'
+alias ga='git add'
+alias gd='git diff'
+alias gp='git push'
+alias gs='git status'
+alias gc='git commit'
+alias gl='git log --all --decorate --graph'
+
+alias tr-remote='transmission-remote'
+alias tr-daemon='transmission-daemon'
+alias tr-show='transmission-show'
+alias tr-cli='transmission-cli'
+alias tr-edit='transmission-edit'
+alias tr-create='transmission-create'
+
+alias tmux='tmux -f ~/.config/tmux/tmux.conf'
+alias tm='tmux -f ~/.config/tmux/tmux.conf'
+alias tma='tmux-attach'
+
+alias yt-dl='youtube-dl -o "%(title)s.%(ext)s"'
+alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s"'
+alias yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s"'
+alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s"'
+alias yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s"'
+alias yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s"'
+
+alias mirror="sudo reflector -l 30 -n 10 -f 30 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector -l 50 -n 20 --sort score --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector -l 50 -n 20 --sort delay --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector -l 50 -n 20 --sort age   --verbose --save /etc/pacman.d/mirrorlist"
+
+alias out='pkill -kill -u $(whoami)'
+alias note='sticky-note'
+alias todo='ztodo'
+alias fuck='pkill -9'
+alias help='run-help'
+alias unlock='sudo rm /var/lib/pacman/db.lck'

@@ -30,7 +30,8 @@ export LESSHISTFILE="-"
 
 export SUDO_ASKPASS="$HOME/.local/bin/scripts/utils/dmenupass"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export SUDO_PROMPT=$'\e[34m'[$'\e[0m'sudo$'\e[34m']$'\e[0m'' password for %p: '
+export SUDO_PROMPT=$'\e[34m'[$'\e[0m'sudo$'\e[34m']$'\e[0m'' password for '$'\e[1;34m''%p'$'\e[0m'': '
+export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
 
 export PAGER=less
 export LESS=-R
