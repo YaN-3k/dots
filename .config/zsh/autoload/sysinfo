@@ -70,17 +70,14 @@ print -f "    \e[0;36m ram \e[1;36m%-5s %s\n" $ram% $(draw_bar $ram 10)
 local battery=(/sys/class/power_supply/BAT?)
 local charge=$((100 * $(<$battery/charge_now) / $(<$battery/charge_full)))
 (( $charge <= 20 )) && color=31 || color=36
-
 print -f "    \e[0;${color}m bat \e[1;${color}m%-5s %s\n" $charge% $(draw_bar $charge 10 $color)
 
 #█▓▒░ volume
 local vol=$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')
 [[ "$(amixer get Master)" =~ off ]] && color=31 || color=36
-
 print -f "    \e[0;${color}m vol \e[1;${color}m%-5s %s\n" $vol% $(draw_bar $vol 10 $color)
 
 #█▓▒░ temperature
 local temp=$(sensors | awk '/Core 0/ {gsub(/\+/,"",$3); gsub(/\..+/,"",$3); print $3}')
 (( $temp >= 70 )) && color=31 || color=36
-
 print -f "    \e[0;${color}mtemp \e[1;${color}m%-5s %s\n" $temp°C $(draw_bar $temp 15 $color)

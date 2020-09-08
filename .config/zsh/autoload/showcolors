@@ -1,10 +1,9 @@
 #!/usr/bin/env zsh
 # Show colors from X server resource database.
-local -a colors
 local hex_val hue col
-colors=($(xrdb -query | grep 'color[0-9]' | sed 's/*.color//g' | sort -n | cut -d '#' -f2))
+local colors=($(xrdb -query | sed -n 's/\*.color//p' | sort -n | cut -d '#' -f2))
 for hex_val in $colors; do
   print -n "\e[$hue;$((30 + col))m██ $hex_val \e[0m"
-  (( col+=1 ))
+  (( col += 1 ))
   (( col == 8 )) && { hue=1; col=0; print }
 done

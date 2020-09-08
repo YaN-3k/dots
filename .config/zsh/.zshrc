@@ -279,7 +279,7 @@ alias mirrors="sudo reflector -l 50 -n 20 --sort score --verbose --save /etc/pac
 alias mirrord="sudo reflector -l 50 -n 20 --sort delay --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrora="sudo reflector -l 50 -n 20 --sort age   --verbose --save /etc/pacman.d/mirrorlist"
 
-alias out='pkill -kill -u $(whoami)'
+alias out='pkill -kill -u $USER'
 alias note='sticky-note'
 alias todo='ztodo'
 alias fuck='pkill -9'

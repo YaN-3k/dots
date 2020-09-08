@@ -1,34 +1,25 @@
 #!/usr/bin/env zsh
 # Simple http python3 server for files or pages.
 
-local port="8080"
-local dir=.
+local port=8080
 local ip=$(ip addr show wlan0 | grep -oP "\d*\.\d*\.\d*\.\d*" | head -1)
-local usage="usage: $0 [-h] [-l] [-s] [-p PORT] [-d DIRECTORY] [-b]"
 local pidfile=/tmp/simple-server.pid
 local logfile=/tmp/simple-server.log
 
-function stop() {
-  if [[ -e $pidfile ]]; then
-    while read -r recpid; do
-      kill -15 $recpid
-      (sleep 3; kill -9 $recpid) &>/dev/null &
-    done <$pidfile
-    rm -f $pidfile
-    echo "server terminated"
-  else
-    echo "server not started"
-  fi
-}
-
-while getopts ':p:d:slhb' opt; do
+while getopts ':p:sblh' opt; do
   case $opt in
     p) port=$OPTARG;;
-    d) dir=$OPTARG;;
-    b) run_browser=1;;
-    s) stop; return;;
-    h) echo $usage; return;;
-    l) cat $logfile; return;;
+    s) if [[ ! -e $pidfile ]]; then
+         echo "server not started"
+         return
+       fi
+       kill -9 $(<$pidfile) &>/dev/null
+       =rm $pidfile
+       print "server terminated"
+       return;;
+    b) local run_browser=1;;
+    l) less $logfile; return;;
+    h) echo "usage: $0 [-h] | [-l] | [-s] | [-b] [-p port] [directory]" >&2; return;;
     \?) echo "invalid option: -$OPTARG" 1>&2; echo $usage; return 1;;
     :)  echo "invalid option: -$OPTARG requires an argument" 1>&2; echo $usage; return 1;;
   esac
@@ -36,12 +27,11 @@ done
 shift $((OPTIND - 1))
 
 if [[ ! -e $pidfile ]]; then
-  nohup python3 -u -m http.server --bind $ip --directory ${dir:-$*} $port >$logfile 2>&1 &
-  echo $! >$pidfile
-  [[ $run_browser && $BROWSER ]] && "$BROWSER" "http://${ip}:${port}"
+  nohup python3 -u -m http.server --bind $ip --directory ${1:-$PWD} $port &>$logfile &
+  print $! >$pidfile
+  if [[ -n $run_browser && -n $BROWSER ]]; then
+    $BROWSER "http://${ip}:${port}"
+  fi
 else
   echo "serv already running"
-  return 1
 fi
-
-unfunction stop

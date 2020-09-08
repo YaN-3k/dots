@@ -2,7 +2,6 @@
 #   environment
 #    variables
 #      -----
-
 export PATH="$PATH:$HOME/.config/fzf/bin/:$(du $HOME/.local/bin | cut -f2 | paste -sd ':')"
 fpath+=(~/.config/zsh/autoload/**/)
 
