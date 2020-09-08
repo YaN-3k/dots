@@ -24,4 +24,4 @@ myear=$(date +'%Y-%m-')
 mday=$(date +'%d')
 clock="#[bg=colour0,fg=colour7]$mtime #[fg=colour5]$myear#[fg=colour7]$mday#[default]#[fg=colour0]"
 
-echo "░▒▓█${bat}#[default]#[fg=colour0]█▓▒░░▒▓█${temp}#[default]#[fg=colour0]█▓▒░░▒▓█${clock}█▓▒░░▒▓█#[bg=colour0,fg=colour7]#S#[default]#[fg=colour0]█▒"
+echo "░▒▓█${bat}#[default]#[fg=colour0]▓▒░░▒▓${temp}#[default]#[fg=colour0]▓▒░░▒▓${clock}▓▒░░▒▓#[bg=colour0,fg=colour7]#S#[default]#[fg=colour0]█▒"
