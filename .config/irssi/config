@@ -1,26 +1,10 @@
-#  ██                        ██
-# ░░                        ░░
-#  ██ ██████  ██████  ██████ ██
-# ░██░░██░░█ ██░░░░  ██░░░░ ░██
-# ░██ ░██ ░ ░░█████ ░░█████ ░██
-# ░██ ░██    ░░░░░██ ░░░░░██░██
-# ░██░███    ██████  ██████ ░██
-# ░░ ░░░    ░░░░░░  ░░░░░░  ░░
-
-utf8 = "on";
-
+#  ---
+# irssi
+#  ---
 servers = (
   {
     address = "chat.freenode.net";
-    chatnet = "freenode";
-    port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "no";
-    autoconnect = "yes";
-  },
-  {
-    address = "irc.oftc.net";
-    chatnet = "otfc";
+    chatnet = "Freenode";
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "no";
@@ -29,26 +13,37 @@ servers = (
 );
 
 channels = (
-  { name = "#vim"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#linux"; chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#zsh";   chatnet = "Freenode"; autojoin = "Yes"; },
+  { name = "#bash";  chatnet = "Freenode"; autojoin = "Yes"; },
 );
 
 chatnets = {
-  freenode = { type = "IRC"; };
-  otfc = { type = "IRC"; };
+  Freenode = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+  };
 };
 
 aliases = {
   ns = "msg nickserv";
-  cs = "msg chanserv";
-  os = "msg operserv";
+  wc = "window close";
+  sb = "scrollback";
+  p = "part";
   j = "join";
-  jw = "join -window";
-  close = "window close";
+  m = "msg";
+  q = "query";
+  n = "names";
+  t = "topic";
+  w = "who";
+  wi = "whois";
 };
 
 keyboard = (
-  { key = "meta-k"; id = "command"; data = "scrollback goto -1"; },
-  { key = "meta-j"; id = "command"; data = "scrollback goto +1"; }
+  { key = "^K"; id = "command"; data = "scrollback goto -1"; },
+  { key = "^J"; id = "command"; data = "scrollback goto +1"; }
 );
 
 settings = {
@@ -57,37 +52,12 @@ settings = {
     user_name = "cherrry9";
     nick = "cherrry9";
   };
-  "fe-text" = {
-    actlist_sort = "refnum";
-    term_force_colors = "yes";
-    indent = "12";
-    paste_verify_line_count = "0";
-  };
+  "fe-text" = { actlist_sort = "refnum"; indent = "12"; };
   "fe-common/core" = {
-    theme = "fro.theme";
-    autolog_path = "~/.cache/irc/$tag/$0.log";
+    theme = "irssi.theme";
     autolog = "yes";
-  };
-  "irc / core" = {
-    ctcp_userinfo_reply = "rip";
-    ctcp_version_reply = "rip";
-    max_ctcp_queue = "0";
+    autolog_path = "~/.cache/irc/$tag/$0.log";
   };
 };
 
-statusbar = {
-  default = {
-    window = {
-      items = {
-        barstart = { priority = "100"; };
-        user = { };
-        window = { };
-        window_empty = { };
-        lag = { priority = "-1"; };
-        act = { priority = "10"; };
-        more = { priority = "-1"; alignment = "right"; };
-        barend = { priority = "100"; alignment = "right"; };
-      };
-    };
-  };
-};
+ignores = ( { level = "JOINS PARTS QUITS"; } );

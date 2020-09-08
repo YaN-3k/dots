@@ -5,11 +5,11 @@ local success
 local extract_dir
 
 if (( $# == 0 )); then
-  cat <<-'EOF' >&2
-    Usage: extract [-option] [file ...]
+  cat <<-EOF >&2
+Usage: $0 [-option] [file ...]
 
-    Options:
-        -r, --remove    Remove archive after unpacking.
+Options:
+  -r, --remove    Remove archive after unpacking.
 EOF
 fi
 

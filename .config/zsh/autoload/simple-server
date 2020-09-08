@@ -19,9 +19,18 @@ while getopts ':p:sblh' opt; do
        return;;
     b) local run_browser=1;;
     l) less $logfile; return;;
-    h) echo "usage: $0 [-h] | [-l] | [-s] | [-b] [-p port] [directory]" >&2; return;;
-    \?) echo "invalid option: -$OPTARG" 1>&2; echo $usage; return 1;;
-    :)  echo "invalid option: -$OPTARG requires an argument" 1>&2; echo $usage; return 1;;
+    h) cat <<-EOF >&2
+Usage: $0 [-option] [directory]
+
+Options:
+  -p port   Port on which run server
+  -b        Open in browser
+  -l        Show log
+  -h        Help
+EOF
+       return;;
+    \?) echo "invalid option: -$OPTARG" 1>&2; return 1;;
+    :)  echo "invalid option: -$OPTARG requires an argument" 1>&2; return 1;;
   esac
 done
 shift $((OPTIND - 1))
