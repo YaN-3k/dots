@@ -19,7 +19,6 @@
   "diagnostic.warningSign": " ",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": " ",
-  // "diagnostic.virtualText": true, // this won't work with codelens when error on same line
   // "codeLens.enable": true,
 
   // autoformat

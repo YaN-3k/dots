@@ -7,7 +7,7 @@
 " ░██   ░░████░██░░░░ ░██   ░██ ░░████  ░██ ░██ ░██ ░██
 " ░██    ░░███░░██████░░██████   ░░██   ░██ ███ ░██ ░██
 " ░░      ░░░  ░░░░░░  ░░░░░░     ░░    ░░ ░░░  ░░  ░░
-"
+
 " general {{{
 " settings {{{
 let mapleader = ' '                     " map <space> as leader key
@@ -81,7 +81,6 @@ set listchars+=nbsp:░
 " python host prog
 let g:python3_host_prog = '/bin/python3'
 let g:python_host_prog = '/bin/python2'
-
 " }}}
 
 " autocmd {{{
@@ -101,13 +100,11 @@ augroup BufferEnter
   au!
   " make views automatic
   autocmd BufWinLeave * silent! mkview!
-  "autocmd BufWinEnter * silent! loadview
+  autocmd BufWinEnter * silent! loadview
 augroup end
 
 augroup FileTypes
   au!
-  " the same settings like clang-format
-  "autocmd Filetype c,cpp setlocal expandtab
   " turn spellcheck on for markdown files
   autocmd FileType markdown setlocal spell
   " for properly auto closing tags
@@ -447,7 +444,7 @@ let g:which_key_map.b = {
   \ 'l' : ['blast',            'last-buffer'],
   \ 'n' : ['bnext',            'next-buffer'],
   \ 'p' : ['bprevious',        'previous-buffer'],
-  \ '?' : [':CocList buffers', 'buffers list'],
+  \ ';' : [':CocList buffers', 'buffers list'],
   \ }
 " }}}
 
@@ -552,7 +549,7 @@ let g:which_key_map.t = {
   \ 'n' : [':FloatermNext',            'next'],
   \ 'k' : [':FloatermKill',            'kill'],
   \ 'N' : [':FloatermPrev',            'prev'],
-  \ 't' : [':FloatermToggle',          'toggle'],
+  \ ';' : [':FloatermToggle',          'toggle'],
   \ 'p' : [':FloatermNew python',      'python'],
   \ 'v' : [':FloatermNew vifm',        'vifm'],
   \ 'h' : [':FloatermNew htop',        'ytop'],
