@@ -30,7 +30,7 @@ function trash-find() {
 
 function trash-list() {
   dirs=(${${*:-$PWD}:a})
-  local files=(${TRASH_DIR}${^~dirs%/}/**/*(.NDOm))
+  local files=(${TRASH_DIR}${^~dirs%/}/**/*(NDOm))
   if [[ -z $files ]]; then
     print "No files trashed from directory(ies) (${dirs})"
     return
@@ -65,7 +65,7 @@ function trash-restore-interactive() {
     read decision"?What fiile to restore [1..${#files}]: "
     [[ -z $decision ]] && break
     # range
-    if [[ $decision =~ ^(-)?[0-9]+\.\.(-)?[0-9]+ ]]; then
+    if [[ $decision =~ '^-?[0-9]+\.\.-?[0-9]+$' ]]; then
       local range=(${files[${decision%%.*}, ${decision##*.}]})
       if [[ -z $range ]]; then
         print "Invalid range.\n"
@@ -74,7 +74,7 @@ function trash-restore-interactive() {
       mv -vi $range $PWD
       break
     # single index
-    elif [[ $decision =~ ^(-)?[0-9]+ ]]; then
+    elif [[ $decision =~ '^-?[0-9]+$' ]]; then
       if (( ${decision#-} > $#files )); then
         print "Invalid index.\n"
         continue
@@ -104,7 +104,7 @@ function trash-remove-interactive() {
     read decision"?What fiile to remove [1..${#files}]: "
     [[ -z $decision ]] && break
     # range
-    if [[ $decision =~ ^(-)?[0-9]+\.\.(-)?[0-9]+ ]]; then
+    if [[ $decision =~ '^-?[0-9]+\.\.-?[0-9]+$' ]]; then
       local range=(${files[${decision%%.*}, ${decision##*.}]})
       if [[ -z $range ]]; then
         print "Invalid range.\n"
@@ -113,7 +113,7 @@ function trash-remove-interactive() {
       rm -vrf $range
       break
     # single index
-    elif [[ $decision =~ ^(-)?[0-9]+ ]]; then
+    elif [[ $decision =~ '^-?[0-9]+$' ]]; then
       if (( ${decision#-} > $#files )); then
         print "Invalid index.\n"
         continue
