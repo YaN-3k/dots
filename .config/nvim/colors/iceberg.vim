@@ -147,9 +147,9 @@ call s:HL("DiffAdd",      s:none,  s:ice2,  "none")
 call s:HL("DiffDelete",   s:none,  s:ice1,  "none")
 call s:HL("DiffChange",   s:none,  s:ice3,  "none")
 call s:HL("DiffText",     s:none,  s:ice7,  "none")
-hi! link diffSubname   DiffChange
-hi! link diffAdded     DiffAdd
-hi! link diffRemoved   DiffDelete
+hi! link diffSubname      DiffChange
+hi! link diffAdded        DiffAdd
+hi! link diffRemoved      DiffDelete
 " }}}
 
 " completion menu {{{
