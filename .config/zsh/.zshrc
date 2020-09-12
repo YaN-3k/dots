@@ -15,12 +15,11 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-remote-status git-modified git-a
 zstyle ':vcs_info:*+*:*' debug false
 
 function +vi-git-remote-status() {
-    local ahead behind
-    local -a branch_status
-    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-    (( ahead )) && branch_status+=(+$ahead)
+    local ahead behind branch_status
     behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-    (( behind )) && branch_status+=(-$behind)
+    (( behind )) && branch_status+="|-$behind"
+    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+    (( ahead )) && branch_status+="|+$ahead"
     hook_com[branch]+=$branch_status
 }
 
@@ -39,10 +38,10 @@ function +virtual-env() {
 }
 precmd_functions+=(+virtual-env)
 
-#export PS1="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
-export PS1="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
-export PS2="%F{blue}[%f%_%F{blue}]%f "
-export RPS1="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
+#export PROMPT="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
+export PROMPT="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
+export PROMPT2="%F{blue}[%f%_%F{blue}]%f "
+export RPROMPT="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
 
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -55,7 +54,7 @@ setopt auto_menu        # automatically use menu completion
 setopt correct_all      # autocorrect commands
 setopt always_to_end    # move cursor to end if word had one match
 setopt complete_in_word # completion from both ends
-autoload -U compinit && compinit -u
+autoload -Uz compinit && compinit -u
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu select
 zstyle ':completion:*' special-dirs true
@@ -133,12 +132,13 @@ ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
 # miscellaneous
 set -k               # allows comments in interactive shell
 setopt auto_cd       # cd by just typing the directory name
+setopt extendedglob  # additional syntax for filename generation
 unsetopt flowcontrol # disable ctrl-s and ctrl-q
 [ ! -f $ZDOTDIR/shortcutrc ] && shortcuts
 source $ZDOTDIR/shortcutrc
 
 # load functions
-autoload ~/.config/zsh/autoload/**/*
+autoload -Uz ~/.config/zsh/autoload/**/*
 source ~/.config/zsh/autoload/trash
 
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -181,12 +181,12 @@ bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
 
 # edit command line in vim
-autoload edit-command-line; zle -N edit-command-line
+autoload -Uz edit-command-line; zle -N edit-command-line
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M viins '^e' edit-command-line
 
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
+autoload -Uz up-line-or-beginning-search
+autoload -Uz down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey -M viins '^k' up-line-or-beginning-search
