@@ -11,7 +11,7 @@ $ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-
 ```
 Packages from AUR:
 ```
-$ yay -S --needed polybar ranger-git
+$ yay -S --needed polybar
 ```
 Python packages:
 ```
