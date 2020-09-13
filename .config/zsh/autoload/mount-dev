@@ -1,0 +1,39 @@
+#!/usr/bin/env zsh
+# Gives a fzf prompt to mount devices.
+
+local drives=("$(lsblk -rpo 'name,type,size,mountpoint' | awk '$4 == "" {printf "%s (%s)\n", $1, $3}')")
+if [[ -z $drives ]]; then
+  print "No USB drive detected."
+  return
+fi
+
+local chosen=($(fzf -m --prompt 'mount: ' <<<$drives | cut -d ' ' -f 1))
+[[ $chosen ]] || return 1
+
+local drive
+for drive in $chosen; do
+  if sudo mount $drive 2>/dev/null; then
+    print "$drive mounted."
+    return
+  fi
+
+  # select mount point
+  mp=$(print -l /mnt/**/*(DN/) | fzf --prompt "mount point for $drive: " | sed "s|~|$HOME|g")
+  [[ $mp ]] || return 1
+
+  if [[ ! -d $mp ]]; then
+    create=$(print "No\\nYes" | fzf --prompt "$mp does not exist. Create it? ")
+    [[ $create ]] || return 1
+    if [[ $create == 'Yes' ]]; then
+      mkdir -p $mp || sudo mkdir -p $mp
+    fi
+  fi
+
+  type=$(lsblk -no 'fstype' $drive)
+  case $type in
+    'vfat') sudo mount -t vfat $drive $mp -o rw,umask=0000;;
+    *) sudo mount $drive $mp
+       sudo chown $USER $mp;;
+  esac
+  print "$drive mounted to $mp."
+done

@@ -209,6 +209,8 @@ alias sudo='sudo '
 alias v='edit'
 alias f='fedit'
 alias ext='extract'
+alias mdev='mount-dev'
+alias udev='umount-dev'
 alias pkg='package'
 alias serv='simple-server'
 

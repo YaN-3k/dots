@@ -54,7 +54,7 @@ bspc config border_width 0
 #bspc config window_gap 10
 
 # Disable border when is only one window
-bspc config single_monocle       true
+#bspc config single_monocle       true
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
@@ -72,6 +72,7 @@ bspc config presel_feedback_color "$bg"
 #======
 # Rule
 #======
+bspc desktop ^3 --layout next
 bspc desktop ^4 --layout next
 bspc rule -a firefox desktop='^3'
 bspc rule -a qutebrowser desktop='^3'

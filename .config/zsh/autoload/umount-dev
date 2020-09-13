@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# A dmenu prompt to unmount drives.
+
+drives=("$(lsblk -nrpo 'name,type,size,mountpoint' | awk '$4 !~ /\/boot|\/home$|SWAP/ && length($4) > 1 {printf "%s (%s)\n", $4, $3}')")
+if [[ -z $drives ]]; then
+  print "No drives to umount."
+  return
+fi
+
+chosen=($(fzf -m --prompt "umount: " <<<$drives | cut -d ' ' -f 1))
+[[ $chosen ]] || exit 1
+
+sudo umount -l $chosen && print "$chosen unmounted."

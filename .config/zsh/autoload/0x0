@@ -1,14 +1,20 @@
 #!/usr/bin/env zsh
 # Upload string, file or shorten link using https://0x0.st
 local url
+# use zle to read text
 if (( $# == 0 )) then
-  local text
   vared -p "Enter the text to be uploaded:"$'\n' -c text
-  url=$(curl -F file='@-' 'http://0x0.st' <<< $text)
+  url=$(curl -F file='@-' 'http://0x0.st' <<<$text)
+# read from stdin
+elif [[ $1 == '-' ]]; then
+  url=$(curl -F file='@-' 'http://0x0.st' <&0)
+# upload file
 elif [[ -f $1 ]]; then
   url=$(curl -F file=@$1 'http://0x0.st')
+# shorten link
 elif [[ $1 =~ '(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]' ]]; then
   url=$(curl -F shorten=$1 'http://0x0.st')
+# upload args
 else
   url=$(curl -F file='@-' 'http://0x0.st' <<<$*)
 fi

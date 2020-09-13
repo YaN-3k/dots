@@ -26,7 +26,7 @@ super + {m,x,s,z}
   bspc node -g {marked,locked,sticky,private}
 
 # hide / unhide the scratchpad
-super + F1
+super + F2
   id=$(head -1 /tmp/scratchid);\
   bspc node $id --flag hidden;bspc node -f $id
 
@@ -184,11 +184,14 @@ alt + v
 # open the sound configurations
 alt + a
   $TERMINAL -e alsamixer
+# open rss feader
+alt + n
+  $TERMINAL -n newsboat -e newsboat
 # open the mail client
 alt + e
   $TERMINAL -e neomutt
 # show help
-super + F2
+super + F1
   $TERMINAL -n float -e sxhkd-help
 # }}}
 
@@ -274,20 +277,4 @@ super + ctrl + n
 # open terminal if desktop is empty
 ~button1
   click-desktop
-# }}}
-
-# MEDIA KEYS {{{
-# audiokeys
-XF86AudioMute
-  amixer sset Master toggle
-XF86Audio{Raise,Lower}Volume
-  volume {up,down}
-XF86Audio{Next,Prev}
-  mpc {next,prev}
-XF86Audio{Pause,Play,Stop}
-  mpc {pause,play,stop}
-XF86Audio{Rewind,Forward}
-  mpc seek {-,+}10
-XF86AudioMedia
-  $TERMINAL -e ncmpcpp
 # }}}

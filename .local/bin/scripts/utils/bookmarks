@@ -3,9 +3,7 @@
 
 bmfile="$HOME/.config/bookmarks"
 
-m() { ${DMENU:-dmenu} "$@"; }
-
-chosen="$(sed 's/http.*\/\///g' "$bmfile" | m)"
+chosen="$(sed 's/http.*\/\///g' "$bmfile" | ${DMENU:-dmenu} -p 'Search')"
 [ ! "$chosen" ] && exit
 
 url="$(grep -m 1 "$chosen" "$bmfile" | awk '{ print $1 }')"

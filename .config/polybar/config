@@ -18,7 +18,7 @@ fg-alt = ${xrdb:color15}
 secondary = ${xrdb:color4}
 
 [fonts]
-font-0 = "Hack Nerd Font:pixelsize=9;2"
+font-0 = "Hack Nerd Font:pixelsize=8;2"
 ; For separator
 font-1 = "Hack Nerd Font:pixelsize=16;2"
 
@@ -134,7 +134,7 @@ label-empty-background = ${colors.bg-alt}
 type = custom/script
 interval = 1
 format-foreground = ${colors.fg}
-exec = ~/.config/polybar/mpd
+exec = ~/.config/polybar/mpd-module
 
 ;===========;
 ; Backlight ;
@@ -266,7 +266,7 @@ type = custom/script
 exec = echo ""
 format-foreground = ${colors.secondary}
 format-background = ${colors.bg-alt}
-click-left = dmenupower
+click-left = power
 format-padding = 1
 
 ;=====;
@@ -275,7 +275,7 @@ format-padding = 1
 [module/pkg]
 type = custom/script
 format-foreground = ${colors.fg}
-exec = ~/.config/polybar/pkg
+exec = ~/.config/polybar/pkg-module
 click-left = ~/.local/bin/update
 format-background = ${colors.bg-alt}
 format-padding = 1

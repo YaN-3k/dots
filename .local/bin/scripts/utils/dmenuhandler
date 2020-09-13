@@ -2,17 +2,17 @@
 # Feed this script a link and it will give dmenu
 # some choice programs to use to open it.
 
-opt="copy url
+opt='copy url
 mpv
-mpv (loop) 
+mpv (loop)
 mpv (float)
 download
 youtube-dl
 sxiv
 browser
-w3m"
+w3m'
 
-program="$(printf %b "$opt" | ${DMENU:-dmenu} -i -p "Open with")"
+program="$(printf %b "$opt" | ${DMENU:-dmenu} -i -p 'Open with')"
 
 case $program in
   "copy url") printf %s "$1" | xclip -selection clipboard;;

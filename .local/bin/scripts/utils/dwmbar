@@ -27,7 +27,7 @@ battery() {
   printf "%s %s%%" "$ico" "$bat"
 }
 
-_date() {
+time() {
   printf " %s $SEP  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
 }
 
@@ -36,15 +36,25 @@ backlight() {
 }
 
 volume() {
-  vol="$(amixer get Master | awk -F"[][%]" '$0~/%/ { print $2; exit }')"
-  if [ "$vol" -lt 30 ]; then
-    ico=""
-  elif [ "$vol" -lt 60 ]; then
-    ico=""
-  else
-    ico=""
-  fi
-  amixer get Master | grep -q '\[off\]' && ico="婢"
+  while IFS=[] read -r line vol stat; do
+  case "$line" in
+    *Right:*)
+      vol="${vol%\%}"
+      case $stat in
+        *off*) ico="婢";;
+        *) if [ "$vol" -lt 30 ]; then
+             ico=""
+           elif [ "$vol" -lt 60 ]; then
+             ico=""
+           else
+             ico=""
+           fi
+      esac
+      break;;
+  esac
+  done <<EOF
+$(amixer get Master)
+EOF
   printf "%s %s%%" "$ico" "$vol"
 }
 
@@ -87,10 +97,11 @@ torrents() {
   done <<EOF
   $data
 EOF
-  transmission-remote -l | grep -qE "%|n/a" && printf " %s" "$SEP"
+  transmission-remote -l | grep -qE "%|n/a"
+  printf " %s" "$SEP"
 }
 
 while :; do
-  xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(_date) "
+  xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(time) "
   sleep 1
 done

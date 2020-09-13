@@ -1,12 +1,12 @@
 #!/bin/sh
 # Double borders.
-bg=$(xrdb -query | awk -F "#" '/\*.background/ { printf $2 }')
+bg=$(xrdb -query | awk -F "#" '/\*.background/ {printf $2}')
 
 outer="0x$bg"
-inner1="0x84a0c6"
-inner2="0xa093c7"
+focused_inner="0x84a0c6"
+normal_inner="0xd2d4de"
 
-draw() { chwb2 -I "$i" -O "$o" -i "2" -o "8" $@ 2>/dev/null; }
+draw() { chwb2 -I "$i" -O "$outer" -i "2" -o "8" "$@" 2>/dev/null; }
 
 targets() {
   case $1 in
@@ -16,11 +16,7 @@ targets() {
 }
 
 # initial draw, and then subscribe to events
-{
-  echo
-  bspc subscribe node_geometry node_focus
-} |
-  while read -r _; do
-    i=$inner1 o=$outer draw "$(targets focused)"
-    i=$inner2 o=$outer draw "$(targets normal)"
-  done
+bspc subscribe node_geometry node_focus | while read -r _; do
+    i=$focused_inner draw $(targets focused)
+    i=$normal_inner draw $(targets normal)
+done

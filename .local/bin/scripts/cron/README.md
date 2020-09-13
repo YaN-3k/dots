@@ -1,11 +1,7 @@
 # Important Note
-
-These cronjobs have components that require information about your current display to display notifications correctly.
-
+These cronjobs have components that require information about your current display to display notifications correctly.<br>
 When you add them as cronjobs, I recommend you precede the command with commands as those below:
-
 ```
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; . $HOME/.zprofile;  then_command_goes_here
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus; export DISPLAY=:0; . ~/.zshenv; then_command_goes_here
 ```
-
 This ensures that notifications will display, xdotool commands will function and environmental varialbes will work as well.

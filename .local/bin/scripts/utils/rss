@@ -1,4 +1,3 @@
 #!/bin/sh
 # Run RSS Feeder.
-newsboat -q &&
-  newsboat -x print-unread | awk '{ print $1 }' >~/.cache/news_unread
+newsboat -q && newsboat -x print-unread | cut -d ' ' -f 1 >~/.cache/news_unread

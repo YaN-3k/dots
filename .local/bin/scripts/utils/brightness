@@ -1,16 +1,24 @@
 #!/bin/sh
-color='#F7E599'
-full='•'
-empty='○'
+color='#84a0c6'
+full='━'
+empty='┄'
 value="${2:-10}"
 
 case $1 in
-up)   xbacklight -inc "$value";;
-down) xbacklight -dec "$value";;
+  up)   xbacklight -inc "$value";;
+  down) xbacklight -dec "$value";;
 esac
+
+bar() {
+  i=0
+  while [ $i -lt "$1" ]; do
+    printf "$2"
+    i=$((i + 1))
+  done
+}
 
 brightness=$(xbacklight -get)
 brightness=${brightness%.*}
-barfull=$(seq -s "$full" $((brightness / 5)) | sed 's/[0-9]//g')
-barempty=$(seq -s "$empty" $((20 - brightness / 5)) | sed 's/[0-9]//g')
+barfull=$(bar $((brightness / 5)) "$full")
+barempty=$(bar $((20 - brightness / 5)) "$empty")
 dunstify -t 1000 -r 1000 -u normal "Brightness $brightness%" "<span color=\'$color\'>$barfull</span>$barempty"
