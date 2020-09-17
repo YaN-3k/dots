@@ -13,14 +13,14 @@
   default = current
 
 [color "status"]
-  added = green
-  changed = yellow
-  untracked = red
+  added = bold blue
+  changed = bold white
+  untracked = bold red
 
 [color "branch"]
-  current = bold reverse yellow
-  local = yellow
-  remote = green
+  current = bold reverse blue
+  local = blue
+  remote = yellow
 
 [format]
   pretty = %C(yellow)%h%Creset -%C(bold blue)%d%Creset %s %Cgreen(%cr) %C(bold black)<%an>%Creset

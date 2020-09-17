@@ -153,13 +153,13 @@ super + shift + y
   bspc node newest.marked -n newest.!automatic.local
 # }}}
 
-# APPLICATION {{{{
+# APPLICATION {{{
 # close/Kill the node
 super + {_,shift + }q
   bspc node -{c,k}
 # run the dmenu desktop
 super + d
-  $DMENU_RUN
+  $=DMENU_RUN
 # open the terminal
 super + Return
   $TERMINAL
@@ -181,6 +181,9 @@ alt + m
 # open the neovim
 alt + v
   $TERMINAL -e nvim
+# open process viewer
+alt + p
+  $TERMINAL -n float -e htop
 # open the sound configurations
 alt + a
   $TERMINAL -e alsamixer

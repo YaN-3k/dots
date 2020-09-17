@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 # Generate colors for tty from X server resource databas
-
 colours=($(xrdb -query | sed -n 's/*.color//gp' | sort -n | awk -F '#' '{ print $2 }'))
 colours[1]=$(xrdb -query | awk -F "#" '/\*.background/ { print $2 }')
 {
@@ -23,7 +22,6 @@ EOF
   done
   echo "done"
 } >~/.cache/ttycol.sh
-
 chmod a+x ~/.cache/ttycol.sh
 sudo mv ~/.cache/ttycol.sh /usr/local/bin/
 sudo cp ~/.local/share/dots/ttycol.service /etc/systemd/system/

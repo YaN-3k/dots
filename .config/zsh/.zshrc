@@ -123,7 +123,7 @@ ZSH_HIGHLIGHT_STYLES[links]='none'
 ZSH_HIGHLIGHT_STYLES[path]='none'
 ZSH_HIGHLIGHT_STYLES[path_approx]='fg=yellow'
 ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
-ZSH_HIGHLIGHT_STYLES[precommand]='none'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=blue'
 ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=blue'
 ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=green'
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=cyan'
@@ -173,6 +173,7 @@ bindkey "^l" clear-screen
 bindkey "^u" kill-whole-line
 bindkey "^w" backward-kill-word
 bindkey "^y" yank
+bindkey "^_" undo
 bindkey '^[^M' self-insert-unmeta
 bindkey '^[[Z' reverse-menu-complete
 
@@ -270,11 +271,10 @@ alias tm='tmux -f ~/.config/tmux/tmux.conf'
 alias tma='tmux-attach'
 
 alias yt-dl='youtube-dl -o "%(title)s.%(ext)s"'
-alias yt-video='youtube-dl -f bestvideo -o "%(title)s.%(ext)s"'
-alias yt-webm='youtube-dl -f webm -o "%(title)s.%(ext)s"'
-alias yt-audio='youtube-dl -f bestaudio -o "%(title)s.%(ext)s"'
-alias yt-opus='youtube-dl -x --audio-format opus -o "%(title)s.%(ext)s"'
-alias yt-vorbis='youtube-dl -x --audio-format vorbis -o "%(title)s.%(ext)s"'
+alias yt-video='yt-dl -f bestvideo'
+alias yt-audio='yt-dl -f bestaudio'
+alias yt-mp3='yt-audio --audio-quality 0 -x --audio-format mp3'
+alias yt-flac='yt-audio --audio-quality 0 -x --audio-format flac'
 
 alias mirror="sudo reflector -l 30 -n 10 -f 30 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector -l 50 -n 20 --sort score --verbose --save /etc/pacman.d/mirrorlist"
@@ -282,6 +282,7 @@ alias mirrord="sudo reflector -l 50 -n 20 --sort delay --verbose --save /etc/pac
 alias mirrora="sudo reflector -l 50 -n 20 --sort age   --verbose --save /etc/pacman.d/mirrorlist"
 
 alias out='pkill -kill -u $USER'
+alias open='xdg-open'
 alias note='sticky-note'
 alias todo='ztodo'
 alias fuck='pkill -9'
