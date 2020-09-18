@@ -18,8 +18,9 @@ for drive in $chosen; do
   fi
 
   # select mount point
-  mp=$(print -l /mnt/**/*(DN/) | fzf --prompt "mount point for $drive: " | sed "s|~|$HOME|g")
+  mp=("${(@f)$(print -l /mnt/**/*(DN/) | fzf -m --expect alt-enter --print-query --prompt "mount point for $drive: " | sed "s|~|$HOME|g")}")
   [[ $mp ]] || return 1
+  [[ $mp[1] ]] && mp=$mp[1] || mp=$mp[3]
 
   if [[ ! -d $mp ]]; then
     create=$(print "No\\nYes" | fzf --prompt "$mp does not exist. Create it? ")
