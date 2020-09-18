@@ -1,8 +1,5 @@
 # Preview
-![ice](pix/prev/ice.png)
-![ice](pix/prev/dwm.png)
-![nvim](pix/prev/nvim.png)
-![sea](pix/prev/sea.png)
+![screenshot](pix/prev/screenshot.png)
 # Installation guide
 ## Install dependencies
 Packages from official arch repositories:

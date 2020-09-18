@@ -210,8 +210,8 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 
 	/* scrool */
-	{ MODKEY|ShiftMask,     XK_K,           kscrollup,      {.i =  1} },
-	{ MODKEY|ShiftMask,     XK_J,           kscrolldown,    {.i =  1} },
+	{ MODKEY,               XK_k,           kscrollup,      {.i =  1} },
+	{ MODKEY,               XK_j,           kscrolldown,    {.i =  1} },
 	{ MODKEY,               XK_Up,          kscrollup,      {.i =  1} },
 	{ MODKEY,               XK_Down,        kscrolldown,    {.i =  1} },
 
