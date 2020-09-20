@@ -4,7 +4,7 @@
 ## Install dependencies
 Packages from official arch repositories:
 ```
-$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdo xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg imagemagick maim transmission-cli xorg-server xorg-xinit xorg-xsetroot
+$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg imagemagick maim transmission-cli xorg-server xorg-xinit xorg-xsetroot
 ```
 Packages from AUR:
 ```

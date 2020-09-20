@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 # Tmux statusline script.
-temp=$(sensors | awk '/Core 0/ {gsub(/\+/,"",$3); gsub(/\..+/,"",$3); print $3}')
-temp_col=colour3
+temp=$(sensors | awk '/Core 0/ {print int(gensub(/+(.*)°C/, "\\1", "g", $3)); exit}')
 if (( temp <= 50 )); then
   temp_col=colour4
 elif (( temp >= 75 )); then
   temp_col=colour1
+else
+  temp_col=colour3
 fi
 temp="#[bg=colour0,fg=$temp_col]$temp°C"
-
 bat_path=(/sys/class/power_supply/BAT?)
 case $(<$bat_path/status) in
   Full)        bat_status='=';;
@@ -18,10 +18,6 @@ esac
 capacity=$(<$bat_path/capacity)
 (( capacity < 10 )) && fg=colour1 || fg=colour4
 bat="#[fg=$fg,bg=colour0]$bat_status$capacity%"
-
-mtime=$(date +'%H:%M')
-myear=$(date +'%Y-%m-')
-mday=$(date +'%d')
-clock="#[bg=colour0,fg=colour7]$mtime #[fg=colour5]$myear#[fg=colour7]$mday#[default]#[fg=colour0]"
-
-echo "░▒▓█${bat}#[default]#[fg=colour0]▓▒░░▒▓${temp}#[default]#[fg=colour0]▓▒░░▒▓${clock}▓▒░░▒▓#[bg=colour0,fg=colour7]#S#[default]#[fg=colour0]█▒"
+clock="#[bg=colour0,fg=colour7]$(date +'%H:%M') #[fg=colour5]$(date +'%Y-%m-')#[fg=colour7]$(date +'%d')"
+session="#[bg=colour0,fg=colour7]#S#"
+print -N "░▒▓█${bat}#[default]▓▒░░▒▓${temp}#[default]▓▒░░▒▓${session}#[default]▓▒░░▒▓${clock}#[default]█▒"

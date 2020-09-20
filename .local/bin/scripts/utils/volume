@@ -15,7 +15,7 @@ bar() {
 notify() {
   barfull=$(bar $(($2 / 5)) "$full")
   barempty=$(bar $((20 - $2 / 5)) "$empty")
-  dunstify -t 1000 -r 1000 -u normal "$1 Volume $2%" "<span color=\'$color\'>$barfull</span>$barempty"
+  dunstify -t 6000 -r 1000 -u normal "$1 Volume $2%" "<span color=\'$color\'>$barfull</span>$barempty"
 }
 
 case $1 in

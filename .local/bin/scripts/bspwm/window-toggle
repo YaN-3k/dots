@@ -1,0 +1,31 @@
+#!/bin/sh
+list="/tmp/toggle.window_list.$(xdotool get_desktop)"
+case $1 in
+  hide)
+    window=$(xdotool getactivewindow)
+    xdotool windowunmap $window
+    echo $window >>$list
+    ;;
+  show)
+    case $2 in
+      last)
+        id=$(tail -n 1 $list)
+        size=$(wc -c $list | cut -d' ' -f1)
+        item=$(echo $id | wc -c)
+        truncate -s $((size - item)) $list
+        ;;
+      *)
+        [ -s $list ] || exit 1
+        id=$(
+        while read -r line; do
+          echo "$(xdotool getwindowname $line) $line"
+        done <$list | $DMENU
+        )
+        id=${id##* }
+        sed -i "/$id/d" $list
+        ;;
+    esac
+    [ $id ] || exit 1
+    xdotool windowmap $id
+    ;;
+esac

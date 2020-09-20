@@ -1,0 +1,7 @@
+#!/bin/sh
+# Open a terminal in the same directory as current
+wpid=$(xdotool getactivewindow getwindowpid)
+if [ -n "$wpid" ]; then
+  pid=$(pgrep -P $wpid | tail -n 1)
+  [ -e "/proc/$pid/cwd" ] && cd "$(readlink "/proc/$pid/cwd")" && $TERMINAL
+fi

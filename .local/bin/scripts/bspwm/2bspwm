@@ -1,8 +1,6 @@
 #!/bin/sh
 # Double borders.
-bg=$(xrdb -query | awk -F "#" '/\*.background/ {printf $2}')
-
-outer="0x$bg"
+outer="0x161821"
 focused_inner="0x84a0c6"
 normal_inner="0xd2d4de"
 

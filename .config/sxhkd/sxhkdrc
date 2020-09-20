@@ -7,39 +7,34 @@
 #  ██████  ██ ░░██░██  ░██░██░░██░░██████
 # ░░░░░░  ░░   ░░ ░░   ░░ ░░  ░░  ░░░░░░
 
-# STATE/FLAGS {{{
+# state / flags {{{
 # switch the node state on tiled - floating
 super + t
-  bspc query --nodes -n focused.tiled && state=floating || state=tiled; \
-  bspc node --state ~$state
+  bspc node --state $(bspc query -N -n focused.tiled &>/dev/null && print floating || print tiled)
 
-# switch the node state on tiled - pseudo tiled
+# switch the node state to pseudo tiled
 super + p
-  bspc node --state ~pseudo_tiled
+  bspc node --state \~pseudo_tiled
 
-# switch the node state on tiled - fullscreen
+# switch the node state to fullscreen
 super + f
-  bspc node --state ~fullscreen
+  bspc node --state \~fullscreen
 
-# set marked,locked,sticky,private flag
-super + {m,x,s,z}
+# set marked, locked, sticky, private flag
+super + {i,x,s,z}
   bspc node -g {marked,locked,sticky,private}
 
 # hide / unhide the scratchpad
 super + F2
-  id=$(head -1 /tmp/scratchid);\
-  bspc node $id --flag hidden;bspc node -f $id
+  id=$(head -1 /tmp/scratchid); \
+  bspc node $id --flag hidden; bspc node -f $id
 
 # hide / unhide the currently active node
 super + {_,shift +} u
-  bsp-toggle {hide,show}
-
-# hide / unhide the currently active node
-super + {_,shift +} w
-  {bsp-hidden,bspc node -g sticky; bspc node -g hidden}
+  window-toggle {hide,show}
 # }}}
 
-# MOVE/RESIZE {{{
+# move / resize {{{
 # focus/swap the node in the given direction
 #super + {_,shift + }{h,j,k,l}
 #  bspc node -{f,s} {west,south,north,east}
@@ -54,18 +49,18 @@ super + {h,j,k,l}
 
 # swap the tiled node or move the floating node
 super + shift + {h,j,k,l}
-  bsp-move {west,south,north,east}
+  window-move {west,south,north,east}
 
 # focus/Swap the last node/desktop
 super + {grave,shift + grave,apostrophe}
   bspc {node -f last.local,desktop -f last,node --swap last}
 
 # focus or send the node to the given desktop
-super + {_,shift +}g
+super + {_,shift +} space
   bspc node {-f,-s} biggest.local
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }n
+super + {_,shift +} n
   bspc node -f {next,prev}.local
 
 # expand a window by moving one of its side outward
@@ -78,20 +73,20 @@ super + {_,shift + }n
 
 # resize the node
 ctrl + super + {h,j,k,l}
-  bsp-resize {west,south,north,east}
+  window-resize {west,south,north,east}
 
 # resize gaps
 ctrl + alt + g: {k,j}
   bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 # }}}
 
-# DESKTOP {{{
+# desktop {{{
 # focus the next/previous desktop
-super + {_,shift + }Tab
+super + {_,shift +} Tab
   bspc desktop --focus {next,prev}.occupied
 
 # move/Send the node to selected desktop
-super + {_,shift + }{1-9,0}
+super + {_,shift +} {1-9,0}
   bspc {desktop -f,node -d} '^{1-9,10}'
 
 # move the node to selected desktop
@@ -107,7 +102,7 @@ super + {_,shift + }{1-9,0}
 #    bspc node --to-desktop {prev,next} --focus
 # }}}
 
-# LAYOUTS {{{
+# layouts {{{
 # flip the layout vertically/horizontally
 super + {v,b}
   bspc node @/ --flip {vertical,horizontal}
@@ -117,19 +112,19 @@ super + {_,shift +} r
    bspc node @/ -R {90,270}
 
 # circulate the leaves of the tree
-super + {_,shift + } c
+super + {_,shift +} c
   bspc node @/ --circulate {forward,backward}
 
-# enable/Disable the monocle layout
-super + {_,shift + }space
-  bspc desktop --layout {next,prev}
+# switch monocle layout
+super + m
+  bspc desktop --layout next
 
 # make the split ratios equal/balanced
 super + shift + {e,b}
   bspc node @/ {--equalize,--balance}
 # }}}
 
-# PRESELECTION {{{
+# preselection {{{
 # make a new split
 alt + shift + {h,j,k,l}
   bspc node -p {west,south,north,east}
@@ -153,7 +148,7 @@ super + shift + y
   bspc node newest.marked -n newest.!automatic.local
 # }}}
 
-# APPLICATION {{{
+# application {{{
 # close/Kill the node
 super + {_,shift + }q
   bspc node -{c,k}
@@ -198,12 +193,12 @@ super + F1
   $TERMINAL -n float -e sxhkd-help
 # }}}
 
-# BACKLIGHT/AUDIO {{{
+# backlight / audio {{{
 # increase the volume (mpd or alsa)
 super + {equal,shift + plus}
   {volume alsa up,volume mpc up}
 # decrease the volume (mpd or alsa)
-super {_,shift} + minus
+super {_,shift +} minus
   {volume alsa down,volume mpc down}
 
 # mute the sound
@@ -236,7 +231,7 @@ alt  + {_,shift +} equal
   {brightness down,brightness up}
 # }}}
 
-# SCRIPTS {{{
+# scripts {{{
 # bookmarks
 super + ctrl + o
   bookmarks
@@ -258,9 +253,6 @@ super + ctrl + Insert
 # kill the recording
 super + ctrl + w
   blaze -s
-# mount, umount a device
-super + ctrl + d
-  ANS=$(printf "mount\numount" | $DMENU -p 'Device'); case "$ANS" in mount) mountdev;; umount) umountdev;; esac
 # display the information
 super + slash
   notify-send \
@@ -271,9 +263,6 @@ super + slash
 # show the clicboard content
 super + Insert
   showclip
-# update OS
-super + ctrl + u
-  update
 # network menu
 super + ctrl + n
   iwd

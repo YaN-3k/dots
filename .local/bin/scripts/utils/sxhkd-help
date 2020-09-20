@@ -1,2 +1,2 @@
 #!/usr/bin/env zsh
-awk '/^#/ {comment = $0} /^[a-zA-Z]/ {print $0 "\t" gensub(/#/, "--", "1", comment)}' ~/.config/sxhkd/sxhkdrc | column -t -s $'\t' | fzf --height 100%
+awk '/^#/ {comment = $0} /^[a-zA-Z]/ {print $0 "\t" gensub(/#/, "--", "1", comment)}' ~/.config/sxhkd/sxhkdrc | column -t -s $'\t' | fzf --no-hscroll --height 100%

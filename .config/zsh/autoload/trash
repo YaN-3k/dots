@@ -19,9 +19,11 @@
 : ${TRASH_DIR:=~/.local/share/trash}
 
 function trash-put() {
-  touch -c $*
-  mkdir -p ${TRASH_DIR}${PWD}
-  mv -vi $* $_
+  for i in $*; do
+    touch -c $i
+    mkdir -p ${TRASH_DIR}${i:a:h}
+    mv -vi $* $_
+  done
 }
 
 function trash-find() {
@@ -41,11 +43,11 @@ function trash-list() {
 }
 
 function trash-restore() {
-  mv -vi ${TRASH_DIR}/$^~* $PWD
+  mv -vi ${TRASH_DIR}${^~*:a} $PWD
 }
 
 function trash-remove() {
-  rm -vrf ${TRASH_DIR}/$^~*
+  rm -vrf ${TRASH_DIR}${^~*:a}
 }
 
 function trash-restore-interactive() {
