@@ -20,4 +20,4 @@ capacity=$(<$bat_path/capacity)
 bat="#[fg=$fg,bg=colour0]$bat_status$capacity%"
 clock="#[bg=colour0,fg=colour7]$(date +'%H:%M') #[fg=colour5]$(date +'%Y-%m-')#[fg=colour7]$(date +'%d')"
 session="#[bg=colour0,fg=colour7]#S#"
-print -N "░▒▓█${bat}#[default]▓▒░░▒▓${temp}#[default]▓▒░░▒▓${session}#[default]▓▒░░▒▓${clock}#[default]█▒"
+print -N "░▒▓█${bat}#[default]▓▒░░▒▓${temp}#[default]▓▒░░▒▓${clock}#[default]▓▒░░▒▓${session}#[default]█▒"

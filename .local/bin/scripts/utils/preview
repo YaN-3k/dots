@@ -11,7 +11,11 @@ case "$1" in
 *.7z) 7z l "$1" ;;
 *.html | *.xml) w3m -dump "$1" ;;
 *)
-  [ -f "$1" ] && cat "$1"
-  [ -d "$1" ] && tree "$1" -L 1 --dirsfirst
-  ;;
+  if [ -d "$1" ]; then
+    tree "$1" -L 1 --dirsfirst
+  elif [  -f "$1" ] && file "$1" | grep -q text; then
+    cat "$1"
+  else
+    file "$1"
+  fi
 esac

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 # It's simple script to control a wirelless network connection
 # using iwd and dhcpcd
 
@@ -7,12 +7,15 @@ m() { ${DMENU:-dmenu} "$@"; }
 
 add() {
   list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
-  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  list=$(comm -23 <(sort -u <<<"$list_all") <(sort -u <<<"$list_known"))
-  ssid=$(printf "%s" "$list" | m -i -p "add") || return
-  pass=$(m -P) || return
-
-  if iwctl --passphrase "$pass" station $interface connect "$ssid"; then
+  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { printf "\\<" $1 "\\>|" }')
+  list=$(echo "$list_all" | sed -r "/${list_known%|}/d")
+  if [ -z "$list" ]; then
+    notify-send "There is no network to add."
+    return
+  fi
+  ssid=$(printf "%s" "$list" | m -p "add") || return
+  pass=$(m -p "Password" -P) || return
+  if iwctl --passphrase "$pass" station "$interface" connect "$ssid"; then
     notify-send "Successfully added $ssid"
     exit
   else
@@ -23,13 +26,14 @@ add() {
 
 switch() {
   list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print $3 }')
-  list=$(comm -23 <(sort -u <<<"$list_known") <(sort -u <<<"$connected"))
-
-  [ -z "$list" ] && { notify-send "There is no network to switch."; return; }
-
+  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print "\\<" $3 "\\>" }')
+  list=$(echo "$list_known" | sed "/$connected/d")
+  if [ -z "$list" ]; then
+    notify-send "There is no network to switch."
+    return
+  fi
   ssid=$(printf "%s" "$list" | m -p "switch") || return
-  if iwctl station $interface connect "$ssid"; then
+  if iwctl station "$interface" connect "$ssid"; then
     notify-send "Successfully connected with $ssid"
     exit
   else
@@ -40,37 +44,40 @@ switch() {
 
 forget() {
   list=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  [ -z "$list" ] && { notify-send "There is no network to forget."; return; }
+  if [ -z "$list" ]; then
+    notify-send "There is no network to switch."
+    return
+  fi
   ssid=$(printf "%s" "$list" | m -p "forget") || return
   iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
 }
 
 scan() {
-  iwctl station $interface scan
-  notify-send "Network scanning..."
+  iwctl station "$interface" scan
+  notify-send "Scanning network..."
 }
 
-if ! pgrep -x iwd &>/dev/null; then
-  if ! (sudo -A systemctl start iwd && sudo -A systemctl enable iwd); then
+if ! pgrep -x iwd >/dev/null 2>&1; then
+  if ! {sudo -A systemctl start iwd && sudo -A systemctl enable iwd}; then
     notify-send -u critical " Unable to start iwd."
     exit
   fi
 fi
 
-if ! pgrep -x dhcpcd &>/dev/null; then
-  if ! (sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd);then
+if ! pgrep -x dhcpcd >/dev/null 2>&1; then
+  if ! {sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd};then
     notify-send -u critical " Unable to start dhcpcd."
     exit
   fi
 fi
 
-while true; do
-  options="switch\nadd\nscan\nforget"
+while :; do
+  options="Switch\nAdd\nScan\nForget"
   choice=$(printf "%b" "$options" | m -p "Network") || exit
-  case $choice in
-  "add") add ;;
-  "switch") switch ;;
-  "forget") forget ;;
-  "scan") scan ;;
+  case "$choice" in
+    Forget) forget;;
+    Scan) scan;;
+    Add) add;;
+    Switch) switch;;
   esac
 done
