@@ -1,7 +1,3 @@
 #!/bin/sh
-# A dmenu binary prompt script.
-# Gives a dmenu prompt labeled with $1 to perform command $2.
-# For example:
-# `./prompt "Do you want to shutdown?" "shutdown -h now"`
-
-[ "$(printf "No\\nYes" | ${DMENU:-dmenu} -i -p "$1" )" = "Yes" ] && eval "$2"
+# gives a menu prompt labeled with $1 to perform command $2
+[ "$(echo "No\nYes" | menu -p "$1" )" = "Yes" ] && eval "$2"

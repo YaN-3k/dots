@@ -1,4 +1,4 @@
 #!/bin/sh
 # Display a manual in zathura.
-manpage=$(man -k . | ${DMENU:-dmenu} | cut -d' ' -f1)
+manpage=$(man -k . | menu | cut -d' ' -f1)
 [ "$manpage" ] && man -Tpdf "$manpage" | zathura - &

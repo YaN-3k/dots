@@ -14,8 +14,8 @@ export TERMINAL="st"
 export READER="zathura"
 export FILE="vifm"
 export BROWSER="qutebrowser"
-export DMENU_RUN="dmenu_run -w 245 -x 10 -y 30 -i"
-export DMENU="dmenu -w 245 -x 10 -y 30 -i"
+export DMENU="dmenu -w 225 -x 10 -y 30 -i"
+export DMENU_RUN=${DMENU/dmenu/dmenu_run}
 
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -27,7 +27,7 @@ export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export LESSHISTFILE="-"
 
-export SUDO_ASKPASS="$HOME/.local/bin/scripts/utils/dmenupass"
+export SUDO_ASKPASS="$HOME/.local/bin/scripts/utils/menupass"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export SUDO_PROMPT=$'\e[34m'[$'\e[0m'sudo$'\e[34m']$'\e[0m'' password for '$'\e[1;34m''%p'$'\e[0m'': '
 export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
@@ -47,6 +47,7 @@ export FZF_DEFAULT_OPTS='
 --color pointer:1,info:8,spinner:3,header:8,prompt:4,marker:8
 --info=inline
 --height 60%
+--cycle
 --reverse
 '
 
@@ -56,7 +57,7 @@ export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 
-export SXHKD_SHELL="/bin/zsh"
+export SXHKD_SHELL="/bin/sh"
 export MPD_HOST="password@$HOME/.config/mpd/socket"
 export GOPATH="$HOME/dox/go"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

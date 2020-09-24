@@ -73,4 +73,4 @@ highlight TabLineSel    ctermfg=default ctermbg=default cterm=bold,reverse
 
 highlight /^.*\.(mp3|ogg|oga|flac|m4a)$/ ctermfg=magenta
 highlight /^.*\.(jpg|jpeg|png|gif|tiff|webp|bmp|svg|svgz)$/ ctermfg=green
-highlight /^.*\.(zip|gz|bz2|xz|tar|tgz|tbz2|7z|rar|iso|rpm|deb)$/ ctermfg=red
+highlight /^.*\.(zip|gz|bz2|xz|tar|tgz|tbz2|7z|rar|iso|rpm|deb)$/ ctermfg=yellow

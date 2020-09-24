@@ -35,7 +35,7 @@ macro t set browser "setsid youtube-dl --add-metadata -ic"; open-in-browser ; se
 macro a set browser "setsid youtube-dl --add-metadata -xic -f bestaudio/best"; open-in-browser ; set browser linkhandler
 macro v set browser "setsid mpv"; open-in-browser ; set browser linkhandler
 macro w set browser "w3m"; open-in-browser ; set browser linkhandler
-macro p set browser "dmenuhandler"; open-in-browser ; set browser linkhandler
+macro p set browser "menuhandler"; open-in-browser ; set browser linkhandler
 macro c set browser "xclip -sel clip <<<" ; open-in-browser ; set browser linkhandler
 
 highlight all "---.*---" yellow

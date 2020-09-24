@@ -1,0 +1,10 @@
+#!/bin/sh
+# move a file to trash (needs GNU mvA)
+td=~/.local/share/trash
+for o; do
+  case "$o" in
+    --) break;;
+    -*) rm "$@"; exit;;
+  esac
+done
+mv --backup=t -v "$@" "$td"

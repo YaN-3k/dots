@@ -1,19 +1,12 @@
 #!/bin/sh
 # Take screenshot
-
-m() { ${DMENU:-dmenu} "$@"; }
-
-type="$(printf "Screen\nWindow/Area" | m -i -p 'Type')"
+type="$(echo "Screen\nWindow/Area" | menu -p 'Type')"
 [ "$type" ] || exit
-time="$(printf "0.5\n5\n10" | m -i -p 'Seconds to wait')"
+time="$(echo "0.5\n5\n10" | menu -p 'Seconds to wait')"
 [ "$time" ] || exit
-
 [ "$type" = 'Window/Area' ] && type='-s -u' || type='-u'
-
-xclip -sel clip /dev/null # clear clipboard
 dir="$(xdg-user-dir PICTURES)/ss"
 mkdir -p "$dir"
 sleep "$time"
-
-maim $type | tee "$dir/$(date +%G-%m-%d_%s.png)" | xclip -selection clipboard -t image/png
+maim $type | tee "$dir/$(date +%G-%m-%d_%s.png)" | xclip -sel clip -t image/png
 notify-send "  Screenshot taken."

@@ -56,7 +56,7 @@ wm-restack = bspwm
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-; show, hide polybar 
+; show, hide polybar
 ; polybar-msg cmd hide/show
 enable-ipc = true
 
@@ -266,7 +266,7 @@ type = custom/script
 exec = echo ""
 format-foreground = ${colors.secondary}
 format-background = ${colors.bg-alt}
-click-left = power
+click-left = pm
 format-padding = 1
 
 ;=====;

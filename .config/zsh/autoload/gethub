@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-# Autistic script for convert GitHub links to files and download it via wget.
-wget $(sed 's/github.com/raw.githubusercontent.com/g; s/blob//g' <<<$1)

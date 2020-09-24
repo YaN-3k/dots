@@ -1,5 +1,5 @@
 #!/bin/sh
-operation="$(printf " Lock\n Exit\n Shutdown\n Reboot" | ${DMENU:-dmenu} -i -p ' System')"
+operation="$(echo " Lock\n Exit\n Shutdown\n Reboot" | menu -p ' System')"
 case "$operation" in
   ' Lock') slock & mpc pause;;
   ' Exit') killall Xorg;;

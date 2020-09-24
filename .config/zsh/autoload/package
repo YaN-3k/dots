@@ -1,3 +1,0 @@
-#!/usr/bin/env zsh
-# Fzf wraper for yay.
-yay -Slq | fzf -m --preview 'yay -Si {}' | xargs -r yay ${*-S} -

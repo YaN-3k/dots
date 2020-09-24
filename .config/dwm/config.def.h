@@ -16,9 +16,9 @@ static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#005577";
 static char selbgcolor[]            = "#005577";
 static char *colors[][3] = {
-       /*               fg           bg           border   */
-       [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
-       [SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
+	/*               fg           bg           border   */
+	[SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
+	[SchemeSel]  = { selfgcolor,  selbgcolor,  selbordercolor  },
 };
 
 /* tagging */
@@ -26,9 +26,9 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
 	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
+	*	WM_CLASS(STRING) = instance, class
+	*	WM_NAME(STRING) = title
+	*/
 	/* class         instance    title       tags mask    iscentered    isfloating    isterminal    noswallow    monitor */
 	{ "Gimp",        NULL,       NULL,       1 << 2,      0,            0,            0,            0,           -1 },
 	{ "Firefox",     NULL,       NULL,       1 << 2,      0,            0,            0,           -1,           -1 },
@@ -36,7 +36,8 @@ static const Rule rules[] = {
 	{ "Telegram",    NULL,       NULL,       1 << 3,      0,            0,            0,            1,           -1 },
 	{ "discord",     NULL,       NULL,       1 << 3,      0,            0,            0,            1,           -1 },
 	{ "st",          NULL,       NULL,            0,      0,            0,            1,           -1,           -1 },
-	{ NULL,       "float",       NULL,            0,      1,            1,            0,            1,           -1 },
+	{ NULL,         "floating",  NULL,            0,      0,            1,            0,            1,           -1 },
+	{ NULL,         "centered",  NULL,            0,      1,            1,            0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -78,7 +79,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 
-  /* realod colorscheme */
+	/* realod colorscheme */
 	{ MODKEY,                       XK_F5,     xrdb,           {.v = NULL } },
 
 	/* layouts */
@@ -133,7 +134,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	/*{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },*/
+
+	/* quit */
+	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} },
 };
 
 /* button definitions */

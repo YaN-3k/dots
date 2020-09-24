@@ -1,0 +1,46 @@
+#!/bin/sh
+# simple http python3 server for files or pages
+
+port='8080'
+ip=$(ip addr show wlan0 | grep -oP '\d*\.\d*\.\d*\.\d*' | head -1)
+pidfile='/tmp/simple-server.pid'
+logfile='/tmp/simple-server.log'
+
+while getopts ':p:sblh' opt; do
+  case "$opt" in
+    p) port="$OPTARG";;
+    s) if [ ! -e "$pidfile" ]; then
+         echo 'server not started'
+         return
+       fi
+       kill -9 "$(cat "$pidfile")" >/dev/null 2>&1
+       rm "$pidfile"
+       echo 'server terminated'
+       return;;
+    b) run_browser=1;;
+    l) less "$logfile"; return;;
+    h) cat <<-EOF >&2
+usage: $0 [-option] [directory]
+
+options:
+  -p port   port on which run server
+  -b        open in browser
+  -l        show log
+  -h        help
+EOF
+       return;;
+    \?) echo "invalid option: -$OPTARG" 1>&2; return 1;;
+    :)  echo "invalid option: -$OPTARG requires an argument" 1>&2; return 1;;
+  esac
+done
+shift $((OPTIND - 1))
+
+if [ ! -e $pidfile ]; then
+  nohup python3 -u -m http.server --bind "$ip" --directory "${1:-$PWD}" "$port" >"$logfile" 2>&1 &
+  echo $! >"$pidfile"
+  if [ -n "$run_browser" ] && [ -n "$BROWSER" ]; then
+    $BROWSER "http://${ip}:${port}"
+  fi
+else
+  echo "serv already running"
+fi

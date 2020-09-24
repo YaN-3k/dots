@@ -3,8 +3,6 @@
 # using iwd and dhcpcd
 
 interface='wlan0'
-m() { ${DMENU:-dmenu} "$@"; }
-
 add() {
   list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
   list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { printf "\\<" $1 "\\>|" }')
@@ -13,32 +11,34 @@ add() {
     notify-send "There is no network to add."
     return
   fi
-  ssid=$(printf "%s" "$list" | m -p "add") || return
-  pass=$(m -p "Password" -P) || return
+  ssid=$(echo "$list" | menu -p "add")
+  [ "$ssid" ] || exit
+  pass=$(menu -p "Password" -P)
   if iwctl --passphrase "$pass" station "$interface" connect "$ssid"; then
     notify-send "Successfully added $ssid"
     exit
   else
     notify-send "Wrong password $ssid"
-    return
+    exit
   fi
 }
 
 switch() {
   list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { print "\\<" $3 "\\>" }')
+  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { printf "\\<" $3 "\\>" }')
   list=$(echo "$list_known" | sed "/$connected/d")
   if [ -z "$list" ]; then
     notify-send "There is no network to switch."
     return
   fi
-  ssid=$(printf "%s" "$list" | m -p "switch") || return
+  ssid=$(echo "$list" | menu -p "switch")
+  [ "$ssid" ]|| exit
   if iwctl station "$interface" connect "$ssid"; then
     notify-send "Successfully connected with $ssid"
     exit
   else
     notify-send "Failed to connect with $ssid"
-    return
+    exit
   fi
 }
 
@@ -48,7 +48,8 @@ forget() {
     notify-send "There is no network to switch."
     return
   fi
-  ssid=$(printf "%s" "$list" | m -p "forget") || return
+  ssid=$(echo "$list" | menu -p "forget")
+  [ "$ssid" ] || exit
   iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
 }
 
@@ -59,21 +60,22 @@ scan() {
 
 if ! pgrep -x iwd >/dev/null 2>&1; then
   if ! {sudo -A systemctl start iwd && sudo -A systemctl enable iwd}; then
-    notify-send -u critical " Unable to start iwd."
+    notify-send -u critical "Unable to start iwd."
     exit
   fi
 fi
 
 if ! pgrep -x dhcpcd >/dev/null 2>&1; then
   if ! {sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd};then
-    notify-send -u critical " Unable to start dhcpcd."
+    notify-send -u critical "Unable to start dhcpcd."
     exit
   fi
 fi
 
 while :; do
   options="Switch\nAdd\nScan\nForget"
-  choice=$(printf "%b" "$options" | m -p "Network") || exit
+  choice=$(echo "$options" | menu -p "Network")
+  [ $choice ] || exit
   case "$choice" in
     Forget) forget;;
     Scan) scan;;

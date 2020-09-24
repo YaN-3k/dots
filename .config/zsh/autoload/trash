@@ -19,10 +19,10 @@
 : ${TRASH_DIR:=~/.local/share/trash}
 
 function trash-put() {
-  for i in $*; do
+  for i; do
     touch -c $i
     mkdir -p ${TRASH_DIR}${i:a:h}
-    mv -vi $* $_
+    mv --backup=t -v $i $_
   done
 }
 
@@ -43,7 +43,7 @@ function trash-list() {
 }
 
 function trash-restore() {
-  mv -vi ${TRASH_DIR}${^~*:a} $PWD
+  mv --backup=t -v ${TRASH_DIR}${^~*:a} $PWD
 }
 
 function trash-remove() {
@@ -73,7 +73,7 @@ function trash-restore-interactive() {
         print "Invalid range.\n"
         continue
       fi
-      mv -vi $range $PWD
+      mv --backup=t -v $range $PWD
       break
     # single index
     elif [[ $decision =~ '^-?[0-9]+$' ]]; then
@@ -81,7 +81,7 @@ function trash-restore-interactive() {
         print "Invalid index.\n"
         continue
       fi
-      mv -vi $files[decision] $PWD
+      mv --backup=t -v $files[decision] $PWD
       break
     else
       break

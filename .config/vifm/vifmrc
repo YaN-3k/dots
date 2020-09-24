@@ -34,24 +34,8 @@ set scrolloff=5
 " %D the other window directory name.
 " %m run the command in a menu window
 
-" split
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
 " new file
 nnoremap V :!nvim<space>
-
-" executable
-nnoremap x :!chmod +x %f<cr>
-nnoremap X :!chmod -x %f<cr>
-
-" run script
-nnoremap r :!%f<CR>
-
-" select
-nnoremap <space> tj
 
 " start shell in current directory
 nnoremap s :shell<cr>
@@ -62,16 +46,9 @@ nnoremap S :sort<cr>
 " toggle visibility of preview window
 nnoremap w :view<cr>
 
-" open file in the background using its default program
-nnoremap o :!xdg-open %c&<cr>
-
-" yank current directory path into the clipboard
-nnoremap yd :!printf %%s %d | sed "s|$HOME|~|" | xclip -selection clipboard<cr>
-nnoremap yD :!printf %%s %d | xclip -selection clipboard<cr>
-
-" yank current file path into the clipboard
-nnoremap yf :!printf %%s %c:p | sed "s|$HOME|~|" | xclip -selection clipboard<cr>
-nnoremap yF :!printf %%s %c:p | xclip -selection clipboard<cr>
+" yank current directory/file path into the clipboard
+nnoremap yd :!printf %%s %d | xclip -sel clip<cr>
+nnoremap yf :!printf %%s %c:p | xclip -sel clip<cr>
 
 " set wallpaper
 map bg :!setbg %f &<CR>
@@ -90,21 +67,11 @@ nnoremap ,c :edit $MYVIFMRC | restart<cr>
 " toggle wrap setting on ,w key
 nnoremap ,w :set wrap!<cr>
 
-command! df df -h %m 2> /dev/null
-command! diff nvim -d %f
-command! zip zip -r %f.zip %f
-command! make !!make %a
-command! reload :write | restart
-
 " fuzzy finding
-command! fzflocate :set noquickview | :execute 'goto "'.system('locate $HOME | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
 command! fzffind :set noquickview | :execute 'goto "'.system('find . -mindepth 1 2>/dev/null | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
-
-nnoremap <c-g> :fzflocate<cr>
 nnoremap <c-f> :fzffind<cr>
 
 map mkd :mkdir<space>
-nmap q ZQ
 
 " open all images in current directory in sxiv thumbnail mode
 nnoremap i :!sxiv -tb %d & <cr>

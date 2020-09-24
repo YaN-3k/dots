@@ -1,4 +1,0 @@
-#!/usr/bin/env zsh
-# Find and open files.
-files=(${(@f)"$(find $@ -type f,l | fzf -m --preview 'preview {}')"})
-[[ -n $files ]] && edit $files

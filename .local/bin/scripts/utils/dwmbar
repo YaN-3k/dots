@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SEP='|'
+sep='|'
 
 battery() {
   bat="$(cat /sys/class/power_supply/BAT?/capacity)"
@@ -28,7 +28,7 @@ battery() {
 }
 
 time() {
-  printf " %s $SEP  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
+  printf " %s $sep  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
 }
 
 backlight() {
@@ -60,17 +60,17 @@ EOF
 
 mpd() {
   music="$(mpc current)"
-  [ "$music" ] && printf " %s %s" "$music" "$SEP"
+  [ "$music" ] && printf " %s %s" "$music" "$sep"
 }
 
 pkg() {
   updates=$(pacman -Quq | wc -l)
-  [ "$updates" -gt 0 ] && printf "   %s %s" "$updates" "$SEP"
+  [ "$updates" -gt 0 ] && printf "   %s %s" "$updates" "$sep"
 }
 
 news() {
   news="$(cat ~/.cache/news_unread 2>/dev/null)"
-  [ "${news:-0}" -gt 0 ] && printf "  %s %s" "$news" "$SEP"
+  [ "${news:-0}" -gt 0 ] && printf "  %s %s" "$news" "$sep"
 }
 
 torrents() {
@@ -98,10 +98,10 @@ torrents() {
   $data
 EOF
   transmission-remote -l | grep -qE "%|n/a"
-  printf " %s" "$SEP"
+  printf " %s" "$sep"
 }
 
 while :; do
-  xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $SEP $(volume) $SEP $(battery) $SEP $(time) "
+  xsetroot -name " $(mpd)$(torrents)$(news)$(pkg) $(backlight) $sep $(volume) $sep $(battery) $sep $(time) "
   sleep 1
 done

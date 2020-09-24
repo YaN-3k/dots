@@ -1,0 +1,11 @@
+h       ~
+bin     ~/.local/bin
+share   ~/.local/share
+sc      ~/.config/zsh/sc
+z       ~/.config/zsh/.zshrc
+com     ~/.config/picom.conf
+bs      ~/.config/bspwm/bspwmrc
+drc     ~/.config/dunst/dunstrc
+sx      ~/.config/sxhkd/sxhkdrc
+vimrc   ~/.config/nvim/init.vim
+bw      ~/.config/bookmarks

@@ -1,8 +1,0 @@
-#!/usr/bin/env zsh
-# Show colors from X server resource database.
-local color offset hue
-local colors=($(xrdb -query | sed -n 's/\*.color//p' | sort -n | cut -d'#' -f2))
-for color in $colors; do
-  print -n "\e[$hue;$((30 + offset))m██ $color \e[0m"
-  (( ++offset == 8 )) && { hue=1; offset=0; print }
-done

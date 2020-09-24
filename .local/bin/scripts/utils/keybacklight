@@ -1,11 +1,10 @@
 #!/bin/sh
 file='/sys/class/leds/dell::kbd_backlight/brightness'
 if [ -f "$file" ]; then
+  current=$(cat $file)
   case $1 in
-    -inc) current=$(cat $file)
-      [ "$current" -lt 4 ] && echo $((current + 1)) | sudo -A tee $file;;
-    -dec) current=$(cat $file)
-      [ "$current" -gt 0 ] && echo $((current - 1)) | sudo -A tee $file;;
+    -inc) [ "$current" -lt 4 ] && echo $((current + 1)) | sudo -A tee $file;;
+    -dec) [ "$current" -gt 0 ] && echo $((current - 1)) | sudo -A tee $file;;
     -set) [ "$2" ] && echo "$2" | sudo -A tee $file
   esac
 else

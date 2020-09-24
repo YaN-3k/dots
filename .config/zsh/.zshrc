@@ -38,10 +38,10 @@ function +virtual-env() {
 }
 precmd_functions+=(+virtual-env)
 
-#export PROMPT="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
-export PROMPT="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
-export PROMPT2="%F{blue}[%f%_%F{blue}]%f "
+export PROMPT="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
+#export PROMPT="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
 export RPROMPT="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
+export PROMPT2="%F{blue}[%f%_%F{blue}]%f "
 
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -71,25 +71,27 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+local cursor_insert="\e[4 q"
+local cursor_normal="\e[2 q"
 
 # change cursor shape for different vi modes.
 function zle-keymap-select() {
   if [[ $KEYMAP == vicmd || $1 = 'block' ]]; then
-    print -n '\e[2 q'
+    print -n $cursor_normal
   elif [[ $KEYMAP == main || $KEYMAP == viins || -z $KEYMAP || $1 = 'beam' ]]; then
-    print -n '\e[6 q'
+    print -n $cursor_insert
   fi
 }
 zle -N zle-keymap-select
 
 function zle-line-init() {
   zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -v` has been set elsewhere)
-  print -n "\e[6 q"
+  print -n $cursor_insert
 }
 zle -N zle-line-init
 
-print -n '\e[6 q' # use beam shape cursor on startup.
-function preexec() { print -n '\e[6 q'; } # use beam shape cursor for each new prompt.
+print -n $cursor_insert # use beam shape cursor on startup.
+function preexec() { print -n $cursor_insert; } # use beam shape cursor for each new prompt.
 
 # fzf
 [ ! -d ~/.config/fzf ] && {
@@ -133,8 +135,8 @@ set -k               # allows comments in interactive shell
 setopt auto_cd       # cd by just typing the directory name
 setopt extendedglob  # additional syntax for filename generation
 unsetopt flowcontrol # disable ctrl-s and ctrl-q
-[ ! -f $ZDOTDIR/shortcutrc ] && shortcuts
-source $ZDOTDIR/shortcutrc
+[ ! -f $ZDOTDIR/sc.sh ] && sc
+source $ZDOTDIR/sc.sh
 
 # load functions
 autoload -Uz ~/.config/zsh/autoload/**/*
@@ -173,6 +175,8 @@ bindkey "^u" kill-whole-line
 bindkey "^w" backward-kill-word
 bindkey "^y" yank
 bindkey "^_" undo
+bindkey '^p' up-line-or-search
+bindkey '^n' down-line-or-search
 bindkey '^[^M' self-insert-unmeta
 bindkey '^[[Z' reverse-menu-complete
 
@@ -197,22 +201,10 @@ bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
 bindkey -M vicmd '^r' fzf-history-widget
 
-function widget-edit-file() { fedit; zle redisplay }
-zle -N widget-edit-file
-bindkey "^f" widget-edit-file
-
 #     ---
 #   aliases
 #     ---
 alias sudo='sudo '
-
-alias v='edit'
-alias f='fedit'
-alias ext='extract'
-alias mdev='mount-dev'
-alias udev='umount-dev'
-alias pkg='package'
-alias serv='simple-server'
 
 alias grep='grep --color=auto'
 alias cp='cp -vri'
@@ -267,7 +259,6 @@ alias tr-create='transmission-create'
 
 alias tmux='tmux -f ~/.config/tmux/tmux.conf'
 alias tm='tmux -f ~/.config/tmux/tmux.conf'
-alias tma='tmux-attach'
 
 alias yt-dl='youtube-dl -o "%(title)s.%(ext)s"'
 alias yt-video='yt-dl -f bestvideo'

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 # blaze - record screen and audio
 
 deps() {
@@ -41,9 +41,6 @@ fi
 [ ! -d "$BLAZE_DIR" ] && mkdir -p "$BLAZE_DIR" >/dev/null 2>&1
 
 output="$BLAZE_DIR/${BLAZE_FILE:-blaze-$(date '+%Y-%m-%d_%H-%M-%S').mp4}"
-
-# menu to use
-m() { ${DMENU:-dmenu} "$@"; }
 
 # exit if X isn't running
 [ ! "$DISPLAY" ] && { echo "Can't open display; exiting"; exit; }
@@ -176,7 +173,7 @@ shift $((OPTIND -1))
 
   # if the user has both slop and disputils ask the user which one to use
   [ "$s" ] && [ "$d" ] &&
-    method="$(printf "display\nselection" | m -p "Method of recording")"
+    method="$(printf "display\nselection" | menu -p "Method of recording")"
 }
 
 if [ "$method" = display ]; then
@@ -188,7 +185,7 @@ if [ "$method" = display ]; then
   if [ "$(printf "%b\n" "$monitors" | wc -l)" = 1 ]; then
     display="$monitors"
   else  # if there are other displays ask the user which one to use
-    [ ! "$display" ] && display="$(printf "%b" "$monitors" | m -p "Display to record")"
+    [ ! "$display" ] && display="$(printf "%b" "$monitors" | menu -p "Display to record")"
   fi
 
   set -- $(xrandr -q | grep "$display" | grep -oP '\d*x\d*\+\d*\+\d*' | tr '+x' ' ')
@@ -223,10 +220,10 @@ fi
 [ ! "$nvenc" ] && lspci | grep -qi nvidia && nvenc="-vcodec h264_nvenc"
 
 # ask the user what they want the framerate of the video to be
-[ ! "$rate" ] && rate="$(printf "30\n60" | m -p "Framerate")"
+[ ! "$rate" ] && rate="$(printf "30\n60" | menu -p "Framerate")"
 
 # ask the user if they want to start the recording
-[ ! "$ready" ] && ready="$(printf "yes\nno" | m -p "Start the recording")"
+[ ! "$ready" ] && ready="$(printf "yes\nno" | menu -p "Start the recording")"
 
 # save preset
 [ "$preset_location" ] && {

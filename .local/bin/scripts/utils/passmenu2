@@ -14,7 +14,7 @@ done <<EOF
 $(find "$prefix" -name \*.gpg -type f)
 EOF
 
-password=$(printf '%b\n' "$password_files" | ${DMENU:-dmenu})
+password=$(printf '%b\n' "$password_files" | menu)
 
 [ ! "$password" ] && exit
 
