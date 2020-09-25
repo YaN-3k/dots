@@ -1,0 +1,26 @@
+html {
+  font: 11pt Hack Nerd Font;
+  background: #161821;
+  /* align to center */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  margin-bottom: -10px;
+  /* flow horizontally */
+  display: flex;
+}
+
+div > * {
+  display: block;
+  text-decoration: none;
+  padding: 10px 40px;
+  text-align: center;
+}
+
+a       { color: #d2d4de;    }
+span    { color: #84a0c6; }
+a:hover { color: #91acd1; }

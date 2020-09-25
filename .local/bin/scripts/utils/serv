@@ -9,10 +9,7 @@ logfile='/tmp/simple-server.log'
 while getopts ':p:sblh' opt; do
   case "$opt" in
     p) port="$OPTARG";;
-    s) if [ ! -e "$pidfile" ]; then
-         echo 'server not started'
-         return
-       fi
+    s) [ ! -e "$pidfile" ] && { echo 'server not started'; return; }
        kill -9 "$(cat "$pidfile")" >/dev/null 2>&1
        rm "$pidfile"
        echo 'server terminated'
@@ -20,7 +17,7 @@ while getopts ':p:sblh' opt; do
     b) run_browser=1;;
     l) less "$logfile"; return;;
     h) cat <<-EOF >&2
-usage: $0 [-option] [directory]
+usage: serv [-option] [directory]
 
 options:
   -p port   port on which run server

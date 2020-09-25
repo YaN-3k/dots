@@ -107,7 +107,7 @@ call s:HL("Number",       s:none,  s:ice5,  "none")
 call s:HL("Boolean",      s:none,  s:ice11, "none")
 call s:HL("Float",        s:none,  s:ice5,  "none")
 
-call s:HL("Identifier",   s:none,  s:ice6,  "none")
+call s:HL("Identifier",   s:none,  s:ice7,  "none")
 call s:HL("Function",     s:none,  s:ice3,  "none")
 " }}}
 
@@ -121,7 +121,7 @@ call s:HL("Operator",     s:none,  s:ice4,  "none")
 call s:HL("Keyword",      s:none,  s:ice4,  "none")
 call s:HL("Exception",    s:none,  s:ice1,  "none")
 
-call s:HL("Special",      s:none,  s:ice2,  "none")
+call s:HL("Special",      s:none,  s:ice7,  "none")
 call s:HL("SpecialChar",  s:none,  s:ice5,  "none")
 call s:HL("Tag",          s:none,  s:ice4,  "none")
 call s:HL("Delimiter",    s:none,  s:none,  "none")
@@ -129,7 +129,7 @@ call s:HL("SpecialComment", s:none,  s:ice5,  "none")
 call s:HL("Debug",        s:none,  s:ice5,  "none")
 " }}}
 
-" c le {{{
+" c {{{
 call s:HL("PreProc",      s:none,  s:ice5,  "none")
 call s:HL("Include",      s:none,  s:ice5,  "none")
 call s:HL("Define",       s:none,  s:ice3,  "none")
@@ -171,6 +171,10 @@ call s:HL("SpellLocal",   s:none,  s:ice3,  "underline")
 call s:HL("SpellRare",    s:none,  s:ice3,  "underline")
 " }}}
 
+" netrw {{{
+call s:HL("netrwClassify", s:none,  s:ice7,  "none")
+" }}}
+
 " statusline {{{
 call s:HL("NormalMode",   s:ice0,  s:ice4,  "none")
 call s:HL("InsertMode",   s:ice0,  s:ice3,  "none")
@@ -178,15 +182,21 @@ call s:HL("ReplaceMode",  s:ice0,  s:ice1,  "none")
 call s:HL("VisualMode",   s:ice0,  s:ice5,  "none")
 call s:HL("CmdMode",      s:ice0,  s:ice2,  "none")
 call s:HL("TermMode",     s:ice0,  s:ice1,  "none")
-call s:HL("ModifiedBody", s:none,  s:ice7,  "none")
 
 call s:HL("Reset",        s:none,  s:ice0,  "none")
+call s:HL("Modified",     s:none,  s:ice8,  "none")
 call s:HL("Separator",    s:none,  s:ice0,  "none")
 call s:HL("Git",          s:ice0,  s:ice7,  "none")
-call s:HL("Modified",     s:ice0,  s:ice0,  "none")
 call s:HL("LineCol",      s:ice0,  s:ice3,  "none")
 call s:HL("LinePerc",     s:ice0,  s:ice2,  "none")
 call s:HL("Filetype",     s:ice0,  s:ice5,  "italic")
+
+call s:HL("MinSeparator", s:none,  s:ice8,  "none")
+call s:HL("MinModified",  s:none,  s:ice8,  "none")
+call s:HL("MinMode",      s:none,  s:ice8,  "none")
+call s:HL("MinLine",      s:none,  s:ice4,  "none")
+call s:HL("MinFilename",  s:none,  s:ice7,  "none")
+call s:HL("MinFiletype",  s:none,  s:ice8,  "none")
 " }}}
 
 " linting {{{
@@ -227,6 +237,7 @@ call s:HL("VimwikiPre",     s:none,  s:ice8,   "italic")
 
 " sh {{{
 call s:HL("shStatement",   s:none,  s:none,  "none")
+call s:HL("shCtrlSeq",     s:none,  s:ice5,  "none")
 call s:HL("shFunction",    s:none,  s:none,  "none")
 call s:HL("shOption",      s:none,  s:ice2,  "none")
 call s:HL("shQuote",       s:none,  s:ice4,  "none")

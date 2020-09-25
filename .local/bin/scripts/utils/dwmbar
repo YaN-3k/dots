@@ -31,31 +31,18 @@ time() {
   printf " %s $sep  %s" "$(date "+%I:%M %p")" "$(date "+%Y-%m-%d")"
 }
 
-backlight() {
-  printf " %0.f%%" "$(xbacklight -get)"
-}
+backlight() { printf " %0.f%%" "$(xbacklight -get)"; }
 
 volume() {
-  while IFS=[] read -r line vol stat; do
-  case "$line" in
-    *Right:*)
-      vol="${vol%\%}"
-      case $stat in
-        *off*) ico="婢";;
-        *) if [ "$vol" -lt 30 ]; then
-             ico=""
-           elif [ "$vol" -lt 60 ]; then
-             ico=""
-           else
-             ico=""
-           fi
-      esac
-      break;;
-  esac
-  done <<EOF
-$(amixer get Master)
-EOF
-  printf "%s %s%%" "$ico" "$vol"
+  vol=$(vol get)
+  if [ "$vol" -lt 30 ]; then
+    ico=""
+  elif [ "$vol" -lt 60 ]; then
+   ico="墳"
+  else
+   ico=""
+  fi
+  printf "%s %s" "$ico" "$vol%"
 }
 
 mpd() {

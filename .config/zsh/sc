@@ -1,5 +1,6 @@
 h       ~
 bin     ~/.local/bin
+dl      ~/.local/dl
 share   ~/.local/share
 sc      ~/.config/zsh/sc
 z       ~/.config/zsh/.zshrc

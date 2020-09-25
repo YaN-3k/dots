@@ -49,6 +49,7 @@ export FZF_DEFAULT_OPTS='
 --height 60%
 --cycle
 --reverse
+--pointer=" "
 '
 
 export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"

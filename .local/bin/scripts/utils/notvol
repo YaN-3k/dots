@@ -17,4 +17,4 @@ bar() {
     i=$((i+1))
   done
 }
-dunstify -t 1000 -r 9955 "Volume" "$(bar $1)" &
+dunstify -t 700 -r 9955 "Volume" "$(bar $1)" &

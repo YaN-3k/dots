@@ -1,6 +1,5 @@
-#show-read-feeds no
+show-read-feeds yes
 auto-reload yes
-external-url-viewer "urlscan -dc -r 'linkhandler {}'"
 
 bind-key j down
 bind-key k up
@@ -24,28 +23,23 @@ bind-key x pb-delete
 color background          default default
 color listnormal          color8  default
 color listnormal_unread   default default
-color listfocus_unread    color4  color0
-color listfocus           color3  color0
-color info                color4  color0
+color listfocus_unread    default black
+color listfocus           color4  black
+color info                color8  default
 color article             white   default
 
 browser linkhandler
 macro , open-in-browser
-macro t set browser "setsid youtube-dl --add-metadata -ic"; open-in-browser ; set browser linkhandler
-macro a set browser "setsid youtube-dl --add-metadata -xic -f bestaudio/best"; open-in-browser ; set browser linkhandler
-macro v set browser "setsid mpv"; open-in-browser ; set browser linkhandler
-macro w set browser "w3m"; open-in-browser ; set browser linkhandler
-macro p set browser "menuhandler"; open-in-browser ; set browser linkhandler
-macro c set browser "xclip -sel clip <<<" ; open-in-browser ; set browser linkhandler
+macro p set browser "setsid -f menuhandler"; open-in-browser; set browser linkhandler
 
 highlight all "---.*---" yellow
 highlight feedlist ".*(0/0))" black
-highlight article "^Feed:.*" black default bold
-highlight article "^Title:.*" yellow default bold
-highlight article "^Author:.*" cyan default bold
-highlight article "^Date:.*" magenta default
+highlight article "^Feed:.*" white default bold
+highlight article "^Title:.*" blue default bold
+highlight article "^Author:.*" white default
+highlight article "^Date:.*" white default
 highlight article "^Link:.*" blue default bold
-highlight article "\\[[0-9][0-9]*\\]" green default bold
+highlight article "\\[[0-9][0-9]*\\]" magenta default
 highlight article "\\[image\\ [0-9]+\\]" yellow default bold
 highlight article "\\[embedded flash: [0-9][0-9]*\\]" yellow default bold
 highlight article ":.*\\(link\\)$" blue default underline

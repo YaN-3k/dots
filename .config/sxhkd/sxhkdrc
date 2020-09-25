@@ -82,21 +82,26 @@ super + y
 super + {_,shift + }q
   bspc node -{c,k}
 
-# run the dmenu desktop
+# run dmenu desktop
 super + d
   launch
 
-# open the terminal
+# open a terminal
 super + Return
   $TERMINAL
+
+# open a floating terminal
+super + shift + Return
+  $TERMINAL -n centered
+
+# open a terminal in the same directory
+super + ctrl + Return
+  samedir
 
 # u/map window
 super + {_,shift +} u
   wmap {umap,map}
 
-# open the terminal in the same directory
-super + shift + Return
-  samedir
 
 # open the file manager
 alt + f
@@ -176,7 +181,7 @@ alt  + shift + {minus,plus}
 # scripts {{{
 # bookmarks
 super + ctrl + o
-  bookmarks
+  search
 
 # passmenu
 super + ctrl + p
@@ -206,9 +211,9 @@ super + ctrl + r
 super + ctrl + w
   blaze -s
 
-# display the information
+# display information
 super + slash
-  notify-send "$(date "+%a %d %b - %I:%M %p")" "Volume: $(vol get)%"
+  dunstify "$(date "+%a %d %b - %I:%M %p")" "Battery: $(bat)%"
 
 # show the clicboard content
 super + o

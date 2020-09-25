@@ -1,8 +1,10 @@
 #!/bin/sh
-# Wraper for dotfiles.
-dotfiles() { git --git-dir=$HOME/.config/dots-git/ --work-tree=$HOME "$@"; }
+# wraper for dotfiles
+dotfiles() { git --git-dir ~/.config/dots-git/ --work-tree ~ "$@"; }
 if [ $1 = 'up' ]; then
-  dotfiles pull && dotfiles update-index --assume-unchanged ~/LICENSE ~/README.md && rm -rf ~/LICENSE ~/README.md
+  dotfiles pull &&
+    dotfiles update-index --assume-unchanged ~/LICENSE ~/README.md ~/INSTALL.md &&
+    rm -rf ~/LICENSE ~/README.md ~/INSTALL.md
 else
   dotfiles $*
 fi

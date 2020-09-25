@@ -3,8 +3,6 @@
 " ┗━┓ ┃ ┃━┫ ┃ ┃ ┃┗━┓┃  ┃┃┃┃┣━
 " ━━┛ ┇ ┛ ┇ ┇ ┇━┛━━┛┇━┛┇┇┗┛┻━┛
 "
-" ~~ Statusline configuration ~~
-" ':help statusline' is your friend!
 
 " color depending on mode {{{
 function! RedrawModeColors(mode)
@@ -63,18 +61,14 @@ endfunction
 " }}}
 
 " modification mark {{{
-function! SetModifiedSymbol(modified)
+function! ModifiedSymbol(modified)
   if a:modified == 1 | return '+' | else | return '' | endif
 endfunction
 " }}}
 
 " filetype {{{
-function! SetFiletype(filetype)
-  if a:filetype ==# ''
-    return '-'
-  else
-    return a:filetype
-  endif
+function! Filetype(filetype)
+  if a:filetype ==# '' | return '-' | else | return a:filetype | endif
 endfunction
 " }}}
 
@@ -111,7 +105,7 @@ else
 endif
 
 " Modified status
-set statusline+=%#ModifiedBody#%{SetModifiedSymbol(&modified)}%#Reset#
+set statusline+=%#Modified#%{ModifiedSymbol(&modified)}%#Reset#
 
 "==================
 " right side items
@@ -130,6 +124,6 @@ set statusline+=%#Separator#▓▒░
 
 " filetype
 set statusline+=%#Separator#░▒▓
-set statusline+=\%#Filetype#%{SetFiletype(&filetype)}
+set statusline+=\%#Filetype#%{Filetype(&filetype)}
 set statusline+=%#Separator#█▒
 " }}}

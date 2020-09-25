@@ -2,84 +2,68 @@
 # It's simple script to control a wirelless network connection
 # using iwd and dhcpcd
 
-interface='wlan0'
-add() {
-  list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
-  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { printf "\\<" $1 "\\>|" }')
-  list=$(echo "$list_all" | sed -r "/${list_known%|}/d")
-  if [ -z "$list" ]; then
-    notify-send "There is no network to add."
-    return
-  fi
-  ssid=$(echo "$list" | menu -p "add")
-  [ "$ssid" ] || exit
-  pass=$(menu -p "Password" -P)
-  if iwctl --passphrase "$pass" station "$interface" connect "$ssid"; then
-    notify-send "Successfully added $ssid"
-    exit
-  else
-    notify-send "Wrong password $ssid"
-    exit
-  fi
-}
+: ${interface:='wlan0'}
 
 switch() {
-  list_known=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { printf "\\<" $3 "\\>" }')
+  list_known=$(iwctl known-networks list |
+    awk 'NR>4 && $0 !~ /^$/ { print $1 }')
+  connected=$(iwctl station "$interface" show |
+    awk 'NR>4 && /Connected/ { printf "\\<" $3 "\\>" }')
   list=$(echo "$list_known" | sed "/$connected/d")
-  if [ -z "$list" ]; then
-    notify-send "There is no network to switch."
-    return
-  fi
+  [ -z "$list" ] && { notify-send "There is no network to switch."; return; }
   ssid=$(echo "$list" | menu -p "switch")
-  [ "$ssid" ]|| exit
-  if iwctl station "$interface" connect "$ssid"; then
-    notify-send "Successfully connected with $ssid"
-    exit
-  else
+  [ "$ssid" ] || exit
+  iwctl station "$interface" connect "$ssid" &&
+    notify-send "Successfully connected with $ssid" ||
     notify-send "Failed to connect with $ssid"
-    exit
-  fi
+  exit
 }
+
+add() {
+  list_all=$(iwctl station "$interface" get-networks |
+    awk 'NR > 4 && $0 !~ /^$/ && $0 !~ />/ { print $1}')
+  list_known=$(iwctl known-networks list |
+    awk 'NR>4 && $0 !~ /^$/ { printf "\\<" $1 "\\>|" }')
+  list=$(echo "$list_all" | sed -r "/${list_known%|}/d")
+  [ -z "$list" ] && { notify-send "There is no network to add."; return; }
+  ssid=$(echo "$list" | menu -p "add")
+  [ "$ssid" ] || exit
+  pass=$(menu -p "Password")
+  iwctl --passphrase "$pass" station "$interface" connect "$ssid" &&
+    notify-send "Successfully added $ssid" ||
+    notify-send "Wrong password $ssid"
+  exit
+}
+
+scan() { iwctl station "$interface" scan && notify-send "Scanning network..."; }
 
 forget() {
   list=$(iwctl known-networks list | awk 'NR>4 && $0 !~ /^$/ { print $1 }')
-  if [ -z "$list" ]; then
-    notify-send "There is no network to switch."
-    return
-  fi
+  [ -z "$list" ] && { notify-send "There is no network to switch." return; }
   ssid=$(echo "$list" | menu -p "forget")
   [ "$ssid" ] || exit
-  iwctl known-networks "$ssid" forget && notify-send "Successfully forgot $ssid" && exit
-}
-
-scan() {
-  iwctl station "$interface" scan
-  notify-send "Scanning network..."
+  iwctl known-networks "$ssid" forget &&
+    { notify-send "Successfully forgot $ssid" && exit; }
 }
 
 if ! pgrep -x iwd >/dev/null 2>&1; then
-  if ! {sudo -A systemctl start iwd && sudo -A systemctl enable iwd}; then
-    notify-send -u critical "Unable to start iwd."
-    exit
-  fi
+  ! {sudo -A systemctl start iwd && sudo -A systemctl enable iwd} &&
+    { notify-send -u critical "Unable to start iwd."; exit; }
 fi
 
 if ! pgrep -x dhcpcd >/dev/null 2>&1; then
-  if ! {sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd};then
-    notify-send -u critical "Unable to start dhcpcd."
-    exit
-  fi
+  ! {sudo -A systemctl start dhcpcd && sudo -A systemctl enable dhcpcd} &&
+    { notify-send -u critical "Unable to start dhcpcd."; exit; }
 fi
 
 while :; do
-  options="Switch\nAdd\nScan\nForget"
-  choice=$(echo "$options" | menu -p "Network")
-  [ $choice ] || exit
+  set -- Switch Add Scan Forget
+  choice=$(printf "%s\n" "$@" | menu -p "Network")
+  [ "$choice" ] || exit
   case "$choice" in
-    Forget) forget;;
-    Scan) scan;;
-    Add) add;;
     Switch) switch;;
+    Add) add;;
+    Scan) scan;;
+    Forget) forget;;
   esac
 done

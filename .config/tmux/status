@@ -9,15 +9,8 @@ else
   temp_col='colour3'
 fi
 temp="#[bg=colour0,fg=$temp_col]$temp°C"
-bat='/sys/class/power_supply/BAT?'
-case $(cat $bat/status) in
-  Full)        sign='=';;
-  Discharging) sign='-';;
-  Charging)    sign='+';;
-esac
-capacity=$(cat $bat/capacity)
 [ "$capacity" -lt 10 ] && fg='colour1' || fg='colour4'
-bat="#[fg=$fg,bg=colour0]$sign$capacity%"
+bat="#[fg=$fg,bg=colour0]$(bat)%"
 clock="#[bg=colour0,fg=colour7]$(date +'%H:%M') #[fg=colour5]$(date +'%Y-%m-')#[fg=colour7]$(date +'%d')"
 session="#[bg=colour0,fg=colour7]#S#"
 echo "░▒▓█${bat}#[default]▓▒░░▒▓${temp}#[default]▓▒░░▒▓${clock}#[default]▓▒░░▒▓${session}#[default]█▒"

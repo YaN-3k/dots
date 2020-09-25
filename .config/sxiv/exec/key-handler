@@ -1,26 +1,24 @@
-#!/usr/bin/env sh
+#!/bin/sh
 while read -r file; do
+  fpath=$(readlink -f "$file")
   case "$1" in
   'w') setbg "$file" &;;
   'g') gimp "$file" &;;
   'c')
-    destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/zsh/directories |
-      awk '{print $2}' | ${DMENU:-dmenu} -p 'Copy' | sed "s|~|$HOME|g")"
+    destdir="$(shortcuts show | awk '{print $2}' | menu -p "Copy $file to" | sed "s|~|$HOME|g")"
     [ "$destdir" ] || exit
-    cp "$file" "$destdir" && notify-send "$file copied to $destdir." &;;
+    cp "$file" "$destdir" && notify-send "Image copied to $destdir." &;;
   'm')
-    destdir="$(sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/zsh/directories |
-      awk '{print $2}' | ${DMENU:-dmenu} -p 'Move' | sed "s|~|$HOME|g")"
+    destdir="$(shortcuts show | awk '{print $2}' | menu -p "Move $file to" | sed "s|~|$HOME|g")"
     [ "$destdir" ] || exit
-    mv "$file" "$destdir" && notify-send "$file moved to $destdir." &;;
+    mv "$file" "$destdir" && notify-send "Image moved to $destdir." &;;
   'd')
-    [ "$(printf "No\nYes" | ${DMENU:-dmenu} -p 'Delete')" = 'Yes' ] &&
-      rm "$file" && notify-send "$file deleted." &;;
+      prompt "Delete $file" && rm "$file" && notify-send "$file deleted" &;;
   'y')
-    readlink -f "$file" | xclip -selection clipboard &&
-      notify-send "$(readlink -f "$file") copied to clipboard" &;;
+     printf %s "$fpath" | xclip -selection clipboard &&
+      notify-send "Patch to image copied to clipboard" &;;
   'Y')
-    xclip -selection clipboard -t image/png -i "$(readlink -f "$file")" &&
-      notify-send -i "$(readlink -f "$file")" "Image copied to clipboard" &;;
+    xclip -selection clipboard -t image/png -i "$fpath" &&
+      notify-send -i "$fpath" "Image copied to clipboard" &;;
   esac
 done

@@ -38,10 +38,12 @@ function +virtual-env() {
 }
 precmd_functions+=(+virtual-env)
 
-export PROMPT="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
+#export PROMPT="%F{blue}[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}── ─ %f" # oneline
 #export PROMPT="%F{blue}┌[%F{white}%~%F{blue}]\${vcs_info_msg_0_}\${virtual_env_msg}"$'\n'"%F{blue}└─ ─ %f" # dual
-export RPROMPT="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
-export PROMPT2="%F{blue}[%f%_%F{blue}]%f "
+#export RPROMPT="%(?..%F{red}%?%f) %F{blue}─ ──[%F{white}%n@%M%F{blue}]"
+#export PROMPT2="%F{blue}[%f%_%F{blue}]%f "
+PROMPT='%F{%(?.4.1)}>%f ' # minimal
+export PROMPT2="%_%F{blue} >%f "
 
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -50,7 +52,7 @@ setopt hist_verify            # show command with history expansion to user befo
 setopt share_history          # share command history data
 
 setopt auto_menu        # automatically use menu completion
-setopt correct_all      # autocorrect commands
+#setopt correct_all      # autocorrect commands
 setopt always_to_end    # move cursor to end if word had one match
 setopt complete_in_word # completion from both ends
 autoload -Uz compinit && compinit -u
@@ -135,7 +137,7 @@ set -k               # allows comments in interactive shell
 setopt auto_cd       # cd by just typing the directory name
 setopt extendedglob  # additional syntax for filename generation
 unsetopt flowcontrol # disable ctrl-s and ctrl-q
-[ ! -f $ZDOTDIR/sc.sh ] && sc
+[ ! -f $ZDOTDIR/sc.sh ] && shortcuts
 source $ZDOTDIR/sc.sh
 
 # load functions
@@ -160,7 +162,7 @@ autoload -Uz run-help # search for help / manual pages
 #zle -N bracketed-paste bracketed-paste-magic
 
 function command_not_found_handler() {
-  print -P "%F{blue}[%fzsh%F{blue}]%f command not found: %F{red}$1%f"
+  print -P "not found: %F{red}$0%f" >&2
   return 127
 }
 
@@ -224,15 +226,15 @@ alias tre='trash-restore-interactive'
 alias trm='trash-remove-interactive'
 alias cleanup='trash-find -mtime +7 -exec rm -vrf {} \;'
 
-#alias ls='ls -CF --group-directories-first  --color=auto'
-#alias la='ls -ACF -h --group-directories-first --color=auto'
-#alias ll='ls -lA -h --group-directories-first --color=auto'
-#alias lt='tree'
+alias ls='ls -CF --group-directories-first  --color=auto'
+alias la='ls -ACF -h --group-directories-first --color=auto'
+alias ll='ls -lA -h --group-directories-first --color=auto'
+alias lt='tree'
 
-alias ls='exa --group-directories-first'
-alias la='exa -a --group-directories-first'
-alias ll='exa -al --group-directories-first'
-alias lt='exa -aT --group-directories-first'
+#alias ls='exa --group-directories-first'
+#alias la='exa -a --group-directories-first'
+#alias ll='exa -al --group-directories-first'
+#alias lt='exa -aT --group-directories-first'
 
 alias ir='irssi --home ~/.config/irssi'
 alias nc='ncmpcpp -q'
@@ -278,3 +280,4 @@ alias todo='ztodo'
 alias fuck='pkill -9'
 alias help='run-help'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
+alias clip="xclip -sel clip"

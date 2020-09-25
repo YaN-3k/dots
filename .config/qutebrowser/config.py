@@ -28,10 +28,9 @@ config.set("content.javascript.enabled", True, "qute://*/*")
 # Change start/default pages + search engine
 # config.set("url.start_pages", "https://start.duckduckgo.com/?kae=d")
 # config.set("url.default_page", "https://start.duckduckgo.com/?kae=d")
-config.set("url.start_pages", "https://cherrry9.github.io/startpage/")
-config.set("url.default_page", "https://cherrry9.github.io/startpage/")
-config.set("url.searchengines", {
-           "DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
+config.set("url.start_pages", "file:///home/cherrry9/.local/share/startpage/index.html")
+config.set("url.default_page", "file:///home/cherrry9/.local/share/startpage/index.html")
+config.set("url.searchengines", { "DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
 
 # Tab settings
 config.set("tabs.padding", {"top": 1, "bottom": 2, "left": 5, "right": 5})

@@ -1,4 +1,5 @@
 #!/bin/sh
 # sets the background. If given an argument, will set file as background
-[ -n "$1" ] && cp "$1" "$(xdg-user-dir PICTURES)/wallpaper" && notify-send -i ~/pix/wallpaper "Wallpaper changed."
+[ -f "$1" ] && { cp "$1" "$(xdg-user-dir PICTURES)/wallpaper"
+                 notify-send -i ~/pix/wallpaper "Wallpaper changed."; }
 xwallpaper --daemon --zoom "$(xdg-user-dir PICTURES)/wallpaper"

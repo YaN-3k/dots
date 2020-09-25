@@ -1,7 +1,4 @@
 #!/bin/sh
 # open file in editor
-if [ $# = 0 ] || [ ! -e "$1" ] || [ $(stat -c %U $1 2>/dev/null) = "$USER" ]; then
-  $EDITOR $*
-else
-  sudo $EDITOR $*
-fi
+[ $# = 0 ] || [ ! -e "$1" ] || [ $(stat -c %U $1 2>/dev/null) = "$USER" ] &&
+  $EDITOR "$@" || sudo $EDITOR "$@"

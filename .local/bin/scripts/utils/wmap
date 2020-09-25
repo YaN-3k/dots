@@ -17,7 +17,7 @@ case $1 in
         truncate -s $((size - item)) $list
         ;;
       *)
-        id=$(menu <"$list")
+        id=$(menu -p "Window" <"$list")
         id=${id##* }
         sed -i "/$id/d" "$list"
         ;;

@@ -78,7 +78,6 @@ help() {
   printf "  \033[34m-h\033[0m        Display what you're reading right now\n"
   printf "  \033[34m-d\033[0m        printf dependencies\n"
   printf "  \033[34m-c\033[0m        Don't ask if the user is ready to record\n"
-  printf "  \033[34m-p\033[0m     \033[35m[]\033[0m Save to and load from preset <x>\n"
   printf "  \033[34m-r\033[0m     \033[35m[]\033[0m Force framerate\n"
   printf "  \033[34m-b\033[0m     \033[35m[]\033[0m Force bitrate  (in MB)\n"
   printf "  \033[34m-m\033[0m     \033[35m[]\033[0m Force method   (slop, display)\n"
@@ -104,42 +103,22 @@ help() {
   exit
 }
 
-while getopts ':hdscb:m:r:nD:S:p:ao:' opt; do
+while getopts ':hdscb:m:r:nD:S:ao:' opt; do
   case "$opt" in
-    h)
-      help;;
-    d)
-      deps;;
-    s)
-      save;;
-    c)
-      ready='yes';;
-    b)
-      bitrate="-b:v ${OPTARG}M";;
-    m)
-      method="$OPTARG";;
-    r)
-      rate="$OPTARG";;
-    n)
-      nvenc=' ';;
-    D)
-      display="$OPTARG"
-      method='display';;
-    S)
-      sloptions="$OPTARG"
-      method='selection';;
-    p)
-      preset="$OPTARG";;
-    a)
-      audio;;
-    o)
-      output="$OPTARG";;
-    \?)
-      echo "Invalid Option: -$OPTARG" 1>&2
-      exit 1;;
-    :)
-      echo "Invalid Option: -$OPTARG requires an argument" 1>&2
-      exit 1;;
+    h) help;;
+    d) deps;;
+    s) save;;
+    c) ready='yes';;
+    b) bitrate="-b:v ${OPTARG}M";;
+    m) method="$OPTARG";;
+    r) rate="$OPTARG";;
+    n) nvenc=' ';;
+    D) display="$OPTARG"; method='display';;
+    S) sloptions="$OPTARG"; method='selection';;
+    a) audio;;
+    o) output="$OPTARG";;
+    \?) echo "Invalid Option: -$OPTARG" >&2; exit 1;;
+    :) echo "Invalid Option: -$OPTARG requires an argument" >&2; exit 1;;
   esac
 done
 shift $((OPTIND -1))
@@ -149,16 +128,6 @@ shift $((OPTIND -1))
   echo "Blaze is already running, exiting."
   notify-send "Blaze is already running, exiting."
   exit
-}
-
-[ "$preset" ] && {
-  # create preset location
-  mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}"
-
-  # load preset
-  preset_location="${XDG_CONFIG_HOME:-$HOME/.config}"/blaze/"$preset"
-  [ -f "$preset_location" ] &&
-    . "$preset_location"
 }
 
 # ask the user what method they want to use
@@ -177,7 +146,6 @@ shift $((OPTIND -1))
 }
 
 if [ "$method" = display ]; then
-
   # get information about the display
   monitors="$(xrandr --listmonitors | awk 'NR>1 { printf $NF"\n" }')"
 
@@ -194,9 +162,7 @@ if [ "$method" = display ]; then
   height="$2"
   offX="$3"
   offY="$4"
-
 elif [ "$method" = selection ] || [ "$method" = slop ]; then
-
   # select an area and make each number a separate word
   set -- $(slop $sloptions -f '%w %h %x %y')
 
@@ -208,12 +174,9 @@ elif [ "$method" = selection ] || [ "$method" = slop ]; then
 
   [ "$(( width % 2 ))" = 1 ] && width="$(( width + 1 ))"
   [ "$(( height % 2 ))" = 1 ] && height="$(( height + 1 ))"
-
 else
-
   printf "Invalid method; exiting\n"
   exit 1
-
 fi
 
 # detect if the user has a nvidia card and use nvenc
@@ -224,15 +187,6 @@ fi
 
 # ask the user if they want to start the recording
 [ ! "$ready" ] && ready="$(printf "yes\nno" | menu -p "Start the recording")"
-
-# save preset
-[ "$preset_location" ] && {
-  cat >"$preset_location"<<EOF
-[ ! "\$rate" ]    && rate="$rate"
-[ ! "\$bitrate" ] && bitrate="$bitrate"
-[ ! "\$method" ]  && method="$method"
-EOF
-}
 
 [ "$ready" = yes ] && {
   notify-send -t 1500 "Recording Started"
@@ -258,7 +212,7 @@ EOF
     -i "$DISPLAY.0+$offX,$offY"  \
     $bitrate                     \
     -pix_fmt yuv420p             \
-    $nvenc                      \
+    $nvenc                       \
     -q:v 0                       \
     "$output" &
 

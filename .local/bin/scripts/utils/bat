@@ -1,0 +1,8 @@
+#!/bin/sh
+bat='/sys/class/power_supply/BAT?'
+case $(cat $bat/status) in
+  Full)        sign='=';;
+  Discharging) sign='-';;
+  Charging)    sign='+';;
+esac
+echo "$sign$(cat $bat/capacity)"

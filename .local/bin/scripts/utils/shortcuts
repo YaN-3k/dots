@@ -1,4 +1,5 @@
 #!/bin/sh
+[ "$1" ]  && sed "s/\s.*#.*$//;/^\s*$/d" ~/.config/zsh/sc && exit
 while read -r line; do
   line=$(echo $line | sed "s@~@$HOME@")
   set -- $line
