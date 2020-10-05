@@ -15,26 +15,26 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-remote-status git-modified git-a
 zstyle ':vcs_info:*+*:*' debug false
 
 function +vi-git-remote-status() {
-    local ahead behind branch_status
-    behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
-    (( behind )) && branch_status+="|-$behind"
-    ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
-    (( ahead )) && branch_status+="|+$ahead"
-    hook_com[branch]+=$branch_status
+	local ahead behind branch_status
+	behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l)
+	(( behind )) && branch_status+="|-$behind"
+	ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l)
+	(( ahead )) && branch_status+="|+$ahead"
+	hook_com[branch]+=$branch_status
 }
 
 function +vi-git-modified() {
-    local modified=$(git diff --name-only | wc -l)
-    (( modified )) && hook_com[unstaged]+=$modified
+	local modified=$(git diff --name-only | wc -l)
+	(( modified )) && hook_com[unstaged]+=$modified
 }
 
 function +vi-git-added() {
-    local added=$(git diff --name-only --cached | wc -l)
-    (( added )) && hook_com[staged]+=$added
+	local added=$(git diff --name-only --cached | wc -l)
+	(( added )) && hook_com[staged]+=$added
 }
 
 function +virtual-env() {
-  [[ -n $VIRTUAL_ENV ]] && virtual_env_msg="%F{blue}-[%F{white}${VIRTUAL_ENV:t}%F{blue}]"
+	[[ -n $VIRTUAL_ENV ]] && virtual_env_msg="%F{blue}-[%F{white}${VIRTUAL_ENV:t}%F{blue}]"
 }
 precmd_functions+=(+virtual-env)
 
@@ -51,8 +51,8 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
 
-setopt auto_menu        # automatically use menu completion
 #setopt correct_all      # autocorrect commands
+setopt auto_menu        # automatically use menu completion
 setopt always_to_end    # move cursor to end if word had one match
 setopt complete_in_word # completion from both ends
 autoload -Uz compinit && compinit -u
@@ -78,17 +78,17 @@ local cursor_normal="\e[2 q"
 
 # change cursor shape for different vi modes.
 function zle-keymap-select() {
-  if [[ $KEYMAP == vicmd || $1 = 'block' ]]; then
-    print -n $cursor_normal
-  elif [[ $KEYMAP == main || $KEYMAP == viins || -z $KEYMAP || $1 = 'beam' ]]; then
-    print -n $cursor_insert
-  fi
+	if [[ $KEYMAP == vicmd || $1 = 'block' ]]; then
+		print -n $cursor_normal
+	elif [[ $KEYMAP == main || $KEYMAP == viins || -z $KEYMAP || $1 = 'beam' ]]; then
+		print -n $cursor_insert
+	fi
 }
 zle -N zle-keymap-select
 
 function zle-line-init() {
-  zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -v` has been set elsewhere)
-  print -n $cursor_insert
+	zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -v` has been set elsewhere)
+	print -n $cursor_insert
 }
 zle -N zle-line-init
 
@@ -97,14 +97,14 @@ function preexec() { print -n $cursor_insert; } # use beam shape cursor for each
 
 # fzf
 [ ! -d ~/.config/fzf ] && {
-  git clone --depth 1 https://github.com/junegunn/fzf ~/.config/fzf
-  ~/.config/fzf/install --no-bash --no-fish --xdg --all
+	git clone --depth 1 https://github.com/junegunn/fzf ~/.config/fzf
+	~/.config/fzf/install --no-bash --no-fish --xdg --all
 }
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 
 # syntax highlighting
 [ ! -d ~/.config/zsh-syntax-highlighting ] &&
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh-syntax-highlighting
+	git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.config/zsh-syntax-highlighting
 source ~/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
@@ -152,8 +152,9 @@ zstyle :sticky-note notefile $ZDOTDIR/.zsticky
 zstyle :sticky-note theme bg ''
 autoload -Uz ztodo # todo list
 zstyle ':ztodo:*' cache-file $ZDOTDIR/.ztodo
-autoload -Uz zmv # replacement for cp, mv and ln
-autoload -Uz run-help # search for help / manual pages
+autoload -Uz zmv       # replacement for cp, mv and ln
+autoload -Uz zcalc     # calculator
+autoload -Uz run-help  # search for help / manual pages
 (( $+aliases[run-help] )) && unalias run-help
 
 # automaticly escape urls special characters
@@ -162,8 +163,8 @@ autoload -Uz run-help # search for help / manual pages
 #zle -N bracketed-paste bracketed-paste-magic
 
 function command_not_found_handler() {
-  print -P "not found: %F{red}$0%f" >&2
-  return 127
+	print -P "not found: %F{red}$0%f" >&2
+	return 127
 }
 
 #       ---
@@ -191,14 +192,10 @@ autoload -Uz edit-command-line; zle -N edit-command-line
 bindkey -M vicmd '^e' edit-command-line
 bindkey -M viins '^e' edit-command-line
 
-autoload -Uz up-line-or-beginning-search
-autoload -Uz down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey -M viins '^k' up-line-or-beginning-search
-bindkey -M viins '^j' down-line-or-beginning-search
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
+bindkey -M viins '^k' up-line-or-search
+bindkey -M viins '^j' down-line-or-search
+bindkey -M vicmd 'k' up-line-or-search
+bindkey -M vicmd 'j' down-line-or-search
 bindkey -M vicmd '?' history-incremental-search-backward
 bindkey -M vicmd '/' history-incremental-search-forward
 bindkey -M vicmd '^r' fzf-history-widget
@@ -264,9 +261,9 @@ alias tm='tmux -f ~/.config/tmux/tmux.conf'
 
 alias yt-dl='youtube-dl -o "%(title)s.%(ext)s"'
 alias yt-video='yt-dl -f bestvideo'
-alias yt-audio='yt-dl -f bestaudio'
-alias yt-mp3='yt-audio --audio-quality 0 -x --audio-format mp3'
-alias yt-flac='yt-audio --audio-quality 0 -x --audio-format flac'
+alias yt-audio='yt-dl -f bestaudio --audio-quality 0 -x'
+alias yt-mp3='yt-audio --audio-format mp3'
+alias yt-flac='yt-audio --audio-format flac'
 
 alias mirror="sudo reflector -l 30 -n 10 -f 30 --verbose --save /etc/pacman.d/mirrorlist"
 alias mirrors="sudo reflector -l 50 -n 20 --sort score --verbose --save /etc/pacman.d/mirrorlist"

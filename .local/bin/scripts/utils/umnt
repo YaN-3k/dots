@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/sh -e
 # unmount disk
 fe() {
-  while read -r l; do
-    set -- $l
-    grep -iq "$2" /etc/fstab || echo "$1 $2"
-  done
+	while read -r l; do
+		set -- $l
+		grep -iq "$2" /etc/fstab || echo "$1 $2"
+	done
 }
 set -- $(lsblk -rno 'name,mountpoint' | grep ' /' | fe | menu -0 -p 'Umount')
-[ "$1" ] || exit
+[ "$1" ]
 sudo umount "$2"
 [ -d "$HOME/mnt/$1" ] && rmdir "$HOME/mnt/$1"
 notify-send "Unmounted $1" "$2"

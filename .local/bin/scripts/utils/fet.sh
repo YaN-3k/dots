@@ -3,7 +3,6 @@
 #    fet.sh
 #  a fetch in pure POSIX shell
 #
-# source: https://github.com/6gk/fet.sh
 
 # supress errors
 exec 2>/dev/null

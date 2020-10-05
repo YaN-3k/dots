@@ -1,13 +1,13 @@
 #!/bin/sh
 file='/sys/class/leds/dell::kbd_backlight/brightness'
 if [ -f "$file" ]; then
-  current=$(cat $file)
-  case $1 in
-    -inc) [ "$current" -lt 4 ] && echo $((current + 1)) | sudo -A tee $file;;
-    -dec) [ "$current" -gt 0 ] && echo $((current - 1)) | sudo -A tee $file;;
-    -set) [ "$2" ] && echo "$2" | sudo -A tee $file
-  esac
+	current=$(cat $file)
+	case $1 in
+		-inc) [ "$current" -lt 4 ] && echo $((current + 1)) | sudo -A tee $file;;
+		-dec) [ "$current" -gt 0 ] && echo $((current - 1)) | sudo -A tee $file;;
+		-set) [ "$2" ] && echo "$2" | sudo -A tee $file
+	esac
 else
-  echo "File doesn't exist!"
-  exit 1
+	echo "File doesn't exist!"
+	exit 1
 fi

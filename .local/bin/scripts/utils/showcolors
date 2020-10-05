@@ -2,7 +2,7 @@
 # Show colors from X server resource database.
 colors=$(xrdb -query | sed -n 's/\*.color//p' | sort -n | cut -d'#' -f2)
 for color in $colors; do
-  printf "\033[$hue;$((30 + offset))m██ $color \033[0m"
-  offset=$((offset + 1))
-  [ $offset -ge 8 ] && { hue=1; offset=0; echo; }
+	printf "\033[$hue;$((30 + offset))m██ $color \033[0m"
+	offset=$((offset + 1))
+	[ $offset -ge 8 ] && { hue=1; offset=0; echo; }
 done

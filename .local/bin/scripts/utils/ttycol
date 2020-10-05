@@ -4,16 +4,16 @@ file='/usr/local/bin/ttycol.sh'
 serv='/usr/lib/systemd/system/ttycol.service'
 colors=$(xrdb -query | sed -rn 's/\*.?color//gp' | sort -n | cut -d'#' -f2)
 {
-  echo '#!/bin/sh'
-  echo 'for tty in /dev/tty[0-9]; do'
-  echo '\t[ -w $tty ] || continue'
-  i=0
-  for color in $colors; do
-    printf '\tprintf "\\033]P%X%s\\n" > $tty\n' "$i" "$color"
-    [ $i -ge 15 ] && break
-    i=$((i + 1))
-  done
-  echo 'done'
+	echo '#!/bin/sh'
+	echo 'for tty in /dev/tty[0-9]; do'
+	echo '\t[ -w $tty ] || continue'
+	i=0
+	for color in $colors; do
+		printf '\tprintf "\\033]P%X%s\\n" > $tty\n' "$i" "$color"
+		[ $i -ge 15 ] && break
+		i=$((i + 1))
+	done
+	echo 'done'
 } | sudo tee >"$file"; chmod +x "$file"
 [ -e $serv ] || cat << EOF | sudo tee "$serv" >/dev/null
 [Unit]

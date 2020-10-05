@@ -1,4 +1,4 @@
 #!/bin/sh
 IFS=:
 set -- $PATH
-find "$@" -type f,l -printf '%f\n' -executable | sort | uniq | menu -p "Launch" | sh &
+exec "$(find "$@" -type f,l -printf '%f\n' -executable | sort | uniq | menu -p 'Launch')"

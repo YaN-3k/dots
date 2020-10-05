@@ -2,11 +2,11 @@
 # tmux statusline script
 temp=$(sensors | awk '/Core 0/ {print int(gensub(/+(.*)°C/, "\\1", "g", $3)); exit}')
 if [ "$temp" -le 50 ]; then
-  temp_col='colour4'
+	temp_col='colour4'
 elif [ "$temp" -ge 75 ]; then
-  temp_col='colour1'
+	temp_col='colour1'
 else
-  temp_col='colour3'
+	temp_col='colour3'
 fi
 temp="#[bg=colour0,fg=$temp_col]$temp°C"
 [ "$capacity" -lt 10 ] && fg='colour1' || fg='colour4'

@@ -6,69 +6,58 @@
 
 " color depending on mode {{{
 function! RedrawModeColors(mode)
-  " normal mode
-  if a:mode ==# 'n'
-    hi! link Mode NormalMode
-  " insert mode
-  elseif a:mode ==# 'i'
-    hi! link Mode InsertMode
-  " replace mode
-  elseif a:mode ==# 'R'
-    hi! link Mode ReplaceMode
-  " visual mode
-  elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# ''
-    hi! link Mode VisualMode
-  " command mode
-  elseif a:mode ==# 'c'
-    hi! link Mode CmdMode
-  " terminal mode
-  elseif a:mode ==# 't'
-    hi! link Mode TermMode
-  endif
-  return ''
+	if a:mode ==# 'n'
+		hi! link Mode NormalMode
+	elseif a:mode ==# 'i'
+		hi! link Mode InsertMode
+	elseif a:mode ==# 'R'
+		hi! link Mode ReplaceMode
+	elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# ''
+		hi! link Mode VisualMode
+	elseif a:mode ==# 'c'
+		hi! link Mode CmdMode
+	elseif a:mode ==# 't'
+		hi! link Mode TermMode
+	endif
+	return ''
 endfunction " }}}
 
 " nice mode name {{{
 function! ModeName(mode)
-  if a:mode ==# 'n'
-    return 'NORMAL'
-    " Insert mode
-  elseif a:mode ==# 'i'
-    return 'INSERT'
-    " Replace mode
-  elseif a:mode ==# 'R'
-    return 'REPLACE'
-    " Visual mode
-  elseif a:mode ==# 'v'
-    return 'VISUAL'
-  elseif a:mode ==# 'V'
-    return 'V-LINE'
-  elseif a:mode ==# ''
-    return 'V-BLOCK'
-    " Command mode
-  elseif a:mode ==# 'c'
-    return 'COMMAND'
-    " Terminal mode
-  elseif a:mode ==# 't'
-    return 'TERMINAL'
-  endif
+	if a:mode ==# 'n'
+		return 'NORMAL'
+	elseif a:mode ==# 'i'
+		return 'INSERT'
+	elseif a:mode ==# 'R'
+		return 'REPLACE'
+	elseif a:mode ==# 'v'
+		return 'VISUAL'
+	elseif a:mode ==# 'V'
+		return 'V-LINE'
+	elseif a:mode ==# ''
+		return 'V-BLOCK'
+	elseif a:mode ==# 'c'
+		return 'COMMAND'
+	elseif a:mode ==# 't'
+		return 'TERMINAL'
+	endif
 endfunction " }}}
 
 " git {{{
 function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+	return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
 " }}}
 
 " modification mark {{{
 function! ModifiedSymbol(modified)
-  if a:modified == 1 | return '+' | else | return '' | endif
+	if a:modified == 1 | return '+' | else | return '' | endif
 endfunction
 " }}}
 
 " filetype {{{
 function! Filetype(filetype)
-  if a:filetype ==# '' | return '-' | else | return a:filetype | endif
+	if a:filetype ==# '' | return '-' | else | return a:filetype | endif
 endfunction
 " }}}
 
@@ -96,12 +85,12 @@ set statusline+=%#Mode#%t
 " git branch
 let branch = GitBranch()
 if !empty(branch)
-  set statusline+=%#Separator#▓▒░
-  set statusline+=%#Separator#░▒▓
-  set statusline+=%#Git#%{FugitiveHead()}
-  set statusline+=%#Separator#█▓▒░
+	set statusline+=%#Separator#▓▒░
+	set statusline+=%#Separator#░▒▓
+	set statusline+=%#Git#%{FugitiveHead()}
+	set statusline+=%#Separator#█▓▒░
 else
-  set statusline+=%#Separator#█▓▒░
+	set statusline+=%#Separator#█▓▒░
 endif
 
 " Modified status

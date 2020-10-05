@@ -1,21 +1,21 @@
 #!/bin/sh
-# Preview script for fzf.
+# preview script for shell utilities
 case "$1" in
-*.png | *.jpg | *.jpeg | *.mkv | *.mp4 | *.mp3) mediainfo "$1" ;;
-*.pdf) pdftotext "$1" - ;;
-*.zip) zipinfo "$1" ;;
-*.tar.gz) tar -ztvf "$1" ;;
-*.tar.bz2) tar -jtvf "$1" ;;
-*.tar) tar -tvf "$1" ;;
-*.rar) unrar l "$1" ;;
-*.7z) 7z l "$1" ;;
+*.png|*.jpg |*.jpeg |*.mkv |*.mp4 |*.mp3) mediainfo "$1";;
+*.pdf) pdftotext "$1" -;;
+*.zip) zipinfo "$1";;
+*.tar.gz) tar -ztvf "$1";;
+*.tar.bz2) tar -jtvf "$1";;
+*.tar) tar -tvf "$1";;
+*.rar) unrar l "$1";;
+*.7z) 7z l "$1";;
 *.html | *.xml) w3m -dump "$1" ;;
 *)
-  if [ -d "$1" ]; then
-    tree "$1" -L 1 --dirsfirst
-  elif [  -f "$1" ] && file "$1" | grep -q text; then
-    cat "$1"
-  else
-    file "$1"
-  fi
-esac
+	if [ -d "$1" ]; then
+		tree "$1" -L 1 --dirsfirst
+	elif [  -f "$1" ] && file "$1" | grep -q text; then
+		cat "$1"
+	else
+		file "$1"
+	fi
+esac 2>/dev/null || file "$1"

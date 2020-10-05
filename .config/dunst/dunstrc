@@ -8,70 +8,71 @@
 #  ░░░░░░  ░░░░░░ ░░░   ░░ ░░░░░░     ░░
 
 [global]
-  font = Hack Nerd Font 10
-  geometry = "500-20+20"
-  padding = 5
-  horizontal_padding = 20
-  shrink = true
+	font = Hack Nerd Font 10
+	geometry = "500-20+20"
+	padding = 5
+	horizontal_padding = 20
+	shrink = true
 
-  markup = full
-  format = "<b>%s</b>\n%b"
-  alignment = center
-  word_wrap = true
-  separator_color = auto
-  transparency = 20
+	markup = full
+	format = "<b>%s</b>\n%b"
+	alignment = center
+	word_wrap = true
+	separator_color = auto
+	transparency = 20
 
-  dmenu = /usr/bin/dmenu -p dunst:
-  browser = /usr/bin/qutebrowser
+	dmenu = /usr/bin/dmenu -p dunst:
+	browser = /usr/bin/qutebrowser
 
 	icon_position = left
 	max_icon_size = 32
 	icon_path = /dev/null
 
-  idle_threshold = 0
-  show_age_threshold = 60
-  show_indicators = false
+	idle_threshold = 0
+	show_age_threshold = 60
+	show_indicators = false
+	hide_duplicate_count = true
 
 [shortcuts]
-  close = ctrl+space
-  close_all = ctrl+shift+space
-  history = ctrl+grave
-  context = ctrl+shift+period
+	close = ctrl+space
+	close_all = ctrl+shift+space
+	history = ctrl+grave
+	context = ctrl+shift+period
 
 [urgency_low]
-  background = "#161821"
-  foreground = "#c6c8d1"
-  frame_color = "#89b8c2"
-  timeout = 5
+	background = "#161821"
+	foreground = "#adafb8"
+	frame_color = "#89b8c2"
+	timeout = 5
 
 [urgency_normal]
-  background = "#161821"
-  foreground = "#d2d4de"
-  frame_color = "#84a0c6"
-  timeout = 5
+	background = "#161821"
+	foreground = "#d2d4de"
+	frame_color = "#84a0c6"
+	timeout = 5
 
 [urgency_critical]
-  background = "#161821"
-  foreground = "#e27878"
-  frame_color = "#84a0c6"
-  timeout = 10
+	background = "#161821"
+	foreground = "#e27878"
+	frame_color = "#84a0c6"
+	timeout = 10
 
 [history-ignore-brightness]
 	appname = dunstify
-  summary = "Brightness"
+	summary = "Brightness"
 	history_ignore = yes
 
 [history-ignore-volume]
 	appname = dunstify
-  summary = "Volume"
+	summary = "Volume"
 	history_ignore = yes
 
 [history-ignore-switched]
 	appname = dunstify
-  summary = "Switched to *"
+	summary = "Switched to *"
 	history_ignore = yes
 
 [history-ignore-moved]
 	appname = dunstify
-  summary = "Moved to *"
+	summary = "Moved to *"
 	history_ignore = yes

@@ -1,11 +1,11 @@
 #!/bin/sh
 # resize window
 case $1 in
-  # dimension  direction  fallback-dir  sign
-  west)  set -- width right left -;;
-  east)  set -- width right left +;;
-  north) set -- height bottom top -;;
-  south) set -- height bottom top +;;
+	# dimension  direction  fallback-dir  sign
+	west)  set -- width right left -;;
+	east)  set -- width right left +;;
+	north) set -- height bottom top -;;
+	south) set -- height bottom top +;;
 esac
 set -- "$@" "${4}40"
 

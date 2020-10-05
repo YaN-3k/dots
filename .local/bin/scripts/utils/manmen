@@ -1,0 +1,3 @@
+#!/bin/sh
+manpage=$(man -k . | menu | cut -d' ' -f1)
+[ "$manpage" ] && st -e man "$manpage" # man -Tpdf "$manpage" | zathura -

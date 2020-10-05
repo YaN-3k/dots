@@ -7,14 +7,14 @@ normal_inner="0xd2d4de"
 draw() { chwb2 -I "$i" -O "$outer" -i "2" -o "8" "$@" 2>/dev/null; }
 
 targets() {
-  case $1 in
-    focused) bspc query -N -n .local.focused.\!fullscreen;;
-    normal)  bspc query -N -n .local.\!focused.\!fullscreen;;
-  esac
+	case $1 in
+		focused) bspc query -N -n .local.focused.\!fullscreen;;
+		normal)  bspc query -N -n .local.\!focused.\!fullscreen;;
+	esac
 }
 
 # initial draw, and then subscribe to events
 bspc subscribe node_geometry node_focus | while read -r _; do
-    i=$focused_inner draw $(targets focused)
-    i=$normal_inner draw $(targets normal)
+	i=$focused_inner draw $(targets focused)
+	i=$normal_inner draw $(targets normal)
 done

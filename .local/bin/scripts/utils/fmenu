@@ -7,14 +7,14 @@ cat >"$in" 2>/dev/null
 
 # parse opt
 while [ "$1" ]; do
-  case "$1" in
-    -p) prompt=" $2";;
-    -m) args="$args -m";;
-    -n) class="$2" && shift;;
-    -g) geometry="$2" && shift;;
-    -0) args="$args -0";;
-  esac
-  shift
+	case "$1" in
+		-p) prompt=" $2";;
+		-m) args="$args -m";;
+		-n) class="$2" && shift;;
+		-g) geometry="$2" && shift;;
+		-0) args="$args -0";;
+	esac
+	shift
 done
 args="$args --expect alt-enter --print-query --no-info --height 100% --prompt='$prompt > '"
 

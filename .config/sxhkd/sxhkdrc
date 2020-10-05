@@ -10,31 +10,31 @@
 # bspwm {{{
 # switch the node state on tiled - floating
 super + t
-  bspc node --state $(bspc query -N -n focused.tiled >/dev/null 2>&1 && echo floating || echo tiled)
+	bspc node --state $(bspc query -N -n focused.tiled >/dev/null 2>&1 && echo floating || echo tiled)
 
 # switch the node state to pseudo tiled
 super + p
-  bspc node --state ~pseudo_tiled
+	bspc node --state ~pseudo_tiled
 
 # switch the node state to fullscreen
 super + f
-  bspc node --state ~fullscreen
+	bspc node --state ~fullscreen
 
 # switch monocle layout
 super + m
-  bspc desktop -l prev
+	bspc desktop -l prev
 
 # set marked, locked, sticky, private flag
 super + {i,x,s,z}
-  bspc node -g {marked,locked,sticky,private}
+	bspc node -g {marked,locked,sticky,private}
 
 # focus or send the node to the given desktop
 super + {_,shift +} space
-  bspc node {-f,-s} biggest.local
+	bspc node {-f,-s} biggest.local
 
 # focus the next/previous node in the current desktop
 super + {_,shift +} n
-  bspc node -f {next,prev}.local
+	bspc node -f {next,prev}.local
 
 # focus/move/resize the node
 super + {_,shift,ctrl} + {h,j,k,l}
@@ -42,188 +42,191 @@ super + {_,shift,ctrl} + {h,j,k,l}
 
 # resize gaps
 super + g: {k,j}
-  bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
+	bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
 # focus on the last desktop/node
 super + {grave,Tab}
-  bspc {node -f last.local,desktop -f last,node --swap last}
+	bspc {node -f last.local,desktop -f last,node --swap last}
 
 # move/Send the node to selected desktop
 super + {_,shift +} {1-9,0}
-  bspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} '^{1-9,10}'
 
 # flip the layout vertically/horizontally
 super + {v,b}
-  bspc node @/ --flip {vertical,horizontal}
+	bspc node @/ --flip {vertical,horizontal}
 
 # rotate nodes tree
 super + {_,shift +} r
-   bspc node @/ -R {90,270}
+	bspc node @/ -R {90,270}
 
 # circulate the leaves of the tree
 super + {_,shift +} c
-  bspc node @/ --circulate {forward,backward}
+	bspc node @/ --circulate {forward,backward}
 
 # make a new split
 super + alt + {h,j,k,l}
-  bspc node -p {west,south,north,east}
+	bspc node -p {west,south,north,east}
 
 # cancel the preselection
 super + {_,shift +} e
-  {bspc node -p cancel,bspc query -N -d | xargs -I{} -n1 bspc node {} -p cancel}
+	{bspc node -p cancel,bspc query -N -d | xargs -I{} -n1 bspc node {} -p cancel}
 
 # send the focused node to the newest preselected node
 super + y
-  bspc node focused -n newest.!automatic.local
+	bspc node focused -n newest.!automatic.local
 # }}}
 
 # apps {{{
 # close/Kill the node
 super + {_,shift + }q
-  bspc node -{c,k}
+	bspc node -{c,k}
 
 # run dmenu desktop
 super + d
-  launch
+	launch
 
 # open a terminal
 super + Return
-  $TERMINAL
+	$TERMINAL
 
 # open a floating terminal
 super + shift + Return
-  $TERMINAL -n centered
+	$TERMINAL -n centered
 
 # open a terminal in the same directory
 super + ctrl + Return
-  samedir
+	samedir
 
 # u/map window
 super + {_,shift +} u
-  wmap {umap,map}
-
+	wmap {umap,map}
 
 # open the file manager
 alt + f
-  $TERMINAL -e $FILE
+	$TERMINAL -e $FILE
 
 # open the browser
 alt + w
-  $BROWSER
+	$BROWSER
 
 # open the mpd client
 alt + m
-  $TERMINAL -n centered -e ncmpcpp
+	$TERMINAL -n centered -e ncmpcpp
 
 # open the neovim
 alt + v
-  $TERMINAL -e nvim
+	$TERMINAL -e nvim
 
 # open process viewer
 alt + p
-  $TERMINAL -n centered -e htop
+	$TERMINAL -n centered -e htop
 
 # open the sound configurations
 alt + a
-  $TERMINAL -e alsamixer
+	$TERMINAL -e alsamixer
 
 # open rss feader
 alt + n
-  $TERMINAL -n newsboat -e news
+	$TERMINAL -n newsboat -e news
 
 # show help
 super + F1
-  $TERMINAL -n centered -e sxhkd-help
+	$TERMINAL -n centered -e sxhkd-help
 # }}}
 
 # media {{{
 # increase the volume (mpd or alsa)
 super + {shift + minus,shift + plus}
-  {mpc vol -5,mpc vol +5}; notvol mpd
+	{mpc vol -5,mpc vol +5}; notvol mpd
 
 # decrease the volume (mpd or alsa)
 super + {minus,equal}
-  {vol down,vol up}; notvol
+	{vol down,vol up}; notvol
 
 # mute the sound
 super + shift + m
-  amixer sset Master toggle
+	amixer sset Master toggle
 
 # pause mpd audio
 super + shift + p
-  mpc toggle
+	mpc toggle
 
 # changes to the next/previous tracks
 super + {comma,period}
-  mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
+	mpc {prev; dunstify "$(mpc current)",next; dunstify "$(mpc current)"}
 
 # restart track
 super + shift + less
-  mpc seek 0%
+	mpc seek 0%
 
 # seek foward in song
 super + {_,shift +} bracketright
-  mpc seek +{10,120}
+	mpc seek +{10,120}
 
 # seek backward in song
 super + {_,shift +} bracketleft
-  mpc seek -{10,120}
+	mpc seek -{10,120}
 
 # increase the backlight
 alt + {minus,equal}
-  {xbacklight -dec 10,xbacklight -inc 10}; notlight
+	{xbacklight -dec 10,xbacklight -inc 10}; notlight
 
 # decrease the backlight
 alt  + shift + {minus,plus}
-  {keybacklight -dec,keybacklight -inc}
+	{keybacklight -dec,keybacklight -inc}
 # }}}
 
 # scripts {{{
 # bookmarks
 super + ctrl + o
-  search
+	search
 
 # passmenu
 super + ctrl + p
-  passmenu2 --type
+	passmenu2 --type
 
 # kill menu
 super + ctrl + f
-  killmen
+	killmen
+
+# man menu
+super + ctrl + i
+	manmen
 
 # un/mount drives
 super + ctrl + {m,u}
-  {_,u}mnt
+	{_,u}mnt
 
 # lock, shutdown, reboot, exit?
 super + Escape
-  pm
+	pm
 
 # take a screenshot
 super + ctrl + s
-  screenshot
+	screenshot
 
 # record the screen
 super + ctrl + r
-  blaze
+	blaze
 
 # kill the recording
 super + ctrl + w
-  blaze -s
+	blaze -s
 
 # display information
 super + slash
-  dunstify "$(date "+%a %d %b - %I:%M %p")" "Battery: $(bat)%"
+	dunstify "$(date "+%a %d %b - %I:%M %p")" "Battery: $(bat)%"
 
 # show the clicboard content
 super + o
-  showclip
+	showclip
 
 # network menu
 super + ctrl + n
-  iwd
+	iwd
 
 # open terminal if desktop is empty
 ~button1
-  click-desktop
+	click-desktop
 # }}}

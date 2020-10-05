@@ -1,7 +1,7 @@
 h       ~
 bin     ~/.local/bin
 dl      ~/.local/dl
-share   ~/.local/share
+sha     ~/.local/share
 sc      ~/.config/zsh/sc
 z       ~/.config/zsh/.zshrc
 com     ~/.config/picom.conf

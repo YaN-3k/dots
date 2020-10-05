@@ -1,76 +1,76 @@
 [user]
-  name = cherrry9
-  email = cherrry9@disroot.org
-  signingkey = FF469BD6
+	name = cherrry9
+	email = cherrry9@disroot.org
+	signingkey = FF469BD6
 
 [commit]
-  gpgsign = true
+	gpgsign = true
 
 [tag]
-  gpgsign = true
+	gpgsign = true
 
 [push]
-  default = current
+	default = current
 
 [color "status"]
-  added = bold blue
-  changed = bold white
-  untracked = bold red
+	added = bold blue
+	changed = bold white
+	untracked = bold red
 
 [color "branch"]
-  current = bold reverse blue
-  local = blue
-  remote = yellow
+	current = bold reverse blue
+	local = blue
+	remote = yellow
 
 [format]
-  pretty = %C(yellow)%h%Creset -%C(bold blue)%d%Creset %s %Cgreen(%cr) %C(bold black)<%an>%Creset
+	pretty = %C(yellow)%h%Creset -%C(bold blue)%d%Creset %s %Cgreen(%cr) %C(bold black)<%an>%Creset
 
 [credential]
-  helper = cache --timeout 28800
+	helper = cache --timeout 28800
 
 [rerere]
-  enabled = 1
-  autoupdate = 1
+	enabled = 1
+	autoupdate = 1
 
 [merge]
-  style = diff3
-  tool = nvim
+	style = diff3
+	tool = nvim
 
 [mergetool]
-  prompt = false
+	prompt = false
 
 [mergetool "nvim"]
-  cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
+	cmd = nvim -f -c \"Gvdiffsplit!\" \"$MERGED\"
 
 [diff]
-  tool = nvim
+	tool = nvim
 
 [difftool]
-  prompt = false
+	prompt = false
 
 [difftool "nvim"]
-  cmd = nvim -d \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c \"$wincmd w\" -c \"wincmd J\"
+	cmd = nvim -d \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c \"$wincmd w\" -c \"wincmd J\"
 
 [alias]
-  a = add -v
-  ap = add -p
+	a = add -v
+	ap = add -p
 
-  c = commit
-  ca = commit -a
-  cae = commit -a --no-edit
+	c = commit
+	ca = commit -a
+	cae = commit -a --no-edit
 
-  s = status
-  ss = status -s
+	s = status
+	ss = status -s
 
-  l = log
-  ls = log --show-signature
-  lp = log -p
+	l = log
+	ls = log --show-signature
+	lp = log -p
 
-  mt = mergetool
-  df = difftool
-  d = diff
-  ds = diff --staged
+	mt = mergetool
+	df = difftool
+	d = diff
+	ds = diff --staged
 
-  co = checkout
-  com = checkout master
-  cob = checkout -b
+	co = checkout
+	com = checkout master
+	cob = checkout -b

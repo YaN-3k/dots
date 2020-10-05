@@ -6,11 +6,11 @@
 prefix=${PASSWORD_STORE_DIR-~/.password-store}
 
 while read -r file; do
-  file="${file%.gpg}"
-  [ "$password_files" ] &&
-    password_files="$password_files\n${file##$prefix/}" ||
-    password_files="${file##$prefix/}"
-done <<EOF
+	file="${file%.gpg}"
+	[ "$password_files" ] &&
+		password_files="$password_files\n${file##$prefix/}" ||
+		password_files="${file##$prefix/}"
+		done <<EOF
 $(find "$prefix" -name \*.gpg -type f)
 EOF
 
@@ -19,8 +19,8 @@ password=$(printf '%b\n' "$password_files" | menu)
 [ ! "$password" ] && exit
 
 if [ "$typeit" -eq 0 ]; then
-  pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } |
-    xdotool type --clearmodifiers --file -
+	pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } |
+		xdotool type --clearmodifiers --file -
 else
-  pass show -c "$password" 2>/dev/null
+	pass show -c "$password" 2>/dev/null
 fi

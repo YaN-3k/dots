@@ -11,34 +11,34 @@ let g:colors_name='iceberg'
 " }}}
 
 " palette {{{
-let s:ice0  =  [0,  '#22262e']
-let s:ice1  =  [1,  '#e27878']
-let s:ice2  =  [2,  '#b4be82']
-let s:ice3  =  [3,  '#e2a478']
-let s:ice4  =  [4,  '#84a0c6']
-let s:ice5  =  [5,  '#a093c7']
-let s:ice6  =  [6,  '#89b8c2']
-let s:ice7  =  [7,  '#c6c8d1']
+let s:ice0  = [0,  '#22262e']
+let s:ice1  = [1,  '#e27878']
+let s:ice2  = [2,  '#b4be82']
+let s:ice3  = [3,  '#e2a478']
+let s:ice4  = [4,  '#84a0c6']
+let s:ice5  = [5,  '#a093c7']
+let s:ice6  = [6,  '#89b8c2']
+let s:ice7  = [7,  '#c6c8d1']
 
-let s:ice8  =  [8,  '#6b7089']
-let s:ice9  =  [9,  '#e98989']
-let s:ice10 =  [10, '#c0ca8e']
-let s:ice11 =  [11, '#e9b189']
-let s:ice12 =  [12, '#91acd1']
-let s:ice13 =  [13, '#ada0d3']
-let s:ice14 =  [14, '#95c4ce']
-let s:ice15 =  [15, '#d2d4de']
+let s:ice8  = [8,  '#6b7089']
+let s:ice9  = [9,  '#e98989']
+let s:ice10 = [10, '#c0ca8e']
+let s:ice11 = [11, '#e9b189']
+let s:ice12 = [12, '#91acd1']
+let s:ice13 = [13, '#ada0d3']
+let s:ice14 = [14, '#95c4ce']
+let s:ice15 = [15, '#d2d4de']
 
-let s:none  =  ["none", "none"]
+let s:none  = ["none", "none"]
 
 function! s:HL(scope, bg, fg, attr)
-  exec "hi ".a:scope
-    \ "ctermbg=".a:bg[0]
-    \ "ctermfg=".a:fg[0]
-    \ "guibg=".a:bg[1]
-    \ "guifg=".a:fg[1]
-    \ "cterm=".a:attr
-    \ "gui=".a:attr
+	exec "hi ".a:scope
+	\ "ctermbg=".a:bg[0]
+	\ "ctermfg=".a:fg[0]
+	\ "guibg=".a:bg[1]
+	\ "guifg=".a:fg[1]
+	\ "cterm=".a:attr
+	\ "gui=".a:attr
 endfunction
 " }}}
 

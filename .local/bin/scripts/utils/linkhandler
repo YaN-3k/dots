@@ -3,11 +3,11 @@
 [ "$1" ] || exit
 exec >/dev/null 2>&1
 case "$1" in
-  *mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
-    setsid mpv -quiet "$1" & ;;
-  *png|*jpg|*jpe|*jpeg|*gif)
-    file=$(echo "$1" | sed "s/.*\///")
-    curl -sL "$1" > "/tmp/$file" && sxiv -ab "/tmp/$file" &;;
-  *mp3|*flac|*opus|*mp3?source*) cd ~/.local/dl && setsid curl -LO "$1" &;;
-  *) [ -f "$1" ] && $TERMINAL -e $EDITOR "$1" || setsid $BROWSER "$1";;
+	*mkv|*webm|*mp4|*youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
+		setsid mpv -quiet "$1" & ;;
+	*png|*jpg|*jpe|*jpeg|*gif)
+		file=$(echo "$1" | sed "s/.*\///")
+		curl -sL "$1" > "/tmp/$file" && sxiv -ab "/tmp/$file" &;;
+	*mp3|*flac|*opus|*mp3?source*) cd ~/.local/dl && setsid curl -LO "$1" &;;
+	*) [ -f "$1" ] && $TERMINAL -e $EDITOR "$1" || setsid $BROWSER "$1";;
 esac
