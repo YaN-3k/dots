@@ -230,3 +230,5 @@ super + ctrl + n
 ~button1
 	click-desktop
 # }}}
+
+# vi: fdm=marker

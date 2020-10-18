@@ -10,12 +10,12 @@ $ yay -S --needed polybar
 ```
 Python packages:
 ```
-$ pip install --user pynvim msgpack ueberzug
+$ pip install --user ueberzug
 ```
 ## Setup dotfiles
 Download dotfiles
 ```
-$ git clone --bare https://github.com/cherrry9/dots.git ~/.config/dots-git
+$ git clone --recurse-submodules --bare https://github.com/cherrry9/dots.git ~/.config/dots-git
 $ alias dots='git --git-dir ~/.config/dots-git/ --work-tree ~'
 $ dots checkout
 ```
@@ -37,7 +37,7 @@ $ dots config --local status.showUntrackedFiles no
 ```
 Install fonts
 ```
-$ fc-cache -f -v
+$ fc-cache -fv
 ```
 Create user directories like ~/music and ~/pix
 ```
@@ -50,7 +50,7 @@ $ chsh -s /usr/bin/zsh
 Remove `LICENSE`, `README.md` and `INSTALL.md` from your `~`
 ```
 $ dots update-index --assume-unchanged LICENSE README.md INSTALL.md
-$ rm -rf LICENSE README.md
+$ rm -rf LICENSE README.md INSTALL.md
 ```
 You can revert this later with `--no-assume-unchanged` flag.
 ## Build and install suckless programs

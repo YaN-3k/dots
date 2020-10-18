@@ -1,0 +1,12 @@
+[submodule ".config/nvim/pack/plugins/start/fzf.vim"]
+	path = .config/nvim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule ".config/nvim/pack/plugins/start/targets.vim"]
+	path = .config/nvim/pack/plugins/start/targets.vim
+	url = https://github.com/wellle/targets.vim
+[submodule ".config/nvim/pack/plugins/start/vim-surround"]
+	path = .config/nvim/pack/plugins/start/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule ".config/nvim/pack/plugins/start/vim-repeat"]
+	path = .config/nvim/pack/plugins/start/vim-repeat
+	url = https://github.com/tpope/vim-repeat

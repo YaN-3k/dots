@@ -51,7 +51,7 @@ export FZF_DEFAULT_OPTS='
 --reverse
 --pointer=" "
 '
-
+export FZF_PREVIEW_COMMAND='preview {}'
 export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
 export FZF_ALT_C_COMMAND="find . -mindepth 1 -type d 2>/dev/null"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"

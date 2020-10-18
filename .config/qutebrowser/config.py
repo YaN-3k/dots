@@ -5,54 +5,19 @@
 #   \__, |\__,_|\__\___|_.__/|_|  \___/ \_/\_/ |___/\___|_|
 #      |_|
 
-# Uncomment this to still load settings configured via autoconfig.yml
-# config.load_autoconfig()
+# settings
+c.colors.webpage.darkmode.enabled = False
+c.url.start_pages = "file:///home/cherrry9/.local/share/startpage/index.html"
+c.url.default_page = c.url.start_pages
+c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}'}
+c.search.ignore_case = 'smart'
+c.content.cookies.accept = 'all'
 
-# Set custom User Agent
-# config.set('content.headers.user_agent', 'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0')
+# mapping
+config.bind('M', 'hint links spawn mpv {hint-url}')
+config.bind('gh', 'config-cycle statusbar.show always never;; config-cycle tabs.show always never')
 
-# Scripts
-config.bind("pv", "spawn --userscript ~/.config/qutebrowser/scripts/view_in_mpv")
-
-# Enable Javascript
-config.set("content.javascript.enabled", True, "file://*")
-config.set("content.javascript.enabled", True, "chrome://*/*")
-config.set("content.javascript.enabled", True, "qute://*/*")
-
-# Custom Adblock list file
-# c.content.host_blocking.lists.append( str(config.configdir) + "/blockedHosts")
-
-# Custom CSS
-# c.content.user_stylesheets = ["css/main.css"]
-
-# Change start/default pages + search engine
-# config.set("url.start_pages", "https://start.duckduckgo.com/?kae=d")
-# config.set("url.default_page", "https://start.duckduckgo.com/?kae=d")
-config.set("url.start_pages", "file:///home/cherrry9/.local/share/startpage/index.html")
-config.set("url.default_page", "file:///home/cherrry9/.local/share/startpage/index.html")
-config.set("url.searchengines", { "DEFAULT": "https://start.duckduckgo.com/?q={}&kae=d"})
-
-# Tab settings
-config.set("tabs.padding", {"top": 1, "bottom": 2, "left": 5, "right": 5})
-config.set("tabs.indicator.width", 0)
-config.set("tabs.favicons.scale", 1.2)
-
-# Disable case sensitivity for searching
-config.set("search.ignore_case", "always")
-
-# Confirm exit when downloading files
-c.confirm_quit = ["downloads"]
-
-# Fonts
-c.fonts.default_family = "Hack Nerd Font Mono"
-c.fonts.completion.category = "10pt Hack Nerd Font Mono"
-c.fonts.completion.entry = "10pt Hack Nerd Font Mono"
-c.fonts.statusbar = "10pt Hack Nerd Font Mono"
-c.fonts.downloads = "10pt Hack Nerd Font Mono"
-c.fonts.hints = "bold 10pt Hack Nerd Font Mono"
-c.fonts.debug_console = "10pt Hack Nerd Font Mono"
-
-# Color Scheme
+# colorscheme
 black = "#161821"
 white = "#c6c8d1"
 red = "#e27878"
@@ -61,84 +26,82 @@ yellow = "#e2a478"
 blue = "#84a0c6"
 magenta = "#a093c7"
 cyan = "#89b8c2"
-
-background = black
-backgroundAlt = "#22262e"
+alt = "#22262e"
 accent = blue
 
-# Set colors from color scheme
-c.colors.completion.category.bg = background
-c.colors.completion.category.border.bottom = background
-c.colors.completion.category.border.top = background
+c.colors.completion.category.bg = black
+c.colors.completion.category.border.bottom = black
+c.colors.completion.category.border.top = black
 c.colors.completion.category.fg = accent
 c.colors.completion.fg = white
-c.colors.completion.item.selected.bg = backgroundAlt
-c.colors.completion.item.selected.border.bottom = backgroundAlt
-c.colors.completion.item.selected.border.top = backgroundAlt
+c.colors.completion.item.selected.bg = alt
+c.colors.completion.item.selected.match.fg = yellow
+c.colors.completion.item.selected.border.bottom = alt
+c.colors.completion.item.selected.border.top = alt
 c.colors.completion.item.selected.fg = accent
 c.colors.completion.match.fg = white
-c.colors.completion.odd.bg = background
-c.colors.completion.even.bg = background
-c.colors.completion.scrollbar.bg = background
+c.colors.completion.odd.bg = black
+c.colors.completion.even.bg = black
+c.colors.completion.scrollbar.bg = black
 c.colors.completion.scrollbar.fg = accent
-c.colors.downloads.bar.bg = background
+c.colors.downloads.bar.bg = black
 c.colors.downloads.error.fg = red
-c.colors.downloads.start.bg = background
+c.colors.downloads.start.bg = black
 c.colors.downloads.start.fg = white
-c.colors.downloads.stop.bg = background
+c.colors.downloads.stop.bg = black
 c.colors.downloads.stop.fg = accent
 c.colors.hints.bg = yellow
-c.colors.hints.fg = background
+c.colors.hints.fg = black
 c.colors.hints.match.fg = yellow
-c.colors.keyhint.bg = background
+c.colors.keyhint.bg = black
 c.colors.keyhint.fg = accent
 c.colors.keyhint.suffix.fg = accent
 c.colors.messages.error.fg = accent
-c.colors.messages.error.bg = background
-c.colors.messages.error.border = background
-c.colors.messages.info.bg = background
-c.colors.messages.info.border = background
+c.colors.messages.error.bg = black
+c.colors.messages.error.border = black
+c.colors.messages.info.bg = black
+c.colors.messages.info.border = black
 c.colors.messages.info.fg = accent
 c.colors.messages.warning.bg = red
 c.colors.messages.warning.border = red
-c.colors.messages.warning.fg = background
-c.colors.prompts.bg = background
-c.colors.prompts.border = background
+c.colors.messages.warning.fg = black
+c.colors.prompts.bg = black
+c.colors.prompts.border = black
 c.colors.prompts.fg = white
 c.colors.prompts.selected.bg = accent
 c.colors.statusbar.caret.bg = accent
-c.colors.statusbar.caret.fg = background
+c.colors.statusbar.caret.fg = black
 c.colors.statusbar.caret.selection.bg = accent
-c.colors.statusbar.caret.selection.fg = background
-c.colors.statusbar.command.bg = backgroundAlt
+c.colors.statusbar.caret.selection.fg = black
+c.colors.statusbar.command.bg = alt
 c.colors.statusbar.command.fg = accent
-c.colors.statusbar.command.private.bg = backgroundAlt
+c.colors.statusbar.command.private.bg = alt
 c.colors.statusbar.command.private.fg = accent
-c.colors.statusbar.insert.bg = backgroundAlt
+c.colors.statusbar.insert.bg = alt
 c.colors.statusbar.insert.fg = accent
-c.colors.statusbar.normal.bg = background
+c.colors.statusbar.normal.bg = black
 c.colors.statusbar.normal.fg = accent
 c.colors.statusbar.passthrough.bg = accent
-c.colors.statusbar.passthrough.fg = background
-c.colors.statusbar.private.bg = background
+c.colors.statusbar.passthrough.fg = black
+c.colors.statusbar.private.bg = black
 c.colors.statusbar.private.fg = accent
 c.colors.statusbar.progress.bg = accent
 c.colors.statusbar.url.error.fg = red
-c.colors.statusbar.url.fg = background
+c.colors.statusbar.url.fg = black
 c.colors.statusbar.url.hover.fg = accent
 c.colors.statusbar.url.success.http.fg = accent
 c.colors.statusbar.url.success.https.fg = accent
 c.colors.statusbar.url.warn.fg = red
-c.colors.tabs.bar.bg = background
-c.colors.tabs.even.bg = background
+c.colors.tabs.bar.bg = black
+c.colors.tabs.even.bg = black
 c.colors.tabs.even.fg = white
-c.colors.tabs.indicator.error = background
+c.colors.tabs.indicator.error = black
 c.colors.tabs.indicator.start = accent
-c.colors.tabs.indicator.stop = background
-c.colors.tabs.odd.bg = background
+c.colors.tabs.indicator.stop = black
+c.colors.tabs.odd.bg = black
 c.colors.tabs.odd.fg = white
-c.colors.tabs.selected.even.bg = backgroundAlt
+c.colors.tabs.selected.even.bg = alt
 c.colors.tabs.selected.even.fg = accent
-c.colors.tabs.selected.odd.bg = backgroundAlt
+c.colors.tabs.selected.odd.bg = alt
 c.colors.tabs.selected.odd.fg = accent
-# c.colors.webpage.bg = background
+c.colors.webpage.bg = black
