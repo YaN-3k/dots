@@ -6,6 +6,7 @@
 
 " general
 set nocompatible
+set clipboard=unnamedplus
 set autoread
 set belloff=all
 set completeopt+=longest
@@ -18,6 +19,14 @@ set ttimeoutlen=50
 set undofile
 set wildmenu
 set wildmode=longest:full,full
+
+" searching
+set path+=**
+set hlsearch
+set ignorecase
+set smartcase
+set incsearch
+if has('nvim') | set inccommand=nosplit | endif
 
 " formating
 filetype plugin indent on
@@ -34,14 +43,6 @@ set tabstop=8
 set textwidth=79
 au! Filetype gitcommit,markdown setl spell!
 
-" searching
-set path+=**
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-if has('nvim') | set inccommand=nosplit | endif
-
 " theme
 syntax on
 colors iceberg
@@ -52,6 +53,13 @@ set showcmd
 set noshowmode
 set cursorline
 set shortmess+=cs
+
+" gui
+set guioptions-=m
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
+set guicursor+=a:blinkon0
 
 " cursor
 let &t_EI = "\e[2 q"
@@ -96,7 +104,7 @@ au! FileType fzf set ls=0 nonu nornu | au BufLeave <buffer> set ls=2
 let mapleader = ' '
 let maplocalleader = ','
 set pastetoggle=<C-k>
-nno <Leader>c :cd %:p:h<CR>
+nno <Leader>c :cd %:p:h \| pwd<CR>
 nno <silent><Esc> :noh<CR>
 nno <silent><leader>q :cw<CR>
 nno <silent><leader>i :set list! cuc! \| let &cc = &cc ? 0 : &tw<CR>
