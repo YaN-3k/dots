@@ -7,8 +7,8 @@
 "   ░░██   ░██  ░██   ███ ░██ ░██
 "    ░░    ░░   ░░   ░░░  ░░  ░░
 
-colorscheme iceberg
 source ~/.config/vifm/sc
+colors iceberg
 set vicmd=nvim
 set syscalls
 set vimhelp
@@ -22,46 +22,29 @@ set smartcase
 set incsearch
 set scrolloff=5
 
-nnoremap <space> tj
-nnoremap q :q<cr>
-nnoremap I cw<c-a>
-nnoremap cc cw<c-u>
-nnoremap A cw
-
-nnoremap s :shell<cr>
-nnoremap S :sort<cr>
-nnoremap w :view<cr>
-
-nnoremap yd :!printf %s %d | xclip -sel clip<cr>
-nnoremap yf :!printf %s %c:p | xclip -sel clip<cr>
-
-command! fzffind :set noquickview | :execute 'goto "'.system('find . -mindepth 1 2>/dev/null | fzf --height 100 2>/dev/tty ').'"%IU' | redraw
-nnoremap <c-f> :fzffind<cr>
-
-" web
 filextype *.html,*.htm $BROWSER %f 2>/dev/null &
-
-" office files
 filextype *.odt,*.doc,*.docx,*.xls,*.xlsx,*.odp,*.pptx libreoffice %f &
-
-" music
 filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus mpv --no-audio-display 2>/dev/null %c
-
-" pdf
 filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
-
-" video
 filextype *.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,
          \*.fl[icv],*.m2v,*.mov,*.webm,*.ts,*.mts,*.m4v,*.r[am],*.qt,*.divx,
          \*.as[fx] mpv %f,
-
-" man pages
 filetype *.[1-8] man ./%c
-
-" images
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm vifmimg draw %px %py %pw %ph %c %pc vifmimg clear
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.ico,*.gif,*.xpm sxiv -iab &
 filextype *.svg inkscape &
 filextype *.xcf gimp &
-
 fileview *,.* preview
+
+nno <Space> tj
+nno q :q<CR>
+nno I cw<C-a>
+nno cc cw<C-u>
+nno A cw
+nno s :shell<CR>
+nno S :sort<CR>
+nno w :view<CR>
+nno yd :!printf %s %d | xclip -sel clip<CR>
+nno yf :!printf %s %c:p | xclip -sel clip<CR>
+com FzfFind :set noquickview | :exec 'goto "'.system('find . -mindepth 1 2>/dev/null | fzf --height 100 2>/dev/tty').'"%IU' | redraw
+nno <C-f> :FzfFind<CR>

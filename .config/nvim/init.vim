@@ -5,14 +5,18 @@
 " _____/  /_/  /_/ /_/ /_/
 
 " general
+let mapleader = '\'
 set nocompatible
-set clipboard=unnamedplus
 set autoread
 set belloff=all
+set clipboard=unnamedplus
 set completeopt+=longest
+set exrc
+set secure
 set hidden
 set lazyredraw
 set listchars=tab:>\ ,trail:-,nbsp:+,eol:$
+set mouse=a
 set scrolloff=5
 set ttimeout
 set ttimeoutlen=50
@@ -75,9 +79,10 @@ let StatusModes = {
 	\ 'R': 'rep',
 	\ 'c': 'cmd',
 	\ 't': 'trm',
-	\ 'v': 'sel',
-	\ 'V': 'sel',
-	\ '': 'sel'
+	\ 'v': 'vis',
+	\ 'V': 'vis',
+	\ '': 'vis',
+	\ 'S': 'sel'
 	\ }
 set stl=%#Dark#\ %{get(StatusModes,mode(),'-')}\ \|
 set stl+=%#Normal#\ %t\ 
@@ -86,7 +91,16 @@ set stl+=%=
 set stl+=\%#Accent#\ %l.%v\ %#Dark#\|\ 
 set stl+=%{empty(&filetype)?'txt':&filetype}\ 
 
-" plugins configs
+" plugins
+ru! ftplugin/man.vim
+pa! matchit
+pa! justify
+pa! cfilter
+
+function! LessInitFunc()
+	set nonu nornu nocul ls=0
+endfunction
+
 let g:netrw_list_hide = '^\.\.\=/\=$'
 let g:netrw_winsize = 25
 let g:netrw_banner = 0
@@ -96,13 +110,10 @@ let g:netrw_preview = 1
 set rtp+=~/.config/fzf
 let $FZF_DEFAULT_OPTS .= '--layout=default'
 let g:fzf_history_dir = '~/.local/share/fzf-history'
-let g:fzf_layout = {'down': '33%'}
-let g:fzf_preview_window = 'right:50%'
-au! FileType fzf set ls=0 nonu nornu | au BufLeave <buffer> set ls=2
+let g:fzf_layout = {'down': '50%'}
+au! FileType fzf set ls=0 nonu nornu
 
-" mapping
-let mapleader = ' '
-let maplocalleader = ','
+" mappings
 set pastetoggle=<C-k>
 nno <Leader>c :cd %:p:h \| pwd<CR>
 nno <silent><Esc> :noh<CR>

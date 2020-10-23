@@ -1,0 +1,1 @@
+col -b | /usr/share/vim/vim82/macros/less.sh -c ":set filetype=man"

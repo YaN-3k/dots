@@ -130,6 +130,10 @@ alt + a
 alt + n
 	$TERMINAL -n newsboat -e news
 
+# open syncthing web GUI
+alt + s
+	syncthing --browser-only
+
 # show help
 super + F1
 	$TERMINAL -n centered -e sxhkd-help
@@ -216,7 +220,7 @@ super + ctrl + w
 
 # display information
 super + slash
-	dunstify "$(date "+%a %d %b - %I:%M %p")" "Battery: $(bat)%"
+	dunstify "$(date "+%a %d %b - %I:%M %p")" "Battery: $(batery)%"
 
 # show the clicboard content
 super + o
@@ -231,4 +235,4 @@ super + ctrl + n
 	click-desktop
 # }}}
 
-# vi: fdm=marker
+# vim: fdm=marker

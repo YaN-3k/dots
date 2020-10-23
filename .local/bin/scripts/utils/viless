@@ -1,0 +1,20 @@
+#!/bin/sh
+# start Vim with less.vim
+# read stdin if no arguments were given and stdin was redirected
+
+if [ -t 0 ] && [ $# = 0 ]; then
+	echo "Missing filename" >&2
+	exit
+fi
+
+if [ -t 1 ]; then
+	op="vim -R -c 'ru! macros/less.vim'"
+else
+	op='cat'
+fi
+
+if [ $# = 0 ]; then
+	eval "$op -"
+else
+	eval "$op \"$@\""
+fi

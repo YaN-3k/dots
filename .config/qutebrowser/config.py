@@ -6,7 +6,6 @@
 #      |_|
 
 # settings
-c.colors.webpage.darkmode.enabled = False
 c.url.start_pages = "file:///home/cherrry9/.local/share/startpage/index.html"
 c.url.default_page = c.url.start_pages
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}'}
@@ -104,4 +103,3 @@ c.colors.tabs.selected.even.bg = alt
 c.colors.tabs.selected.even.fg = accent
 c.colors.tabs.selected.odd.bg = alt
 c.colors.tabs.selected.odd.fg = accent
-c.colors.webpage.bg = black

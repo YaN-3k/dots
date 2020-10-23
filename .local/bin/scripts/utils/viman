@@ -1,0 +1,3 @@
+#!/bin/sh
+# start Vim with less.vim and man filetype
+col -b | vim -R -c 'ru! macros/less.vim | set ft=man' -

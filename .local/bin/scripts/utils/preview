@@ -13,7 +13,7 @@ case "$1" in
 *)
 	if [ -d "$1" ]; then
 		tree "$1" -L 1 --dirsfirst
-	elif [  -f "$1" ] && file "$1" | grep -q text; then
+	elif [ -f "$1" ] && file "$1" | grep -Eq 'text|data'; then
 		cat "$1"
 	else
 		file "$1"
