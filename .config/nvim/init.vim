@@ -5,7 +5,7 @@
 " _____/  /_/  /_/ /_/ /_/
 
 " general
-let mapleader = '\'
+let mapleader = ' '
 set nocompatible
 set autoread
 set belloff=all
@@ -23,6 +23,7 @@ set ttimeoutlen=50
 set undofile
 set wildmenu
 set wildmode=longest:full,full
+set updatetime=100
 
 " searching
 set path+=**
@@ -113,6 +114,8 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_layout = {'down': '50%'}
 au! FileType fzf set ls=0 nonu nornu
 
+set omnifunc=ale#completion#OmniFunc
+
 " mappings
 set pastetoggle=<C-k>
 nno <Leader>c :cd %:p:h \| pwd<CR>
@@ -124,7 +127,16 @@ nno <silent><Leader>w :%s/\s\+$//e<CR>
 nno <silent><Leader>s :setl spell!<CR>
 nno <silent><Leader>n :let [&nu, &rnu] = [!&rnu, &nu + &rnu == 1]<CR>
 
-" fzf
+nno <silent>]e :cn<CR>
+nno <silent>[e :cp<CR>
+nno <silent><Leader>n :lne<CR>
+nno <silent><Leader>N :lp<CR>
+
+nno <silent><Leader>a :ALEToggle<CR>
+nno <silent><Leader>F :ALEFix<CR>
+nno <silent><Leader><C-]>  :ALEGoToDefinition<CR>
+nno <silent><Leader><C-w>] :ALEGoToDefinition -split<CR>
+
 nno <silent><Leader>f :Files<CR>
 nno <silent><Leader>b :Buffers<CR>
 nno <silent><Leader>l :BLines<CR>

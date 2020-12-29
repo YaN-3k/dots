@@ -14,8 +14,6 @@ servers = (
 
 channels = (
   { name = "#linux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#zsh";   chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#bash";  chatnet = "Freenode"; autojoin = "Yes"; },
 );
 
 chatnets = {

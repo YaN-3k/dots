@@ -9,13 +9,13 @@ logfile='/tmp/simple-server.log'
 while getopts ':p:sblh' opt; do
 	case "$opt" in
 		p) port="$OPTARG";;
-		s) [ ! -e "$pidfile" ] && { echo 'server not started'; return; }
+		s) [ ! -e "$pidfile" ] && { echo 'server not started'; exit; }
 			kill -9 "$(cat "$pidfile")" >/dev/null 2>&1
 			rm "$pidfile"
 			echo 'server terminated'
-			return;;
+			exit;;
 		b) run_browser=1;;
-		l) less "$logfile"; return;;
+		l) less "$logfile"; exit;;
 		h) cat <<-EOF
 		usage: serv [-option] [directory]
 
@@ -25,10 +25,10 @@ while getopts ':p:sblh' opt; do
 		  -l        show log
 		  -h        help
 EOF
-return;;
-\?) echo "invalid option: -$OPTARG" 1>&2; return 1;;
-:)  echo "invalid option: -$OPTARG requires an argument" 1>&2; return 1;;
-esac
+		   exit;;
+		\?) echo "invalid option: -$OPTARG" 1>&2; exit 1;;
+		:)  echo "invalid option: -$OPTARG requires an argument" 1>&2; exit 1;;
+	esac
 done
 shift $((OPTIND - 1))
 

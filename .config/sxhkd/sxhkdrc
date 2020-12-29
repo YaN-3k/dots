@@ -228,7 +228,7 @@ super + o
 
 # network menu
 super + ctrl + n
-	iwd
+	iwdmenu
 
 # open terminal if desktop is empty
 ~button1

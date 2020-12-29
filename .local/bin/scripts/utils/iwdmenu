@@ -1,0 +1,74 @@
+#!/bin/sh
+# It's simple script to control a wirelless network connection
+# using iwd and dhcpcd
+
+: ${interface:='wlan0'}
+
+switch() {
+	list_known=$(iwctl known-networks list | awk 'NR>4 && $0 { print $1 }')
+	connected=$(iwctl station "$interface" show | awk 'NR>4 && /Connected/ { printf "\\<" $3 "\\>" }')
+	list=$(echo "$list_known" | sed "/$connected/d")
+	if [ -z "$list" ]; then
+		notify-send "There is no network to switch."
+		return
+	fi
+	ssid=$(echo "$list" | menu -p "switch")
+	[ "$ssid" ] || exit
+	if iwctl station "$interface" connect "$ssid"; then
+		notify-send "Connected with $ssid"
+	else
+		notify-send "Failed to connect with $ssid"
+	fi
+	exit
+}
+
+add() {
+	list_all=$(iwctl station "$interface" get-networks | awk 'NR > 4 && $0 && $0 !~ />/ { print $1}')
+	list_known=$(iwctl known-networks list | awk 'NR > 4 && $0 { printf "\\<" $1 "\\>|" }')
+	list=$(echo "$list_all" | sed -r "/${list_known%|}/d")
+	if [ -z "$list" ]; then
+		notify-send "There is no network to add."
+		return
+	fi
+	ssid=$(echo "$list" | menu -p "add")
+	[ "$ssid" ] || return
+	pass=$(menupass)
+	if iwctl -P "$pass" station "$interface" connect "$ssid"; then
+		notify-send "Added $ssid"
+	else
+		notify-send "Wrong password $ssid"
+	fi
+	exit
+}
+
+scan() { iwctl station "$interface" scan; notify-send "Scanning network..."; }
+
+forget() {
+	list=$(iwctl known-networks list | awk 'NR>4 && $0 { print $1 }')
+	if [ -z "$list" ]; then 
+		notify-send "There is no network to switch."
+		return
+	fi
+	ssid=$(echo "$list" | menu -p "forget")
+	[ "$ssid" ] || return
+	iwctl known-networks "$ssid" forget
+	notify-send "Forgotten $ssid"
+	exit
+}
+
+if ! pgrep -x iwd >/dev/null 2>&1; then
+	notify-send -u critical "iwd is not running"
+	exit
+fi
+
+while :; do
+	set -- Switch Add Scan Forget
+	choice=$(printf "%s\n" "$@" | menu -p "Network")
+	[ "$choice" ] || exit
+	case "$choice" in
+		Switch) switch;;
+		Add) add;;
+		Scan) scan;;
+		Forget) forget;;
+	esac
+done

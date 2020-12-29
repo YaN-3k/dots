@@ -1,0 +1,5 @@
+keymap S	COMMAND		"EXTERN ~/.w3m/cgi-bin/surfraw.sh; GOTO file:/cgi-bin/surfraw.cgi"
+keymap \\\i	COMMAND		"SET_OPTION display_image=toggle; RESHAPE"
+keymap yy	EXTERN		'printf %s "$1" | xclip -i -selection clipboard'
+keymap yf       EXTERN_LINK	'printf %s "$0" | xsel -b'
+keymap M-u	TAB_GOTO

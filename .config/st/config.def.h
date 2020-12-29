@@ -208,9 +208,9 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_J,           zoom,           {.f = +1} },
 	{ TERMMOD,              XK_U,           zoom,           {.f = +5} },
 	{ TERMMOD,              XK_D,           zoom,           {.f = -5} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+	{ TERMMOD,              XK_plus,        zoomreset,      {.f =  0} },
 
-	/* scrool */
+	/* scroll */
 	{ SMODKEY,              XK_K,           kscrollup,      {.i =  1} },
 	{ SMODKEY,              XK_J,           kscrolldown,    {.i =  1} },
 	{ SMODKEY,              XK_B,           kscrollup,      {.i = -1} },

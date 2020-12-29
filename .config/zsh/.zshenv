@@ -32,8 +32,8 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 export SUDO_PROMPT=$'\e[34m'[$'\e[0m'sudo$'\e[34m']$'\e[0m'' password for '$'\e[1;34m''%p'$'\e[0m'': '
 export SPROMPT="%F{blue}[%fzsh%F{blue}]%f correct %F{red}%R%f to %F{blue}%r%f [nyae]: "
 
-export PAGER=less
-export LESS=-R
+export PAGER='less'
+export LESS='-R'
 export LESS_TERMCAP_mb=$'\e[1;34m'
 export LESS_TERMCAP_md=$'\e[1;34m'
 export LESS_TERMCAP_me=$'\e[0m'
@@ -51,13 +51,13 @@ export FZF_DEFAULT_OPTS='
 --reverse
 --pointer=" "
 '
-export FZF_PREVIEW_COMMAND='preview {}'
 export FZF_DEFAULT_COMMAND="find . -mindepth 1 2>/dev/null"
 export FZF_ALT_C_COMMAND="find . -mindepth 1 -type d 2>/dev/null"
 export FZF_ALT_C_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_CTRL_T_OPTS="$FZF_DEFAULT_OPTS --preview 'preview {}'"
 
+export WWW_HOME="ddg.gg"
 export SXHKD_SHELL="/bin/sh"
 export MPD_HOST="password@$HOME/.config/mpd/socket"
 export GOPATH="$HOME/dox/go"

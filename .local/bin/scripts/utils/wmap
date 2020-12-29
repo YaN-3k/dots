@@ -13,8 +13,9 @@ case $1 in
 			last)
 				id=$(tail -n 1 "$list")
 				size=$(wc -c "$list" | cut -d' ' -f1)
-				item=$(echo "$id" | wc -c)
-				truncate -s $((size - item)) $list
+				item=${#id}
+				truncate -s $((size - item - 1)) $list
+				id=${id##* }
 				;;
 			*)
 				id=$(menu -p "Window" <"$list")
@@ -23,6 +24,6 @@ case $1 in
 				;;
 		esac
 		[ "$id" ] || exit 1
-		xdotool windowmap $id
+		xdotool windowmap "$id"
 		;;
 esac

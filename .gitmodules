@@ -10,3 +10,6 @@
 [submodule ".config/nvim/pack/plugins/start/vim-repeat"]
 	path = .config/nvim/pack/plugins/start/vim-repeat
 	url = https://github.com/tpope/vim-repeat
+[submodule ".config/nvim/pack/plugins/start/auto-pairs"]
+	path = .config/nvim/pack/plugins/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs

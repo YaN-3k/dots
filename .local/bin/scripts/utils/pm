@@ -1,8 +1,9 @@
 #!/bin/sh
-operation="$(echo " Lock\n Exit\n Shutdown\n Reboot" | menu -p ' System')"
-case "$operation" in
-	' Lock') slock & mpc pause;;
-	' Exit') killall Xorg;;
-	' Shutdown') shutdown now;;
-	' Reboot') reboot;;
+set -- Lock Exit Shutdown Reboot
+op="$(printf "%s\n" "$@" | menu -p 'System')"
+case "$op" in
+	Lock) slock & mpc pause;;
+	Exit) killall Xorg;;
+	Shutdown) shutdown now;;
+	Reboot) reboot;;
 esac

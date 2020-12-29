@@ -105,7 +105,7 @@ call s:hi("Boolean",       -1, 11)
 call s:hi("Float",         -1,  5)
 
 call s:hi("Identifier",    -1,  7)
-call s:hi("Function",      -1, -1)
+call s:hi("Function",      -1,  7)
 
 " language constructs
 call s:hi("Comment",       -1,  8)
@@ -153,7 +153,7 @@ call s:hi("PmenuThumb",     0,  0)
 
 " spelling
 call s:hi("SpellBad",      -1,  1, 'underline')
-call s:hi("SpellCap",      -1,  2, 'underline')
+call s:hi("SpellCap",      -1,  3, 'underline')
 call s:hi("SpellLocal",    -1,  3, 'underline')
 call s:hi("SpellRare",     -1,  3, 'underline')
 

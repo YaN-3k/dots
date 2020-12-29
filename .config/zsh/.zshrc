@@ -34,7 +34,7 @@ function +vi-git-added() {
 }
 
 function +virtual-env() {
-	[[ -n $VIRTUAL_ENV ]] && virtual_env_msg="%F{blue}-[%F{white}${VIRTUAL_ENV:t}%F{blue}]"
+	[[ -n $VIRTUAL_ENV ]] && virtual_env_msg="%F{blue}-[%F{white}${VIRTUAL_ENV/$HOME/~}%F{blue}]" || virtual_env_msg=
 }
 precmd_functions+=(+virtual-env)
 
@@ -233,13 +233,15 @@ alias lt='tree'
 #alias ll='exa -al --group-directories-first'
 #alias lt='exa -aT --group-directories-first'
 
-alias ir='irssi --home ~/.config/irssi'
-alias nc='ncmpcpp -q'
-alias ra='ranger'
-alias nm='neomutt'
 alias ab='abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook'
-alias ss="sudo systemctl"
 alias gdb='gdb -q -x ~/.config/gdb/gdbinit'
+alias irssi='irssi --home ~/.config/irssi'
+alias ir='irssi'
+alias nc='ncmpcpp -q'
+alias nm='neomutt'
+alias ra='ranger'
+alias ss="sudo systemctl"
+alias vf='vifm'
 
 alias g='git'
 alias ga='git add'
@@ -271,7 +273,6 @@ alias mirrord="sudo reflector -l 50 -n 20 --sort delay --verbose --save /etc/pac
 alias mirrora="sudo reflector -l 50 -n 20 --sort age   --verbose --save /etc/pacman.d/mirrorlist"
 
 alias out='pkill -kill -u $USER'
-alias less='viless'
 alias open='xdg-open'
 alias note='sticky-note'
 alias todo='ztodo'

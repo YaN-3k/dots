@@ -142,7 +142,7 @@ shift $((OPTIND -1))
 
   # if the user has both slop and disputils ask the user which one to use
   [ "$s" ] && [ "$d" ] &&
-	  method="$(printf "display\nselection" | menu -p "Method of recording")"
+	  method="$(printf "display\nselection\n" | menu -p "Method of recording")"
   }
 
 if [ "$method" = display ]; then
@@ -183,10 +183,10 @@ fi
 [ ! "$nvenc" ] && lspci | grep -qi nvidia && nvenc="-vcodec h264_nvenc"
 
 # ask the user what they want the framerate of the video to be
-[ ! "$rate" ] && rate="$(printf "30\n60" | menu -p "Framerate")"
+[ ! "$rate" ] && rate="$(printf "30\n60\n" | menu -p "Framerate")"
 
 # ask the user if they want to start the recording
-[ ! "$ready" ] && ready="$(printf "yes\nno" | menu -p "Start the recording")"
+[ ! "$ready" ] && ready="$(printf "yes\nno\n" | menu -p "Start the recording")"
 
 [ "$ready" = yes ] && {
 	notify-send -t 1500 "Recording Started"
