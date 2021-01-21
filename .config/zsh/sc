@@ -1,12 +1,4 @@
-h       ~
 bin     ~/.local/bin
 dl      ~/.local/dl
-sha     ~/.local/share
-sc      ~/.config/zsh/sc
-z       ~/.config/zsh/.zshrc
-com     ~/.config/picom.conf
-bs      ~/.config/bspwm/bspwmrc
-drc     ~/.config/dunst/dunstrc
-sx      ~/.config/sxhkd/sxhkdrc
-vimrc   ~/.config/nvim/init.vim
-bw      ~/.config/bookmarks
+share   ~/.local/share
+bw      ~/.local/share/bookmarks

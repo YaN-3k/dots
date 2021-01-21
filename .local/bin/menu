@@ -1,0 +1,4 @@
+#!/bin/sh
+# specify which menu to use in scripts
+#dmenu "$@"
+fmenu "$@"

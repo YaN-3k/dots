@@ -87,7 +87,6 @@ void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
 void toggleprinter(const Arg *);
-void copyurl(const Arg *);
 
 int tattrset(int);
 int tisaltscr(void);
@@ -122,6 +121,7 @@ extern char *stty_args;
 extern char *vtiden;
 extern wchar_t *worddelimiters;
 extern int allowaltscreen;
+extern int allowwindowops;
 extern char *termname;
 extern unsigned int tabspaces;
 extern unsigned int defaultfg;

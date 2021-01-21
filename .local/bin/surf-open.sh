@@ -1,0 +1,1 @@
+/home/jan/.config/surf/surf-open.sh

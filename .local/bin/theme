@@ -1,0 +1,4 @@
+#!/bin/sh
+xrdb -merge -D$(echo $1 | tr a-z A-Z)_THEME ~/.config/xrdb/Xdefaults
+dunst &
+xwallpaper --daemon --zoom "$(find pix/wall/$1/ -type f | shuf -n1)" &

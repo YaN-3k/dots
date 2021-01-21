@@ -1,9 +1,0 @@
-#!/bin/sh
-set -- Lock Exit Shutdown Reboot
-op="$(printf "%s\n" "$@" | menu -p 'System')"
-case "$op" in
-	Lock) slock & mpc pause;;
-	Exit) killall Xorg;;
-	Shutdown) shutdown now;;
-	Reboot) reboot;;
-esac

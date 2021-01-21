@@ -7,72 +7,126 @@
 !  ██   ░░██░░██████░░██████  ░██  ░░████████░░██████ ███  ░░██  ██████
 ! ░░     ░░  ░░░░░░  ░░░░░░   ░░    ░░░░░░░░  ░░░░░░ ░░░    ░░  ░░░░░░
 
-! █▓▒░ colorscheme
-#include "themes/iceberg"
+*.font: xft:Terminus:pixelsize=14
 
-! █▓▒░ misc
-URxvt.scrollBar: false
-URxvt.saveLines: 9999
-URxvt.iso14755: false
-URxvt.geometry: 80x30
-URxvt.cursorUnderline:1
+#ifdef LIGHT_THEME
+#define bg	#e8e9ec
+#define fg	#33374c
 
-! █▓▒░ perl extensions
-URxvt.perl-lib: /usr/lib/urxvt/perl
-URxvt.perl-ext: default,matcher,clipboard,url-select,keyboard-select,resize-font
+! black
+#define ice00	#dcdfe7
+#define ice08	#8389a3
 
-! █▓▒░ clipboard
-URxvt.clipboard.autocopy: true
-URxvt.keysym.Shift-Control-V: eval:paste_clipboard
-URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+! red
+#define ice01	#cc517a
+#define ice09	#cc3768
 
-! █▓▒░ font settings
-URxvt.font: xft:Hack Nerd Font:size=9
-dmenu.font: Hack Nerd Font:size=9
-*.font: Hack Nerd Font:size=9
+! green
+#define ice02	#668e3d
+#define ice0A	#598030
 
-Xft.dpi: 96
-Xft.antialias: true
-Xft.hinting: true
-Xft.rgba: rgb
-Xft.autohint: false
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
+! yellow
+#define ice03	#c57339
+#define ice0B	#b6662d
 
-! █▓▒░ reisze
-URxvt.keysym.C-minus: resize-font:smaller
-URxvt.keysym.C-plus:  resize-font:bigger
-URxvt.keysym.C-equal: resize-font:reset
+! blue
+#define ice04	#2d539e
+#define ice0C	#22478e
 
-! █▓▒░ interface
-! do not scroll with output
-URxvt.scrollTtyOutput: false
+! magenta
+#define ice05	#7759b4
+#define ice0D	#6845ad
 
-! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-URxvt.scrollWithBuffer: true
+! cyan
+#define ice06	#3f83a6
+#define ice0E	#327698
 
-! scroll back to the bottom on keypress
-URxvt.scrollTtyKeypress: true
+! white
+#define ice07	#33374c
+#define ice0F	#262a3f
 
-! vim like scrolling
-URxvt.keysym.Control-Shift-K: command:\033]720;1\007
-URxvt.keysym.Control-Shift-J: command:\033]721;1\007
+! special
+#define accent	ice07
+#else
+#define bg	#161821
+#define fg	#c6c8d1
 
-! border
-URxvt*internalBorder: 40
-URxvt*borderLess: false
+! black
+#define ice00	#22262e
+#define ice08	#6b7089
 
-! █▓▒░ matcher
-URxvt.colorUL: #84a0c6
-URxvt.matcher.button: 1
+! red
+#define ice01	#e27878
+#define ice09	#e98989
 
-! █▓▒░ keyboard select
-URxvt.keysym.M-Escape: perl:keyboard-select:activate
-URxvt.clipboard.copycmd: xclip -sel clip
-URxvt.clipboard.pastecmd: xclip -o
+! yellow
+#define ice02	#b4be82
+#define ice0A	#c0ca8e
 
-! █▓▒░ url select
-URxvt.url-select.underline: false
-URxvt.url-select.autocopy: true
-URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.url-select.launcher: /usr/bin/xdg-open
+! green
+#define ice03	#e2a478
+#define ice0B	#e9b189
+
+! blue
+#define ice04	#84a0c6
+#define ice0C	#91acd1
+
+! cyan
+#define ice05	#a093c7
+#define ice0D	#ada0d3
+
+! magenta
+#define ice06	#89b8c2
+#define ice0E	#95c4ce
+
+! white
+#define ice07	#c6c8d1
+#define ice0F	#d2d4de
+
+! special
+#define accent	ice04
+#endif
+
+*background:	bg
+*foreground:	fg
+*cursorColor:	fg
+
+*color0:	ice00
+*color1:	ice01
+*color2:	ice02
+*color3:	ice03
+*color4:	ice04
+*color5:	ice05
+*color6:	ice06
+*color7:	ice07
+*color8:	ice08 
+*color9:	ice09
+*color10:	ice0A
+*color11:	ice0B
+*color12:	ice0C
+*color13:	ice0D
+*color14:	ice0E
+*color15:	ice0F
+
+dmenu.foreground:    fg
+dmenu.background:    bg
+dmenu.selforeground: bg
+dmenu.selbackground: accent
+
+dwm.normfgcolor:     fg
+dwm.normbgcolor:     bg
+dwm.normbordercolor: bg
+dwm.selfgcolor:      bg
+dwm.selbgcolor:      accent
+dwm.selbordercolor:  accent
+
+tabbed.normfgcolor:     fg
+tabbed.normbgcolor:     bg
+tabbed.selfgcolor:      bg
+tabbed.selbgcolor:      accent
+
+slock.init:         bg
+slock.input:        accent
+slock.failed:       ice01
+
+! vim: ft=xdefaults

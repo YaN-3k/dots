@@ -1,0 +1,62 @@
+#!/bin/sh
+# amixer wrapper script for volume
+
+mute() {
+	# if a command isn't specified toggle mute
+	if [ -z "$1" ]; then
+		amixer -D pulse get Master | grep -qio "off" &&
+			action="unmute" || action="mute"
+		else
+			action="$1"
+	fi
+
+	amixer -D pulse set Master "$action" >/dev/null
+	echo "volume ${action}d"
+}
+
+volume() {
+	# get the current volume
+	amixer=$(amixer -D pulse get Master)
+	current=${amixer##*[0-9] \[}
+	current=${current%%%*}
+	mute=${amixer##*\[}
+	[ "$1" = get ] && [ "$mute" != 'on]' ] && printf '%s\n' "$current% [mutted]" && exit
+	[ "$1" = get ] && printf '%s\n' "$current%" && exit
+
+	# default modifier (5%)
+	[ "$2" ] && number="$2" || number='5'
+
+	# calculate the new volume
+	[ "$1" =  up  ] && number="$((current + number))"
+	[ "$1" = down ] && number="$((current - number))"
+
+	# handling of invalid numbers
+	[ "$number" -lt  '0'  ] && number='0'
+	[ "$number" -gt '100' ] && number='100'
+
+	amixer -D pulse set Master "$number%" >/dev/null
+	echo "volume set to $number"
+}
+
+case $1 in
+	toggle) mute;;
+	mute|unmute) mute "$1";;
+	get) volume get;;
+	set)
+		[ "$2" ] || { echo "option set requires a number"; exit 1; }
+		volume set "$2";;
+	up|down) volume "$1" "$2";;
+	*)
+		cat <<-EOF
+	muting:
+	  toggle
+	  mute
+	  unmute
+	volume:
+	  get     get current volume
+	  set     set volume to <number>
+	  up      increase volume by number (default: 5)
+	  down    decrease volume by number (default: 5)
+EOF
+exit 1;;
+esac

@@ -21,6 +21,7 @@ set scrolloff=5
 set ttimeout
 set ttimeoutlen=50
 set undofile
+set undodir=~/.vim/undo
 set wildmenu
 set wildmode=longest:full,full
 set updatetime=100
@@ -50,6 +51,7 @@ au! Filetype gitcommit,markdown setl spell!
 
 " theme
 syntax on
+set background=dark
 colors iceberg
 set number
 set relativenumber
@@ -129,13 +131,6 @@ nno <silent><Leader>n :let [&nu, &rnu] = [!&rnu, &nu + &rnu == 1]<CR>
 
 nno <silent>]e :cn<CR>
 nno <silent>[e :cp<CR>
-nno <silent><Leader>n :lne<CR>
-nno <silent><Leader>N :lp<CR>
-
-nno <silent><Leader>a :ALEToggle<CR>
-nno <silent><Leader>F :ALEFix<CR>
-nno <silent><Leader><C-]>  :ALEGoToDefinition<CR>
-nno <silent><Leader><C-w>] :ALEGoToDefinition -split<CR>
 
 nno <silent><Leader>f :Files<CR>
 nno <silent><Leader>b :Buffers<CR>

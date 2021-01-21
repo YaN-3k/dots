@@ -1,0 +1,22 @@
+#!/bin/sh
+
+bat() {
+	echo "BAT: $(battery)%"
+}
+
+date() {
+	echo "$(command date '+%I:%M %p') | $(command date '+%D')"
+}
+
+light() {
+	printf "LIGHT: %0.f%%" "$(xbacklight -get)"
+}
+
+vol() {
+	echo "VOL: $(command vol get)"
+}
+
+while :; do
+	xsetroot -name " $(vol) | $(light) | $(bat) | $(date) "
+	sleep 1
+done

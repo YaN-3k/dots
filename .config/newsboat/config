@@ -27,10 +27,12 @@ color listfocus_unread    default black
 color listfocus           color4  black
 color info                color8  default
 color article             white   default
+search-highlight-colors   default default reverse
 
 browser linkhandler
-macro , open-in-browser
-macro p set browser "setsid -f menuhandler"; open-in-browser; set browser linkhandler
+macro d set browser "setsid -f menuhandler"; open-in-browser; set browser linkhandler
+macro c set browser "xclip -sel clip <<<" ; open-in-browser; set browser linkhandler
+macro w set browser "w3m"; open-in-browser; set browser linkhandler
 
 highlight all "---.*---" yellow
 highlight feedlist ".*(0/0))" black

@@ -1,24 +1,23 @@
 #!/bin/sh
 while read -r file; do
-  fpath=$(readlink -f "$file")
-  case "$1" in
-  'w') setbg "$file" &;;
-  'g') gimp "$file" &;;
-  'c')
-    destdir="$(shortcuts show | awk '{print $2}' | menu -p "Copy $file to" | sed "s|~|$HOME|g")"
-    [ "$destdir" ] || exit
-    cp "$file" "$destdir" && notify-send "Image copied to $destdir." &;;
-  'm')
-    destdir="$(shortcuts show | awk '{print $2}' | menu -p "Move $file to" | sed "s|~|$HOME|g")"
-    [ "$destdir" ] || exit
-    mv "$file" "$destdir" && notify-send "Image moved to $destdir." &;;
-  'd')
-      prompt "Delete $file" && rm "$file" && notify-send "$file deleted" &;;
-  'y')
-     printf %s "$fpath" | xclip -selection clipboard &&
-      notify-send "Patch to image copied to clipboard" &;;
-  'Y')
-    xclip -selection clipboard -t image/png -i "$fpath" &&
-      notify-send -i "$fpath" "Image copied to clipboard" &;;
-  esac
+	case "$1" in
+	'w') setbg "$file" &;;
+	'g') gimp "$file" &;;
+	'c')
+		destdir="$(menu -p "Copy $file to" <&- | sed "s|~|$HOME|")"
+		[ "$destdir" ] || exit
+		cp "$file" "$destdir" && notify-send "image copied to $destdir" &;;
+	'm')
+		destdir="$(menu -p "Move $file to" <&- | sed "s|~|$HOME|g")"
+		[ "$destdir" ] || exit
+		mv "$file" "$destdir" && notify-send "image moved to $destdir" &;;
+	'd')
+		prompt "Delete $file" && rm "$file" && notify-send "$file deleted" &;;
+	'y')
+		printf %s "$file" | xclip -selection clipboard &&
+		notify-send "patch to image copied to clipboard" &;;
+	'Y')
+		xclip -selection clipboard -t image/png -i "$file" &&
+		notify-send -i "$file" "image copied to clipboard" &;;
+	esac
 done

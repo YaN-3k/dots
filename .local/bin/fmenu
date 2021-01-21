@@ -1,0 +1,38 @@
+#!/bin/sh
+# fzf dmenu alternative
+
+# save input, output
+in=/tmp/fmenuin  out=/tmp/fmenuout
+cat >"$in" 2>/dev/null
+
+# parse opt
+while [ "$1" ]; do
+	if [ "$1" = '-p' ]; then
+		prompt=" $2"
+		shift
+	else
+		args="$args $1"
+	fi
+	shift
+done
+args="$args --expect alt-enter --print-query --no-info --height 100% --prompt='$prompt > '"
+
+# automatically adjust height
+height=$(($(wc -l "$in" | cut -d' ' -f1) + 1))
+[ $height -gt 15 ] && height=15
+
+# open floating terminal and run fzf
+$TERMINAL -g ${geometry:-48x$height} -n ${class:-center} -t fmenu -e sh -c "fzf $args <$in >$out" 2>/dev/null
+exit_code=$?
+
+# line:
+#   1   -- query string
+#   2   -- empty string or "alt-enter"
+#   3.. -- selected item(s)
+if [ -n "$(sed -n '2p' "$out")" ] || [ -z "$(sed -n '3p' "$out")" ]; then
+	head -n1 "$out"
+else 
+	sed -n '3,$p' "$out"
+fi
+
+exit $exit_code

@@ -1,0 +1,5 @@
+#!/bin/sh
+red=$(xgetres color1)
+fg=$(xgetres foreground)
+bg=$(xgetres background)
+/usr/bin/dunst -lf $fg -lb $bg -nf $fg -nb $bg -cf $red -cb $bg "$@"

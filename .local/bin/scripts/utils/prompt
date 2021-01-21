@@ -1,3 +1,0 @@
-#!/bin/sh
-# gives a menu prompt labeled with $1 to perform command $2
-[ "$(echo "No\nYes" | menu -p "$1" )" = "Yes" ] && eval "$2"

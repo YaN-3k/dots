@@ -1,0 +1,29 @@
+#!/bin/sh
+list='/tmp/window_list'
+case $1 in
+	umap)
+		id=$(xdotool getactivewindow)
+		name=$(xdotool getactivewindow getwindowname)
+		xdotool windowunmap "$id"
+		echo "$name $id" >>"$list"
+		;;
+	map)
+		[ -s "$list" ] || exit 1
+		case $2 in
+			last)
+				id=$(tail -n 1 "$list")
+				size=$(wc -c "$list" | cut -d' ' -f1)
+				item=${#id}
+				truncate -s $((size - item - 1)) $list
+				id=${id##* }
+				;;
+			*)
+				id=$(menu <"$list")
+				id=${id##* }
+				sed -i "/$id/d" "$list"
+				;;
+		esac
+		[ "$id" ] || exit 1
+		xdotool windowmap "$id"
+		;;
+esac

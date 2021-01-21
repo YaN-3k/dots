@@ -8,7 +8,7 @@
 #  ░░░░░░  ░░░░░░ ░░░   ░░ ░░░░░░     ░░
 
 [global]
-	font = Hack Nerd Font 10
+	font = monospace 10
 	geometry = "500-20+20"
 	padding = 5
 	horizontal_padding = 20
@@ -19,7 +19,7 @@
 	alignment = center
 	word_wrap = true
 	separator_color = auto
-	transparency = 20
+	transparency = 10
 
 	dmenu = /usr/bin/dmenu -p dunst:
 	browser = /usr/bin/qutebrowser
@@ -41,38 +41,41 @@
 
 [urgency_low]
 	background = "#161821"
-	foreground = "#adafb8"
-	frame_color = "#89b8c2"
+	foreground = "#d2d4de"
+	#background = "#e8e9ec"
+	#foreground = "#33374c"
 	timeout = 5
 
 [urgency_normal]
 	background = "#161821"
 	foreground = "#d2d4de"
-	frame_color = "#84a0c6"
+	#background = "#e8e9ec"
+	#foreground = "#33374c"
 	timeout = 5
 
 [urgency_critical]
 	background = "#161821"
 	foreground = "#e27878"
-	frame_color = "#84a0c6"
+	#background = "#e8e9ec"
+	#foreground = "#cc517a"
 	timeout = 10
 
 [history-ignore-brightness]
 	appname = dunstify
-	summary = "Brightness"
+	summary = "brightness"
 	history_ignore = yes
 
 [history-ignore-volume]
 	appname = dunstify
-	summary = "Volume"
+	summary = "volume*"
 	history_ignore = yes
 
 [history-ignore-switched]
 	appname = dunstify
-	summary = "Switched to *"
+	summary = "switched to *"
 	history_ignore = yes
 
 [history-ignore-moved]
 	appname = dunstify
-	summary = "Moved to *"
+	summary = "moved to *"
 	history_ignore = yes

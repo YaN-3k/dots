@@ -1,0 +1,11 @@
+#!/bin/sh
+set -- lock exit suspend hibernate shutdown reboot
+op="$(printf "%s\n" "$@" | menu -p 'System')"
+case "$op" in
+	lock) slock & mpc pause;;
+	exit) killall X;;
+	shutdown) shutdown now;;
+	suspend) loginctl suspend-then-hibernate;;
+	hibernate) loginctl hibernate;;
+	reboot) reboot;;
+esac

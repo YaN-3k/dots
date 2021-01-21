@@ -1,17 +1,13 @@
 # Installation guide
 ## Install dependencies
-Packages from official arch repositories:
-```
-$ sudo pacman -S --needed git bspwm sxhkd picom dunst libnotify xdotool xdg-user-dirs sxiv urxvt vifm tmux neomutt abook neovim zathura zathura-pdf-mupdf mpd mpc ncmpcpp alsa-utils pulseaudio pulseaudio-alsa ffmpeg imagemagick maim transmission-cli xorg-server xorg-xinit xorg-xsetroot
-```
-Packages from AUR:
-```
-$ yay -S --needed polybar
-```
-Python packages:
-```
-$ pip install --user ueberzug
-```
+* tmux
+* sxiv
+* irssi
+* vifm
+* neovim
+* dunst
+* mpd / mpc / ncmpcpp
+* xdg-user-dirs
 ## Setup dotfiles
 Download dotfiles
 ```
@@ -39,8 +35,9 @@ Install fonts
 ```
 $ fc-cache -fv
 ```
-Create user directories like ~/music and ~/pix
+Create user directories:
 ```
+$ mkdir ~/.local/dl ~/dox ~/music ~/pix ~/vid
 $ xdg-user-dirs-update
 ```
 Set `zsh` as default shell
@@ -54,27 +51,11 @@ $ rm -rf LICENSE README.md INSTALL.md
 ```
 You can revert this later with `--no-assume-unchanged` flag.
 ## Build and install suckless programs
-Install dwm
+Example to install foo program:
 ```
-$ cd ~/.config/dwm
-$ sudo make clean install
+$ cd ~/.config/foo
+$ sudo make install
 ```
-Install st
-```
-$ cd ~/.config/st
-$ sudo make clean install
-```
-Install slock
-```
-$ cd ~/.config/slock
-$ sudo make clean install
-```
-Install dmenu
-```
-$ cd ~/.config/dmenu
-$ sudo make clean install
-```
-To display colorful emoji in dmenu you need `libxft-bgra` (see [.config/dmenu/README](.config/dmenu/README) "Requirements")<br>
 ## Finished
 That's it, dotfiles are ready! It is recommended to restart your computer. Now you can type `dots up` to update dotfiles or use regular git commands:
 ```

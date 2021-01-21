@@ -2,27 +2,150 @@
 # irssi
 #  ---
 servers = (
+  { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
+  {
+    address = "ssl.efnet.org";
+    chatnet = "EFNet";
+    port = "9999";
+    use_tls = "yes";
+  },
+  {
+    address = "irc.esper.net";
+    chatnet = "EsperNet";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
+  },
   {
     address = "chat.freenode.net";
     chatnet = "Freenode";
     port = "6697";
-    use_ssl = "yes";
-    ssl_verify = "no";
-    autoconnect = "yes";
-  }
+    use_tls = "yes";
+    tls_verify = "yes";
+  },
+  {
+    address = "irc.gamesurge.net";
+    chatnet = "GameSurge";
+    port = "6667";
+  },
+  {
+    address = "eu.irc6.net";
+    chatnet = "IRCnet";
+    port = "6667";
+    use_tls = "yes";
+  },
+  { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
+  {
+    address = "irc.ircsource.net";
+    chatnet = "IRCSource";
+    port = "6667";
+  },
+  { address = "irc.netfuze.net"; chatnet = "NetFuze"; port = "6667"; },
+  {
+    address = "irc.oftc.net";
+    chatnet = "OFTC";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
+  },
+  {
+    address = "irc.quakenet.org";
+    chatnet = "QuakeNet";
+    port = "6667";
+  },
+  {
+    address = "irc.rizon.net";
+    chatnet = "Rizon";
+    port = "6697";
+    use_tls = "yes";
+    tls_verify = "yes";
+  },
+  { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
+  {
+    address = "irc.undernet.org";
+    chatnet = "Undernet";
+    port = "6667";
+  },
+  { address = "localhost"; chatnet = "BitlBee"; port = "6667"; },
+  { address = "irc.pirc.pl"; chatnet = "PIRC"; port = "6667"; }
 );
 
 channels = (
-  { name = "#linux"; chatnet = "Freenode"; autojoin = "Yes"; },
+  #{ name = "#linux"; chatnet = "Freenode"; autojoin = "Yes"; },
+  #{ name = "#gentoo"; chatnet = "Freenode"; autojoin = "Yes"; }
 );
 
 chatnets = {
+  DALnet = {
+    type = "IRC";
+    max_kicks = "4";
+    max_msgs = "20";
+    max_whois = "30";
+  };
+  EFNet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+  };
+  EsperNet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+  };
   Freenode = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
     max_whois = "1";
   };
+  GameSurge = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  IRCnet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  IRCSource = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "4";
+    max_whois = "1";
+  };
+  NetFuze = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  OFTC = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
+  QuakeNet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  Rizon = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  SILC = { type = "SILC"; };
+  Undernet = {
+    type = "IRC";
+    max_kicks = "1";
+    max_msgs = "1";
+    max_whois = "1";
+  };
+  PIRC = { type = "IRC"; max_kicks = "1"; max_msgs = "1"; max_whois = "1"; };
+  BitlBee = { type = "IRC"; };
 };
 
 aliases = {
@@ -32,11 +155,6 @@ aliases = {
   p = "part";
   j = "join";
   m = "msg";
-  q = "query";
-  n = "names";
-  t = "topic";
-  w = "who";
-  wi = "whois";
 };
 
 keyboard = (
@@ -50,12 +168,27 @@ settings = {
     user_name = "cherrry9";
     nick = "cherrry9";
   };
-  "fe-text" = { actlist_sort = "refnum"; indent = "12"; };
-  "fe-common/core" = {
-    theme = "irssi.theme";
-    autolog = "yes";
-    autolog_path = "~/.cache/irc/$tag/$0.log";
-  };
+  autolog = "yes";
+  autolog_path = "~/.cache/irc/$tag/$0.log";
+  "fe-text" = { actlist_sort = "refnum"; };
+  "fe-common/core" = { theme = "default"; };
 };
 
 ignores = ( { level = "JOINS PARTS QUITS"; } );
+
+statusbar = {
+  default = {
+    window = {
+      items = {
+        barstart = { priority = "100"; };
+        user = { };
+        window = { };
+        window_empty = { };
+        lag = { priority = "-1"; };
+        act = { priority = "10"; };
+        more = { priority = "-1"; alignment = "right"; };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
+  };
+};

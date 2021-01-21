@@ -1,0 +1,11 @@
+#!/bin/sh
+# Toggles all cronjobs off/on.
+if [ -f ~/.config/cronsaved ]; then
+	crontab ~/.config/cronsaved
+	rm ~/.config/cronsaved
+	notify-send "cronjobs re-enabled."
+else
+	crontab -l >~/.config/cronsaved
+	crontab -d
+	notify-send "cronjobs saved and disabled."
+fi

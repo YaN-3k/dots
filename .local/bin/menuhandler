@@ -1,0 +1,16 @@
+#!/bin/sh
+# feed this script a link and it will give menu some choice programs to use to open it
+exec 2>/dev/null
+url="$1"
+set -- copy browser mpv download youtube-dl sxiv w3m
+program=$(printf "%s\n" "$@" | menu -p 'Open with')
+exec >/dev/null
+case $program in
+	copy) printf %s "$url" | xclip -sel clip;;
+	browser) setsid -f $BROWSER "$url";;
+	mpv) setsid -f mpv -quiet "$url";;
+	download) (cd ~/.local/dl && curl -sLO "$url") &;;
+	youtube-dl) (cd ~/.local/dl && setsid youtube-dl --add-metadata -ic "$url") &;;
+	sxiv) file=$(echo "$url" | sed "s/.*\///"); curl -sL "$url" >"/tmp/$file" && sxiv -ab "/tmp/$file" &;;
+	w3m) setsid -f $TERMINAL -e w3m "$url";;
+esac

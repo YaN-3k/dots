@@ -1,0 +1,13 @@
+#
+#              ██████ ██████   ██████  ███    ██ 
+#             ██      ██   ██ ██    ██ ████   ██ 
+#             ██      ██████  ██    ██ ██ ██  ██ 
+#             ██      ██   ██ ██    ██ ██  ██ ██ 
+#              ██████ ██   ██  ██████  ██   ████ 
+#
+#                       -+(crontab)-+-
+#                If you want to interact with
+#                X-session you need to export:
+#                XAUTHORITY=<path> DISPLAY=:0
+#
+#                             ~~

@@ -1,0 +1,150 @@
+#!/bin/sh
+# Draw an image using w3mimagedisplay
+#
+# Dependencies:
+#     w3mimgdisplay
+#     imlib2
+#     libx11
+#     bc
+#
+# w3mimgdispolay read arguments from stdin, each argument is separeted by ';'
+#
+# 0; params    -- draw image
+# 1; params    -- redraw image
+# 2; -none-    -- terminate drawing
+# 3; -none-    -- sync drawing
+# 4; -none-    -- nop, sync communication response '\n'
+# 5; path      -- get size of image, response "<width> <height>\n"
+# 6; params(6) -- clear image
+#
+# params:
+#      <n>;<x>;<y>;<w>;<h>;<sx>;<sy>;<sw>;<sh>;<path>
+# params(6):
+#      <x>;<y>;<w>;<h>
+#
+# n  - this is used when displaying multiple images
+# x  - x coordinate to draw the image at (top left corner)
+# y  - y coordinate to draw the image at (top left corner)
+# w  - width to draw the image
+# h  - height to draw the image
+# sx - x offset to draw the image
+# xy - y offset to draw the image
+# sw - width of the original (source) image
+# sh - height of the original (source) image
+#
+# usage:
+#   imgt FILENAME -m MODE -x X_OFFSET -y Y_OFFSET -w WIDTH -h HEIGHT
+#
+# modes:
+#   auto  -- automatically adjusts dimensions (default)
+#   scale -- scale an image keeping its aspect ratio (useful for previews scripts)
+#   clear -- clear image
+#
+# examples:
+#   automatically adjusts the width to the height, using the aspect ratio of the original image:
+#     imgt image.png -m auto -h 30
+#
+#   keep aspect ratio with width <= 30 and height <= 50:
+#     imgt image.png -m scale -w 30 -h 50
+
+
+w3mimg="/usr/libexec/w3m/w3mimgdisplay"
+fonth=16 # size of one terminal row
+fontw=8  # size of one terminal column
+
+[ -f "$1" ] && filename=$1 && shift
+x=0
+y=0
+width=0
+height=0
+mode='auto'
+
+while getopts ':m:x:y:w:h:' opt; do
+	case "$opt" in
+		m) mode=$OPTARG;;
+		x) x=$((OPTARG * fontw));;
+		y) y=$((OPTARG * fonth));;
+		w) width=$((OPTARG * fontw));;
+		h) height=$((OPTARG * fonth));;
+		\?) echo "invalid option: -$OPTARG" 1>&2; exit 1;;
+	esac
+done
+shift $((OPTIND - 1))
+
+if [ "$mode" = clear ]; then
+	cmd="6;$x;$y;$width;$height\n3"
+	printf "%b" "$cmd" | $w3mimg
+	exit
+fi
+
+read -r source_width source_height <<EOF
+$(echo "5;$filename" | $w3mimg)
+EOF
+
+if [ -z "$source_width" ] ||  [ -z "$source_height"  ]; then
+	echo "failed to obtain image size"
+	exit 1
+fi
+
+if [ "$mode" = auto ]; then
+	columns=$(tput cols)
+	lines=$(tput lines)
+
+	max_width=$((fontw * columns))
+	max_height=$((fonth * (lines - 1)))
+
+	if [ "$width" -eq 0 ]; then
+		if [ "$height" -ne 0 ]; then
+			scale=$(echo "$source_height / $height" | bc -l)
+			width=$(echo "$source_width / $scale" | bc)
+		else
+			width=$source_width
+		fi
+	fi
+
+	if [ "$height" -eq 0 ]; then
+		if [ "$width" -ne 0 ]; then
+			scale=$(echo "$source_width / $width" | bc -l)
+			height=$(echo "$source_height / $scale" | bc)
+		else
+			height=$source_height
+		fi
+	fi
+
+	if [ "$((width + x))" -gt "$max_width" ]; then
+		x=$((max_width - width))
+		[ "$x" -le 0 ] && x=0
+		height=$((height * max_width / width))
+		width=$max_width
+	fi
+
+	if [ "$((height + y))" -gt "$max_height" ]; then
+		y=$((max_height - height))
+		[ "$y" -le 0 ] && y=0
+		width=$((width * max_height / height))
+		height=$max_height
+	fi
+
+	clear && tput cup $((height / fonth + y / fonth)) 0
+	cmd="0;1;$x;$y;$width;$height;;;;;$filename\n4\n3"
+
+elif [ "$mode" = scale ]; then
+	max_width=$width
+	max_height=$height
+	width=$source_width
+	height=$source_height
+
+	if [ "$width" -gt "$max_width" ]; then
+		height=$((height * max_width / width))
+		width=$max_width
+	fi
+
+	if [ "$height" -gt "$max_height" ]; then
+		width=$((width * max_height / height))
+		height=$max_height
+	fi
+
+	cmd="0;1;$x;$y;$width;$height;;;;;$filename\n4\n3"
+fi
+
+printf "%b" "$cmd" | $w3mimg

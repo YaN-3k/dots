@@ -1,5 +1,0 @@
-#!/bin/sh
-# Did I just click the desktop?
-eval "$(xdotool getmouselocation --shell)"
-bspwm=$(xdotool search --class Bspwm | head -n 1)
-[ "$WINDOW" = "$bspwm" ] && $TERMINAL

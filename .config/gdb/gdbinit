@@ -1,7 +1,6 @@
 set history save on
 set history filename ~/.config/gdb/gdb_history
 set history remove-duplicates 1
-set prompt \033[34m[\033[0mgdb\033[34m]- - \033[0m
 set print pretty on
 set pagination off
 set confirm off

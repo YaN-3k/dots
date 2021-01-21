@@ -1,0 +1,7 @@
+#!/bin/sh -e
+# mount disk
+set -- $(lsblk -rno name,mountpoint,fstype | grep -i '  [a-rt-z]' | menu -p 'Mount')
+[ "$1" ]
+mkdir -p "$HOME/mnt/$1"
+sudo mount "/dev/$1" "$HOME/mnt/$1"
+notify-send "Mounted $1"

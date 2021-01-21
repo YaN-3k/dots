@@ -5,10 +5,30 @@
 " setup
 hi clear
 syntax reset
-set background=dark
 let g:colors_name='iceberg'
 
 " palette
+if &background == 'dark'
+let s:colors = {
+	\ -1: 'NONE',
+	\ 0:  '#dcdfe7',
+	\ 1:  '#cc517a',
+	\ 2:  '#668e3d',
+	\ 3:  '#c57339',
+	\ 4:  '#2d539e',
+	\ 5:  '#7759b4',
+	\ 6:  '#3f83a6',
+	\ 7:  '#3f83a6',
+	\ 8:  '#8389a3',
+	\ 9:  '#cc3768',
+	\ 10: '#598030',
+	\ 11: '#b6662d',
+	\ 12: '#22478e',
+	\ 13: '#6845ad',
+	\ 14: '#327698',
+	\ 15: '#262a3f',
+	\ }
+else
 let s:colors = {
 	\ -1: 'NONE',
 	\ 0:  '#22262e',
@@ -27,8 +47,14 @@ let s:colors = {
 	\ 13: '#ada0d3',
 	\ 14: '#95c4ce',
 	\ 15: '#d2d4de',
-	\ 16: '#161821'
 	\ }
+endif
+
+let g:terminal_ansi_colors = []
+for i in range(16)
+	call add(g:terminal_ansi_colors, s:colors[i])
+	exec 'let g:terminal_color_'.i '= s:colors['.i.']'
+endfor
 
 function! s:hi(scope, bg, fg, ...)
 	exec "hi ".a:scope
@@ -40,18 +66,12 @@ function! s:hi(scope, bg, fg, ...)
 	\ "guifg=".s:colors[a:fg]
 endfunction
 
-let g:terminal_ansi_colors = []
-for i in range(16)
-	call add(g:terminal_ansi_colors, s:colors[i])
-	exec 'let g:terminal_color_'.i '= s:colors['.i.']'
-endfor
-
 " editor settings
-call s:hi("Normal",        16,  7)
-call s:hi("Cursor",         7, 16)
+call s:hi("Normal",        -1,  7)
+call s:hi("Cursor",         7, -1)
 call s:hi("CursorLine",     0, -1)
 call s:hi("LineNr",        -1,  8)
-call s:hi("CursorLineNr",  -1, 15, 'bold')
+call s:hi("CursorLineNr",  -1,  7, 'bold')
 
 " number collumn
 call s:hi("CursorColumn",   0, -1)
@@ -105,7 +125,7 @@ call s:hi("Boolean",       -1, 11)
 call s:hi("Float",         -1,  5)
 
 call s:hi("Identifier",    -1,  7)
-call s:hi("Function",      -1,  7)
+call s:hi("Function",      -1,  3)
 
 " language constructs
 call s:hi("Comment",       -1,  8)
@@ -163,7 +183,7 @@ call s:hi("netrwClassify", -1,  7)
 " sh
 call s:hi("shStatement",   -1, -1)
 call s:hi("shCtrlSeq",     -1,  5)
-call s:hi("shFunction",    -1, -1)
+call s:hi("shFunction",    -1,  7)
 call s:hi("shOption",      -1,  2)
 call s:hi("shQuote",       -1,  4)
 call s:hi("shDerefSimple", -1,  5)

@@ -1,3 +1,0 @@
-#!/bin/sh
-[ "$1" = m ] && m="Window moved to" || m="Switched to"
-dunstify -u low -t 700 -r 9966 "$m $(($2 + 1))"

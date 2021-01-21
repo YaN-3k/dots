@@ -1,6 +1,6 @@
 html {
 	font: 11pt Hack Nerd Font;
-	background: #161821;
+	background: #161821; //#e8e9ec;
 	/* align to center */
 	height: 100%;
 	display: flex;
@@ -24,3 +24,9 @@ div > * {
 a       { color: #d2d4de; }
 span    { color: #84a0c6; }
 a:hover { color: #91acd1; }
+
+/*
+a       { color: #262a3f; }
+span    { color: #2d539e; }
+a:hover { color: #22478e; }
+*/

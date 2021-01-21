@@ -158,6 +158,7 @@ st-mono| simpleterm monocolor,
 	rc=\E8,
 	rev=\E[7m,
 	ri=\EM,
+	rin=\E[%p1%dT,
 	ritm=\E[23m,
 	rmacs=\E(B,
 	rmcup=\E[?1049l,
@@ -183,12 +184,13 @@ st-mono| simpleterm monocolor,
 # XTerm extensions
 	rmxx=\E[29m,
 	smxx=\E[9m,
+# disabled rep for now: causes some issues with older ncurses versions.
+#	rep=%p1%c\E[%p2%{1}%-%db,
 # tmux extensions, see TERMINFO EXTENSIONS in tmux(1)
 	Tc,
 	Ms=\E]52;%p1%s;%p2%s\007,
 	Se=\E[2 q,
 	Ss=\E[%p1%d q,
-	Sync=\EP=%p1%ds\E\\,
 
 st| simpleterm,
 	use=st-mono,

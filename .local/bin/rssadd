@@ -1,0 +1,14 @@
+#!/bin/sh
+# Add RSS feed.
+if ! echo "$1" | grep -q "https*://\S\+\.[A-Za-z]\+\S*"; then
+	notify-send "That doesn't look like a full URL."
+	exit
+fi
+
+rssfile=~/.config/newsboat/urls
+if cut -d' ' -f1 "$rssfile" | grep -q "^$1$"; then
+	notify-send "You already have this RSS feed."
+else
+	echo "$@" >> "$rssfile"
+	notify-send "RSS feed added."
+fi
