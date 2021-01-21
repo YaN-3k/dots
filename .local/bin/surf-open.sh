@@ -1,1 +1,1 @@
-/home/jan/.config/surf/surf-open.sh
+../../.config/surf/surf-open.sh
